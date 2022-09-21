@@ -1,9 +1,9 @@
 <?php
 
-return [    
+return [
 
     'list' => 'List',
-    'item_list' => ':Item list',
+    'item_list' => ':Item 一覧',
     'create' => 'Create',
     'create_item' => 'Create :Item', 
     'add' => 'Add',
@@ -35,9 +35,15 @@ return [
     // sort order
     'newest' => 'Newest',
     'oldest' => 'Oldest',
-    
-    'spot' => 'Spot',
-    'event' => 'Event',
-    'goods' => 'Goods'
+
+
+    'spot' => 'スポット',
+    'event' => 'イベント',
+    'goods'=>'品',
+
+
+    'Name'=>'名前',
+    'email'=>'Eメール',
+    'Point'=>'点'
 
 ];

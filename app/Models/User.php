@@ -69,7 +69,7 @@ class User extends BaseModel implements
 
     public function getName()
     {        
-        return $this->display_name ?: __('user.unnamed');
+        return $this->name ?: __('user.unnamed');
     }
     
     public static function roleList()

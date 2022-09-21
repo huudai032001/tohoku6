@@ -103,7 +103,7 @@
                                                 <span class="text">@trans('common.edit')</span>
                                             </a>
                                         @endif                                  
-
+ 
 
                                         @if (!empty($moreItemActions = $controller->moreItemActions($dataItem)))
                                             <div class="dropdown position-static cursor-pointer">
@@ -136,7 +136,7 @@
 
     @else
         <div class="alert alert-primary alert-styled-left alert-dismissible">
-            {{ __('message.no_item_found.') }}
+            {{ __('message.no_item_found') }}
         </div>
     @endif
 

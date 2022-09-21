@@ -10,6 +10,11 @@ Route::name('dashboard')->get('/', function () {
 
 Route::crud('user', AdminControllers\UserController::class);
 
+Route::crud('spot', AdminControllers\SpotController::class);
+Route::crud('goods', AdminControllers\GoodsController::class);
+Route::crud('event', AdminControllers\EventController::class);
+
+
 // Route::crud('page', Controllers\PageController::class);
 
 // Route::crud('post', Controllers\PostController::class);

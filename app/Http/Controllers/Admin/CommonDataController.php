@@ -322,6 +322,7 @@ class CommonDataController extends Controller {
         $request->validate($this->ruleCreate($dataItem));
 
         $this->DBTransaction([$this, 'saveNew'], [$request, $dataItem]);
+        // dd($this->hasTransactionError);
 
         if($this->hasTransactionError) {
             FlashMsg::addError(__('message.unknown_error'));
@@ -334,13 +335,17 @@ class CommonDataController extends Controller {
 
     public function ruleCreate($item)
     {
+
         return $this->ruleEdit($item);
     }
 
     
     protected function saveNew(Request $request, $item)
     {
+        // dd($this->updateItem($request, $item));
+
         return $this->updateItem($request, $item);
+
     }
 
 

@@ -1,10 +1,9 @@
-@extends('admin.layouts.base')
+@extends('auth.layout')
 
-@section('title', 'Forgot password')
 
-@section('body-classes', 'bg-secondary')
+@section('body-class', 'bg-secondary')
 
-@section('body')
+{{-- @section('body')
     <!-- Page content -->
 	<div class="page-content">
 
@@ -18,7 +17,7 @@
 				<div class="content d-flex justify-content-center align-items-center">
 
 					<!-- Password recovery form -->
-					<form class="login-form" action="index.html">
+					<form class="login-form" action="">
 						<div class="card mb-0">
 							<div class="card-body">
 								<div class="text-center mb-3">
@@ -52,4 +51,4 @@
 
 	</div>
 	<!-- /page content -->
-@endsection
+@endsection --}}

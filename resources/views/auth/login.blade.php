@@ -1,6 +1,6 @@
 @extends('auth.layout')
 
-@section('body-classes', 'bg-secondary')
+@section('body-class', 'bg-secondary')
 
 @section('body')
     
@@ -26,18 +26,18 @@
 							<div class="card-body">
 								<div class="text-center mb-3">
 									<i class="icon-lock5 icon-2x text-secondary border-secondary border-3 rounded-pill p-3 mb-3 mt-1"></i>
-									<h1 class="mb-0">{{ __('Login') }}</h1>									
+									<h1 class="mb-0">Login</h1>									
 								</div>								
 
 								<div class="form-group form-group-feedback form-group-feedback-left">
-									<input type="text" class="form-control" placeholder="{{ __('Username') }}" name="login_id" required autocomplete="off">
+									<input type="text" class="form-control" placeholder="Username" name="login_id" required autocomplete="off">
 									<div class="form-control-feedback">
 										<i class="icon-user text-muted"></i>
 									</div>
 								</div>
 
 								<div class="form-group form-group-feedback form-group-feedback-left">
-									<input type="password" class="form-control" placeholder="{{ __('Username') }}" name="password" required autocomplete="off">
+									<input type="password" class="form-control" placeholder="Password" name="password" required autocomplete="off">
 									<div class="form-control-feedback">
 										<i class="icon-lock2 text-muted"></i>
 									</div>
@@ -47,7 +47,7 @@
 									<div class="form-check form-check-inline">
 										<input type="checkbox" class="form-check-input" id="login_remember" name="remember" value="1">
 										<label class="form-check-label" for="login_remember">
-											{{ __('Keep logged in') }}
+											Keep logged in
 										</label>
 									</div>
 								</div>

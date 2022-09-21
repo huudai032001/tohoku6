@@ -14,7 +14,7 @@ yarn-error.log
 /.idea
 /.vscode
 
-uploads/*
+
 test/
 temp/
-test.php
+test.*

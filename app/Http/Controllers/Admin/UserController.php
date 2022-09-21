@@ -42,7 +42,7 @@ class UserController extends CommonDataController
     public function initDataTable($dataTable)
     {
         $dataTable->addSimpleColumn('login_name', __('user.login_name'));
-        $dataTable->addSimpleColumn('display_name', __('user.name'));
+        $dataTable->addSimpleColumn('name', __('user.name'));
         $dataTable->addSimpleColumn('email', __('common.email'));
         $dataTable->addColumn('role', __('user.role'), function ($item)
         {
@@ -74,9 +74,9 @@ class UserController extends CommonDataController
                 'data' => $dataItem->login_name                       
             ]),
             // new Form\Text([
-            //     'name' => 'display_name',
+            //     'name' => 'name',
             //     'label' => __('Display name'),
-            //     'data' => $dataItem->display_name
+            //     'data' => $dataItem->name
             // ]),
             new Form\Text([
                 'name' => 'email',

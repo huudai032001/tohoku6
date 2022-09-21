@@ -20,6 +20,8 @@ return [
     'bulk_action_no_item_selected' => 'No item selected.',
     'bulk_action_no_action_selected' => 'Please select an action.',
 
+    'no_item_found' => 'No item found.',
+
     // erorr message
     'unknown_error' => 'An error occurred. Check log for detail.',
     'data_not_found' => 'Data not found.',

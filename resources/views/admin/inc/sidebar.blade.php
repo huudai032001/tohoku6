@@ -36,7 +36,16 @@
 
                 <li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs">{{ __('Data management') }}</div> <i class="icon-menu"></i></li>
                 
+                <li class="nav-item">
+                    <a href="{{ route('admin.spot.index') }}" class="nav-link"><i class="icon-file-text3"></i> <span> {{ __('Spot') }}</span></a>                    
+                </li> 
 
+                <li class="nav-item">
+                    <a href="{{ route('admin.goods.index') }}" class="nav-link"><i class="icon-file-text3"></i> <span> {{ __('Goods') }}</span></a>                    
+                </li> 
+                <li class="nav-item">
+                    <a href="{{ route('admin.event.index') }}" class="nav-link"><i class="icon-file-text3"></i> <span> {{ __('Event') }}</span></a>                    
+                </li> 
                 {{-- <li class="nav-item">
                     <a href="{{ route('admin.page.index') }}" class="nav-link"><i class="icon-file-text3"></i> <span> {{ __('Page') }}</span></a>                    
                 </li> --}}
