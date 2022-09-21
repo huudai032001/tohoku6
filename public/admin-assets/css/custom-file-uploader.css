@@ -1,0 +1,8 @@
+.custom-file-uploader .upload-results {
+    height: 150px;
+    overflow: auto;
+}
+/* .custom-file-uploader .upload-progress {
+    opacity: 1;
+    visibility: hidden;
+} */
