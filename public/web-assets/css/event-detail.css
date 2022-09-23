@@ -1,0 +1,108 @@
+.section-event-detail {
+  padding: 25px 0 30px;
+  background-color: white;
+}
+.section-event-detail .section_header {
+  margin-bottom: 36px;
+  position: relative;
+}
+.section-event-detail .section_title {
+  text-align: center;
+}
+.section-event-detail .section_title img {
+  height: 19px;
+  width: auto;
+}
+.section-event-detail .area .icon {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 4px solid var(--color2);
+  margin-right: 5px;
+  display: block;
+}
+.section-event-detail .area img {
+  height: 12px;
+  width: auto;
+}
+.section-event-detail .icon-favorite {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1px solid #E8E8E8;
+  text-align: center;
+  padding-top: 5px;
+}
+.section-event-detail .icon-favorite img {
+  height: 14px;
+  display: block;
+  margin: 0 auto;
+}
+.section-event-detail .event-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+.section-event-detail .location {
+  font-size: 10px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+.section-event-detail .event-date {
+  font-size: 29px;
+  font-weight: 700;
+}
+.section-event-detail .notation {
+  text-align: center;
+  color: var(--color1);
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+.section-event-detail .favorite-count .icon img {
+  width: 16px;
+  display: block;
+}
+.section-event-detail .favorite-count .count-number {
+  color: inherit;
+  border: 1px solid #151515;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 15px;
+  padding: 3px 10px;
+  margin-left: 7px;
+  font-family: var(--font2);
+}
+.section-event-detail .event-images {
+  border-top: 1px solid #E8E8E8;
+  border-bottom: 1px solid #E8E8E8;
+  padding: 11px 0;
+  margin: 15px 0;
+}
+.section-event-detail .event-images .slider .item {
+  width: 300px;
+}
+.section-event-detail .post-content-text {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.section-nearby-map .section_title {
+  font-size: 20px;
+  font-weight: 700;
+  padding: 25px 0 15px;
+}
+
+.section-nearby-events .section_title {
+  font-size: 20px;
+  font-weight: 700;
+  padding: 25px 0 15px;
+}
+
+.section-related-events .section_title {
+  font-size: 20px;
+  font-weight: 700;
+  padding: 25px 0 15px;
+}

@@ -1,0 +1,30 @@
+.spot-search-form {
+  padding: 21px 0 26px;
+  background-color: #FAFAFA;
+}
+.spot-search-form .container {
+  max-width: 600px;
+}
+.spot-search-form .to-spot-register {
+  margin-top: 24px;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.post-list-sort-options {
+  padding: 20px 0;
+}
+.post-list-sort-options a {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  border: 2px solid #E8E8E8;
+  padding: 6px 12px;
+  border-radius: 10px;
+  margin: 5px;
+  color: inherit;
+}
+.post-list-sort-options a.active {
+  border-color: currentColor;
+}

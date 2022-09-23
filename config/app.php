@@ -231,5 +231,13 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
     ],
-
+    // 'providers' => [
+    
+    //     Laravel\Socialite\SocialiteServiceProvider::class,
+    // ],
+    
+    // 'aliases' => [
+ 
+    //     'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+    // ],
 ];

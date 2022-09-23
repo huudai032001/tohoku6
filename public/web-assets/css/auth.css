@@ -1,0 +1,133 @@
+body {
+  padding: 0;
+}
+
+.container {
+  max-width: 500px;
+}
+
+.logo {
+  padding: 40px 0 30px;
+}
+.logo img {
+  display: block;
+  margin: 0 auto;
+  height: 40px;
+  width: auto;
+}
+
+.auth-form .auth-form-instruction-text {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  text-align: center;
+}
+.auth-form .form-group {
+  margin-bottom: 12px;
+}
+.auth-form .password-showing-toggle {
+  cursor: pointer;
+  pad: 5px 0;
+}
+
+.form-signup-submit {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 20px;
+  padding: 8px 30px;
+  border-radius: 100px;
+  background-color: #E8E8E8;
+  color: var(--text-color);
+  border: 0;
+  min-width: 335px;
+  transition: 0.3s ease;
+  display: block;
+  width: 100%;
+}
+.form-signup-submit:hover {
+  border-color: var(--color6);
+  background-color: var(--color6);
+  color: white;
+}
+
+.form-signin-submit {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 20px;
+  padding: 8px 30px;
+  border-radius: 100px;
+  background-color: #151515;
+  color: white;
+  border: 0;
+  min-width: 335px;
+  transition: 0.3s ease;
+  display: block;
+  width: 100%;
+}
+.form-signin-submit:hover {
+  border-color: var(--color6);
+  background-color: var(--color6);
+  color: white;
+}
+
+.separate {
+  width: 25px;
+  border-top: 1px solid #151515;
+  margin: 15px auto;
+}
+
+.sns-buttons .button {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 20px;
+  padding: 18px 30px;
+  border-radius: 100px;
+  background-color: #E8E8E8;
+  color: var(--text-color);
+  border: 0;
+  min-width: 335px;
+  transition: 0.3s ease;
+  display: block;
+  width: 100%;
+  position: relative;
+  margin-bottom: 15px;
+}
+.sns-buttons .button img {
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  width: 27px;
+  height: 27px;
+  -o-object-fit: scale-down;
+     object-fit: scale-down;
+}
+.sns-buttons .sns-facebook {
+  background-color: #4267B2;
+  color: white;
+}
+.sns-buttons .sns-twitter {
+  background-color: #1C9DEB;
+  color: white;
+}
+
+.bottom-text {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 500;
+}
+.bottom-text .text-gray {
+  color: #B4B4B4;
+}
+.bottom-text a {
+  font-size: 700;
+}
+
+.instruction-text {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 57px;
+  margin-top: 20px;
+}

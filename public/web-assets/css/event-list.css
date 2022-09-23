@@ -1,0 +1,21 @@
+.page-header {
+  background-color: #FAFAFA;
+}
+
+.page-title {
+  text-align: center;
+  padding: 17px 0;
+  border-bottom: 1px solid #E8E8E8;
+}
+.page-title img {
+  display: block;
+  margin: 0 auto;
+  height: 29px;
+  width: auto;
+}
+
+.calendar-month-select,
+.calendar-day-select {
+  padding-left: 20px;
+  padding-right: 20px;
+}

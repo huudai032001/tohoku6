@@ -1,0 +1,60 @@
+.spot-editing-form .container {
+  max-width: 800px;
+}
+.spot-editing-form .section_header {
+  padding-top: 25px;
+  padding-bottom: 17px;
+}
+.spot-editing-form .section_header .image {
+  text-align: center;
+  margin-bottom: 36px;
+}
+.spot-editing-form .section_header .image img {
+  height: 18.5px;
+  width: auto;
+}
+@media (min-width: 992px) {
+  .spot-editing-form .section_header .image img {
+    height: 24px;
+  }
+}
+.spot-editing-form .section_header .desc {
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+}
+.spot-editing-form .form-group-label {
+  margin-bottom: 15px;
+}
+.spot-editing-form .location-input {
+  --ratio: 1.365;
+}
+.spot-editing-form .form-action-buttons {
+  padding: 26px 0 29px;
+  background-color: white;
+}
+.spot-editing-form .form-action-buttons .form-button {
+  display: block;
+  width: 100%;
+}
+.spot-editing-form .form-action-buttons .action-notice {
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 15px;
+}
+.spot-editing-form .section_header-2 {
+  padding-top: 25px;
+  padding-bottom: 24px;
+}
+.spot-editing-form .section_header-2 .title {
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+}
+.spot-editing-form .section_header-2 .desc {
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 21px;
+  text-align: center;
+}

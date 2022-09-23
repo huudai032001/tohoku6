@@ -36,12 +36,19 @@ class User extends BaseModel implements
      *
      * @var string[]
      */
+    // protected $fillable = [
+    //     'name',
+    //     'email',
+    //     'password',
+    // ];
     protected $fillable = [
         'name',
         'email',
         'password',
-    ];
-
+        'status',
+        'facebook_id',
+        'google_id'
+];
     /**
      * The attributes that should be hidden for serialization.
      *

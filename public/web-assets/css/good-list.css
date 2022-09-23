@@ -1,0 +1,9 @@
+.page-header {
+  padding: 20px 0;
+}
+.page-header img {
+  display: block;
+  margin: 0 auto;
+  height: 30px;
+  width: auto;
+}

@@ -1,0 +1,77 @@
+.page-header {
+  padding: 26px 0;
+}
+.page-header img {
+  display: block;
+  margin: 0 auto;
+  height: 18px;
+  width: auto;
+}
+
+.exchange-item-preview {
+  margin-bottom: 25px;
+}
+.exchange-item-preview .item-thumb {
+  width: 160px;
+  margin-bottom: 10px;
+}
+.exchange-item-preview .item-thumb img {
+  border-radius: 12px;
+}
+.exchange-item-preview .item-name {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.point-exchange-form {
+  margin: 0 auto;
+  max-width: 600px;
+  padding-bottom: 50px;
+}
+.point-exchange-form .form-group {
+  margin-bottom: 18px;
+}
+.point-exchange-form .point-calculating {
+  margin-bottom: 35px;
+}
+.point-exchange-form .point-calculating ._label {
+  font-size: 12px;
+  font-weight: 500;
+  margin-right: 30px;
+}
+.point-exchange-form .point-calculating .point-num {
+  font-size: 16px;
+  font-weight: 700;
+  font-family: var(--font2);
+}
+.point-exchange-form .point-calculating .separate {
+  border-top: 1px solid #E8E8E8;
+}
+
+.point-exchange-confirm-info {
+  margin: 0 auto;
+  max-width: 600px;
+  padding-bottom: 50px;
+  line-height: 1.6;
+}
+.point-exchange-confirm-info .exchange-detail {
+  font-size: 14px;
+  font-weight: 500;
+}
+.point-exchange-confirm-info .separate {
+  border-top: 1px solid #E8E8E8;
+}
+
+.point-exchange-complete {
+  margin: 0 auto;
+  max-width: 600px;
+  padding: 100px 0 50px;
+}
+.point-exchange-complete .message-text {
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 45px;
+}
