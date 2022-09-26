@@ -17,7 +17,7 @@
         <link rel="stylesheet" href="/web-assets/css/owl-customized.css">
         <link rel="stylesheet" href="/web-assets/css/main.css">
         <link rel="stylesheet" href="/web-assets/css/spot-editing.css">
-
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <script src="/web-assets/libs/jquery/jquery-3.6.0.min.js"></script>
         <script src="/web-assets/libs/owl-carousel/owl.carousel.min.js"></script>
         
@@ -139,13 +139,14 @@
                         <div class="container">
                             <div class="form-layout-1">
                                 <div style="margin-bottom: 25px;">
-                                    <input type="text" class="input-text" placeholder="住所またはキーワード" name="location">
+                                    <input type="text" class="input-text @error('location') is-invalid @enderror" placeholder="住所またはキーワード" name="location">
                                 </div>
+                                @error('location')
+                                    <div class="form-error-msg">{{ $message }}</div>
+                                    @enderror
                                 <div style="padding-bottom: 35px;">
                                     <div class="location-input ratio">
-
                                         <div class="d-flex align-items-center justify-content-center" style="font-family: var(--font2); color: white;text-align: center;background-color: #C6C6C6;font-weight: 700;">MAP</div>
-
                                     </div>
                                 </div>
                             </div>                           
@@ -157,15 +158,21 @@
                                 <div class="form-group">
                                     <div class="form-group-label">スポット名</div>
                                     <div class="form-control-wrap">
-                                        <input type="text" class="input-text" name="name">
+                                        <input type="text" class="input-text @error('name') is-invalid @enderror" name="name">
                                     </div>
+                                    @error('name')
+                                    <div class="form-error-msg">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
                                     <div class="form-group-label">スポット説明</div>
                                     <div class="form-control-wrap">
-                                        <textarea class="textarea" rows="5" name="intro"></textarea>
+                                        <textarea class="textarea @error('intro') is-invalid @enderror" rows="5" name="intro"></textarea>
                                     </div>
+                                    @error('intro')
+                                    <div class="form-error-msg">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
@@ -180,37 +187,52 @@
                                             <div class="col-12">
                                                 <label class="custom-input-image">
                                                     <div class="preview-image ratio">
-                                                        <img src="" alt="">
+                                                        <img src="" alt="" id="myImg">
                                                     </div>
-                                                    <input type="file" accept="image/*" name="image" id="upload_img">
+                                                    <input type="file" accept="image/*" name="image" id="upload_img" class="@error('image') is-invalid @enderror">
                                                 </label>
                                             </div>
                                             <div class="col-4">
                                                 <label class="custom-input-image">
                                                     <div class="preview-image ratio">
-                                                        <img src="" alt="">
+                                                        <img src="" alt="" id="myImg01">
                                                     </div>
-                                                    <input type="file" accept="image/*">
+                                                    <input type="file" accept="image/*" name="sub_image_01" id="sub_image_01" class="@error('sub_image_01') is-invalid @enderror">
                                                 </label>
                                             </div>
                                             <div class="col-4">
                                                 <label class="custom-input-image">
                                                     <div class="preview-image ratio">
-                                                        <img src="" alt="">
+                                                        <img src="" alt="" id="myImg02">
                                                     </div>
-                                                    <input type="file" accept="image/*">
+                                                    <input type="file" accept="image/*" name="sub_image_02" id="sub_image_02" class="@error('sub_image_02') is-invalid @enderror">
                                                 </label>
                                             </div>
                                             <div class="col-4">
                                                 <label class="custom-input-image">
                                                     <div class="preview-image ratio">
-                                                        <img src="" alt="">
+                                                        <img src="" alt="" id="myImg03">
                                                     </div>
-                                                    <input type="file" accept="image/*" >
+                                                    <input type="file" accept="image/*" name="sub_image_03" id="sub_image_03" class="@error('sub_image_03') is-invalid @enderror">
                                                 </label>
                                             </div>
                                         </div>
                                     </div>
+                                    @error('image')
+                                    <div class="form-error-msg">{{ $message }}</div>
+                                    @enderror
+
+                                    @error('sub_image_01')
+                                    <div class="form-error-msg">{{ $message }}</div>
+                                    @enderror
+
+                                    @error('sub_image_02')
+                                    <div class="form-error-msg">{{ $message }}</div>
+                                    @enderror
+
+                                    @error('sub_image_03')
+                                    <div class="form-error-msg">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
@@ -254,6 +276,9 @@
                                             </div>                                            
                                         </div>
                                     </div>
+                                    @error('category')
+                                    <div class="form-error-msg">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                             </div>

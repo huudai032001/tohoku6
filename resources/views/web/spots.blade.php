@@ -219,6 +219,7 @@
                                 </div>          
                             @endforeach                
                             </div>
+                            {!! $list_spot->appends(['nickname'=>'huudai'])->links() !!}
 
                         </div>
                         <div class="load-more-button">
@@ -226,8 +227,9 @@
                         </div>
 
                     </div>
-                </section>
 
+                </section>
+                
                 <!-- Footer -->
                 <div id="footer" class="bg-white">
                     <section class="footer-site-map">

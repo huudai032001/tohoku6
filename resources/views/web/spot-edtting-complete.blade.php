@@ -7,24 +7,26 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>spot editing complete</title>
 
-        <link rel="stylesheet" href="css/framework-full.css">
+        <link rel="stylesheet" href="/web-assets/css/framework-full.css">
 
         <link rel="stylesheet" href="fonts/Fontawesome/4.7/css/font-awesome.min.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
 
-        <link rel="stylesheet" href="css/owl-customized.css">
-        <link rel="stylesheet" href="css/main.css">
-        <link rel="stylesheet" href="css/spot-editing.css">
+        <link rel="stylesheet" href="/web-assets/css/owl-customized.css">
+        <link rel="stylesheet" href="/web-assets/css/main.css">
+        <link rel="stylesheet" href="/web-assets/css/spot-editing.css">
 
-        <script src="libs/jquery/jquery-3.6.0.min.js"></script>
-        <script src="libs/owl-carousel/owl.carousel.min.js"></script>
+        <script src="/web-assets/libs/jquery/jquery-3.6.0.min.js"></script>
+        <script src="/web-assets/libs/owl-carousel/owl.carousel.min.js"></script>
         
     </head>
 
     <body>
-
+        <?php
+            var_dump($spot->name);
+        ?>
 
         <div id="wrapper">
             <div id="inner-wrapper">
@@ -42,7 +44,7 @@
                     <div class="nav-bar-center d-flex justify-content-center">
                         <div class="logo">
                             <a href="index.html">
-                                <img src="images/number-6.svg" alt="Tohoku 6">
+                                <img src="/web-assets/images//number-6.svg" alt="Tohoku 6">
                             </a>
                         </div>
                     </div>
@@ -50,18 +52,18 @@
                         <div class="user-menu-icons d-flex">
                             <div data-show-modal="#user-notification-modal">
                                 <div class="icon">
-                                    <img src="images/icons/notification.svg" alt="notification">
+                                    <img src="/web-assets/images//icons/notification.svg" alt="notification">
                                     <div class="has-notification-sight"></div>
                                 </div>
                             </div>
                             <a href="">
                                 <div class="icon">
-                                    <img src="images/icons/star.svg" alt="favorite">
+                                    <img src="/web-assets/images//icons/star.svg" alt="favorite">
                                 </div>
                             </a>
                             <a href="">
                                 <div class="icon">
-                                    <img src="images/icons/search.svg" alt="search">
+                                    <img src="/web-assets/images//icons/search.svg" alt="search">
                                 </div>
                             </a>
                         </div>
@@ -73,7 +75,7 @@
                     <div class="profile-button">
                         <a href="my-profile.html">
                             <div class="profile-image">
-                                <img width="75" src="images/profile.svg" alt="profile">
+                                <img width="75" src="/web-assets/images//profile.svg" alt="profile">
                             </div>
                             <div class="profile-label">プロフィール</div>
                         </a>
@@ -160,17 +162,17 @@
                         <ul class="footer-social-buttons d-flex align-items-center justify-content-center">
                             <li>
                                 <a href="">
-                                    <img src="images/icons/twitter.svg" alt="">
+                                    <img src="/web-assets/images//icons/twitter.svg" alt="">
                                 </a>
                             </li>
                             <li>
                                 <a href="">
-                                    <img src="images/icons/instagram.svg" alt="">
+                                    <img src="/web-assets/images//icons/instagram.svg" alt="">
                                 </a>
                             </li>
                             <li>
                                 <a href="">
-                                    <img src="images/icons/tiktok.svg" alt="">
+                                    <img src="/web-assets/images//icons/tiktok.svg" alt="">
                                 </a>
                             </li>
                         </ul>
@@ -251,9 +253,9 @@
 
 
         
-        <script src="js/components.js"></script>
-        <script src="js/main.js"></script>
-        <script src="js/tohoku-calendar.js"></script>
+        <script src="/web-assets/css/components.js"></script>
+        <script src="/web-assets/css/main.js"></script>
+        <script src="/web-assets/css/tohoku-calendar.js"></script>
         
     </body>
 

@@ -17,9 +17,9 @@ Route::get('/login', [Controllers\AuthController::class, 'login'])->name('login'
 Route::post('/login', [Controllers\AuthController::class, 'postLogin']);
 Route::get('/logout', [Controllers\AuthController::class, 'logout'])->name('logout');
 
-Route::get('/', function () {
-    return view('web.index');
-});
+// Route::get('/', function () {
+//     return view('web.index');
+// });
 Route::get('/xx', function () {
     return view('admin.test.xx');
 });
@@ -34,6 +34,12 @@ Route::get('/spot-detail/{id}', [App\Http\Controllers\Web\SpotController::class,
 
 Route::get('/spot-register', [App\Http\Controllers\Web\SpotController::class, 'spotRegister'])->name('spotRegister');
 Route::post('/spot-register', [App\Http\Controllers\Web\SpotController::class, 'postSpotRegister'])->name('postSpotRegister');
+
+Route::get('/spot-preview', [App\Http\Controllers\Web\SpotController::class, 'spotEdttingComplete'])->name('spotEdttingComplete');
+Route::post('/spot-preview', [App\Http\Controllers\Web\SpotController::class, 'PostSpotPreview'])->name('PostSpotPreview');
+
+Route::get('/spot-edit/{id}', [App\Http\Controllers\Web\SpotController::class, 'spotEdit'])->name('spotEdit');
+Route::post('/spot-edit/{id}', [App\Http\Controllers\Web\SpotController::class, 'postSpotEdit'])->name('postSpotEdit');
 
 
 // event
@@ -92,3 +98,4 @@ Route::get('/set-new-password/{id}',[App\Http\Controllers\Web\HomeController::cl
 Route::post('/set-new-password/{id}',[App\Http\Controllers\Web\HomeController::class, 'postSetNewPassword'])->name('postSetNewPassword');
 
 
+Route::post('/upload_img',[App\Http\Controllers\Web\SpotController::class, 'upload_img'])->name('upload_img');

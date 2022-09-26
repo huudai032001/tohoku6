@@ -21,7 +21,16 @@ body {
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
-
+.form-error-msg {
+  color: red;
+}
+ul.pagination {
+  display: flex;
+  justify-content: center;
+}
+li.page-item {
+  width: 35px;
+}
 hr {
   margin: 1rem 0;
   color: inherit;

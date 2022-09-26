@@ -18,8 +18,8 @@
         <link rel="stylesheet" href="/web-assets/css/main.css">
         <link rel="stylesheet" href="/web-assets/css/spot-detail.css">
 
-        <script src="libs/jquery/jquery-3.6.0.min.js"></script>
-        <script src="libs/owl-carousel/owl.carousel.min.js"></script>
+        <script src="/web-assets/libs/jquery/jquery-3.6.0.min.js"></script>
+        <script src="/web-assets/libs/owl-carousel/owl.carousel.min.js"></script>
         
     </head>
 
@@ -165,20 +165,23 @@
                         <div class="container">
                             <div class="slider owl-carousel">
                                 <div class="item">
-                                    <img src="/web-assets/images/demo/1.png" alt="">
+                                    <img src="/upload/{{$info_spot->image}}" alt="">
                                 </div>
+                                <?php
+                                    // $category = explode(',',$info_spot->sub_image);
+                                    $category = trim($info_spot->sub_image , '"[]');
+                                    $arr = explode(",", $category);
+                                    for($i =0;$i< count($arr);$i++)
+                                    {
+                                        $value = trim($arr[$i] , '"');
+
+                                ?>
                                 <div class="item">
-                                    <img src="/web-assets/images/demo/1.png" alt="">
+                                    <img src="/upload/<?=$value?>" alt="">
                                 </div>
-                                <div class="item">
-                                    <img src="/web-assets/images/demo/1.png" alt="">
-                                </div>
-                                <div class="item">
-                                    <img src="/web-assets/images/demo/1.png" alt="">
-                                </div>
-                                <div class="item">
-                                    <img src="/web-assets/images/demo/1.png" alt="">
-                                </div>
+                                <?php
+                                    }
+                                ?>
                             </div>
                         </div>
                     </div>

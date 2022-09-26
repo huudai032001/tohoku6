@@ -7,19 +7,19 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Edit spot</title>
 
-        <link rel="stylesheet" href="css/framework-full.css">
+        <link rel="stylesheet" href="/web-assets/css/framework-full.css">
 
         <link rel="stylesheet" href="fonts/Fontawesome/4.7/css/font-awesome.min.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
 
-        <link rel="stylesheet" href="css/owl-customized.css">
-        <link rel="stylesheet" href="css/main.css">
-        <link rel="stylesheet" href="css/spot-editing.css">
+        <link rel="stylesheet" href="/web-assets/css/owl-customized.css">
+        <link rel="stylesheet" href="/web-assets/css/main.css">
+        <link rel="stylesheet" href="/web-assets/css/spot-editing.css">
 
-        <script src="libs/jquery/jquery-3.6.0.min.js"></script>
-        <script src="libs/owl-carousel/owl.carousel.min.js"></script>
+        <script src="/web-assets/libs/jquery/jquery-3.6.0.min.js"></script>
+        <script src="/web-assets/libs/owl-carousel/owl.carousel.min.js"></script>
         
     </head>
 
@@ -42,7 +42,7 @@
                     <div class="nav-bar-center d-flex justify-content-center">
                         <div class="logo">
                             <a href="index.html">
-                                <img src="images/number-6.svg" alt="Tohoku 6">
+                                <img src="/web-assets/images/number-6.svg" alt="Tohoku 6">
                             </a>
                         </div>
                     </div>
@@ -50,18 +50,18 @@
                         <div class="user-menu-icons d-flex">
                             <div data-show-modal="#user-notification-modal">
                                 <div class="icon">
-                                    <img src="images/icons/notification.svg" alt="notification">
+                                    <img src="/web-assets/images/icons/notification.svg" alt="notification">
                                     <div class="has-notification-sight"></div>
                                 </div>
                             </div>
                             <a href="">
                                 <div class="icon">
-                                    <img src="images/icons/star.svg" alt="favorite">
+                                    <img src="/web-assets/images/icons/star.svg" alt="favorite">
                                 </div>
                             </a>
                             <a href="">
                                 <div class="icon">
-                                    <img src="images/icons/search.svg" alt="search">
+                                    <img src="/web-assets/images/icons/search.svg" alt="search">
                                 </div>
                             </a>
                         </div>
@@ -73,7 +73,7 @@
                     <div class="profile-button">
                         <a href="my-profile.html">
                             <div class="profile-image">
-                                <img width="75" src="images/profile.svg" alt="profile">
+                                <img width="75" src="/web-assets/images/profile.svg" alt="profile">
                             </div>
                             <div class="profile-label">プロフィール</div>
                         </a>
@@ -128,7 +128,7 @@
                         <div class="section_header">
                             <div class="container">
                                 <div class="image">
-                                    <img src="images/tohoku-6-spot.svg" alt="">
+                                    <img src="/web-assets/images/tohoku-6-spot.svg" alt="">
                                 </div>
                                 <div class="desc">
                                     スポットを編集する
@@ -139,7 +139,7 @@
                         <div class="container">
                             <div class="form-layout-1">
                                 <div style="margin-bottom: 25px;">
-                                    <input type="text" class="input-text" placeholder="住所またはキーワード" value="ダミーテキスト">
+                                    <input type="text" class="input-text" placeholder="住所またはキーワード" value="{{$info_spot->location}}" name="location">
                                 </div>
                                 <div style="padding-bottom: 35px;">
                                     <div class="location-input ratio">
@@ -157,14 +157,14 @@
                                 <div class="form-group">
                                     <div class="form-group-label">スポット名</div>
                                     <div class="form-control-wrap">
-                                        <input type="text" class="input-text" value="ダミーテキスト">
+                                        <input type="text" class="input-text" value="{{$info_spot->name}}" name="name">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <div class="form-group-label">スポット説明</div>
                                     <div class="form-control-wrap">
-                                        <textarea class="textarea" rows="5">ダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキスト</textarea>
+                                        <textarea class="textarea" rows="5" name="intro">{{$info_spot->intro}}</textarea>
                                     </div>
                                 </div>
 
@@ -180,35 +180,40 @@
                                             <div class="col-12">
                                                 <label class="custom-input-image">
                                                     <div class="preview-image ratio">
-                                                        <img src="images/demo/1.png" alt="">
+                                                        <img src="/upload/{{$info_spot->image}}" alt="">
                                                     </div>
                                                     <input type="file" accept="image/*">
                                                 </label>
                                             </div>
+                                            <?php
+                                                $sub_image = trim($info_spot->sub_image , '"[]');
+                                                $arr = explode(",", $sub_image);
+                                                $arr_category = [
+                                                    0=>'宿泊',
+                                                    1=>'グルメ',
+                                                    2=>'ショッピング',
+                                                    3=>'自然',
+                                                    4=>'体験',
+                                                    5=>'歴史',
+                                                ];
+
+                                                $category = explode(',',$info_spot->category);
+                                                for($i =0;$i< count($arr);$i++)
+                                                {
+                                                    $value = trim($arr[$i] , '"');
+
+                                            ?>
                                             <div class="col-4">
                                                 <label class="custom-input-image">
                                                     <div class="preview-image ratio">
-                                                        <img src="images/demo/1.png" alt="">
+                                                        <img src="/upload/{{$value}}" alt="">
                                                     </div>
                                                     <input type="file" accept="image/*">
                                                 </label>
                                             </div>
-                                            <div class="col-4">
-                                                <label class="custom-input-image">
-                                                    <div class="preview-image ratio">
-                                                        <img src="" alt="">
-                                                    </div>
-                                                    <input type="file" accept="image/*">
-                                                </label>
-                                            </div>
-                                            <div class="col-4">
-                                                <label class="custom-input-image">
-                                                    <div class="preview-image ratio">
-                                                        <img src="" alt="">
-                                                    </div>
-                                                    <input type="file" accept="image/*">
-                                                </label>
-                                            </div>
+                                            <?php
+                                                }
+                                            ?>
                                         </div>
                                     </div>
                                 </div>
@@ -217,39 +222,53 @@
                                     <div class="form-group-label">カテゴリを選ぶ</div>
                                     <div class="form-control-wrap">
                                         <div class="row" style="--col-space-x: 30px; --col-space-y: 26px;">
+                                        <?php
+                                            for($s=0;$s<count($arr_category);$s++)
+                                            {
+                                        ?>
                                             <div class="col-auto">
                                                 <label class="custom-radio">
-                                                    <input type="checkbox" name="category"> <span class="checkmark"></span> 宿泊
+                                                    <?php
+                                                        for($u = 0;$u< count($category);$u++)
+                                                        {
+                                                    ?>
+                                                    <input type="checkbox" name="category" value="{{$s+1}}" <?php if($category[$u] == $s+1) echo 'checked'?>> <span class="checkmark"></span> {{$arr_category[$s]}}
+                                                    <?php
+                                                        }
+                                                    ?>
+                                                </label>
+                                            </div>
+                                            <?php
+                                            }
+                                            ?>
+                                            <!-- <div class="col-auto">
+                                                <label class="custom-radio">
+                                                    <input type="checkbox" name="category"  value="2"> <span class="checkmark"></span> グルメ
                                                 </label>
                                             </div>
                                             <div class="col-auto">
                                                 <label class="custom-radio">
-                                                    <input type="checkbox" name="category" checked> <span class="checkmark"></span> グルメ
+                                                    <input type="checkbox" name="category" value="3"> <span class="checkmark"></span> ショッピング
                                                 </label>
                                             </div>
                                             <div class="col-auto">
                                                 <label class="custom-radio">
-                                                    <input type="checkbox" name="category"> <span class="checkmark"></span> ショッピング
+                                                    <input type="checkbox" name="category" checked value="4"> <span class="checkmark"></span> 自然
                                                 </label>
                                             </div>
                                             <div class="col-auto">
                                                 <label class="custom-radio">
-                                                    <input type="checkbox" name="category" checked> <span class="checkmark"></span> 自然
+                                                    <input type="checkbox" name="category" value="5"> <span class="checkmark"></span> 体験
                                                 </label>
                                             </div>
                                             <div class="col-auto">
                                                 <label class="custom-radio">
-                                                    <input type="checkbox" name="category"> <span class="checkmark"></span> 体験
+                                                    <input type="checkbox" name="category" value="6"> <span class="checkmark"></span> 歴史
                                                 </label>
-                                            </div>
-                                            <div class="col-auto">
-                                                <label class="custom-radio">
-                                                    <input type="checkbox" name="category"> <span class="checkmark"></span> 歴史
-                                                </label>
-                                            </div>
+                                            </div> -->
                                             <div class="col-4 col-sm-3">
                                                 <label class="custom-radio">
-                                                    <input type="checkbox" name="category"> <span class="checkmark"></span> SNS映え
+                                                    <input type="checkbox" name="category" value="7"> <span class="checkmark"></span> SNS映え
                                                 </label>
                                             </div>                                            
                                         </div>
@@ -285,17 +304,17 @@
                         <ul class="footer-social-buttons d-flex align-items-center justify-content-center">
                             <li>
                                 <a href="">
-                                    <img src="images/icons/twitter.svg" alt="">
+                                    <img src="/web-assets/images/icons/twitter.svg" alt="">
                                 </a>
                             </li>
                             <li>
                                 <a href="">
-                                    <img src="images/icons/instagram.svg" alt="">
+                                    <img src="/web-assets/images/icons/instagram.svg" alt="">
                                 </a>
                             </li>
                             <li>
                                 <a href="">
-                                    <img src="images/icons/tiktok.svg" alt="">
+                                    <img src="/web-assets/images/icons/tiktok.svg" alt="">
                                 </a>
                             </li>
                         </ul>
@@ -376,9 +395,9 @@
 
 
         
-        <script src="js/components.js"></script>
-        <script src="js/main.js"></script>
-        <script src="js/tohoku-calendar.js"></script>
+        <script src="/web-assets/js/components.js"></script>
+        <script src="/web-assets/js/main.js"></script>
+        <script src="/web-assets/js/tohoku-calendar.js"></script>
         
     </body>
 
