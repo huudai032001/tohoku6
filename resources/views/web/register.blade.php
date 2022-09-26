@@ -28,7 +28,9 @@
     </head>
 
     <body>
-
+        @if(Session::has('thongbao'))
+            <h1 style="text-align: center;">{{Session::get('thongbao')}}</h1>
+        @endif
         <div id="wrapper">
             <div id="inner-wrapper"> 
                 <div class="container">
@@ -85,7 +87,7 @@
                         </div>
 
                         <div class="bottom-text">
-                            <span class="text-gray">新規会員登録は</span><a href="signup.html">こちら</a>                        
+                            <span class="text-gray">新規会員登録は</span><a href="/register">こちら</a>                        
                         </div>
 
                     </div>                    

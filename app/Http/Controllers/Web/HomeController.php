@@ -15,13 +15,11 @@ use App\Models\Event;
 use App\Models\Goods;
 use App\Models\User;
 use App\Jobs\SendEmail;
+use App\Jobs\SendEmailResetPass;
 
 class HomeController extends Controller
 {
-    public function list_spot(){
-        $list_spot = Spot::paginate(6);
-        return view('web.spots',compact('list_spot'));
-    }
+
 
     public function list_events(){
         $list_events = Event::paginate(6);
@@ -76,13 +74,6 @@ class HomeController extends Controller
         return view('web.goods',compact('list_goods'));
     }
 
-    public function spot_detail($id){
-        $info_spot = Spot::where('id',$id)->first(); 
-        $list_spot = Spot::paginate(6);
-        return view('web.spot-detail',['info_spot'=>$info_spot,'list_spot'=>$list_spot]);
-    }
-
-
     public function event_detail($id){
         $info_event = Event::where('id',$id)->first(); 
         $list_event = Event::paginate(6);
@@ -99,11 +90,10 @@ class HomeController extends Controller
 
     // test email 
     public function postSignup(Request $req){
-        $check = User::where('email',$req->email)->first();
-        $otp = rand(10,100);
+        $check = User::where('email',$req->input('email'))->first();
+        $otp = rand(10,100000);
 
-
-        $users = $req->email;
+        $users = $req->input('email');
         $message = [
             'type' => 'Create task',
             'task' => $otp,
@@ -113,11 +103,11 @@ class HomeController extends Controller
     
         if($check == null){
             $user = new user();
-            $user->email = $req->email;
-            $user->password = bcrypt($req->password);
+            $user->email = $req->input('email');
+            $user->password = bcrypt($req->input('password'));
             $user->otp = $otp;
             $user->save();
-            $checks = User::where('email',$req->email)->first();
+            $checks = User::where('email',$req->input('email'))->first();
             
             return redirect('signup-verify/'. $checks['id']); 
         }
@@ -127,8 +117,11 @@ class HomeController extends Controller
         return view('web.signup-verify',compact('id'));
     }
     public function postSignupVerify(Request $req,$id){
-        $checks = User::where(['id'=>$id,'otp'=>$req->otp])->first();
+        $checks = User::where(['id'=>$id,'otp'=>$req->input('otp')])->first();
         if($checks != null){
+            $user = User::findOrFail($id);
+            $user->status = 'active';
+            $user->save();
             return redirect('register-edit-profile/'.$id);
         }
         else {
@@ -143,45 +136,100 @@ class HomeController extends Controller
         // dd(Auth::attempt($credentials));
         if(Auth::attempt($credentials)){
             $check = Auth::user();
-
-            return redirect('index'); 
+            if($check['status'] == 'active'){
+                return redirect('index'); 
+            }
+            else {
+                return redirect('signup-verify/'. $check['id']); 
+            }
         }
         else{
             return redirect()->back()->with('thongbao','Tài khoản hoặc mật khẩu không chính xác!');
 
         }
     }
-    // public $successStatus = 200;
+// reset password
+    public function passwordReset(){
+        return view('web.password-reset');
+    }
 
-    // public function login(Request $request){
-    //     // Log::info($request);
-    //     if(Auth::attempt(['email' => request('email'), 'password' => request('password')])){
-    //         return view('home');
-    //     }
-    //     else{
-    //         return Redirect::back ();
-    //     }
-    // }
+    public function postPasswordReset(Request $req){
 
-    // public function loginWithOtp(Request $request){
-    //     // Log::info($request);
-    //     $user  = User::where([['email','=',request('email')],['otp','=',request('otp')]])->first();
-    //     if($user){
-    //         Auth::login($user, true);
-    //         User::where('email','=',$request->email)->update(['otp' => null]);
-    //         return view('web.signin');
-    //     }
-    //     else{
-    //         return Redirect::back ();
-    //     }
-    // }
+        $check = User::where('email',$req->input('email'))->first();
+        $otp = rand(10,100000);
+        // var_dump($check);
+        // die;
+        if($check){
 
-    // public function sendOtp(Request $request){
+            $message = [
+                'type' => 'Create task',
+                'task' => $otp,
+                'content' => 'has been created!',
+            ];
+            $user = User::where('email',$req->input('email'))->first();
+            $user->otp = $otp;
+            $user->save();
+            SendEmailResetPass::dispatch($message, $req->input('email'))->delay(now()->addMinute(1));
+        
+            return redirect('password-reset-verify/'.$user->id);
+        }
+        else {
+            return redirect()->back()->with('thongbao','Không tìm thấy tài khoản này!');
 
-    //     $otp = rand(1000,9999);
-    //     Log::info("otp = ".$otp);
-    //     $user = User::where('email','=',$request->email)->update(['otp' => $otp]);
-    //     // send otp to email using email api
-    //     return response()->json([$user],200);
-    // }
+        }
+    }
+
+    public function passwordResetVerify($id){
+        return view('web.password-reset-verify',['id'=>$id]);
+    }
+
+    public function postPasswordResetVerify(Request $req,$id){
+        $user = User::findorfail($id);
+        if($user->otp == $req->input('otp')){
+            return redirect("set-new-password/".$user->id);
+        }
+        else{
+            return redirect()->back()->with('thongbao','Mã OTP không chính xác!');
+
+        }
+
+    }
+
+    public function passwordResetComplete($id){
+        return view('web.password-reset-complete',['id'=>$id]);
+    }
+
+    public function setNewPassword($id){
+        return view('web.set-new-password',['id'=>$id]);
+    }
+
+    public function postPasswordResetComplete(Request $req,$id){
+        $user = User::findorfail($id);
+        $user->password = bcrypt($req->input('pass_new'));
+        $user->save();
+        // dd($user->password);
+    }
+    public function postSetNewPassword(Request $req,$id){
+        $this->validate($req,[
+            'pass_new'=>'required|min:6|max:50',
+            're_pass_new'=>'required|same:pass_new|min:6|max:50',
+
+        ],
+        [
+            'pass_new.required'=>'必須項目です',
+            'pass_new.min'=>'パスワードは半角英数字を含む6文字以上を設定してください',
+            'pass_new.max'=>'50文字以上入力しないでください',   
+            
+            're_pass_new.required'=>'必須項目です',
+            're_pass_new.min'=>'パスワードは半角英数字を含む6文字以上を設定してください',
+            're_pass_new.max'=>'50文字以上入力しないでください',   
+            're_pass_new.same'=>'互換性のないパスワード',   
+
+        ]);
+
+
+        return redirect('password-reset-complete/'.$id)->with('pass_new',$req->input('pass_new'));
+    }
+
+
 }

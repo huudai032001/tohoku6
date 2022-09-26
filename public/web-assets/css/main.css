@@ -1579,7 +1579,7 @@ img.alignright {
     font-size: 14px;
   }
 }
-.form-layout-1 .input-text.invalid,
+/* .form-layout-1 .input-text.invalid, */
 .form-layout-1 .select.invalid,
 .form-layout-1 .textarea.invalid {
   border-color: #FF896C;

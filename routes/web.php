@@ -29,8 +29,12 @@ Route::post('/xx', function () {
 
 
 //spot
-Route::get('/list-spot', [App\Http\Controllers\Web\HomeController::class, 'list_spot'])->name('list_spot');
-Route::get('/spot-detail/{id}', [App\Http\Controllers\Web\HomeController::class, 'spot_detail'])->name('spot_detail');
+Route::get('/list-spot', [App\Http\Controllers\Web\SpotController::class, 'list_spot'])->name('list_spot');
+Route::get('/spot-detail/{id}', [App\Http\Controllers\Web\SpotController::class, 'spot_detail'])->name('spot_detail');
+
+Route::get('/spot-register', [App\Http\Controllers\Web\SpotController::class, 'spotRegister'])->name('spotRegister');
+Route::post('/spot-register', [App\Http\Controllers\Web\SpotController::class, 'postSpotRegister'])->name('postSpotRegister');
+
 
 // event
 Route::get('/list-events', [App\Http\Controllers\Web\HomeController::class, 'list_events'])->name('list_events');
@@ -57,13 +61,13 @@ Route::get('/signup-complete', [App\Http\Controllers\Web\HomeController::class, 
 
 //login google
 Route::prefix('google')->name('google.')->group( function(){
-    Route::get('login', [App\Http\Controllers\GoogleController::class, 'loginWithGoogle'])->name('google_login');
-    Route::get('callback', [App\Http\Controllers\GoogleController::class, 'callbackFromGoogle'])->name('google_callback');
+    Route::get('login', [App\Http\Controllers\SNSController::class, 'loginWithGoogle'])->name('google_login');
+    Route::get('callback', [App\Http\Controllers\SNSController::class, 'callbackFromGoogle'])->name('google_callback');
 });
 //login facebook 
 Route::prefix('facebook')->name('facebook.')->group( function(){
-    Route::get('login', [App\Http\Controllers\FacebookController::class, 'redirectToFacebook'])->name('facebook_login');
-    Route::get('callback', [App\Http\Controllers\FacebookController::class, 'handleFacebookCallback'])->name('facebook_callback');
+    Route::get('login', [App\Http\Controllers\SNSController::class, 'redirectToFacebook'])->name('facebook_login');
+    Route::get('callback', [App\Http\Controllers\SNSController::class, 'handleFacebookCallback'])->name('facebook_callback');
 });
 
 
@@ -73,3 +77,18 @@ Route::post('/task', [App\Http\Controllers\TaskController::class, 'store'])->nam
 
 Route::get('/signup-verify/{id}',[App\Http\Controllers\Web\HomeController::class, 'signup_verify'])->name('signup_verify');
 Route::post('/signup-verify/{id}', [App\Http\Controllers\Web\HomeController::class, 'postSignupVerify'])->name('postSignupVerify');
+
+//reset password
+Route::get('/password-reset',[App\Http\Controllers\Web\HomeController::class, 'passwordReset'])->name('passwordReset');
+Route::post('/password-reset',[App\Http\Controllers\Web\HomeController::class, 'postPasswordReset'])->name('postPasswordReset');
+
+Route::get('/password-reset-verify/{id}',[App\Http\Controllers\Web\HomeController::class, 'passwordResetVerify'])->name('passwordResetVerify');
+Route::post('/password-reset-verify/{id}',[App\Http\Controllers\Web\HomeController::class, 'postPasswordResetVerify'])->name('postPasswordResetVerify');
+
+Route::get('/password-reset-complete/{id}',[App\Http\Controllers\Web\HomeController::class, 'passwordResetComplete'])->name('passwordResetComplete');
+Route::post('/password-reset-complete/{id}',[App\Http\Controllers\Web\HomeController::class, 'postPasswordResetComplete'])->name('postPasswordResetComplete');
+
+Route::get('/set-new-password/{id}',[App\Http\Controllers\Web\HomeController::class, 'setNewPassword'])->name('setNewPassword');
+Route::post('/set-new-password/{id}',[App\Http\Controllers\Web\HomeController::class, 'postSetNewPassword'])->name('postSetNewPassword');
+
+

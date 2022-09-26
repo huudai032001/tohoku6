@@ -69,8 +69,10 @@
                                 </a>
                             </div>
                             <div class="button sns-facebook">
+                                <a href="{{route('facebook.facebook_login')}}">
                                 <img src="/web-assets/images/facebook.svg" alt="Facebook">
                                 <span class="text-latin">Facebook</span>で登録
+                                </a>
                             </div>
                             <div class="button sns-twitter">
                                 <img src="/web-assets/images/twitter.svg" alt="Twitter">
