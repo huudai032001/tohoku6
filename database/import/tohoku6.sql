@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 26, 2022 at 06:36 AM
+-- Generation Time: Oct 03, 2022 at 04:31 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -24,6 +24,30 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `comment`
+--
+
+CREATE TABLE `comment` (
+  `id` int(11) NOT NULL,
+  `spot_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `name_user` varchar(100) DEFAULT NULL,
+  `content` text NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `comment`
+--
+
+INSERT INTO `comment` (`id`, `spot_id`, `user_id`, `name_user`, `content`, `created_at`, `updated_at`) VALUES
+(6, 1, 27, 'Đại Hữu Nguyễn', 'asas', '2022-09-29 00:11:11', '2022-09-29 00:11:11'),
+(7, 1, 27, 'Đại Hữu Nguyễn', 'ssss', '2022-09-29 00:13:44', '2022-09-29 00:13:44');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `event`
 --
 
@@ -33,8 +57,12 @@ CREATE TABLE `event` (
   `location` varchar(255) NOT NULL,
   `time_start` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `intro` text NOT NULL,
-  `image` varchar(255) DEFAULT NULL,
+  `upload_id` int(11) DEFAULT NULL,
   `sub_image` varchar(255) DEFAULT NULL,
+  `author` int(11) DEFAULT NULL,
+  `category` int(11) DEFAULT NULL,
+  `favorite` int(11) NOT NULL,
+  `count_comment` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -43,8 +71,11 @@ CREATE TABLE `event` (
 -- Dumping data for table `event`
 --
 
-INSERT INTO `event` (`id`, `name`, `location`, `time_start`, `intro`, `image`, `sub_image`, `created_at`, `updated_at`) VALUES
-(1, 'Dai Huu', 'hanoi', '2022-09-21 23:18:00', 'depdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', NULL, NULL, '2022-09-21 01:15:18', '2022-09-21 01:16:59');
+INSERT INTO `event` (`id`, `name`, `location`, `time_start`, `intro`, `upload_id`, `sub_image`, `author`, `category`, `favorite`, `count_comment`, `created_at`, `updated_at`) VALUES
+(1, 'Dai Huu', 'hanoi', '2022-09-29 10:13:23', 'depdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 1, '[\"Screenshot 2022-05-09 100156.png\",\"Screenshot 2022-08-12 123520.png\",\"Screenshot 2022-08-12 182711.png\"]', 27, 1, 1, 0, '2022-09-21 01:15:18', '2022-09-29 03:13:23'),
+(2, 'asasas', 'sasa', '2022-09-29 01:52:27', 'sasa', 1, NULL, 1, 1, 0, 0, '2022-09-21 08:07:27', '2022-09-21 08:07:27'),
+(3, 'âsas', 'sấ', '2022-09-29 01:52:29', 'sáasas', 1, NULL, 1, 2, 0, 0, '2022-09-20 17:00:00', '2022-09-21 09:57:23'),
+(4, 'sdadsad', 'dsadas', '2022-09-29 01:52:32', 'ádsada', 1, NULL, 1, 3, 0, 0, '2022-09-21 09:57:23', '2022-09-13 09:57:23');
 
 -- --------------------------------------------------------
 
@@ -61,6 +92,30 @@ CREATE TABLE `failed_jobs` (
   `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `favorite`
+--
+
+CREATE TABLE `favorite` (
+  `id` int(11) NOT NULL,
+  `posts_id` int(11) NOT NULL,
+  `type_posts` int(11) NOT NULL,
+  `user_id` text DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `favorite`
+--
+
+INSERT INTO `favorite` (`id`, `posts_id`, `type_posts`, `user_id`, `created_at`, `updated_at`) VALUES
+(9, 1, 1, '27,3,4', '2022-09-29 08:52:53', '2022-09-29 02:21:45'),
+(10, 2, 1, NULL, '2022-09-29 02:08:16', '2022-09-29 02:08:16'),
+(12, 1, 2, '27', '2022-09-29 10:08:08', '2022-09-29 03:13:23');
 
 -- --------------------------------------------------------
 
@@ -175,11 +230,15 @@ CREATE TABLE `sample_term_map` (
 CREATE TABLE `spots` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
-  `image` varchar(255) NOT NULL,
+  `image_id` int(11) DEFAULT NULL,
+  `address` varchar(255) NOT NULL,
+  `sub_image` varchar(255) DEFAULT NULL,
   `location` varchar(255) DEFAULT NULL,
   `category` varchar(50) DEFAULT NULL,
   `intro` text NOT NULL,
   `author` varchar(50) DEFAULT NULL,
+  `favorite` int(11) NOT NULL,
+  `count_comment` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -188,15 +247,9 @@ CREATE TABLE `spots` (
 -- Dumping data for table `spots`
 --
 
-INSERT INTO `spots` (`id`, `name`, `image`, `location`, `category`, `intro`, `author`, `created_at`, `updated_at`) VALUES
-(4, 'Dai Huu', '', 'hanoi', NULL, 'dep', '', '2022-09-21 00:44:46', '2022-09-21 00:44:46'),
-(5, 'Khóa Học Tiếng Anh Mới Nhất', '', 'hanoi', NULL, 'dep', '', '2022-09-21 00:55:22', '2022-09-21 00:55:30'),
-(6, 'Dai Huu', '', 'hanoi', NULL, 'depdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', '', '2022-09-21 01:27:52', '2022-09-21 01:27:52'),
-(7, 'moi', '', 'hanoi', NULL, 'dep', '', '2022-09-21 01:28:57', '2022-09-21 01:28:57'),
-(8, 'âsa', 'anh2.png', 'hanoi', 'on', 'âsas', NULL, '2022-09-25 20:59:51', '2022-09-25 20:59:51'),
-(9, 'test', 'anh2.png', 'hanoi', 'on', 'sá', NULL, '2022-09-25 21:02:33', '2022-09-25 21:02:33'),
-(10, 'sấ', 'anh1.png', 'ádasa', 'on', 'sấ', NULL, '2022-09-25 21:11:49', '2022-09-25 21:11:49'),
-(11, 'sấ', 'anh2.png', 'sâs', '2,7', 'sâs', NULL, '2022-09-25 21:20:11', '2022-09-25 21:20:11');
+INSERT INTO `spots` (`id`, `name`, `image_id`, `address`, `sub_image`, `location`, `category`, `intro`, `author`, `favorite`, `count_comment`, `created_at`, `updated_at`) VALUES
+(1, 'Dai Huu', 1, 'thon 1', NULL, 'hanoi', NULL, 'dep', NULL, 3, 0, '2022-09-27 21:38:11', '2022-09-29 03:10:38'),
+(2, 'asa', 1, 'sấ', '[\"Screenshot 2022-05-09 100156.png\",\"Screenshot 2022-08-12 182711.png\",\"anh1.png\"]', 'sấ', '3', 'asas', NULL, 0, 0, '2022-09-29 02:08:16', '2022-09-29 02:08:16');
 
 -- --------------------------------------------------------
 
@@ -247,16 +300,83 @@ INSERT INTO `tasks` (`id`, `name`, `created_at`, `updated_at`) VALUES
 CREATE TABLE `uploads` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `wp_id` int(11) DEFAULT NULL,
-  `folder_id` int(10) UNSIGNED DEFAULT NULL,
+  `folder_path` int(10) UNSIGNED DEFAULT NULL,
   `file_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `extension` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `mime_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `size` bigint(20) DEFAULT NULL,
-  `fields` mediumtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `file_size` bigint(20) DEFAULT NULL,
+  `file_info` mediumtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `uploads`
+--
+
+INSERT INTO `uploads` (`id`, `name`, `folder_path`, `file_name`, `extension`, `mime_type`, `file_size`, `file_info`, `created_at`, `updated_at`) VALUES
+(1, 'Biểu đồ không có tiêu đề.drawio (3)', NULL, 'tMgG5vcl97HysvkLEEqqSDPrVXDhb6sov40ryFBv.png', 'png', 'image/png', 222099, '{\"width\":932,\"height\":1857,\"versions\":{\"thumbnail\":{\"width\":\"\",\"height\":\"\",\"file_name\":\"tMgG5vcl97HysvkLEEqqSDPrVXDhb6sov40ryFBv-thumbnail.png\"},\"medium\":{\"width\":\"\",\"height\":\"\",\"file_name\":\"tMgG5vcl97HysvkLEEqqSDPrVXDhb6sov40ryFBv-medium.png\"},\"large\":{\"width\":\"\",\"height\":\"\",\"file_name\":\"tMgG5vcl97HysvkLEEqqSDPrVXDhb6sov40ryFBv-large.png\"}}}', '2022-09-27 21:36:34', '2022-09-27 21:36:34');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `upload_folders`
+--
+
+CREATE TABLE `upload_folders` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `dir_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `parent_id` int(10) UNSIGNED DEFAULT NULL,
+  `file_count` int(10) UNSIGNED DEFAULT 0,
+  `file_count_children` int(10) UNSIGNED DEFAULT 0,
+  `file_count_total` int(10) UNSIGNED DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `upload_folders`
+--
+
+INSERT INTO `upload_folders` (`id`, `name`, `dir_name`, `parent_id`, `file_count`, `file_count_children`, `file_count_total`) VALUES
+(1, '2019', '2019', NULL, 0, 21, 21),
+(2, '2020', '2020', NULL, 0, 100, 100),
+(3, '2021', '2021', NULL, 0, 588, 588),
+(4, '01', '01', 1, 0, 0, 0),
+(5, '02', '02', 1, 0, 0, 0),
+(6, '03', '03', 1, 0, 0, 0),
+(7, '04', '04', 1, 0, 0, 0),
+(8, '05', '05', 1, 0, 0, 0),
+(9, '06', '06', 1, 0, 0, 0),
+(10, '07', '07', 1, 0, 0, 0),
+(11, '08', '08', 1, 0, 0, 0),
+(12, '09', '09', 1, 0, 0, 0),
+(13, '10', '10', 1, 0, 0, 0),
+(14, '11', '11', 1, 0, 0, 0),
+(15, '12', '12', 1, 21, 0, 21),
+(16, '01', '01', 2, 75, 0, 75),
+(17, '02', '02', 2, 0, 0, 0),
+(18, '03', '03', 2, 0, 0, 0),
+(19, '04', '04', 2, 0, 0, 0),
+(20, '05', '05', 2, 0, 0, 0),
+(21, '06', '06', 2, 0, 0, 0),
+(22, '07', '07', 2, 14, 0, 14),
+(23, '08', '08', 2, 0, 0, 0),
+(24, '09', '09', 2, 0, 0, 0),
+(25, '10', '10', 2, 0, 0, 0),
+(26, '11', '11', 2, 0, 0, 0),
+(27, '12', '12', 2, 11, 0, 11),
+(28, '01', '01', 3, 167, 0, 167),
+(29, '02', '02', 3, 0, 0, 0),
+(30, '03', '03', 3, 0, 0, 0),
+(31, '04', '04', 3, 106, 0, 106),
+(32, '05', '05', 3, 15, 0, 15),
+(33, '06', '06', 3, 5, 0, 5),
+(34, '07', '07', 3, 3, 0, 3),
+(35, '08', '08', 3, 0, 0, 0),
+(36, '09', '09', 3, 115, 0, 115),
+(37, '10', '10', 3, 151, 0, 151),
+(38, '11', '11', 3, 26, 0, 26),
+(39, '12', '12', 3, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -282,6 +402,10 @@ CREATE TABLE `users` (
   `fields` mediumtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `otp` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `twitter_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `tiktok_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `instagram_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sns_active` varchar(11) COLLATE utf8mb4_unicode_ci NOT NULL,
   `google_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `facebook_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `twitter_id` int(11) DEFAULT NULL,
@@ -293,21 +417,27 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `login_name`, `name`, `avatar_image_id`, `role`, `gender`, `birth_day`, `intro`, `email`, `location`, `password`, `email_verified_at`, `email_verified_token`, `remember_token`, `fields`, `status`, `otp`, `google_id`, `facebook_id`, `twitter_id`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'Admin', NULL, 'admin', NULL, NULL, '', 'admin@sample.email', NULL, '$2y$10$HT3qwQXcuh6BZR88auQUt.pfNNslChaKBVFBrkOu1YsYq9Gg5q65e', NULL, NULL, NULL, '[]', 'active', '', '0', NULL, 0, '2020-12-31 17:00:00', '2022-09-18 23:58:29'),
-(7, 'gfdgdg', '6666', NULL, 'admin', NULL, NULL, '', NULL, NULL, '$2y$10$yWs830Yi7fuSpgbZCc/TiOx9yUs81R7sS0fuAF7X/5AqqsbC1KD9C', NULL, NULL, NULL, '[]', 'active', '', '0', NULL, 0, '2022-04-19 01:44:59', '2022-09-19 02:24:03'),
-(9, 'dassad', NULL, NULL, 'admin', NULL, NULL, '', 'se@gmail.com', NULL, '$2y$10$cZOWi58jI0fdZ.0x8IiYBODygn/zu3IeFG/C5i/mpUYjxRJM9aMRm', NULL, NULL, NULL, NULL, 'active', '', '0', NULL, 0, '2022-09-20 21:32:41', '2022-09-20 21:32:41'),
-(11, 'moi', NULL, NULL, 'admin', NULL, NULL, '', 'longpro298@gmail.com', NULL, '$2y$10$m8M7E9drmqvCHQUTiPcVQOwTY6mahU/F9vGldsLjwGA8jpHxIzf.C', NULL, NULL, NULL, NULL, 'active', '', '0', NULL, 0, '2022-09-20 21:37:19', '2022-09-20 21:37:19'),
-(13, 'sasa', NULL, NULL, 'member', NULL, NULL, '', 'sinh@gmail.com', NULL, '$2y$10$w0lOjv55Ejk8/WwvPfuqTuTbztQ2Ls7mjaSBPCenv4CRM7SToW0Oy', NULL, NULL, NULL, NULL, 'active', '', '0', NULL, 0, '2022-09-21 00:13:30', '2022-09-21 00:13:30'),
-(14, 'ssssssssss', NULL, NULL, 'admin', NULL, NULL, '', 'aa@gmail.com', NULL, '$2y$10$s6VtXvq1IXYbxmMo685DMued8egIOhza5QcFEiMYJ4DiarSNgrRVG', NULL, NULL, NULL, NULL, 'disabled', '', '0', NULL, 0, '2022-09-21 00:15:16', '2022-09-21 19:51:11'),
-(16, NULL, NULL, NULL, NULL, NULL, NULL, '', 'huudai001@gmail.com', NULL, '1111', NULL, NULL, NULL, NULL, NULL, '', '0', NULL, 0, '2022-09-21 21:44:00', '2022-09-21 21:44:00'),
-(19, NULL, NULL, NULL, NULL, NULL, NULL, '', 'dangm452@gmail.com', NULL, '$2y$10$85t2tSr49WzGYnU5tjabUefDArQP.vGpM.R77gjUmF8GP3DoCgTP2', NULL, NULL, NULL, NULL, NULL, '', NULL, NULL, 0, '2022-09-22 02:38:56', '2022-09-22 02:38:56'),
-(27, NULL, 'Đại Hữu Nguyễn', NULL, NULL, NULL, NULL, NULL, 'huudai032001@gmail.com', NULL, '$2y$10$IUk1oNmK8Wjz82VghmVRVOjI5v.tVxAAI/OznEnoYKpcN/5f6/RSW', NULL, NULL, NULL, NULL, 'active', '', '3226743507581614', '3226743507581614', NULL, '2022-09-22 20:52:43', '2022-09-23 02:04:35'),
-(36, NULL, 'da', NULL, NULL, 1, '2022-09-28', 'adada', 'dai20010301@gmail.com', '大沢', '$2y$10$bE5kfO0rtJmJYi8r8Av.g.rNwd5PvszTHoBCp7xYXVSLlUQ7Ik9V6', NULL, NULL, NULL, NULL, 'active', '52638', NULL, NULL, NULL, '2022-09-25 18:26:00', '2022-09-25 19:47:21');
+INSERT INTO `users` (`id`, `login_name`, `name`, `avatar_image_id`, `role`, `gender`, `birth_day`, `intro`, `email`, `location`, `password`, `email_verified_at`, `email_verified_token`, `remember_token`, `fields`, `status`, `otp`, `twitter_url`, `tiktok_url`, `instagram_url`, `sns_active`, `google_id`, `facebook_id`, `twitter_id`, `created_at`, `updated_at`) VALUES
+(1, 'admin', 'Admin', NULL, 'admin', NULL, NULL, '', 'admin@sample.email', NULL, '$2y$10$HT3qwQXcuh6BZR88auQUt.pfNNslChaKBVFBrkOu1YsYq9Gg5q65e', NULL, NULL, NULL, '[]', 'active', '', NULL, NULL, NULL, '0', '0', NULL, 0, '2020-12-31 17:00:00', '2022-09-18 23:58:29'),
+(7, 'gfdgdg', '6666', NULL, 'admin', NULL, NULL, '', NULL, NULL, '$2y$10$yWs830Yi7fuSpgbZCc/TiOx9yUs81R7sS0fuAF7X/5AqqsbC1KD9C', NULL, NULL, NULL, '[]', 'active', '', NULL, NULL, NULL, '0', '0', NULL, 0, '2022-04-19 01:44:59', '2022-09-19 02:24:03'),
+(9, 'dassad', NULL, NULL, 'admin', NULL, NULL, '', 'se@gmail.com', NULL, '$2y$10$cZOWi58jI0fdZ.0x8IiYBODygn/zu3IeFG/C5i/mpUYjxRJM9aMRm', NULL, NULL, NULL, NULL, 'active', '', NULL, NULL, NULL, '0', '0', NULL, 0, '2022-09-20 21:32:41', '2022-09-20 21:32:41'),
+(11, 'moi', NULL, NULL, 'admin', NULL, NULL, '', 'longpro298@gmail.com', NULL, '$2y$10$m8M7E9drmqvCHQUTiPcVQOwTY6mahU/F9vGldsLjwGA8jpHxIzf.C', NULL, NULL, NULL, NULL, 'active', '', NULL, NULL, NULL, '0', '0', NULL, 0, '2022-09-20 21:37:19', '2022-09-20 21:37:19'),
+(13, 'sasa', NULL, NULL, 'member', NULL, NULL, '', 'sinh@gmail.com', NULL, '$2y$10$w0lOjv55Ejk8/WwvPfuqTuTbztQ2Ls7mjaSBPCenv4CRM7SToW0Oy', NULL, NULL, NULL, NULL, 'active', '', NULL, NULL, NULL, '0', '0', NULL, 0, '2022-09-21 00:13:30', '2022-09-21 00:13:30'),
+(14, 'ssssssssss', NULL, NULL, 'admin', NULL, NULL, '', 'aa@gmail.com', NULL, '$2y$10$s6VtXvq1IXYbxmMo685DMued8egIOhza5QcFEiMYJ4DiarSNgrRVG', NULL, NULL, NULL, NULL, 'disabled', '', NULL, NULL, NULL, '0', '0', NULL, 0, '2022-09-21 00:15:16', '2022-09-21 19:51:11'),
+(16, NULL, NULL, NULL, NULL, NULL, NULL, '', 'huudai001@gmail.com', NULL, '1111', NULL, NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, '0', '0', NULL, 0, '2022-09-21 21:44:00', '2022-09-21 21:44:00'),
+(19, NULL, NULL, NULL, NULL, NULL, NULL, '', 'dangm452@gmail.com', NULL, '$2y$10$85t2tSr49WzGYnU5tjabUefDArQP.vGpM.R77gjUmF8GP3DoCgTP2', NULL, NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, '0', NULL, NULL, 0, '2022-09-22 02:38:56', '2022-09-22 02:38:56'),
+(27, NULL, 'Đại Hữu Nguyễn', NULL, NULL, 3, '2022-09-21', 'hhh', 'huudai032001@gmail.com', '川崎', '$2y$10$IUk1oNmK8Wjz82VghmVRVOjI5v.tVxAAI/OznEnoYKpcN/5f6/RSW', NULL, NULL, NULL, NULL, 'active', '', 'https://www.youtube.com/watch?v=XFJ09PqqwU8&list=RDMM&index=6', 'dasd', NULL, '[\"1\",\"2\"]', '109829984724144315607', '3226743507581614', NULL, '2022-09-22 20:52:43', '2022-09-28 19:31:07'),
+(36, NULL, 'da', NULL, 'member', 1, '2022-09-28', 'adada', 'dai20010301@gmail.com', '大沢', '$2y$10$bE5kfO0rtJmJYi8r8Av.g.rNwd5PvszTHoBCp7xYXVSLlUQ7Ik9V6', NULL, NULL, NULL, NULL, 'active', '52638', NULL, NULL, NULL, '0', '117606606609355028013', NULL, NULL, '2022-09-25 18:26:00', '2022-09-27 00:45:02');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `comment`
+--
+ALTER TABLE `comment`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `event`
@@ -321,6 +451,12 @@ ALTER TABLE `event`
 ALTER TABLE `failed_jobs`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
+
+--
+-- Indexes for table `favorite`
+--
+ALTER TABLE `favorite`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `goods`
@@ -379,6 +515,12 @@ ALTER TABLE `uploads`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `upload_folders`
+--
+ALTER TABLE `upload_folders`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -391,16 +533,28 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `comment`
+--
+ALTER TABLE `comment`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
 -- AUTO_INCREMENT for table `event`
 --
 ALTER TABLE `event`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `favorite`
+--
+ALTER TABLE `favorite`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `goods`
@@ -436,7 +590,7 @@ ALTER TABLE `sample_term_map`
 -- AUTO_INCREMENT for table `spots`
 --
 ALTER TABLE `spots`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tasks`
@@ -448,7 +602,13 @@ ALTER TABLE `tasks`
 -- AUTO_INCREMENT for table `uploads`
 --
 ALTER TABLE `uploads`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `upload_folders`
+--
+ALTER TABLE `upload_folders`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `users`

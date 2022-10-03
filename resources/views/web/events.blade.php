@@ -222,7 +222,7 @@
                         @endforeach
                     </div>
                 </div>
-
+                {!! $list_events->appends(['nickname'=>'huudai'])->links() !!}
                 <div style="padding: 25px 0;">
                     <div class="container">
                         <div class="simple-paginator d-flex justify-content-between align-items-center">

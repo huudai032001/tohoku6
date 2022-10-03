@@ -34,6 +34,10 @@ class HomeController extends Controller
         if($get_date['mon'] < 10){
             $mon = "0" .$get_date['mon'];
         }
+        else {
+            $mon = $get_date['mon'];
+
+        }
         $date = ($get_date['year'] . "-" . $mon . "-" . $get_date['mday']);
 
         $list_event = Event::where('created_at', 'like', '%' . $date . '%')->paginate(6);
@@ -60,6 +64,10 @@ class HomeController extends Controller
 
             if($month < 10){
                 $month = "0" .$month;
+            }
+            else {
+                $month = $month;
+
             }
             $date = ($year . "-" . $month . "-" . $day);
         }
@@ -134,7 +142,17 @@ class HomeController extends Controller
     //event
 
     public function list_events(){
-        $list_events = Event::paginate(6);
+        $get_date = getdate();
+        if($get_date['mon'] < 10){
+            $mon = "0" .$get_date['mon'];
+        }
+        else {
+            $mon = $get_date['mon'];
+        }
+        $date = ($get_date['year'] . "-" . $mon . "-" . $get_date['mday']);
+
+        $list_events = Event::where('created_at', 'like', '%' . $date . '%')->paginate(6);
+        // $list_events = Event::paginate(6);
         return view('web.events',compact('list_events'));
     }
 
@@ -352,7 +370,10 @@ class HomeController extends Controller
 
     //feature
     public function feature(){
-        $list_feature = Event::orderBy('favourite','DESC')->paginate(6);
+
+        $list_feature = Event::orderBy('favorite','DESC')
+        ->join('uploads', 'uploads.id', '=', 'event.upload_id')->get(['event.*','uploads.file_name']);
+
         return view('web.features',compact('list_feature'));
     }
 

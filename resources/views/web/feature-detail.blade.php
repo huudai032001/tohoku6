@@ -170,12 +170,12 @@
                         </div>
 
                         <div style="padding: 15px 0 20px;">
-                            <div class="date">2022.10.10 UP!</div>
-                            <div class="post-title">東北新幹線 はやぶさとこまちの連結・切り離し</div>
+                            <div class="date">{{$feature->created_at}} UP!</div>
+                            <div class="post-title">{{$feature->name}}</div>
                             <div class="d-flex justify-content-end">
                                 <div class="favorite-count">
                                     <img width="16" src="/web-assets/images/icons/heart-gray.svg" alt=""> 
-                                    <span class="count">123</span>
+                                    <span class="count">{{$feature->favorite}}</span>
                                 </div>
                             </div>
                         </div>
@@ -366,6 +366,7 @@
         <script src="/web-assets/js/components.js"></script>
         <script src="/web-assets/js/main.js"></script>
         <script src="/web-assets/js/tohoku-calendar.js"></script>
+        <script src="/web-assets/js/event.js"></script>
         
     </body>
 

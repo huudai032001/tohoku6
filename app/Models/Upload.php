@@ -102,4 +102,9 @@ class Upload extends BaseModel
     public function event() {
         return $this->hasMany('App\Models\Event');
     }
+
+    public function getEvent()
+    {
+        return $this->belongsTo('App\Models\Event');
+    }
 }

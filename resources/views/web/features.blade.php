@@ -133,11 +133,12 @@
                 <div class="post-container">
                     <div class="post-row row">
                         @foreach($list_feature as $value)
+                        
                         <div class="col-md-6 col-lg-4">
                             <div class="post-item-1">
                                 <a href="{{route('featureDetail',$value->id)}}">
                                     <div class="thumb ratio thumb-hover-anim">
-                                        <img src="/upload/{{$value->image}}" alt="">
+                                        <img src="/uploads/{{$value->file_name}}" alt="">
                                     </div>
                                 </a>
                                 <div class="item-content">
@@ -147,7 +148,7 @@
                                         </div>
                                         <div class="flex-auto ml-20">
                                             <img width="16" src="/web-assets/images/icons/heart-gray.svg" alt=""> 
-                                            <span class="count text-latin">123</span>
+                                            <span class="count text-latin">{{$value->favorite}}</span>
                                         </div>
                                     </div>
                                     <div class="title">

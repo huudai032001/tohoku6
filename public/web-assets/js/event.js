@@ -51,7 +51,7 @@ function find_by_day(year,month,day){
                                     `+ data.data[i].name +`
                                     </a>
                                 </div>
-                                <div class="item-desc">{{$value->location}}</div>
+                                <div class="item-desc">`+ data.data[i].location +`</div>
                                 <div class="counters d-flex align-items-center justify-content-between"> 
                                     <div class="tags d-flex align-items-center">
                                         <span class="tag">花火</span>

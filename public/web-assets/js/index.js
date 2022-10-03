@@ -96,11 +96,11 @@ function test(){
                                         <div class="d-none d-sm-flex justify-content-end align-items-center">
                                             <div class="comment-count">
                                                 コメント
-                                                <div class="count text-latin ml-10">123</div>
+                                                <div class="count text-latin ml-10">`+ data.data[i].favorite +`</div>
                                             </div>
                                             <div class="favorite-count ml-20">
                                                 <img width="16" src="/web-assets/images/icons/heart-gray.svg" alt=""> 
-                                                <span class="count text-latin">123</span>
+                                                <span class="count text-latin">`+ data.data[i].count_comment +`</span>
                                             </div>
                                         </div>
                                         <div class="title">

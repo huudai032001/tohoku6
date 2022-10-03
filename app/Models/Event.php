@@ -21,4 +21,9 @@ class Event extends BaseModel
     public function upload() {
         return $this->belongsTo('App\Models\Upload');
     }
+
+    public function joinUpload()
+    {
+        return $this->hasMany('App\Models\Upload');
+    }
 }

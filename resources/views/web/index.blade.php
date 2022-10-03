@@ -1,4 +1,3 @@
-@if(Auth::check())
 <!DOCTYPE html>
 <html lang="en">
 
@@ -72,12 +71,14 @@
                 <div class="nav-bar-panel">
                     <div class="button-close" data-toggle="nav-bar-panel">×</div>
                     <div class="profile-button">
+                        @if(Auth::check())
                         <a href="{{route('myProfile',$info['id'])}}">
                             <div class="profile-image">
                                 <img width="75" src="/web-assets/images/profile.svg" alt="profile">
                             </div>
                             <div class="profile-label">プロフィール</div>
                         </a>
+                        @endif
                     </div>
                     <div class="nav-menu">
                         <ul class="ul-lv-1">
@@ -243,7 +244,7 @@
                                     <div class="spot-posts">
                                         <div class="post-slider owl-style-2 owl-carousel list-category" id="dom-category">
                                             @foreach($all_event as $value)
-                                            <!-- {{$value}}; -->
+                                            {{$value->event[0]->name}}
                                             <div class="item">
                                                 <div class="post-item-2">
                                                     <a href="spot-detail.html">
@@ -255,15 +256,15 @@
                                                         <div class="d-none d-sm-flex justify-content-end align-items-center">
                                                             <div class="comment-count">
                                                                 コメント
-                                                                <div class="count text-latin ml-10">123</div>
+                                                                <div class="count text-latin ml-10">{{$value->event[0]->namecount_comment}}</div>
                                                             </div>
                                                             <div class="favorite-count ml-20">
                                                                 <img width="16" src="/web-assets/images/icons/heart-gray.svg" alt=""> 
-                                                                <span class="count text-latin">123</span>
+                                                                <span class="count text-latin">{{$value->event[0]->namefavorite}}</span>
                                                             </div>
                                                         </div>
                                                         <div class="title">
-                                                            <a href="post-detail.html">グランピング・RISING SUN</a>
+                                                            <a href="post-detail.html">{{$value->event[0]->name}}・RISING SUN</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1139,4 +1140,3 @@
     </body>
 
 </html>
-@endif
