@@ -6,6 +6,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Spots</title>
+        <meta name="csrf-token" content="{{ csrf_token() }}" />
 
         <link rel="stylesheet" href="/web-assets/css/framework-full.css">
 
@@ -123,33 +124,39 @@
                 <!-- /Menu bar -->
 
                 <div class="spot-search-form">
-                    <div class="container">
-                        <div class="py-30 row space-x-10 space-y-10 justify-content-center">
-                            <div class="col-auto">
-                                <div class="custom-select-button button area-select">
-                                    エリアを選択 <img src="/web-assets/images/triangle-down.svg" alt="Select">
-                                    <input type="hidden" name="" id="">
+                    <form action="">
+                        <div class="container">
+                            <div class="py-30 row space-x-10 space-y-10 justify-content-center">
+                                <div class="col-auto">
+                                    <div class="custom-select-button button area-select">
+                                        エリアを選択 <img src="/web-assets/images/triangle-down.svg" alt="Select">
+                                        <input type="hidden" name="" id="">
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="custom-select-button button category-select">
+                                        カテゴリを選択 <img src="/web-assets/images/triangle-down.svg" alt="Select">
+                                        <input type="hidden" name="" id="">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-auto">
-                                <div class="custom-select-button button category-select">
-                                    カテゴリを選択 <img src="/web-assets/images/triangle-down.svg" alt="Select">
-                                    <input type="hidden" name="" id="">
+                            <div class="form-layout-1">
+                                <div class="mb-30">
+                                    <input class="input-text" type="text" placeholder="キーワード" name="search">
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-layout-1">
-                            <div class="mb-30">
-                                <input class="input-text" type="text" placeholder="キーワード">
+                            <div class="text-align-center">
+                                <button class="button-style-1 button submit-button">検索</button>
+                            </div>
+                            <div class="to-spot-register">
+                                @if(Auth::check())
+                                <a href="{{route('spotRegister')}}">スポット登録をする</a>
+                                @else
+                                <a href="{{route('signin')}}">スポット登録をする</a>
+                                @endif
                             </div>
                         </div>
-                        <div class="text-align-center">
-                            <button type="button" class="button-style-1 button submit-button">検索</button>
-                        </div>
-                        <div class="to-spot-register">
-                            <a href="{{route('spotRegister')}}">スポット登録をする</a>
-                        </div>
-                    </div>
+                    </form>
                 </div>
 
                 <div class="post-list-sort-options">
@@ -167,7 +174,7 @@
                     <div class="container px-0">                        
                         
                         <div class="post-container">
-                            <div class="post-row row">
+                            <div class="post-row row list-category">
                             @foreach($list_spot as $value)
                                 <div class="col-sm-6 col-lg-4">
                                     <div class="post-item-5 d-flex">
@@ -177,7 +184,7 @@
                                             </div>
                                             <a href="{{route('spot_detail',$value->id)}}">
                                                 <div class="ratio thumb-image">
-                                                    <img src="/web-assets/images/demo/1.png" alt="">
+                                                    <img src="/uploads/{{$value->upload->file_name}}" alt="">
                                                 </div>
                                             </a>
                                         </div>
@@ -369,34 +376,34 @@
                             </li>
                             <li>
                                 <label class="custom-radio-2">
-                                    <input type="radio" name="area-select"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">
+                                    <input type="radio" name="area-select" value="2"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">
                                 </label>
                             </li>
                             <li>
                                 <label class="custom-radio-2">
-                                    <input type="radio" name="area-select" checked> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">
+                                    <input type="radio" name="area-select" value="3"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">
                                 </label>
                             </li>
                             <li>
                                 <label class="custom-radio-2">
-                                    <input type="radio" name="area-select"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">
+                                    <input type="radio" name="area-select" value="4"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">
                                 </label>
                             </li>
                             <li>
                                 <label class="custom-radio-2">
-                                    <input type="radio" name="area-select"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">
+                                    <input type="radio" name="area-select" value="5"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">
                                 </label>
                             </li>
                             <li>
                                 <label class="custom-radio-2">
-                                    <input type="radio" name="area-select"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">
+                                    <input type="radio" name="area-select" value="6"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">
                                 </label>
                             </li>
                         </ul>
                     </div>
                 </div>
                 <div class="flex-auto panel_footer text-align-center">
-                    <div class="button button-style-1">
+                    <div class="button button-style-1" >
                         絞り込む
                     </div>
                 </div>
@@ -415,44 +422,44 @@
                         <div class="row space-x-20 space-y-20">
                             <div class="col-6">
                                 <label class="custom-radio">
-                                    <input type="radio" name="category-select"> <span class="checkmark"></span> グルメ
+                                    <input type="radio" name="category-select" value="1"> <span class="checkmark"></span> グルメ
                                 </label>
                             </div>
                             <div class="col-6">
                                 <label class="custom-radio">
-                                    <input type="radio" name="category-select"> <span class="checkmark"></span> ショッピング
+                                    <input type="radio" name="category-select" value="2"> <span class="checkmark"></span> ショッピング
                                 </label>
                             </div>
                             <div class="col-6">
                                 <label class="custom-radio">
-                                    <input type="radio" name="category-select" checked> <span class="checkmark"></span> 宿泊
+                                    <input type="radio" name="category-select" checked  value="3"> <span class="checkmark"></span> 宿泊
                                 </label>
                             </div>
                             <div class="col-6">
                                 <label class="custom-radio">
-                                    <input type="radio" name="category-select"> <span class="checkmark"></span> 体験
+                                    <input type="radio" name="category-select"  value="4"> <span class="checkmark"></span> 体験
                                 </label>
                             </div>
                             <div class="col-6">
                                 <label class="custom-radio">
-                                    <input type="radio" name="category-select"> <span class="checkmark"></span> 自然
+                                    <input type="radio" name="category-select"  value="5"> <span class="checkmark"></span> 自然
                                 </label>
                             </div>
                             <div class="col-6">
                                 <label class="custom-radio">
-                                    <input type="radio" name="category-select"> <span class="checkmark"></span> SNS映え
+                                    <input type="radio" name="category-select" value="6"> <span class="checkmark"></span> SNS映え
                                 </label>
                             </div>
                             <div class="col-6">
                                 <label class="custom-radio">
-                                    <input type="radio" name="category-select"> <span class="checkmark"></span> 歴史
+                                    <input type="radio" name="category-select" value="7"> <span class="checkmark"></span> 歴史
                                 </label>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="flex-auto panel_footer text-align-center">
-                    <div class="button button-style-1">
+                    <div class="button button-style-1" onclick="find_category()">
                         絞り込む
                     </div>
                 </div>
@@ -470,6 +477,7 @@
         <script src="/web-assets/js/components.js"></script>
         <script src="/web-assets/js/main.js"></script>
         <script src="/web-assets/js/tohoku-calendar.js"></script>
+        <script src="/web-assets/js/spot.js"></script>
         
     </body>
 

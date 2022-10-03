@@ -17,7 +17,9 @@ class Spot extends BaseModel
     public function getName() {
         return $this->name;
     }
-
+    public function upload() {
+        return $this->belongsTo('App\Models\Upload');
+    }
     public function comment() {
         return $this->hasMany('App\Models\Comment');
     }

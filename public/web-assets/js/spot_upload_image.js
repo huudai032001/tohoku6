@@ -9,7 +9,7 @@ upload_img.bind("change keyup", function() {
         $("#myform").submit();
 		var file = document.getElementById("upload_img").files[0];
     
-        // console.log(file);
+        console.log(file);
         // return false
         let formData = new FormData();
         formData.append('file',file);

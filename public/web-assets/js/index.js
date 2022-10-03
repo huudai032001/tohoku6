@@ -19,12 +19,13 @@ function find_by_day(year,month,day){
             if(data.data.length > 0){
                 var html = ``;
                 for(var i = 0;i<data.data.length;i++){
+                    
                     html += `
                     <div class="item">
                         <div class="post-item-1">
                             <a href="event-detail.html">
                                 <div class="thumb ratio thumb-hover-anim">
-                                    <img src="/upload/`+ data.data[i].image +`" alt="">
+                                    <img src="/upload/`+ data.data[i].upload.file_name +`" alt="">
                                 </div>
                             </a>
                             <div class="item-content">
@@ -60,7 +61,7 @@ function find_by_day(year,month,day){
     });
 }
 
-function test(){
+function find_category(){
     var checkbox = document.getElementsByName("category-select");
     // alert(checkbox);
     for (var i = 0; i < checkbox.length; i++){
@@ -87,7 +88,7 @@ function test(){
                             html += `
                             <div class="item">
                                 <div class="post-item-2">
-                                    <a href="spot-detail.html">
+                                    <a href="spot-detail/`+ data.data[i].id +`">
                                         <div class="thumb ratio thumb-hover-anim">
                                             <img src="/uploads/`+ data.data[i].upload.file_name +`" alt="">
                                         </div>
@@ -141,7 +142,7 @@ function test(){
                                 autoWidth: false
                             }
                         }
-                        });
+                    });
                 }
             });
 

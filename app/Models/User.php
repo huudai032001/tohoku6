@@ -78,18 +78,14 @@ class User extends BaseModel implements
     {
         if ($this->sei && $this->mei) {
             return $this->sei . ' ' . $this->mei;
-        } else {
-            return $this->getNameKana();
-        }        
+        }     
     }
 
     public function getNameKana()
     {
         if ($this->sei_kana && $this->mei_kana) {
             return $this->sei_kana . ' ' . $this->mei_kana;
-        } else {
-            return __('user.unnamed');
-        }       
+        }    
     }
     
     public static function roleList()

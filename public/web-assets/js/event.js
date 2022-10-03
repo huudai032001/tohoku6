@@ -27,7 +27,7 @@ function find_by_day(year,month,day){
                                 <div class="icon-star">
                                     <img src="/web-assets/images/icons/star-yellow.svg" alt="">
                                 </div>
-                                <a href="{{route('event_detail',`+ data.data[i].id +`)}}">
+                                <a href="event-detail/`+ data.data[i].id +`">
                                     <div class="ratio thumb-image thumb-hover-anim">
                                         <img src="/web-assets/images/demo/1.png" alt="">
                                     </div>
@@ -47,7 +47,7 @@ function find_by_day(year,month,day){
                                 </div>
                                 <div class="line"></div>
                                 <div class="item-title">
-                                    <a href="{{route('event_detail',`+ data.data[i].id +`}}">
+                                    <a href="event-detail/`+ data.data[i].id +`">
                                     `+ data.data[i].name +`
                                     </a>
                                 </div>

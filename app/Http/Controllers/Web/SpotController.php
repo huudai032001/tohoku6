@@ -21,7 +21,19 @@ use App\Models\User;
 class SpotController extends Controller
 {
     public function list_spot(){
-        $list_spot = Spot::paginate(6);
+        if($_GET){
+            $search = $_GET['search'];
+            // $list_spot = Spot::paginate(6);
+            $list_spot = Spot::where('spots.name', 'like', '%' . $search . '%')
+            ->join('uploads', 'uploads.id', '=', 'spots.upload_id')
+            ->select(['spots.*','uploads.file_name'])
+            ->paginate(6);
+
+        }else {
+            $list_spot = Spot::with('upload')->paginate(6);
+
+        }
+        // dd($list_spot);
         return view('web.spots',compact('list_spot'));
     }
 
@@ -87,6 +99,7 @@ class SpotController extends Controller
         $spot->sub_image = $sub_img;
 
         $spot->category = implode(",",$req->input('category'));
+        // dd(($req->file('image')));
         return view('web./spot-preview',['spot'=> $spot]);
 
         // $spot->save();
@@ -108,7 +121,7 @@ class SpotController extends Controller
             $spot->intro = $req->input('intro');
             // de tam 1
             // $spot->image_id = $req->input('image');
-            $spot->image_id = 1;
+            $spot->upload_id = 1;
 
             $spot->sub_image = $req->input('sub_image');
             $spot->favorite = 0;

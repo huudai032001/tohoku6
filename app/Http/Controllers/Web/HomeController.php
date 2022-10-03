@@ -41,10 +41,8 @@ class HomeController extends Controller
         $date = ($get_date['year'] . "-" . $mon . "-" . $get_date['mday']);
 
         $list_event = Event::where('created_at', 'like', '%' . $date . '%')->paginate(6);
-        // $all_event = Upload::paginate(6);
-        $all_event = Upload::with('event')->get();
+        $all_event = Event::with('upload')->get();
 
-        // dd($all_event);
         $list_spot = Spot::paginate(6);
         $list_upcoming_spot = Event::orderBy('time_start','DESC')->paginate(12);
         $info = Auth::user();
@@ -72,7 +70,7 @@ class HomeController extends Controller
             $date = ($year . "-" . $month . "-" . $day);
         }
 
-        $list_event = Event::where('created_at', 'like', '%' . $date . '%')->paginate(6);
+        $list_event = Event::where('created_at', 'like', '%' . $date . '%')->with('upload')->paginate(6);
         
         echo json_encode($list_event,JSON_UNESCAPED_UNICODE);
 
@@ -379,7 +377,13 @@ class HomeController extends Controller
 
     public function featureDetail($id){
         $feature = Event::findorfail($id);
-        return view('web.feature-detail',compact('feature'));
+        if(Auth::check()){
+            $user = Auth::user();
+        }
+        else {
+            $user = [];
+        }
+        return view('web.feature-detail',compact('feature','user'));
     }
 
     public function postfindByCategory(){
@@ -399,6 +403,8 @@ class HomeController extends Controller
         $user_id = $_POST['user_id'];
 
         $favorite = Favorite::where(['posts_id'=>$id_posts,'type_posts'=>$type_posts])->first();
+        // var_dump($id_posts,$type_posts);
+        // die;
         $array_user = explode(",",$favorite->user_id);
 
         if (in_array($user_id, $array_user)) {
@@ -429,9 +435,10 @@ class HomeController extends Controller
     public function allComment(){
         $id = $_POST['id'];
         $list_comment = Comment::where('spot_id',$id)->orderBy('created_at','DESC')->get();
-        // var_dump($list_comment);
+
         echo json_encode($list_comment,JSON_UNESCAPED_UNICODE);
 
+ 
     }
 
 }

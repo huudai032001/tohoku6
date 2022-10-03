@@ -6,6 +6,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Features</title>
+        <meta name="csrf-token" content="{{ csrf_token() }}" />
 
         <link rel="stylesheet" href="/web-assets/css/framework-full.css">
 
@@ -172,11 +173,21 @@
                         <div style="padding: 15px 0 20px;">
                             <div class="date">{{$feature->created_at}} UP!</div>
                             <div class="post-title">{{$feature->name}}</div>
+
                             <div class="d-flex justify-content-end">
+                                @if(Auth::check())
+                                <input type="hidden" name="user_id" id="user_id" value="{{$user->id}}">
+                                <input type="hidden" name="posts_id" id="posts_id" value="{{$feature->id}}">
+                                <a onclick="favorite()">
+                                @else
+                                <a>
+                                @endif
                                 <div class="favorite-count">
                                     <img width="16" src="/web-assets/images/icons/heart-gray.svg" alt=""> 
-                                    <span class="count">{{$feature->favorite}}</span>
+                                    <span class="count count-number">{{$feature->favorite}}</span>
                                 </div>
+                                </a>
+
                             </div>
                         </div>
 

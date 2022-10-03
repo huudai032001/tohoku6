@@ -8,6 +8,7 @@
         <title>Homepage</title>
 
         <link rel="stylesheet" href="/web-assets/css/framework-full.css">
+        <link rel="stylesheet" href="/web-assets/css/index.css">
 
         <link rel="stylesheet" href="fonts/Fontawesome/4.7/css/font-awesome.min.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -243,28 +244,29 @@
 
                                     <div class="spot-posts">
                                         <div class="post-slider owl-style-2 owl-carousel list-category" id="dom-category">
+
                                             @foreach($all_event as $value)
-                                            {{$value->event[0]->name}}
+                              
                                             <div class="item">
                                                 <div class="post-item-2">
                                                     <a href="spot-detail.html">
                                                         <div class="thumb ratio thumb-hover-anim">
-                                                            <img src="/uploads/{{$value->file_name}}" alt="">
+                                                            <img src="/uploads/{{$value->upload->file_name}}" alt="">
                                                         </div>
                                                     </a>
                                                     <div class="item-content">
                                                         <div class="d-none d-sm-flex justify-content-end align-items-center">
                                                             <div class="comment-count">
                                                                 コメント
-                                                                <div class="count text-latin ml-10">{{$value->event[0]->namecount_comment}}</div>
+                                                                <div class="count text-latin ml-10">{{$value->count_comment}}</div>
                                                             </div>
                                                             <div class="favorite-count ml-20">
                                                                 <img width="16" src="/web-assets/images/icons/heart-gray.svg" alt=""> 
-                                                                <span class="count text-latin">{{$value->event[0]->namefavorite}}</span>
+                                                                <span class="count text-latin">{{$value->favorite}}</span>
                                                             </div>
                                                         </div>
                                                         <div class="title">
-                                                            <a href="post-detail.html">{{$value->event[0]->name}}・RISING SUN</a>
+                                                            <a href="post-detail.html">{{$value->name}}・RISING SUN</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1117,7 +1119,7 @@
                     </div>
                 </div>
                 <div class="flex-auto panel_footer text-align-center">
-                    <div class="button button-style-1" onclick="test()">
+                    <div class="button button-style-1" onclick="find_category()">
                         絞り込む
                     </div>
                 </div>
