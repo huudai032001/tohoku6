@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 03, 2022 at 04:31 AM
+-- Generation Time: Oct 03, 2022 at 08:38 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -74,7 +74,7 @@ CREATE TABLE `event` (
 INSERT INTO `event` (`id`, `name`, `location`, `time_start`, `intro`, `upload_id`, `sub_image`, `author`, `category`, `favorite`, `count_comment`, `created_at`, `updated_at`) VALUES
 (1, 'Dai Huu', 'hanoi', '2022-09-29 10:13:23', 'depdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 1, '[\"Screenshot 2022-05-09 100156.png\",\"Screenshot 2022-08-12 123520.png\",\"Screenshot 2022-08-12 182711.png\"]', 27, 1, 1, 0, '2022-09-21 01:15:18', '2022-09-29 03:13:23'),
 (2, 'asasas', 'sasa', '2022-09-29 01:52:27', 'sasa', 1, NULL, 1, 1, 0, 0, '2022-09-21 08:07:27', '2022-09-21 08:07:27'),
-(3, 'âsas', 'sấ', '2022-09-29 01:52:29', 'sáasas', 1, NULL, 1, 2, 0, 0, '2022-09-20 17:00:00', '2022-09-21 09:57:23'),
+(3, 'âsas', 'sấ', '2022-10-03 02:52:00', 'sáasas', 1, NULL, 1, 2, 1, 0, '2022-09-20 17:00:00', '2022-10-02 19:51:40'),
 (4, 'sdadsad', 'dsadas', '2022-09-29 01:52:32', 'ádsada', 1, NULL, 1, 3, 0, 0, '2022-09-21 09:57:23', '2022-09-13 09:57:23');
 
 -- --------------------------------------------------------
@@ -115,7 +115,8 @@ CREATE TABLE `favorite` (
 INSERT INTO `favorite` (`id`, `posts_id`, `type_posts`, `user_id`, `created_at`, `updated_at`) VALUES
 (9, 1, 1, '27,3,4', '2022-09-29 08:52:53', '2022-09-29 02:21:45'),
 (10, 2, 1, NULL, '2022-09-29 02:08:16', '2022-09-29 02:08:16'),
-(12, 1, 2, '27', '2022-09-29 10:08:08', '2022-09-29 03:13:23');
+(12, 1, 2, '27', '2022-09-29 10:08:08', '2022-09-29 03:13:23'),
+(13, 3, 2, '27', '2022-10-03 02:49:54', '2022-10-02 19:51:40');
 
 -- --------------------------------------------------------
 
@@ -230,7 +231,7 @@ CREATE TABLE `sample_term_map` (
 CREATE TABLE `spots` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
-  `image_id` int(11) DEFAULT NULL,
+  `upload_id` int(11) DEFAULT NULL,
   `address` varchar(255) NOT NULL,
   `sub_image` varchar(255) DEFAULT NULL,
   `location` varchar(255) DEFAULT NULL,
@@ -247,7 +248,7 @@ CREATE TABLE `spots` (
 -- Dumping data for table `spots`
 --
 
-INSERT INTO `spots` (`id`, `name`, `image_id`, `address`, `sub_image`, `location`, `category`, `intro`, `author`, `favorite`, `count_comment`, `created_at`, `updated_at`) VALUES
+INSERT INTO `spots` (`id`, `name`, `upload_id`, `address`, `sub_image`, `location`, `category`, `intro`, `author`, `favorite`, `count_comment`, `created_at`, `updated_at`) VALUES
 (1, 'Dai Huu', 1, 'thon 1', NULL, 'hanoi', NULL, 'dep', NULL, 3, 0, '2022-09-27 21:38:11', '2022-09-29 03:10:38'),
 (2, 'asa', 1, 'sấ', '[\"Screenshot 2022-05-09 100156.png\",\"Screenshot 2022-08-12 182711.png\",\"anh1.png\"]', 'sấ', '3', 'asas', NULL, 0, 0, '2022-09-29 02:08:16', '2022-09-29 02:08:16');
 
@@ -426,7 +427,7 @@ INSERT INTO `users` (`id`, `login_name`, `name`, `avatar_image_id`, `role`, `gen
 (14, 'ssssssssss', NULL, NULL, 'admin', NULL, NULL, '', 'aa@gmail.com', NULL, '$2y$10$s6VtXvq1IXYbxmMo685DMued8egIOhza5QcFEiMYJ4DiarSNgrRVG', NULL, NULL, NULL, NULL, 'disabled', '', NULL, NULL, NULL, '0', '0', NULL, 0, '2022-09-21 00:15:16', '2022-09-21 19:51:11'),
 (16, NULL, NULL, NULL, NULL, NULL, NULL, '', 'huudai001@gmail.com', NULL, '1111', NULL, NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, '0', '0', NULL, 0, '2022-09-21 21:44:00', '2022-09-21 21:44:00'),
 (19, NULL, NULL, NULL, NULL, NULL, NULL, '', 'dangm452@gmail.com', NULL, '$2y$10$85t2tSr49WzGYnU5tjabUefDArQP.vGpM.R77gjUmF8GP3DoCgTP2', NULL, NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, '0', NULL, NULL, 0, '2022-09-22 02:38:56', '2022-09-22 02:38:56'),
-(27, NULL, 'Đại Hữu Nguyễn', NULL, NULL, 3, '2022-09-21', 'hhh', 'huudai032001@gmail.com', '川崎', '$2y$10$IUk1oNmK8Wjz82VghmVRVOjI5v.tVxAAI/OznEnoYKpcN/5f6/RSW', NULL, NULL, NULL, NULL, 'active', '', 'https://www.youtube.com/watch?v=XFJ09PqqwU8&list=RDMM&index=6', 'dasd', NULL, '[\"1\",\"2\"]', '109829984724144315607', '3226743507581614', NULL, '2022-09-22 20:52:43', '2022-09-28 19:31:07'),
+(27, NULL, 'Đại Hữu Nguyễn', NULL, NULL, 3, '2022-09-21', 'hhh', 'huudai032001@gmail.com', '川崎', '$2y$10$IUk1oNmK8Wjz82VghmVRVOjI5v.tVxAAI/OznEnoYKpcN/5f6/RSW', NULL, NULL, NULL, NULL, 'active', '', 'https://www.youtube.com/watch?v=XFJ09PqqwU8&list=RDMM&index=6', 'dasd', NULL, '[\"1\",\"2\"]', '109829984724144315607', '3226743507581614', NULL, '2022-09-22 20:52:43', '2022-10-02 19:42:02'),
 (36, NULL, 'da', NULL, 'member', 1, '2022-09-28', 'adada', 'dai20010301@gmail.com', '大沢', '$2y$10$bE5kfO0rtJmJYi8r8Av.g.rNwd5PvszTHoBCp7xYXVSLlUQ7Ik9V6', NULL, NULL, NULL, NULL, 'active', '52638', NULL, NULL, NULL, '0', '117606606609355028013', NULL, NULL, '2022-09-25 18:26:00', '2022-09-27 00:45:02');
 
 --
@@ -554,7 +555,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `favorite`
 --
 ALTER TABLE `favorite`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `goods`
