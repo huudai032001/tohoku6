@@ -30,22 +30,20 @@ class HomeController extends Controller
 
     public function index(){
 
-        $get_date = getdate();
-        if($get_date['mon'] < 10){
-            $mon = "0" .$get_date['mon'];
-        }
-        else {
-            $mon = $get_date['mon'];
+        $today = \Carbon\Carbon::now();
+        
+        $list_event = Event::whereDate('created_at', $today->fotmat('Y-m-d'))->take(6)->get();
+        $all_event = Event::with('upload')->take(6)->get();
 
-        }
-        $date = ($get_date['year'] . "-" . $mon . "-" . $get_date['mday']);
+        $list_spot = Spot::take(6)->get();
+        $list_upcoming_spot = Event::orderBy('time_start','DESC')->take(12)->get();
 
-        $list_event = Event::where('created_at', 'like', '%' . $date . '%')->paginate(6);
-        $all_event = Event::with('upload')->get();
-
-        $list_spot = Spot::paginate(6);
-        $list_upcoming_spot = Event::orderBy('time_start','DESC')->paginate(12);
-        $info = Auth::user();
+        return view('web.index')->with([
+            'list_event' => $list_event,
+            'list_spot' => $list_spot,
+            'list_upcoming_spot' => $list_upcoming_spot,
+            'all_event' => $all_event,
+        ]);
 
         return view('web.index',compact('info','list_event','list_spot','list_upcoming_spot','all_event'));
     }
@@ -77,19 +75,15 @@ class HomeController extends Controller
     }
     // profile
     public function myProfile(){
-        $info = Auth::user();
-        // dd($info);
-        if($info != null){
-            $list_spot = Spot::where('author',$info['id'])->paginate(6);
-            $list_event = Event::where('author',$info['id'])->orderBy('favourite','DESC')->paginate(6);
-            return view('web.my-profile',compact('info','list_spot','list_event'));
-        }
-        // else {
-        //    return view('404');
-        // }
+        $user = Auth::user();
+
+        $user_spot_posts = Spot::where('author',$info->id)->paginate(6);
+        $user_favorite_events = Event::where('author',$info->id)->orderBy('favourite','DESC')->paginate(6);
+       
+        return view('web.my-profile', compact('list_spot','list_event'));
     }
 
-    public function profileEdit($id){
+    public function profileEdit(){
         $user = User::findorfail($id);
         return view('web.profile-edit',compact('user'));
     }
@@ -267,7 +261,10 @@ class HomeController extends Controller
     }
     // login
     public function postSignin(Request $req){
-        $credentials= (['email'=>$req->input('email'),'password'=>($req->input('password'))]);
+        $credentials= ([
+            'email'=>$req->input('email'),
+            'password'=>($req->input('password'))
+        ]);
         // dd(Auth::attempt($credentials));
         if(Auth::attempt($credentials)){
             $check = Auth::user();

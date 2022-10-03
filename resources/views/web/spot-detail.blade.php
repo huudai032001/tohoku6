@@ -169,30 +169,20 @@
                             </a>
                         </div>                        
                     </div>
+                    @if ($images = $info_spot->getImages())
                     <div class="spot-images">
                         <div class="container">
                             <div class="slider owl-carousel">
+                                @foreach ($images as $image)
                                 <div class="item">
-                                    <img src="/upload/{{$info_spot->image}}" alt="">
-                                </div>
-                                <?php
-                                    // $category = explode(',',$info_spot->sub_image);
-                                    $category = trim($info_spot->sub_image , '"[]');
-                                    $arr = explode(",", $category);
-                                    for($i =0;$i< count($arr);$i++)
-                                    {
-                                        $value = trim($arr[$i] , '"');
-
-                                ?>
-                                <div class="item">
-                                    <img src="/upload/<?=$value?>" alt="">
-                                </div>
-                                <?php
-                                    }
-                                ?>
+                                    <img src="{{ $image->getUrl() }}" alt="">
+                                </div>       
+                                @endforeach                         
                             </div>
                         </div>
                     </div>
+                    @endif
+                    
                     <div class="container">
                         <div class="post-content-text">
                             {{$info_spot->intro}}

@@ -73,7 +73,7 @@
                     <div class="button-close" data-toggle="nav-bar-panel">×</div>
                     <div class="profile-button">
                         @if(Auth::check())
-                        <a href="{{route('myProfile',$info['id'])}}">
+                        <a href="{{route('myProfile', ['id' => Auth::user()->id])}}">
                             <div class="profile-image">
                                 <img width="75" src="/web-assets/images/profile.svg" alt="profile">
                             </div>
@@ -245,24 +245,24 @@
                                     <div class="spot-posts">
                                         <div class="post-slider owl-style-2 owl-carousel list-category" id="dom-category">
 
-                                            @foreach($all_event as $value)
+                                            @foreach($all_event as $event)
                               
                                             <div class="item">
                                                 <div class="post-item-2">
                                                     <a href="spot-detail.html">
                                                         <div class="thumb ratio thumb-hover-anim">
-                                                            <img src="/uploads/{{$value->upload->file_name}}" alt="">
+                                                            <img src="/uploads/{{$event->upload->file_name}}" alt="">
                                                         </div>
                                                     </a>
                                                     <div class="item-content">
                                                         <div class="d-none d-sm-flex justify-content-end align-items-center">
                                                             <div class="comment-count">
                                                                 コメント
-                                                                <div class="count text-latin ml-10">{{$value->count_comment}}</div>
+                                                                <div class="count text-latin ml-10">{{$event->count_comment}}</div>
                                                             </div>
                                                             <div class="favorite-count ml-20">
                                                                 <img width="16" src="/web-assets/images/icons/heart-gray.svg" alt=""> 
-                                                                <span class="count text-latin">{{$value->favorite}}</span>
+                                                                <span class="count text-latin">{{$event->favorite}}</span>
                                                             </div>
                                                         </div>
                                                         <div class="title">

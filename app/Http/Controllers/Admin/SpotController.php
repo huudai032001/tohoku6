@@ -70,13 +70,7 @@ class SpotController extends CommonDataController {
 
         // $dataTable->addSimpleColumn('location', 'Dia Diem');
 
-        $dataTable->addColumn('role', __('Image'), function ($item)
-        {
-            $image = Upload::where('id',$item->image_id)->first();
-            // $image = Upload::whereBelongsTo($item)->get();
-            // dd($image);
-            return $item->image_id;
-        });
+        
     }
 
     // protected function indexQuery($query){
@@ -139,10 +133,16 @@ class SpotController extends CommonDataController {
                 'data' => $dataItem->category
             ]),
             new Form\Upload([
-                'name' => 'image_id',
+                'name' => 'image',
                 'label' => 'Image',
                 'multiple' => false,
                 'data' => $dataItem->image_id
+            ]),
+            new Form\Upload([
+                'name' => 'images',
+                'label' => 'Image',
+                'multiple' => true,
+                'data' => $dataItem->images_id
             ]),
             // cate
             // new Form\Text([
@@ -214,8 +214,8 @@ class SpotController extends CommonDataController {
         $item->intro = $request->input('intro');
         $item->address = $request->input('address');
         $item->category = $request->input('category');
-        $item->image_id = $request->input('image_id');
-
+        $item->image_id = $request->input('image');
+        $item->images_id = $request->input('images');
         $item->save();
     }    
 

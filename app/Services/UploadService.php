@@ -190,7 +190,7 @@ class UploadService
                 $e->getLine()
             )); 
             $result['error'] = 'true';
-            $result['msg'] = 'System error';     
+            $result['msg'] = 'System error';
         }
         
         return $result;

@@ -73,7 +73,7 @@ class Upload extends FormGroup
             if ($mode = 'confirm') {
                 $hiddenInput = sprintf('<input type="hidden" name="%s" value="%s">', 
                     $this->name, 
-                    $this->value
+                    $item->id
                 );
             } else {
                 $hiddenInput = '';

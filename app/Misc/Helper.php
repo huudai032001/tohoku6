@@ -181,12 +181,10 @@ class Helper
 
     public static function makeSearchString($str)
     {
-        if ($str) {
-            $search_str = trim($str);
-            $search_str = preg_replace('!\s+!', '%', $search_str);
-            $search_str = '%' . $search_str . '%';
-            return $search_str;
-        }
+        $search_str = trim($str);
+        $search_str = preg_replace('!\s+!', '%', $search_str);
+        $search_str = '%' . $search_str . '%';
+        return $search_str;
     }
 
     public static function cleanFormInput()

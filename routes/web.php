@@ -17,15 +17,7 @@ Route::get('/login', [Controllers\AuthController::class, 'login'])->name('login'
 Route::post('/login', [Controllers\AuthController::class, 'postLogin']);
 Route::get('/logout', [Controllers\AuthController::class, 'logout'])->name('logout');
 
-// Route::get('/', function () {
-//     return view('web.index');
-// });
-Route::get('/xx', function () {
-    return view('admin.test.xx');
-});
-Route::post('/xx', function () {
-    return redirect()->back()->withInput();
-});
+
 
 // non user
 // Route::get('/', [App\Http\Controllers\Web\HomeController::class, 'nonUser'])->name('nonUser');
@@ -36,10 +28,13 @@ Route::post('/', [App\Http\Controllers\Web\HomeController::class, 'postIndex'])-
 Route::post('/postfindByCategory', [App\Http\Controllers\Web\HomeController::class, 'postfindByCategory'])->name('postfindByCategory');
 
 // profile
-Route::get('/my-profile/{id}', [App\Http\Controllers\Web\HomeController::class, 'myProfile'])->name('myProfile');
+Route::middleware(['login'])->group(function ()
+{
+    Route::get('/my-profile', [App\Http\Controllers\Web\HomeController::class, 'myProfile'])->name('myProfile');
 
-Route::get('/profile-edit/{id}', [App\Http\Controllers\Web\HomeController::class, 'profileEdit'])->name('profileEdit');
-Route::post('/profile-edit/{id}', [App\Http\Controllers\Web\HomeController::class, 'postProfileEdit'])->name('postProfileEdit');
+    Route::get('/profile-edit', [App\Http\Controllers\Web\HomeController::class, 'profileEdit'])->name('profileEdit');
+    Route::post('/profile-edit', [App\Http\Controllers\Web\HomeController::class, 'postProfileEdit'])->name('postProfileEdit');
+});
 
 
 //spot
