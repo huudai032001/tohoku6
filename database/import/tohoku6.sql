@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Oct 03, 2022 at 08:38 AM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 7.4.29
+-- Host: localhost:3306
+-- Generation Time: Oct 03, 2022 at 08:08 AM
+-- Server version: 5.7.33
+-- PHP Version: 7.4.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -55,7 +55,7 @@ CREATE TABLE `event` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `location` varchar(255) NOT NULL,
-  `time_start` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `time_start` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `intro` text NOT NULL,
   `upload_id` int(11) DEFAULT NULL,
   `sub_image` varchar(255) DEFAULT NULL,
@@ -90,7 +90,7 @@ CREATE TABLE `failed_jobs` (
   `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -103,7 +103,7 @@ CREATE TABLE `favorite` (
   `id` int(11) NOT NULL,
   `posts_id` int(11) NOT NULL,
   `type_posts` int(11) NOT NULL,
-  `user_id` text DEFAULT NULL,
+  `user_id` text,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -131,8 +131,8 @@ CREATE TABLE `goods` (
   `sub_image` varchar(255) DEFAULT NULL,
   `intro` text NOT NULL,
   `point` varchar(30) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -185,7 +185,7 @@ CREATE TABLE `personal_access_tokens` (
   `tokenable_id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `abilities` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `abilities` text COLLATE utf8mb4_unicode_ci,
   `last_used_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -202,11 +202,11 @@ CREATE TABLE `sample_terms` (
   `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `slug` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `parent_id` int(10) UNSIGNED DEFAULT NULL,
-  `level` tinyint(3) UNSIGNED NOT NULL DEFAULT 1,
+  `level` tinyint(3) UNSIGNED NOT NULL DEFAULT '1',
   `image_id` int(10) UNSIGNED DEFAULT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci,
   `item_count` int(10) UNSIGNED DEFAULT NULL,
-  `fields` mediumtext COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `fields` mediumtext COLLATE utf8mb4_unicode_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -231,9 +231,9 @@ CREATE TABLE `sample_term_map` (
 CREATE TABLE `spots` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
-  `upload_id` int(11) DEFAULT NULL,
+  `image_id` int(11) DEFAULT NULL,
+  `images_id` text,
   `address` varchar(255) NOT NULL,
-  `sub_image` varchar(255) DEFAULT NULL,
   `location` varchar(255) DEFAULT NULL,
   `category` varchar(50) DEFAULT NULL,
   `intro` text NOT NULL,
@@ -248,9 +248,9 @@ CREATE TABLE `spots` (
 -- Dumping data for table `spots`
 --
 
-INSERT INTO `spots` (`id`, `name`, `upload_id`, `address`, `sub_image`, `location`, `category`, `intro`, `author`, `favorite`, `count_comment`, `created_at`, `updated_at`) VALUES
-(1, 'Dai Huu', 1, 'thon 1', NULL, 'hanoi', NULL, 'dep', NULL, 3, 0, '2022-09-27 21:38:11', '2022-09-29 03:10:38'),
-(2, 'asa', 1, 'sấ', '[\"Screenshot 2022-05-09 100156.png\",\"Screenshot 2022-08-12 182711.png\",\"anh1.png\"]', 'sấ', '3', 'asas', NULL, 0, 0, '2022-09-29 02:08:16', '2022-09-29 02:08:16');
+INSERT INTO `spots` (`id`, `name`, `image_id`, `images_id`, `address`, `location`, `category`, `intro`, `author`, `favorite`, `count_comment`, `created_at`, `updated_at`) VALUES
+(1, 'Dai Huu', 1, NULL, 'thon 1', 'hanoi', NULL, 'dep', NULL, 3, 0, '2022-09-27 21:38:11', '2022-09-29 03:10:38'),
+(2, 'asa', 3, '[\"3\",\"4\",\"5\",\"6\"]', 'ha noi', 'sấ', NULL, 'asas', NULL, 0, 0, '2022-09-29 02:08:16', '2022-10-03 00:41:41');
 
 -- --------------------------------------------------------
 
@@ -301,12 +301,12 @@ INSERT INTO `tasks` (`id`, `name`, `created_at`, `updated_at`) VALUES
 CREATE TABLE `uploads` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `folder_path` int(10) UNSIGNED DEFAULT NULL,
+  `folder_path` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `file_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `extension` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `mime_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `file_size` bigint(20) DEFAULT NULL,
-  `file_info` mediumtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `file_info` mediumtext COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -316,68 +316,11 @@ CREATE TABLE `uploads` (
 --
 
 INSERT INTO `uploads` (`id`, `name`, `folder_path`, `file_name`, `extension`, `mime_type`, `file_size`, `file_info`, `created_at`, `updated_at`) VALUES
-(1, 'Biểu đồ không có tiêu đề.drawio (3)', NULL, 'tMgG5vcl97HysvkLEEqqSDPrVXDhb6sov40ryFBv.png', 'png', 'image/png', 222099, '{\"width\":932,\"height\":1857,\"versions\":{\"thumbnail\":{\"width\":\"\",\"height\":\"\",\"file_name\":\"tMgG5vcl97HysvkLEEqqSDPrVXDhb6sov40ryFBv-thumbnail.png\"},\"medium\":{\"width\":\"\",\"height\":\"\",\"file_name\":\"tMgG5vcl97HysvkLEEqqSDPrVXDhb6sov40ryFBv-medium.png\"},\"large\":{\"width\":\"\",\"height\":\"\",\"file_name\":\"tMgG5vcl97HysvkLEEqqSDPrVXDhb6sov40ryFBv-large.png\"}}}', '2022-09-27 21:36:34', '2022-09-27 21:36:34');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `upload_folders`
---
-
-CREATE TABLE `upload_folders` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `dir_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `parent_id` int(10) UNSIGNED DEFAULT NULL,
-  `file_count` int(10) UNSIGNED DEFAULT 0,
-  `file_count_children` int(10) UNSIGNED DEFAULT 0,
-  `file_count_total` int(10) UNSIGNED DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `upload_folders`
---
-
-INSERT INTO `upload_folders` (`id`, `name`, `dir_name`, `parent_id`, `file_count`, `file_count_children`, `file_count_total`) VALUES
-(1, '2019', '2019', NULL, 0, 21, 21),
-(2, '2020', '2020', NULL, 0, 100, 100),
-(3, '2021', '2021', NULL, 0, 588, 588),
-(4, '01', '01', 1, 0, 0, 0),
-(5, '02', '02', 1, 0, 0, 0),
-(6, '03', '03', 1, 0, 0, 0),
-(7, '04', '04', 1, 0, 0, 0),
-(8, '05', '05', 1, 0, 0, 0),
-(9, '06', '06', 1, 0, 0, 0),
-(10, '07', '07', 1, 0, 0, 0),
-(11, '08', '08', 1, 0, 0, 0),
-(12, '09', '09', 1, 0, 0, 0),
-(13, '10', '10', 1, 0, 0, 0),
-(14, '11', '11', 1, 0, 0, 0),
-(15, '12', '12', 1, 21, 0, 21),
-(16, '01', '01', 2, 75, 0, 75),
-(17, '02', '02', 2, 0, 0, 0),
-(18, '03', '03', 2, 0, 0, 0),
-(19, '04', '04', 2, 0, 0, 0),
-(20, '05', '05', 2, 0, 0, 0),
-(21, '06', '06', 2, 0, 0, 0),
-(22, '07', '07', 2, 14, 0, 14),
-(23, '08', '08', 2, 0, 0, 0),
-(24, '09', '09', 2, 0, 0, 0),
-(25, '10', '10', 2, 0, 0, 0),
-(26, '11', '11', 2, 0, 0, 0),
-(27, '12', '12', 2, 11, 0, 11),
-(28, '01', '01', 3, 167, 0, 167),
-(29, '02', '02', 3, 0, 0, 0),
-(30, '03', '03', 3, 0, 0, 0),
-(31, '04', '04', 3, 106, 0, 106),
-(32, '05', '05', 3, 15, 0, 15),
-(33, '06', '06', 3, 5, 0, 5),
-(34, '07', '07', 3, 3, 0, 3),
-(35, '08', '08', 3, 0, 0, 0),
-(36, '09', '09', 3, 115, 0, 115),
-(37, '10', '10', 3, 151, 0, 151),
-(38, '11', '11', 3, 26, 0, 26),
-(39, '12', '12', 3, 0, 0, 0);
+(3, 'angela-liu-RQRaAhW5QvI-unsplash', 'test', '3SthQP56YGdVuwe5oZ5ZfRVw6rBe8kYNlR3LmP0l.jpg', 'jpg', 'image/jpeg', 87180, '{\"width\":640,\"height\":640,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":256,\"file_name\":\"3SthQP56YGdVuwe5oZ5ZfRVw6rBe8kYNlR3LmP0l-thumbnail.jpg\"}}}', '2022-10-03 00:31:23', '2022-10-03 00:31:23'),
+(4, 'boxed-water-is-better--McsV04u7LA-unsplash', 'test', 'spyesM03QT7TdlZlR596s01JMfVps2JzLPwvOlID.jpg', 'jpg', 'image/jpeg', 68334, '{\"width\":640,\"height\":640,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":256,\"file_name\":\"spyesM03QT7TdlZlR596s01JMfVps2JzLPwvOlID-thumbnail.jpg\"}}}', '2022-10-03 00:40:55', '2022-10-03 00:40:55'),
+(5, 'brandi-ibrao-M-Br3v3-gao-unsplash', 'test', 'n4iY1bBxD7fbCXfsNlTu4CbTn5uGHAB5mhxVv7ql.jpg', 'jpg', 'image/jpeg', 117659, '{\"width\":640,\"height\":640,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":256,\"file_name\":\"n4iY1bBxD7fbCXfsNlTu4CbTn5uGHAB5mhxVv7ql-thumbnail.jpg\"}}}', '2022-10-03 00:40:56', '2022-10-03 00:40:56'),
+(6, 'demi-vdk-RBIQqvkeRwc-unsplash', 'test', 'VBliOFhgV7YjOIRFjuEZVfHFF9KWHzUbflxGeKtq.jpg', 'jpg', 'image/jpeg', 99934, '{\"width\":640,\"height\":678,\"versions\":{\"thumbnail\":{\"width\":242,\"height\":256,\"file_name\":\"VBliOFhgV7YjOIRFjuEZVfHFF9KWHzUbflxGeKtq-thumbnail.jpg\"}}}', '2022-10-03 00:40:56', '2022-10-03 00:40:56'),
+(7, 'do-mee-SH8_JmrsQcw-unsplash', 'test', 'iKVTAIURuGnkaZOT5DbjwaJFtvqyRqV3ykIqJ2AL.jpg', 'jpg', 'image/jpeg', 57356, '{\"width\":640,\"height\":703,\"versions\":{\"thumbnail\":{\"width\":233,\"height\":256,\"file_name\":\"iKVTAIURuGnkaZOT5DbjwaJFtvqyRqV3ykIqJ2AL-thumbnail.jpg\"}}}', '2022-10-03 00:40:56', '2022-10-03 00:40:56');
 
 -- --------------------------------------------------------
 
@@ -393,14 +336,14 @@ CREATE TABLE `users` (
   `role` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `gender` int(11) DEFAULT NULL,
   `birth_day` date DEFAULT NULL,
-  `intro` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `intro` text COLLATE utf8mb4_unicode_ci,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `location` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `email_verified_token` timestamp NULL DEFAULT NULL,
   `remember_token` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `fields` mediumtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `fields` mediumtext COLLATE utf8mb4_unicode_ci,
   `status` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `otp` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `twitter_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -516,12 +459,6 @@ ALTER TABLE `uploads`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `upload_folders`
---
-ALTER TABLE `upload_folders`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -603,13 +540,7 @@ ALTER TABLE `tasks`
 -- AUTO_INCREMENT for table `uploads`
 --
 ALTER TABLE `uploads`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `upload_folders`
---
-ALTER TABLE `upload_folders`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `users`
