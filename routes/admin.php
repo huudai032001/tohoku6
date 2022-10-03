@@ -42,12 +42,12 @@ Route::crud('event', AdminControllers\EventController::class);
 
 // Route::crud('inquiry', Controllers\InquiryController::class);
 
-// Route::prefix('upload')->name('upload.')->group(function ()
-// {
-//     Route::get('/', [Controllers\UploadController::class, 'index'])->name('index');
-//     Route::get('/get-file-manager-items', [Controllers\UploadController::class, 'getFileManagerItems'])->name('get-file-manager-items');
-//     Route::post('/ajaxUpload', [Controllers\UploadController::class, 'handleAjaxUpload']);
-// });
+Route::prefix('file-manager')->name('file-manager.')->group(function ()
+{
+    // Route::get('/', [Controllers\UploadController::class, 'index'])->name('index');
+    Route::get('/fetch-item', [AdminControllers\UploadController::class, 'getFileManagerItems'])->name('fetch-item');
+    Route::post('/upload', [AdminControllers\UploadController::class, 'handleAjaxUpload']);
+});
 
 Route::get('tool/log-viewer', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
 

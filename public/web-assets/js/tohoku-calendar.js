@@ -64,7 +64,7 @@
 
         for( let i = 1; i <= getDaysInMonth(currentYear, currentMonth); i++) {            
             let item = $(`
-                <div class="day-item">
+                <div class="day-item" onclick="find_by_day(`+currentYear.toString()+`,`+currentMonth.toString()+`,`+i.toString()+`)">
                     <div class="day-num"></div>
                     <div class="day-of-week"></div>
                 </div>

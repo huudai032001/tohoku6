@@ -12,6 +12,10 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Spot;
 use App\Models\Event;
+use App\Models\Upload;
+use App\Models\Favorite;
+use App\Models\Comment;
+
 use App\Models\Goods;
 use App\Models\User;
 use App\Jobs\SendEmail;
@@ -20,6 +24,114 @@ use App\Jobs\SendEmailResetPass;
 class HomeController extends Controller
 {
 
+    public function nonUser(){
+        return view('web.non-user');
+    }
+
+    public function index(){
+
+        $get_date = getdate();
+        if($get_date['mon'] < 10){
+            $mon = "0" .$get_date['mon'];
+        }
+        $date = ($get_date['year'] . "-" . $mon . "-" . $get_date['mday']);
+
+        $list_event = Event::where('created_at', 'like', '%' . $date . '%')->paginate(6);
+        // $all_event = Upload::paginate(6);
+        $all_event = Upload::with('event')->get();
+
+        // dd($all_event);
+        $list_spot = Spot::paginate(6);
+        $list_upcoming_spot = Event::orderBy('time_start','DESC')->paginate(12);
+        $info = Auth::user();
+
+        return view('web.index',compact('info','list_event','list_spot','list_upcoming_spot','all_event'));
+    }
+    public function test(){
+        return view("web.test");
+    }
+    public function postIndex(){
+        $id = $_POST['year'];
+
+        if($_POST){
+            $year = $_POST['year'];
+            $month = $_POST['month'];
+            $day = $_POST['day'];
+
+            if($month < 10){
+                $month = "0" .$month;
+            }
+            $date = ($year . "-" . $month . "-" . $day);
+        }
+
+        $list_event = Event::where('created_at', 'like', '%' . $date . '%')->paginate(6);
+        
+        echo json_encode($list_event,JSON_UNESCAPED_UNICODE);
+
+    }
+    // profile
+    public function myProfile(){
+        $info = Auth::user();
+        // dd($info);
+        if($info != null){
+            $list_spot = Spot::where('author',$info['id'])->paginate(6);
+            $list_event = Event::where('author',$info['id'])->orderBy('favourite','DESC')->paginate(6);
+            return view('web.my-profile',compact('info','list_spot','list_event'));
+        }
+        // else {
+        //    return view('404');
+        // }
+    }
+
+    public function profileEdit($id){
+        $user = User::findorfail($id);
+        return view('web.profile-edit',compact('user'));
+    }
+    public function postProfileEdit(Request $req,$id){
+        $this->validate($req,[
+            'name'=>'required|min:6|max:50',
+            'email'=>'required',
+            'location'=>'required',
+            'sns'=>'required',
+            'twitter'=>'required',
+            'tiktok'=>'required',
+            'instagram'=>'required',
+            'birth_day'=>'required',
+            'intro'=>'required',
+
+        ],
+        [
+            'name.required'=>'必須項目です',
+            'name.min'=>'パスワードは半角英数字を含む6文字以上を設定してください',
+            'name.max'=>'50文字以上入力しないでください',   
+            
+            'email.required'=>'必須項目です',
+            'location.required'=>'必須項目です',
+            'sns.required'=>'必須項目です',
+            'twitter.required'=>'必須項目です',
+            'tiktok.required'=>'必須項目です',
+            'instagram.required'=>'必須項目です',
+            'birth_day.required'=>'必須項目です',
+            'intro.required'=>'必須項目です',
+
+        ]);
+
+        $user = User::findorfail($id);
+        $user->name = $req->input('name');
+        $user->email = $req->input('email');
+        $user->location = $req->input('location');
+        $user->sns_active = $req->input('sns');
+        $user->twitter_url = $req->input('twitter');
+        $user->tiktok_url = $req->input('tiktok');
+        $user->instagram_url = $req->input('instagram');
+
+        $user->birth_day = $req->input('birth_day');
+        $user->intro = $req->input('intro');
+        $user->save();
+        return redirect()->back();
+    }
+
+    //event
 
     public function list_events(){
         $list_events = Event::paginate(6);
@@ -77,7 +189,13 @@ class HomeController extends Controller
     public function event_detail($id){
         $info_event = Event::where('id',$id)->first(); 
         $list_event = Event::paginate(6);
-        return view('web.event-detail',['info_event'=>$info_event,'list_event'=>$list_event]);
+        if(Auth::check()){
+            $user = Auth::user();
+        }
+        else {
+            $user = [];
+        }
+        return view('web.event-detail',['info_event'=>$info_event,'list_event'=>$list_event,'user'=>$user]);
     }
 
     public function goods_detail($id){
@@ -106,6 +224,7 @@ class HomeController extends Controller
             $user->email = $req->input('email');
             $user->password = bcrypt($req->input('password'));
             $user->otp = $otp;
+            $user->role = 'member';
             $user->save();
             $checks = User::where('email',$req->input('email'))->first();
             
@@ -192,7 +311,6 @@ class HomeController extends Controller
             return redirect()->back()->with('thongbao','Mã OTP không chính xác!');
 
         }
-
     }
 
     public function passwordResetComplete($id){
@@ -231,5 +349,68 @@ class HomeController extends Controller
         return redirect('password-reset-complete/'.$id)->with('pass_new',$req->input('pass_new'));
     }
 
+
+    //feature
+    public function feature(){
+        $list_feature = Event::orderBy('favourite','DESC')->paginate(6);
+        return view('web.features',compact('list_feature'));
+    }
+
+    public function featureDetail($id){
+        $feature = Event::findorfail($id);
+        return view('web.feature-detail',compact('feature'));
+    }
+
+    public function postfindByCategory(){
+        if($_POST){
+            $category = $_POST['category'];
+
+            $list_category = Event::with('upload')->where('category',$category)->paginate(6);
+            echo json_encode($list_category,JSON_UNESCAPED_UNICODE);
+
+        }
+    }
+
+    //favourite
+    public function favourite(){
+        $id_posts = $_POST['id_posts'];
+        $type_posts = $_POST['type_posts'];
+        $user_id = $_POST['user_id'];
+
+        $favorite = Favorite::where(['posts_id'=>$id_posts,'type_posts'=>$type_posts])->first();
+        $array_user = explode(",",$favorite->user_id);
+
+        if (in_array($user_id, $array_user)) {
+            echo json_encode(['res'=>false]);
+        }
+        else {
+            if($favorite->user_id != null){
+                $favorite->user_id = $favorite->user_id ."," . $user_id;
+            }
+            else {
+                $favorite->user_id = $user_id;
+
+            }
+            $favorite->save();
+            if($type_posts == 1){
+                $posts = Spot::findorfail($id_posts);
+                $posts->favorite = $posts->favorite + 1;
+                $posts->save();
+            }  
+            else {
+                $posts = Event::findorfail($id_posts);
+                $posts->favorite = $posts->favorite + 1;
+                $posts->save();
+            }
+            echo json_encode(['res'=>true ,'count'=>$posts->favorite]);
+        }
+    }
+    public function allComment(){
+        $id = $_POST['id'];
+        $list_comment = Comment::where('spot_id',$id)->orderBy('created_at','DESC')->get();
+        // var_dump($list_comment);
+        echo json_encode($list_comment,JSON_UNESCAPED_UNICODE);
+
+    }
 
 }

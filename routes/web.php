@@ -27,16 +27,38 @@ Route::post('/xx', function () {
     return redirect()->back()->withInput();
 });
 
+// non user
+// Route::get('/', [App\Http\Controllers\Web\HomeController::class, 'nonUser'])->name('nonUser');
+
+//index
+Route::get('/', [App\Http\Controllers\Web\HomeController::class, 'index'])->name('index');
+Route::post('/', [App\Http\Controllers\Web\HomeController::class, 'postIndex'])->name('postIndex');
+Route::post('/postfindByCategory', [App\Http\Controllers\Web\HomeController::class, 'postfindByCategory'])->name('postfindByCategory');
+
+// profile
+Route::get('/my-profile/{id}', [App\Http\Controllers\Web\HomeController::class, 'myProfile'])->name('myProfile');
+
+Route::get('/profile-edit/{id}', [App\Http\Controllers\Web\HomeController::class, 'profileEdit'])->name('profileEdit');
+Route::post('/profile-edit/{id}', [App\Http\Controllers\Web\HomeController::class, 'postProfileEdit'])->name('postProfileEdit');
+
 
 //spot
 Route::get('/list-spot', [App\Http\Controllers\Web\SpotController::class, 'list_spot'])->name('list_spot');
 Route::get('/spot-detail/{id}', [App\Http\Controllers\Web\SpotController::class, 'spot_detail'])->name('spot_detail');
+//comment
+Route::post('/spot-comment', [App\Http\Controllers\Web\SpotController::class, 'spotComment'])->name('spotComment');
+Route::post('/delete-comment', [App\Http\Controllers\Web\SpotController::class, 'deleteComment'])->name('deleteComment');
+Route::post('/all-comment', [App\Http\Controllers\Web\HomeController::class, 'allComment'])->name('allComment');
+
+// like 
+Route::post('/favourite', [App\Http\Controllers\Web\HomeController::class, 'favourite'])->name('favourite');
 
 Route::get('/spot-register', [App\Http\Controllers\Web\SpotController::class, 'spotRegister'])->name('spotRegister');
 Route::post('/spot-register', [App\Http\Controllers\Web\SpotController::class, 'postSpotRegister'])->name('postSpotRegister');
 
 Route::get('/spot-preview', [App\Http\Controllers\Web\SpotController::class, 'spotEdttingComplete'])->name('spotEdttingComplete');
 Route::post('/spot-preview', [App\Http\Controllers\Web\SpotController::class, 'PostSpotPreview'])->name('PostSpotPreview');
+// Route::post('/spot-preview-edit/{id}', [App\Http\Controllers\Web\SpotController::class, 'PostSpotPreviewEdit'])->name('PostSpotPreviewEdit');
 
 Route::get('/spot-edit/{id}', [App\Http\Controllers\Web\SpotController::class, 'spotEdit'])->name('spotEdit');
 Route::post('/spot-edit/{id}', [App\Http\Controllers\Web\SpotController::class, 'postSpotEdit'])->name('postSpotEdit');
@@ -45,6 +67,10 @@ Route::post('/spot-edit/{id}', [App\Http\Controllers\Web\SpotController::class, 
 // event
 Route::get('/list-events', [App\Http\Controllers\Web\HomeController::class, 'list_events'])->name('list_events');
 Route::get('/event-detail/{id}', [App\Http\Controllers\Web\HomeController::class, 'event_detail'])->name('event_detail');
+
+// feature
+Route::get('/feature', [App\Http\Controllers\Web\HomeController::class, 'feature'])->name('feature');
+Route::get('/feature-detail/{id}', [App\Http\Controllers\Web\HomeController::class, 'featureDetail'])->name('featureDetail');
 
 // goods
 Route::get('/list-goods', [App\Http\Controllers\Web\HomeController::class, 'list_goods'])->name('list_goods');
@@ -77,8 +103,8 @@ Route::prefix('facebook')->name('facebook.')->group( function(){
 });
 
 
-Route::get('/task',[App\Http\Controllers\TaskController::class, 'index'])->name('index');
-Route::post('/task', [App\Http\Controllers\TaskController::class, 'store'])->name('task');
+// Route::get('/task',[App\Http\Controllers\TaskController::class, 'index'])->name('index');
+// Route::post('/task', [App\Http\Controllers\TaskController::class, 'store'])->name('task');
 // Route::delete('/task/{task}', [App\Http\Controllers\TaskController::class, 'delete'])->name('delete.task');
 
 Route::get('/signup-verify/{id}',[App\Http\Controllers\Web\HomeController::class, 'signup_verify'])->name('signup_verify');

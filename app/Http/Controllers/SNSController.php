@@ -42,7 +42,8 @@ class SNSController extends Controller
                     'google_id' => $user['id'],
                 ]);
                 $saveUser = User::where('email', $user['email'])->first();
-                return redirect('register-edit-profile/'. $saveUser->id);
+                Auth::loginUsingId($saveUser->id);
+                return redirect()->route('index');
             }
 
         } catch (\Throwable $th) {
@@ -74,7 +75,9 @@ class SNSController extends Controller
                     ]);
                     $saveUser = User::where('email', $user['email'])->first();
                     // dd($saveUser->id);
-                    return redirect('register-edit-profile/'. $saveUser->id);
+                    Auth::loginUsingId($saveUser->id);
+                    return redirect()->route('index');
+                    // return redirect('register-edit-profile/'. $saveUser->id);
 
                 
             }else{

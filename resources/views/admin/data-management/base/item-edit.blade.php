@@ -13,7 +13,7 @@
 
     <div class="card-body">
 
-       <form action="" method="POST">
+       <form action="" method="POST" class="vue-form">
            @csrf
 
            <fieldset class="mb-3">

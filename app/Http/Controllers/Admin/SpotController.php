@@ -19,6 +19,8 @@ use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use App\Form;
 
 use App\Models\Spot;
+use App\Models\Upload;
+
 
 class SpotController extends CommonDataController {
 
@@ -64,13 +66,17 @@ class SpotController extends CommonDataController {
         $dataTable->addSimpleColumn('category', 'Danh muc');
         $dataTable->addSimpleColumn('intro', 'Mo ta');
         $dataTable->addSimpleColumn('address', 'Address');
+        // $dataTable->addSimpleColumn('upload', 'upload');
 
         // $dataTable->addSimpleColumn('location', 'Dia Diem');
 
-        // $dataTable->addColumn('role', __('common.common'), function ($item)
-        // {
-        //     return $item->name;
-        // });
+        $dataTable->addColumn('role', __('Image'), function ($item)
+        {
+            $image = Upload::where('id',$item->image_id)->first();
+            // $image = Upload::whereBelongsTo($item)->get();
+            // dd($image);
+            return $item->image_id;
+        });
     }
 
     // protected function indexQuery($query){
@@ -131,6 +137,12 @@ class SpotController extends CommonDataController {
                 'label' => 'Address',
                 'required' => false,
                 'data' => $dataItem->category
+            ]),
+            new Form\Upload([
+                'name' => 'image_id',
+                'label' => 'Image',
+                'multiple' => false,
+                'data' => $dataItem->image_id
             ]),
             // cate
             // new Form\Text([
@@ -195,13 +207,14 @@ class SpotController extends CommonDataController {
 
     protected function updateItem(Request $request, $item)
     {
-        var_dump($item->category);
-        die;
+        // var_dump($item->category);
+        // die;
         $item->name = $request->input('name');
         $item->location = $request->input('location');
         $item->intro = $request->input('intro');
         $item->address = $request->input('address');
         $item->category = $request->input('category');
+        $item->image_id = $request->input('image_id');
 
         $item->save();
     }    

@@ -1,3 +1,4 @@
+@if(Auth::check())
 <!DOCTYPE html>
 <html lang="en">
 
@@ -143,7 +144,7 @@
                                 </div>
                                 @error('location')
                                     <div class="form-error-msg">{{ $message }}</div>
-                                    @enderror
+                                @enderror
                                 <div style="padding-bottom: 35px;">
                                     <div class="location-input ratio">
                                         <div class="d-flex align-items-center justify-content-center" style="font-family: var(--font2); color: white;text-align: center;background-color: #C6C6C6;font-weight: 700;">MAP</div>
@@ -409,3 +410,4 @@
     </body>
 
 </html>
+@endif

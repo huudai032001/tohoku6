@@ -6,6 +6,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Event detail</title>
+        <meta name="csrf-token" content="{{ csrf_token() }}" />
 
         <link rel="stylesheet" href="/web-assets/css/framework-full.css">
 
@@ -18,8 +19,8 @@
         <link rel="stylesheet" href="/web-assets/css/main.css">
         <link rel="stylesheet" href="/web-assets/css/event-detail.css">
 
-        <script src="libs/jquery/jquery-3.6.0.min.js"></script>
-        <script src="libs/owl-carousel/owl.carousel.min.js"></script>
+        <script src="/web-assets/libs/jquery/jquery-3.6.0.min.js"></script>
+        <script src="/web-assets/libs/owl-carousel/owl.carousel.min.js"></script>
         
     </head>
 
@@ -145,13 +146,20 @@
                         </div>
                         <div class="notation">・日付が複数の場合、範囲の場合の表記</div>
                         <div class="d-flex justify-content-end">
-                            
+                        @if(Auth::check())
+                        <input type="hidden" name="user_id" id="user_id" value="{{$user->id}}">
+                        <input type="hidden" name="posts_id" id="posts_id" value="{{$info_event->id}}">
+                        <a onclick="favorite()">
+                        @else
+                        <a>
+                        @endif
                             <div class="favorite-count d-flex align-items-center">
                                 <div class="icon">
                                     <img src="/web-assets/images/icons/heart-gray.svg" alt="">
                                 </div>
-                                <div class="count-number">123</div>
+                                <div class="count-number">{{$info_event->favorite}}</div>
                             </div>
+                        </a>
                         </div>                        
                     </div>
                     <div class="event-images">
@@ -531,6 +539,7 @@
         <script src="/web-assets/js/components.js"></script>
         <script src="/web-assets/js/main.js"></script>
         <script src="/web-assets/js/tohoku-calendar.js"></script>
+        <script src="/web-assets/js/event.js"></script>
         
     </body>
 

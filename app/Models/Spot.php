@@ -18,4 +18,7 @@ class Spot extends BaseModel
         return $this->name;
     }
 
+    public function comment() {
+        return $this->hasMany('App\Models\Comment');
+    }
 }

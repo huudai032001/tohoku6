@@ -43,10 +43,14 @@
 	@stack('body-open')
 
 	@yield('body')
-	
-	<script src="/admin-assets/js/limitless-admin-template-setup.js"></script>	
+
+	@include('admin.inc.file-manager-modal')
+
+
+	<script src="/admin-assets/js/limitless-admin-template-setup.js"></script>		
+	<script src="/admin-assets/js/vue-app.js"></script>
+
 	<script src="/admin-assets/js/admin.js"></script>
-	{{-- <script src="/admin-assets/js/file-manager.js"></script> --}}	
 
 	@stack('body-close')
 

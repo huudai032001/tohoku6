@@ -1,3 +1,5 @@
+@if(Auth::check())
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -123,13 +125,15 @@
                 <!-- /Menu bar -->
 
                 <section class="spot-editing-form">
-                    <form action="spot-preview.html" method="post">
+                    <form action="{{route('postSpotEdit',$id)}}" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="_token" value="{{csrf_token()}}">
 
                         <div class="section_header">
                             <div class="container">
                                 <div class="image">
                                     <img src="/web-assets/images/tohoku-6-spot.svg" alt="">
                                 </div>
+
                                 <div class="desc">
                                     スポットを編集する
                                 </div>
@@ -141,6 +145,9 @@
                                 <div style="margin-bottom: 25px;">
                                     <input type="text" class="input-text" placeholder="住所またはキーワード" value="{{$info_spot->location}}" name="location">
                                 </div>
+                                @error('location')
+                                    <div class="form-error-msg">{{ $message }}</div>
+                                @enderror
                                 <div style="padding-bottom: 35px;">
                                     <div class="location-input ratio">
 
@@ -159,6 +166,9 @@
                                     <div class="form-control-wrap">
                                         <input type="text" class="input-text" value="{{$info_spot->name}}" name="name">
                                     </div>
+                                    @error('name')
+                                    <div class="form-error-msg">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
@@ -166,6 +176,9 @@
                                     <div class="form-control-wrap">
                                         <textarea class="textarea" rows="5" name="intro">{{$info_spot->intro}}</textarea>
                                     </div>
+                                    @error('intro')
+                                    <div class="form-error-msg">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
@@ -180,9 +193,10 @@
                                             <div class="col-12">
                                                 <label class="custom-input-image">
                                                     <div class="preview-image ratio">
-                                                        <img src="/upload/{{$info_spot->image}}" alt="">
+                                                        <img src="/upload/{{$info_spot->image}}" alt="" id="myImg">
+                                                        <input type="hidden" name="image_hide" id="" value="{{$info_spot->image}}">
                                                     </div>
-                                                    <input type="file" accept="image/*">
+                                                    <input type="file" accept="image/*" name="image" id="upload_img">
                                                 </label>
                                             </div>
                                             <?php
@@ -206,9 +220,10 @@
                                             <div class="col-4">
                                                 <label class="custom-input-image">
                                                     <div class="preview-image ratio">
-                                                        <img src="/upload/{{$value}}" alt="">
+                                                        <img src="/upload/{{$value}}" alt="" id="myImg0<?=$i+1?>" name="test">
+                                                        <input type="hidden" name="sub_image_0<?=$i+1?>_hide" id="" value="{{$value}}">
                                                     </div>
-                                                    <input type="file" accept="image/*">
+                                                    <input type="file" accept="image/*" name="sub_image_0<?=$i+1?>" id="sub_image_0<?=$i+1?>">
                                                 </label>
                                             </div>
                                             <?php
@@ -216,6 +231,21 @@
                                             ?>
                                         </div>
                                     </div>
+                                    @error('image')
+                                    <div class="form-error-msg">{{ $message }}</div>
+                                    @enderror
+
+                                    @error('sub_image_01')
+                                    <div class="form-error-msg">{{ $message }}</div>
+                                    @enderror
+
+                                    @error('sub_image_02')
+                                    <div class="form-error-msg">{{ $message }}</div>
+                                    @enderror
+
+                                    @error('sub_image_03')
+                                    <div class="form-error-msg">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
@@ -228,51 +258,22 @@
                                         ?>
                                             <div class="col-auto">
                                                 <label class="custom-radio">
-                                                    <?php
-                                                        for($u = 0;$u< count($category);$u++)
-                                                        {
-                                                    ?>
-                                                    <input type="checkbox" name="category" value="{{$s+1}}" <?php if($category[$u] == $s+1) echo 'checked'?>> <span class="checkmark"></span> {{$arr_category[$s]}}
-                                                    <?php
-                                                        }
-                                                    ?>
+                                                    <input type="checkbox" name="category[]" value="{{$s+1}}" <?php for($u = 0;$u< count($category);$u++){ if($category[$u] == $s+1){ echo 'checked'; } } ?>> <span class="checkmark"></span> {{$arr_category[$s]}}
                                                 </label>
                                             </div>
                                             <?php
                                             }
                                             ?>
-                                            <!-- <div class="col-auto">
-                                                <label class="custom-radio">
-                                                    <input type="checkbox" name="category"  value="2"> <span class="checkmark"></span> グルメ
-                                                </label>
-                                            </div>
-                                            <div class="col-auto">
-                                                <label class="custom-radio">
-                                                    <input type="checkbox" name="category" value="3"> <span class="checkmark"></span> ショッピング
-                                                </label>
-                                            </div>
-                                            <div class="col-auto">
-                                                <label class="custom-radio">
-                                                    <input type="checkbox" name="category" checked value="4"> <span class="checkmark"></span> 自然
-                                                </label>
-                                            </div>
-                                            <div class="col-auto">
-                                                <label class="custom-radio">
-                                                    <input type="checkbox" name="category" value="5"> <span class="checkmark"></span> 体験
-                                                </label>
-                                            </div>
-                                            <div class="col-auto">
-                                                <label class="custom-radio">
-                                                    <input type="checkbox" name="category" value="6"> <span class="checkmark"></span> 歴史
-                                                </label>
-                                            </div> -->
                                             <div class="col-4 col-sm-3">
                                                 <label class="custom-radio">
-                                                    <input type="checkbox" name="category" value="7"> <span class="checkmark"></span> SNS映え
+                                                    <input type="checkbox" name="category[]" value="7" <?php for($u = 0;$u< count($category);$u++){ if($category[$u] == 7){ echo 'checked'; } } ?>> <span class="checkmark"></span> SNS映え
                                                 </label>
                                             </div>                                            
                                         </div>
                                     </div>
+                                    @error('category')
+                                    <div class="form-error-msg">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                             </div>
@@ -398,7 +399,8 @@
         <script src="/web-assets/js/components.js"></script>
         <script src="/web-assets/js/main.js"></script>
         <script src="/web-assets/js/tohoku-calendar.js"></script>
-        
+        <script src="/web-assets/js/spot_upload_image.js"></script>        
     </body>
 
 </html>
+@endif

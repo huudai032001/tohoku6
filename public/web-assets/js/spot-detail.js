@@ -1,0 +1,132 @@
+// const { create } = require("lodash");
+
+$(document).on("click", ".toggle-action-button", function () {
+    var com_id = $(this).data('id');
+    $(".modal_comment #id_comment").val( com_id );
+
+});
+
+function delete_comment(){
+    $id_com = $("#id_comment").val();
+    // console.log($id_com);
+    var formData = new FormData();
+    formData.append('id',$id_com);
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+        url: "/delete-comment",
+        type: 'post',
+        dataType: "json",
+        async: false,
+        processData: false,
+        contentType: false,
+        data: formData,
+        success: function (data) {
+            // console.log(data);
+            if(data.res == true){
+                window.location.reload();
+            }
+        }
+    });
+}
+
+function favorite(){
+    $id_posts = $("#posts_id").val();
+    $type_posts = 1;
+    $user_id = $("#user_id").val();
+
+    var formData = new FormData();
+    formData.append('id_posts',$id_posts);
+    formData.append('type_posts',$type_posts);
+    formData.append('user_id',$user_id);
+
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+        url: "/favourite",
+        type: 'post',
+        dataType: "json",
+        async: false,
+        processData: false,
+        contentType: false,
+        data: formData,
+        success: function (data) {
+            if(data.res == true){
+                alert('お気に入りのドロップ成功');
+                $(".count-number").html(data.count);
+            }
+            else {
+                alert('あなたはすでにこの投稿を気に入っています');
+            }
+        }
+    });
+}
+function all_comment(id){
+    var formData = new FormData();
+    formData.append('id',id);
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+        url: "/all-comment",
+        type: 'post',
+        dataType: "json",
+        async: false,
+        processData: false,
+        contentType: false,
+        data: formData,
+        success: function (data) {
+            let = str = Date();
+            let time = Date.parse(str);
+
+            var html = ``;
+            for(var i= 0;i< data.length;i++){
+                var created_at = Date.parse(data[i].created_at);
+                // var created_at = (data[i].created_at).split("");
+                // console.log(created_at);
+                // console.log(array_time);
+                // var time_com = time-
+                // console.log(array_time[4]- data[i][crea]);
+
+                html += `
+                <div class="col-12">
+                    <div class="review-item">
+                        <div class="d-flex justify-content-between">
+                            <div class="d-flex align-items-center">
+                                <div class="avatar">
+                                    <img src="/web-assets/images/profile.svg" alt="">
+                                </div>
+                                <div class="user-name">
+                                    `+ data[i].name_user +`
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <div class="review-time">{{$hours}}:{{$mins}}日前</div>
+                                <div class="toggle-action-button d-flex align-items-center" data-show-modal="#modal-review-actions" data-id="`+ data[i].id +`" onclick="showModal()">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="review-content">
+                        `+ data[i].content +`
+                        </div>
+                    </div>
+                </div>
+                `;
+            }
+            $('#list_comment').html(html);
+            // $('.review-item').load();
+
+           
+        }
+    });
+}
+
+function showModal(){
+
+    $('#modal-review-actions').addClass('active');
+}

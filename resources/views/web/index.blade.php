@@ -1,3 +1,4 @@
+@if(Auth::check())
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,19 +8,19 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Homepage</title>
 
-        <link rel="stylesheet" href="css/framework-full.css">
+        <link rel="stylesheet" href="/web-assets/css/framework-full.css">
 
         <link rel="stylesheet" href="fonts/Fontawesome/4.7/css/font-awesome.min.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
 
-        <link rel="stylesheet" href="css/owl-customized.css">
-        <link rel="stylesheet" href="css/main.css">
-        <link rel="stylesheet" href="css/home.css">
-
-        <script src="libs/jquery/jquery-3.6.0.min.js"></script>
-        <script src="libs/owl-carousel/owl.carousel.min.js"></script>
+        <link rel="stylesheet" href="/web-assets/css/owl-customized.css">
+        <link rel="stylesheet" href="/web-assets/css/main.css">
+        <link rel="stylesheet" href="/web-assets/css/home.css">
+        <meta name="csrf-token" content="{{ csrf_token() }}" />
+        <script src="/web-assets/libs/jquery/jquery-3.6.0.min.js"></script>
+        <script src="/web-assets/libs/owl-carousel/owl.carousel.min.js"></script>
         
     </head>
 
@@ -42,7 +43,7 @@
                     <div class="nav-bar-center d-flex justify-content-center">
                         <div class="logo">
                             <a href="index.html">
-                                <img src="images/number-6.svg" alt="Tohoku 6">
+                                <img src="/web-assets/images/number-6.svg" alt="Tohoku 6">
                             </a>
                         </div>
                     </div>
@@ -50,18 +51,18 @@
                         <div class="user-menu-icons d-flex">
                             <div data-show-modal="#user-notification-modal">
                                 <div class="icon">
-                                    <img src="images/icons/notification.svg" alt="notification">
+                                    <img src="/web-assets/images/icons/notification.svg" alt="notification">
                                     <div class="has-notification-sight"></div>
                                 </div>
                             </div>
                             <a href="">
                                 <div class="icon">
-                                    <img src="images/icons/star.svg" alt="favorite">
+                                    <img src="/web-assets/images/icons/star.svg" alt="favorite">
                                 </div>
                             </a>
                             <a href="">
                                 <div class="icon">
-                                    <img src="images/icons/search.svg" alt="search">
+                                    <img src="/web-assets/images/icons/search.svg" alt="search">
                                 </div>
                             </a>
                         </div>
@@ -71,9 +72,9 @@
                 <div class="nav-bar-panel">
                     <div class="button-close" data-toggle="nav-bar-panel">×</div>
                     <div class="profile-button">
-                        <a href="my-profile.html">
+                        <a href="{{route('myProfile',$info['id'])}}">
                             <div class="profile-image">
-                                <img width="75" src="images/profile.svg" alt="profile">
+                                <img width="75" src="/web-assets/images/profile.svg" alt="profile">
                             </div>
                             <div class="profile-label">プロフィール</div>
                         </a>
@@ -133,7 +134,7 @@
                         <div class="container">
                             <div class="short-desc">東北をみんなで遊び尽くすスポット紹介サイト</div>
                             <div class="tohoku-6">
-                                <img src="images/tohoku-6.svg" alt="Tohoku 6">
+                                <img src="/web-assets/images/tohoku-6.svg" alt="Tohoku 6">
                             </div>
                         </div>
                     </div>
@@ -142,10 +143,10 @@
                         <div class="section-posts-inner">
                             <div class="tabs d-flex justify-content-center">
                                 <div class="tab active" data-tab="calendar">
-                                    <img src="images/tohoku-6-calendar.svg" alt="Tohoku 6 calendar">
+                                    <img src="/web-assets/images/tohoku-6-calendar.svg" alt="Tohoku 6 calendar">
                                 </div>
                                 <div class="tab" data-tab="spot">
-                                    <img src="images/tohoku-6-spot.svg" alt="Tohoku 6 spot">
+                                    <img src="/web-assets/images/tohoku-6-spot.svg" alt="Tohoku 6 spot">
                                 </div>
                             </div>
                             <div class="tab-panels">
@@ -155,14 +156,14 @@
                                         <div class="calendar-month-select d-sm-flex justify-content-center">
                                             <div class="d-flex align-items-center justify-content-between">
                                                 <div class="arrow arrow-left">
-                                                    <img src="images/arrow-left.svg" alt="">
+                                                    <img src="/web-assets/images/arrow-left.svg" alt="">
                                                 </div>
                                                 <div class="month-label">
                                                     <span class="year-num"></span>.<span class="month-num"></span>
                                                     <span class="month-name"></span>
                                                 </div>
                                                 <div class="arrow arrow-right">
-                                                    <img src="images/arrow-right.svg" alt="">
+                                                    <img src="/web-assets/images/arrow-right.svg" alt="">
                                                 </div>
                                             </div>
                                             <input type="hidden" name="year">
@@ -177,163 +178,42 @@
 
                                     <div class="area-select d-flex justify-content-center">
                                         <div class="custom-select-button button">
-                                            エリアを選択 <img src="images/triangle-down.svg" alt="Select">
+                                            エリアを選択 <img src="/web-assets/images/triangle-down.svg" alt="Select">
                                             <input type="hidden" name="" id="">
                                         </div>
                                     </div>
 
-                                    <div class="calendar-posts">
-                                        <div class="post-slider owl-carousel owl-style-2">
+                                    <div class="calendar-posts" >
+                                        <!-- <div id="dom" class="aa owl-carousel owl-style-2 "></div> -->
+                                        <div class="post-slider owl-carousel owl-style-2" id="dom">
+                                            <!-- <div id="dome"></div> -->
+                                            @foreach($list_event as $value)
                                             <div class="item">
                                                 <div class="post-item-1">
                                                     <a href="event-detail.html">
                                                         <div class="thumb ratio thumb-hover-anim">
-                                                            <img src="images/demo/1.png" alt="">
+                                                            <img src="/uploads/{{$value->image}}" alt="">
                                                         </div>
                                                     </a>
                                                     <div class="item-content">
                                                         <div class="d-flex justify-content-between align-items-center">
                                                             <div class="flex-fill">
-                                                                <div class="date text-latin">2022.10.10 UP!</div>
+                                                                <div class="date text-latin">{{$value->created_at}} UP!</div>
                                                             </div>
                                                             <div class="flex-auto ml-20">
-                                                                <img width="16" src="images/icons/heart-gray.svg" alt=""> 
+                                                                <img width="16" src="/web-assets/images/icons/heart-gray.svg" alt=""> 
                                                                 <span class="count text-latin">123</span>
                                                             </div>
                                                         </div>
                                                         <div class="title">
                                                             <a href="event-detail.html">
-                                                            全国花火競技大会「大曲の花火」
+                                                            {{$value->name}}
                                                             </a>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="item">
-                                                <div class="post-item-1">
-                                                    <a href="event-detail.html">
-                                                        <div class="thumb ratio thumb-hover-anim">
-                                                            <img src="images/demo/1.png" alt="">
-                                                        </div>
-                                                    </a>
-                                                    <div class="item-content">
-                                                        <div class="d-flex justify-content-between align-items-center">
-                                                            <div class="flex-fill">
-                                                                <div class="date text-latin">2022.10.10 UP!</div>
-                                                            </div>
-                                                            <div class="flex-auto ml-20">
-                                                                <img width="16" src="images/icons/heart-gray.svg" alt=""> 
-                                                                <span class="count text-latin">123</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="title">
-                                                            <a href="event-detail.html">
-                                                            全国花火競技大会「大曲の花火」
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="item">
-                                                <div class="post-item-1">
-                                                    <a href="event-detail.html">
-                                                        <div class="thumb ratio thumb-hover-anim">
-                                                            <img src="images/demo/1.png" alt="">
-                                                        </div>
-                                                    </a>
-                                                    <div class="item-content">
-                                                        <div class="d-flex justify-content-between align-items-center">
-                                                            <div class="flex-fill">
-                                                                <div class="date text-latin">2022.10.10 UP!</div>
-                                                            </div>
-                                                            <div class="flex-auto ml-20">
-                                                                <img width="16" src="images/icons/heart-gray.svg" alt=""> 
-                                                                <span class="count text-latin">123</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="title">
-                                                            <a href="event-detail.html">
-                                                            全国花火競技大会「大曲の花火」
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="item">
-                                                <div class="post-item-1">
-                                                    <a href="event-detail.html">
-                                                        <div class="thumb ratio thumb-hover-anim">
-                                                            <img src="images/demo/1.png" alt="">
-                                                        </div>
-                                                    </a>
-                                                    <div class="item-content">
-                                                        <div class="d-flex justify-content-between align-items-center">
-                                                            <div class="flex-fill">
-                                                                <div class="date text-latin">2022.10.10 UP!</div>
-                                                            </div>
-                                                            <div class="flex-auto ml-20">
-                                                                <img width="16" src="images/icons/heart-gray.svg" alt=""> 
-                                                                <span class="count text-latin">123</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="title">
-                                                            <a href="event-detail.html">
-                                                            全国花火競技大会「大曲の花火」
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="item">
-                                                <div class="post-item-1">
-                                                    <a href="event-detail.html">
-                                                        <div class="thumb ratio thumb-hover-anim">
-                                                            <img src="images/demo/1.png" alt="">
-                                                        </div>
-                                                    </a>
-                                                    <div class="item-content">
-                                                        <div class="d-flex justify-content-between align-items-center">
-                                                            <div class="flex-fill">
-                                                                <div class="date text-latin">2022.10.10 UP!</div>
-                                                            </div>
-                                                            <div class="flex-auto ml-20">
-                                                                <img width="16" src="images/icons/heart-gray.svg" alt=""> 
-                                                                <span class="count text-latin">123</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="title">
-                                                            <a href="event-detail.html">
-                                                            全国花火競技大会「大曲の花火」
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="item">
-                                                <div class="post-item-1">
-                                                    <a href="event-detail.html">
-                                                        <div class="thumb ratio thumb-hover-anim">
-                                                            <img src="images/demo/1.png" alt="">
-                                                        </div>
-                                                    </a>
-                                                    <div class="item-content">
-                                                        <div class="d-flex justify-content-between align-items-center">
-                                                            <div class="flex-fill">
-                                                                <div class="date text-latin">2022.10.10 UP!</div>
-                                                            </div>
-                                                            <div class="flex-auto ml-20">
-                                                                <img width="16" src="images/icons/heart-gray.svg" alt=""> 
-                                                                <span class="count text-latin">123</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="title">
-                                                            <a href="event-detail.html">
-                                                            全国花火競技大会「大曲の花火」
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            @endforeach
                                         </div>
                                     </div>
 
@@ -345,13 +225,13 @@
                                             <div class="py-30 row space-x-10 space-y-10 justify-content-center">
                                                 <div class="col-auto">
                                                     <div class="custom-select-button button area-select">
-                                                        エリアを選択 <img src="images/triangle-down.svg" alt="Select">
+                                                        エリアを選択 <img src="/web-assets/images/triangle-down.svg" alt="Select">
                                                         <input type="hidden" name="" id="">
                                                     </div>
                                                 </div>
                                                 <div class="col-auto">
                                                     <div class="custom-select-button button category-select">
-                                                        カテゴリを選択 <img src="images/triangle-down.svg" alt="Select">
+                                                        カテゴリを選択 <img src="/web-assets/images/triangle-down.svg" alt="Select">
                                                         <input type="hidden" name="" id="">
                                                     </div>
                                                 </div>
@@ -361,12 +241,14 @@
                                     </div>
 
                                     <div class="spot-posts">
-                                        <div class="post-slider owl-style-2 owl-carousel">
+                                        <div class="post-slider owl-style-2 owl-carousel list-category" id="dom-category">
+                                            @foreach($all_event as $value)
+                                            <!-- {{$value}}; -->
                                             <div class="item">
                                                 <div class="post-item-2">
                                                     <a href="spot-detail.html">
                                                         <div class="thumb ratio thumb-hover-anim">
-                                                            <img src="images/demo/1.png" alt="">
+                                                            <img src="/uploads/{{$value->file_name}}" alt="">
                                                         </div>
                                                     </a>
                                                     <div class="item-content">
@@ -376,7 +258,7 @@
                                                                 <div class="count text-latin ml-10">123</div>
                                                             </div>
                                                             <div class="favorite-count ml-20">
-                                                                <img width="16" src="images/icons/heart-gray.svg" alt=""> 
+                                                                <img width="16" src="/web-assets/images/icons/heart-gray.svg" alt=""> 
                                                                 <span class="count text-latin">123</span>
                                                             </div>
                                                         </div>
@@ -386,126 +268,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="item">
-                                                <div class="post-item-2">
-                                                    <a href="spot-detail.html">
-                                                        <div class="thumb ratio thumb-hover-anim">
-                                                            <img src="images/demo/1.png" alt="">
-                                                        </div>
-                                                    </a>
-                                                    <div class="item-content">
-                                                        <div class="d-none d-sm-flex justify-content-end align-items-center">
-                                                            <div class="comment-count">
-                                                                コメント
-                                                                <div class="count text-latin ml-10">123</div>
-                                                            </div>
-                                                            <div class="favorite-count ml-20">
-                                                                <img width="16" src="images/icons/heart-gray.svg" alt=""> 
-                                                                <span class="count text-latin">123</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="title">
-                                                            <a href="post-detail.html">グランピング・RISING SUN</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="item">
-                                                <div class="post-item-2">
-                                                    <a href="spot-detail.html">
-                                                        <div class="thumb ratio thumb-hover-anim">
-                                                            <img src="images/demo/1.png" alt="">
-                                                        </div>
-                                                    </a>
-                                                    <div class="item-content">
-                                                        <div class="d-none d-sm-flex justify-content-end align-items-center">
-                                                            <div class="comment-count">
-                                                                コメント
-                                                                <div class="count text-latin ml-10">123</div>
-                                                            </div>
-                                                            <div class="favorite-count ml-20">
-                                                                <img width="16" src="images/icons/heart-gray.svg" alt=""> 
-                                                                <span class="count text-latin">123</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="title">
-                                                            <a href="post-detail.html">グランピング・RISING SUN</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="item">
-                                                <div class="post-item-2">
-                                                    <a href="spot-detail.html">
-                                                        <div class="thumb ratio thumb-hover-anim">
-                                                            <img src="images/demo/1.png" alt="">
-                                                        </div>
-                                                    </a>
-                                                    <div class="item-content">
-                                                        <div class="d-none d-sm-flex justify-content-end align-items-center">
-                                                            <div class="comment-count">
-                                                                コメント
-                                                                <div class="count text-latin ml-10">123</div>
-                                                            </div>
-                                                            <div class="favorite-count ml-20">
-                                                                <img width="16" src="images/icons/heart-gray.svg" alt=""> 
-                                                                <span class="count text-latin">123</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="title">
-                                                            <a href="post-detail.html">グランピング・RISING SUN</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="item">
-                                                <div class="post-item-2">
-                                                    <a href="spot-detail.html">
-                                                        <div class="thumb ratio thumb-hover-anim">
-                                                            <img src="images/demo/1.png" alt="">
-                                                        </div>
-                                                    </a>
-                                                    <div class="item-content">
-                                                        <div class="d-none d-sm-flex justify-content-end align-items-center">
-                                                            <div class="comment-count">
-                                                                コメント
-                                                                <div class="count text-latin ml-10">123</div>
-                                                            </div>
-                                                            <div class="favorite-count ml-20">
-                                                                <img width="16" src="images/icons/heart-gray.svg" alt=""> 
-                                                                <span class="count text-latin">123</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="title">
-                                                            <a href="post-detail.html">グランピング・RISING SUN</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="item">
-                                                <div class="post-item-2">
-                                                    <a href="spot-detail.html">
-                                                        <div class="thumb ratio thumb-hover-anim">
-                                                            <img src="images/demo/1.png" alt="">
-                                                        </div>
-                                                    </a>
-                                                    <div class="item-content">
-                                                        <div class="d-none d-sm-flex justify-content-end align-items-center">
-                                                            <div class="comment-count">
-                                                                コメント
-                                                                <div class="count text-latin ml-10">123</div>
-                                                            </div>
-                                                            <div class="favorite-count ml-20">
-                                                                <img width="16" src="images/icons/heart-gray.svg" alt=""> 
-                                                                <span class="count text-latin">123</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="title">
-                                                            <a href="post-detail.html">グランピング・RISING SUN</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            @endforeach
                                         </div>
                                     </div>
 
@@ -516,129 +279,36 @@
                 </section>
 
                 <div class="number-6-black-white d-lg-none">
-                    <img src="images/number-6-white.svg" alt="Tohoku 6">
+                    <img src="/web-assets/images/number-6-white.svg" alt="Tohoku 6">
                 </div>
                 <section class="section-tohoku-media">
                     <div class="section-bg"></div>
                     <div class="section-content">
                         <div class="section-title">
-                            <img src="images/tohoku-media.svg" alt="">
+                            <img src="/web-assets/images/tohoku-media.svg" alt="">
                         </div>
                         <div class="slider owl-carousel owl-style-3">
+                            @foreach($list_spot as $value)
                             <div class="post-item-3">
-                                <a href="sport-detail.html">
+                                <a href="{{route('spot_detail',$value->id)}}">
                                     <div class="thumb ratio thumb-hover-anim">
-                                        <img src="images/demo/1.png" alt="">
+                                        <img src="/uploads/{{$value->image}}" alt="">
                                     </div>
                                     <div class="item-content d-flex flex-column justify-content-end">
-                                        <div class="title">全国花火競技大会「大曲の花火」</div>
+                                        <div class="title">{{$value->name}}</div>
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div class="flex-fill">
-                                                <div class="date text-latin">2022.10.10 UP!</div>
+                                                <div class="date text-latin">{{$value->created_at}} UP!</div>
                                             </div>
                                             <div class="flex-auto ml-20">
-                                                <img width="16" src="images/icons/heart-white.svg" alt=""> 
+                                                <img width="16" src="/web-assets/images/icons/heart-white.svg" alt=""> 
                                                 <span class="count text-latin">123</span>
                                             </div>
                                         </div>
                                     </div>
                                 </a>
                             </div>
-                            <div class="post-item-3">
-                                <a href="sport-detail.html">
-                                    <div class="thumb ratio thumb-hover-anim">
-                                        <img src="images/demo/1.png" alt="">
-                                    </div>
-                                    <div class="item-content d-flex flex-column justify-content-end">
-                                        <div class="title">全国花火競技大会「大曲の花火」</div>
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <div class="flex-fill">
-                                                <div class="date text-latin">2022.10.10 UP!</div>
-                                            </div>
-                                            <div class="flex-auto ml-20">
-                                                <img width="16" src="images/icons/heart-white.svg" alt=""> 
-                                                <span class="count text-latin">123</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="post-item-3">
-                                <a href="sport-detail.html">
-                                    <div class="thumb ratio thumb-hover-anim">
-                                        <img src="images/demo/1.png" alt="">
-                                    </div>
-                                    <div class="item-content d-flex flex-column justify-content-end">
-                                        <div class="title">全国花火競技大会「大曲の花火」</div>
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <div class="flex-fill">
-                                                <div class="date text-latin">2022.10.10 UP!</div>
-                                            </div>
-                                            <div class="flex-auto ml-20">
-                                                <img width="16" src="images/icons/heart-white.svg" alt=""> 
-                                                <span class="count text-latin">123</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="post-item-3">
-                                <a href="sport-detail.html">
-                                    <div class="thumb ratio thumb-hover-anim">
-                                        <img src="images/demo/1.png" alt="">
-                                    </div>
-                                    <div class="item-content d-flex flex-column justify-content-end">
-                                        <div class="title">全国花火競技大会「大曲の花火」</div>
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <div class="flex-fill">
-                                                <div class="date text-latin">2022.10.10 UP!</div>
-                                            </div>
-                                            <div class="flex-auto ml-20">
-                                                <img width="16" src="images/icons/heart-white.svg" alt=""> 
-                                                <span class="count text-latin">123</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="post-item-3">
-                                <a href="sport-detail.html">
-                                    <div class="thumb ratio thumb-hover-anim">
-                                        <img src="images/demo/1.png" alt="">
-                                    </div>
-                                    <div class="item-content d-flex flex-column justify-content-end">
-                                        <div class="title">全国花火競技大会「大曲の花火」</div>
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <div class="flex-fill">
-                                                <div class="date text-latin">2022.10.10 UP!</div>
-                                            </div>
-                                            <div class="flex-auto ml-20">
-                                                <img width="16" src="images/icons/heart-white.svg" alt=""> 
-                                                <span class="count text-latin">123</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="post-item-3">
-                                <a href="sport-detail.html">
-                                    <div class="thumb ratio thumb-hover-anim">
-                                        <img src="images/demo/1.png" alt="">
-                                    </div>
-                                    <div class="item-content d-flex flex-column justify-content-end">
-                                        <div class="title">全国花火競技大会「大曲の花火」</div>
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <div class="flex-fill">
-                                                <div class="date text-latin">2022.10.10 UP!</div>
-                                            </div>
-                                            <div class="flex-auto ml-20">
-                                                <img width="16" src="images/icons/heart-white.svg" alt=""> 
-                                                <span class="count text-latin">123</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
+                            @endforeach
                         </div>
                         <div class="d-flex justify-content-center">
                             <a href="" class="view-more button button-style-2">もっと見る</a>
@@ -650,12 +320,12 @@
                     <div class="section-bg"></div>
                     <div class="section-content">
                         <div class="section-title">
-                            <img src="images/pickup.svg" alt="">
+                            <img src="/web-assets/images/pickup.svg" alt="">
                         </div>
                         <div class="slider owl-carousel owl-style-3">
                             <div class="post-item-4">
                                 <div class="thumb ratio thumb-hover-anim">
-                                    <img src="images/demo/2.png" alt="">
+                                    <img src="/web-assets/images/demo/2.png" alt="">
                                 </div>
                                 <a href="event-detail.html">
                                     <div class="item-content d-flex flex-column justify-content-end">
@@ -666,7 +336,7 @@
                                                 <div class="date text-latin">2022.10.10 UP!</div>
                                             </div>
                                             <div class="flex-auto ml-20">
-                                                <img width="16" src="images/icons/heart-white.svg" alt=""> 
+                                                <img width="16" src="/web-assets/images/icons/heart-white.svg" alt=""> 
                                                 <span class="count text-latin">123</span>
                                             </div>
                                         </div>
@@ -675,7 +345,7 @@
                             </div>
                             <div class="post-item-4">
                                 <div class="thumb ratio thumb-hover-anim">
-                                    <img src="images/demo/2.png" alt="">
+                                    <img src="/web-assets/images/demo/2.png" alt="">
                                 </div>
                                 <a href="spot-detail.html">
                                     <div class="item-content d-flex flex-column justify-content-end">
@@ -686,7 +356,7 @@
                                                 <div class="date text-latin">2022.10.10 UP!</div>
                                             </div>
                                             <div class="flex-auto ml-20">
-                                                <img width="16" src="images/icons/heart-white.svg" alt=""> 
+                                                <img width="16" src="/web-assets/images/icons/heart-white.svg" alt=""> 
                                                 <span class="count text-latin">123</span>
                                             </div>
                                         </div>
@@ -695,7 +365,7 @@
                             </div>
                             <div class="post-item-4">
                                 <div class="thumb ratio thumb-hover-anim">
-                                    <img src="images/demo/2.png" alt="">
+                                    <img src="/web-assets/images/demo/2.png" alt="">
                                 </div>
                                 <a href="event-detail.html">
                                     <div class="item-content d-flex flex-column justify-content-end">
@@ -706,7 +376,7 @@
                                                 <div class="date text-latin">2022.10.10 UP!</div>
                                             </div>
                                             <div class="flex-auto ml-20">
-                                                <img width="16" src="images/icons/heart-white.svg" alt=""> 
+                                                <img width="16" src="/web-assets/images/icons/heart-white.svg" alt=""> 
                                                 <span class="count text-latin">123</span>
                                             </div>
                                         </div>
@@ -715,7 +385,7 @@
                             </div>
                             <div class="post-item-4">
                                 <div class="thumb ratio thumb-hover-anim">
-                                    <img src="images/demo/2.png" alt="">
+                                    <img src="/web-assets/images/demo/2.png" alt="">
                                 </div>
                                 <a href="spot-detail.html">
                                     <div class="item-content d-flex flex-column justify-content-end">
@@ -726,7 +396,7 @@
                                                 <div class="date text-latin">2022.10.10 UP!</div>
                                             </div>
                                             <div class="flex-auto ml-20">
-                                                <img width="16" src="images/icons/heart-white.svg" alt=""> 
+                                                <img width="16" src="/web-assets/images/icons/heart-white.svg" alt=""> 
                                                 <span class="count text-latin">123</span>
                                             </div>
                                         </div>
@@ -735,7 +405,7 @@
                             </div>
                             <div class="post-item-4">
                                 <div class="thumb ratio thumb-hover-anim">
-                                    <img src="images/demo/2.png" alt="">
+                                    <img src="/web-assets/images/demo/2.png" alt="">
                                 </div>
                                 <a href="event-detail.html">
                                     <div class="item-content d-flex flex-column justify-content-end">
@@ -746,7 +416,7 @@
                                                 <div class="date text-latin">2022.10.10 UP!</div>
                                             </div>
                                             <div class="flex-auto ml-20">
-                                                <img width="16" src="images/icons/heart-white.svg" alt=""> 
+                                                <img width="16" src="/web-assets/images/icons/heart-white.svg" alt=""> 
                                                 <span class="count text-latin">123</span>
                                             </div>
                                         </div>
@@ -755,7 +425,7 @@
                             </div>
                             <div class="post-item-4">
                                 <div class="thumb ratio thumb-hover-anim">
-                                    <img src="images/demo/2.png" alt="">
+                                    <img src="/web-assets/images/demo/2.png" alt="">
                                 </div>
                                 <a href="spot-detail.html">
                                     <div class="item-content d-flex flex-column justify-content-end">
@@ -766,7 +436,7 @@
                                                 <div class="date text-latin">2022.10.10 UP!</div>
                                             </div>
                                             <div class="flex-auto ml-20">
-                                                <img width="16" src="images/icons/heart-white.svg" alt=""> 
+                                                <img width="16" src="/web-assets/images/icons/heart-white.svg" alt=""> 
                                                 <span class="count text-latin">123</span>
                                             </div>
                                         </div>
@@ -775,7 +445,7 @@
                             </div>
                             <div class="post-item-4">
                                 <div class="thumb ratio thumb-hover-anim">
-                                    <img src="images/demo/2.png" alt="">
+                                    <img src="/web-assets/images/demo/2.png" alt="">
                                 </div>
                                 <a href="event-detail.html">
                                     <div class="item-content d-flex flex-column justify-content-end">
@@ -786,7 +456,7 @@
                                                 <div class="date text-latin">2022.10.10 UP!</div>
                                             </div>
                                             <div class="flex-auto ml-20">
-                                                <img width="16" src="images/icons/heart-white.svg" alt=""> 
+                                                <img width="16" src="/web-assets/images/icons/heart-white.svg" alt=""> 
                                                 <span class="count text-latin">123</span>
                                             </div>
                                         </div>
@@ -795,7 +465,7 @@
                             </div>
                             <div class="post-item-4">
                                 <div class="thumb ratio thumb-hover-anim">
-                                    <img src="images/demo/2.png" alt="">
+                                    <img src="/web-assets/images/demo/2.png" alt="">
                                 </div>
                                 <a href="spot-detail.html">
                                     <div class="item-content d-flex flex-column justify-content-end">
@@ -806,7 +476,7 @@
                                                 <div class="date text-latin">2022.10.10 UP!</div>
                                             </div>
                                             <div class="flex-auto ml-20">
-                                                <img width="16" src="images/icons/heart-white.svg" alt=""> 
+                                                <img width="16" src="/web-assets/images/icons/heart-white.svg" alt=""> 
                                                 <span class="count text-latin">123</span>
                                             </div>
                                         </div>
@@ -823,7 +493,7 @@
                             <div class="section-header">
                                 <div class="title d-flex align-items-center justify-content-md-center">
                                     <div>
-                                        <img src="images/tohoku-6-spot.svg" alt="">
+                                        <img src="/web-assets/images/tohoku-6-spot.svg" alt="">
                                     </div>
                                     <span class="ml-30">直近のイベント</span>
                                 </div>
@@ -832,15 +502,16 @@
                         </div>
                         <div class="post-container">
                             <div class="post-row row">
+                                @foreach($list_upcoming_spot as $value)
                                 <div class="col-sm-6 col-lg-4">
                                     <div class="post-item-5 d-flex">
                                         <div class="thumb">
                                             <div class="icon-star">
-                                                <img src="images/icons/star-yellow.svg" alt="">
+                                                <img src="/web-assets/images/icons/star-yellow.svg" alt="">
                                             </div>
-                                            <a href="spot-detail.html">
+                                            <a href="{{route('event_detail',$value->id)}}">
                                                 <div class="ratio thumb-image">
-                                                    <img src="images/demo/1.png" alt="">
+                                                    <img src="/uploads/{{$value->image}}" alt="">
                                                 </div>
                                             </a>
                                         </div>
@@ -848,414 +519,30 @@
                                             <div class="area d-flex align-items-center">
                                                 <div class="icon"></div>
                                                 <div>
-                                                    <img src="images/area/akita.svg" alt="">
+                                                    <img src="/web-assets/images/area/akita.svg" alt="">
                                                 </div>
                                             </div>
-                                            <a href="spot-detail.html">
-                                                <div class="item-title">グランピング・<span class="text-latin">RISING SUN</span></div>
+                                            <a href="{{route('spot_detail',$value->id)}}">
+                                                <div class="item-title">{{$value->name}}・<span class="text-latin">RISING SUN</span></div>
                                             </a>
                                             <div class="counters d-flex align-items-center justify-content-end justify-content-lg-start">
                                                 <div class="comment-count">
                                                     コメント
-                                                    <div class="count text-latin ml-10">123</div>
+                                                    <div class="count text-latin ml-10">{{$value->count_comment}}</div>
                                                 </div>
                                                 <div class="favorite-count ml-20">
-                                                    <img src="images/icons/heart-gray.svg" alt=""> 
-                                                    <span class="count text-latin">123</span>
+                                                    <img src="/web-assets/images/icons/heart-gray.svg" alt=""> 
+                                                    <span class="count text-latin">{{$value->favorite}}</span>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <div class="post-item-5 d-flex">
-                                        <div class="thumb">
-                                            <div class="icon-star">
-                                                <img src="images/icons/star-yellow.svg" alt="">
-                                            </div>
-                                            <a href="spot-detail.html">
-                                                <div class="ratio thumb-image">
-                                                    <img src="images/demo/1.png" alt="">
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="item-content flex-fill d-flex flex-column justify-content-between">
-                                            <div class="area d-flex align-items-center">
-                                                <div class="icon"></div>
-                                                <div>
-                                                    <img src="images/area/akita.svg" alt="">
-                                                </div>
-                                            </div>
-                                            <a href="spot-detail.html">
-                                                <div class="item-title">グランピング・<span class="text-latin">RISING SUN</span></div>
-                                            </a>
-                                            <div class="counters d-flex align-items-center justify-content-end justify-content-lg-start">
-                                                <div class="comment-count">
-                                                    コメント
-                                                    <div class="count text-latin ml-10">123</div>
-                                                </div>
-                                                <div class="favorite-count ml-20">
-                                                    <img src="images/icons/heart-gray.svg" alt=""> 
-                                                    <span class="count text-latin">123</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <div class="post-item-5 d-flex">
-                                        <div class="thumb">
-                                            <div class="icon-star">
-                                                <img src="images/icons/star-yellow.svg" alt="">
-                                            </div>
-                                            <a href="spot-detail.html">
-                                                <div class="ratio thumb-image">
-                                                    <img src="images/demo/1.png" alt="">
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="item-content flex-fill d-flex flex-column justify-content-between">
-                                            <div class="area d-flex align-items-center">
-                                                <div class="icon"></div>
-                                                <div>
-                                                    <img src="images/area/akita.svg" alt="">
-                                                </div>
-                                            </div>
-                                            <a href="spot-detail.html">
-                                                <div class="item-title">グランピング・<span class="text-latin">RISING SUN</span></div>
-                                            </a>
-                                            <div class="counters d-flex align-items-center justify-content-end justify-content-lg-start">
-                                                <div class="comment-count">
-                                                    コメント
-                                                    <div class="count text-latin ml-10">123</div>
-                                                </div>
-                                                <div class="favorite-count ml-20">
-                                                    <img src="images/icons/heart-gray.svg" alt=""> 
-                                                    <span class="count text-latin">123</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <div class="post-item-5 d-flex">
-                                        <div class="thumb">
-                                            <div class="icon-star">
-                                                <img src="images/icons/star-yellow.svg" alt="">
-                                            </div>
-                                            <a href="spot-detail.html">
-                                                <div class="ratio thumb-image">
-                                                    <img src="images/demo/1.png" alt="">
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="item-content flex-fill d-flex flex-column justify-content-between">
-                                            <div class="area d-flex align-items-center">
-                                                <div class="icon"></div>
-                                                <div>
-                                                    <img src="images/area/akita.svg" alt="">
-                                                </div>
-                                            </div>
-                                            <a href="spot-detail.html">
-                                                <div class="item-title">グランピング・<span class="text-latin">RISING SUN</span></div>
-                                            </a>
-                                            <div class="counters d-flex align-items-center justify-content-end justify-content-lg-start">
-                                                <div class="comment-count">
-                                                    コメント
-                                                    <div class="count text-latin ml-10">123</div>
-                                                </div>
-                                                <div class="favorite-count ml-20">
-                                                    <img src="images/icons/heart-gray.svg" alt=""> 
-                                                    <span class="count text-latin">123</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <div class="post-item-5 d-flex">
-                                        <div class="thumb">
-                                            <div class="icon-star">
-                                                <img src="images/icons/star-yellow.svg" alt="">
-                                            </div>
-                                            <a href="spot-detail.html">
-                                                <div class="ratio thumb-image">
-                                                    <img src="images/demo/1.png" alt="">
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="item-content flex-fill d-flex flex-column justify-content-between">
-                                            <div class="area d-flex align-items-center">
-                                                <div class="icon"></div>
-                                                <div>
-                                                    <img src="images/area/akita.svg" alt="">
-                                                </div>
-                                            </div>
-                                            <a href="spot-detail.html">
-                                                <div class="item-title">グランピング・<span class="text-latin">RISING SUN</span></div>
-                                            </a>
-                                            <div class="counters d-flex align-items-center justify-content-end justify-content-lg-start">
-                                                <div class="comment-count">
-                                                    コメント
-                                                    <div class="count text-latin ml-10">123</div>
-                                                </div>
-                                                <div class="favorite-count ml-20">
-                                                    <img src="images/icons/heart-gray.svg" alt=""> 
-                                                    <span class="count text-latin">123</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <div class="post-item-5 d-flex">
-                                        <div class="thumb">
-                                            <div class="icon-star">
-                                                <img src="images/icons/star-yellow.svg" alt="">
-                                            </div>
-                                            <a href="spot-detail.html">
-                                                <div class="ratio thumb-image">
-                                                    <img src="images/demo/1.png" alt="">
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="item-content flex-fill d-flex flex-column justify-content-between">
-                                            <div class="area d-flex align-items-center">
-                                                <div class="icon"></div>
-                                                <div>
-                                                    <img src="images/area/akita.svg" alt="">
-                                                </div>
-                                            </div>
-                                            <a href="spot-detail.html">
-                                                <div class="item-title">グランピング・<span class="text-latin">RISING SUN</span></div>
-                                            </a>
-                                            <div class="counters d-flex align-items-center justify-content-end justify-content-lg-start">
-                                                <div class="comment-count">
-                                                    コメント
-                                                    <div class="count text-latin ml-10">123</div>
-                                                </div>
-                                                <div class="favorite-count ml-20">
-                                                    <img src="images/icons/heart-gray.svg" alt=""> 
-                                                    <span class="count text-latin">123</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <div class="post-item-5 d-flex">
-                                        <div class="thumb">
-                                            <div class="icon-star">
-                                                <img src="images/icons/star-yellow.svg" alt="">
-                                            </div>
-                                            <a href="spot-detail.html">
-                                                <div class="ratio thumb-image">
-                                                    <img src="images/demo/1.png" alt="">
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="item-content flex-fill d-flex flex-column justify-content-between">
-                                            <div class="area d-flex align-items-center">
-                                                <div class="icon"></div>
-                                                <div>
-                                                    <img src="images/area/akita.svg" alt="">
-                                                </div>
-                                            </div>
-                                            <a href="spot-detail.html">
-                                                <div class="item-title">グランピング・<span class="text-latin">RISING SUN</span></div>
-                                            </a>
-                                            <div class="counters d-flex align-items-center justify-content-end justify-content-lg-start">
-                                                <div class="comment-count">
-                                                    コメント
-                                                    <div class="count text-latin ml-10">123</div>
-                                                </div>
-                                                <div class="favorite-count ml-20">
-                                                    <img src="images/icons/heart-gray.svg" alt=""> 
-                                                    <span class="count text-latin">123</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <div class="post-item-5 d-flex">
-                                        <div class="thumb">
-                                            <div class="icon-star">
-                                                <img src="images/icons/star-yellow.svg" alt="">
-                                            </div>
-                                            <a href="spot-detail.html">
-                                                <div class="ratio thumb-image">
-                                                    <img src="images/demo/1.png" alt="">
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="item-content flex-fill d-flex flex-column justify-content-between">
-                                            <div class="area d-flex align-items-center">
-                                                <div class="icon"></div>
-                                                <div>
-                                                    <img src="images/area/akita.svg" alt="">
-                                                </div>
-                                            </div>
-                                            <a href="spot-detail.html">
-                                                <div class="item-title">グランピング・<span class="text-latin">RISING SUN</span></div>
-                                            </a>
-                                            <div class="counters d-flex align-items-center justify-content-end justify-content-lg-start">
-                                                <div class="comment-count">
-                                                    コメント
-                                                    <div class="count text-latin ml-10">123</div>
-                                                </div>
-                                                <div class="favorite-count ml-20">
-                                                    <img src="images/icons/heart-gray.svg" alt=""> 
-                                                    <span class="count text-latin">123</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <div class="post-item-5 d-flex">
-                                        <div class="thumb">
-                                            <div class="icon-star">
-                                                <img src="images/icons/star-yellow.svg" alt="">
-                                            </div>
-                                            <a href="spot-detail.html">
-                                                <div class="ratio thumb-image">
-                                                    <img src="images/demo/1.png" alt="">
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="item-content flex-fill d-flex flex-column justify-content-between">
-                                            <div class="area d-flex align-items-center">
-                                                <div class="icon"></div>
-                                                <div>
-                                                    <img src="images/area/akita.svg" alt="">
-                                                </div>
-                                            </div>
-                                            <a href="spot-detail.html">
-                                                <div class="item-title">グランピング・<span class="text-latin">RISING SUN</span></div>
-                                            </a>
-                                            <div class="counters d-flex align-items-center justify-content-end justify-content-lg-start">
-                                                <div class="comment-count">
-                                                    コメント
-                                                    <div class="count text-latin ml-10">123</div>
-                                                </div>
-                                                <div class="favorite-count ml-20">
-                                                    <img src="images/icons/heart-gray.svg" alt=""> 
-                                                    <span class="count text-latin">123</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <div class="post-item-5 d-flex">
-                                        <div class="thumb">
-                                            <div class="icon-star">
-                                                <img src="images/icons/star-yellow.svg" alt="">
-                                            </div>
-                                            <a href="spot-detail.html">
-                                                <div class="ratio thumb-image">
-                                                    <img src="images/demo/1.png" alt="">
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="item-content flex-fill d-flex flex-column justify-content-between">
-                                            <div class="area d-flex align-items-center">
-                                                <div class="icon"></div>
-                                                <div>
-                                                    <img src="images/area/akita.svg" alt="">
-                                                </div>
-                                            </div>
-                                            <a href="spot-detail.html">
-                                                <div class="item-title">グランピング・<span class="text-latin">RISING SUN</span></div>
-                                            </a>
-                                            <div class="counters d-flex align-items-center justify-content-end justify-content-lg-start">
-                                                <div class="comment-count">
-                                                    コメント
-                                                    <div class="count text-latin ml-10">123</div>
-                                                </div>
-                                                <div class="favorite-count ml-20">
-                                                    <img src="images/icons/heart-gray.svg" alt=""> 
-                                                    <span class="count text-latin">123</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <div class="post-item-5 d-flex">
-                                        <div class="thumb">
-                                            <div class="icon-star">
-                                                <img src="images/icons/star-yellow.svg" alt="">
-                                            </div>
-                                            <a href="spot-detail.html">
-                                                <div class="ratio thumb-image">
-                                                    <img src="images/demo/1.png" alt="">
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="item-content flex-fill d-flex flex-column justify-content-between">
-                                            <div class="area d-flex align-items-center">
-                                                <div class="icon"></div>
-                                                <div>
-                                                    <img src="images/area/akita.svg" alt="">
-                                                </div>
-                                            </div>
-                                            <a href="spot-detail.html">
-                                                <div class="item-title">グランピング・<span class="text-latin">RISING SUN</span></div>
-                                            </a>
-                                            <div class="counters d-flex align-items-center justify-content-end justify-content-lg-start">
-                                                <div class="comment-count">
-                                                    コメント
-                                                    <div class="count text-latin ml-10">123</div>
-                                                </div>
-                                                <div class="favorite-count ml-20">
-                                                    <img src="images/icons/heart-gray.svg" alt=""> 
-                                                    <span class="count text-latin">123</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <div class="post-item-5 d-flex">
-                                        <div class="thumb">
-                                            <div class="icon-star">
-                                                <img src="images/icons/star-yellow.svg" alt="">
-                                            </div>
-                                            <a href="spot-detail.html">
-                                                <div class="ratio thumb-image">
-                                                    <img src="images/demo/1.png" alt="">
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="item-content flex-fill d-flex flex-column justify-content-between">
-                                            <div class="area d-flex align-items-center">
-                                                <div class="icon"></div>
-                                                <div>
-                                                    <img src="images/area/akita.svg" alt="">
-                                                </div>
-                                            </div>
-                                            <a href="spot-detail.html">
-                                                <div class="item-title">グランピング・<span class="text-latin">RISING SUN</span></div>
-                                            </a>
-                                            <div class="counters d-flex align-items-center justify-content-end justify-content-lg-start">
-                                                <div class="comment-count">
-                                                    コメント
-                                                    <div class="count text-latin ml-10">123</div>
-                                                </div>
-                                                <div class="favorite-count ml-20">
-                                                    <img src="images/icons/heart-gray.svg" alt=""> 
-                                                    <span class="count text-latin">123</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                @endforeach
                             </div>
                         </div>
                         <div class="mt-30 d-flex justify-content-center">
-                            <a href="spots.html" class="button-style-1 button">スポットを探す</a>
+                            <a href="{{route('list_spot')}}" class="button-style-1 button">スポットを探す</a>
                         </div>
                     </section>
 
@@ -1264,7 +551,7 @@
                             <div class="section-header">
                                 <div class="title d-flex align-items-center justify-content-md-center">
                                     <div>
-                                        <img src="images/tohoku-6-calendar.svg" alt="">
+                                        <img src="/web-assets/images/tohoku-6-calendar.svg" alt="">
                                     </div>
                                     <span class="ml-30">新着スポット</span>
                                 </div>
@@ -1277,11 +564,11 @@
                                     <div class="post-item-6">
                                         <div class="thumb">
                                             <div class="icon-star">
-                                                <img src="images/icons/star-yellow.svg" alt="">
+                                                <img src="/web-assets/images/icons/star-yellow.svg" alt="">
                                             </div>
                                             <a href="feature-detail.html">
                                                 <div class="ratio thumb-image thumb-hover-anim">
-                                                    <img src="images/demo/1.png" alt="">
+                                                    <img src="/web-assets/images/demo/1.png" alt="">
                                                 </div>
                                             </a>
                                         </div>
@@ -1293,7 +580,7 @@
                                                 <div class="area d-flex align-items-center">
                                                     <div class="icon"></div>
                                                     <div>
-                                                        <img src="images/area/akita.svg" alt="">
+                                                        <img src="/web-assets/images/area/akita.svg" alt="">
                                                     </div>
                                                 </div>
                                             </div>
@@ -1306,7 +593,7 @@
                                             <div class="item-desc">秋田県雄勝郡羽後町足田字五輪坂下43-4</div>
                                             <div class="counters d-flex align-items-center justify-content-end"> 
                                                 <div class="favorite-count ml-20">
-                                                    <img src="images/icons/heart-gray.svg" alt=""> 
+                                                    <img src="/web-assets/images/icons/heart-gray.svg" alt=""> 
                                                     <span class="count text-latin">123</span>
                                                 </div>
                                             </div>
@@ -1317,11 +604,11 @@
                                     <div class="post-item-6">
                                         <div class="thumb">
                                             <div class="icon-star">
-                                                <img src="images/icons/star-yellow.svg" alt="">
+                                                <img src="/web-assets/images/icons/star-yellow.svg" alt="">
                                             </div>
                                             <a href="feature-detail.html">
                                                 <div class="ratio thumb-image thumb-hover-anim">
-                                                    <img src="images/demo/1.png" alt="">
+                                                    <img src="/web-assets/images/demo/1.png" alt="">
                                                 </div>
                                             </a>
                                         </div>
@@ -1333,7 +620,7 @@
                                                 <div class="area d-flex align-items-center">
                                                     <div class="icon"></div>
                                                     <div>
-                                                        <img src="images/area/akita.svg" alt="">
+                                                        <img src="/web-assets/images/area/akita.svg" alt="">
                                                     </div>
                                                 </div>
                                             </div>
@@ -1346,7 +633,7 @@
                                             <div class="item-desc">秋田県雄勝郡羽後町足田字五輪坂下43-4</div>
                                             <div class="counters d-flex align-items-center justify-content-end"> 
                                                 <div class="favorite-count ml-20">
-                                                    <img src="images/icons/heart-gray.svg" alt=""> 
+                                                    <img src="/web-assets/images/icons/heart-gray.svg" alt=""> 
                                                     <span class="count text-latin">123</span>
                                                 </div>
                                             </div>
@@ -1357,11 +644,11 @@
                                     <div class="post-item-6">
                                         <div class="thumb">
                                             <div class="icon-star">
-                                                <img src="images/icons/star-yellow.svg" alt="">
+                                                <img src="/web-assets/images/icons/star-yellow.svg" alt="">
                                             </div>
                                             <a href="feature-detail.html">
                                                 <div class="ratio thumb-image thumb-hover-anim">
-                                                    <img src="images/demo/1.png" alt="">
+                                                    <img src="/web-assets/images/demo/1.png" alt="">
                                                 </div>
                                             </a>
                                         </div>
@@ -1373,7 +660,7 @@
                                                 <div class="area d-flex align-items-center">
                                                     <div class="icon"></div>
                                                     <div>
-                                                        <img src="images/area/akita.svg" alt="">
+                                                        <img src="/web-assets/images/area/akita.svg" alt="">
                                                     </div>
                                                 </div>
                                             </div>
@@ -1386,7 +673,7 @@
                                             <div class="item-desc">秋田県雄勝郡羽後町足田字五輪坂下43-4</div>
                                             <div class="counters d-flex align-items-center justify-content-end"> 
                                                 <div class="favorite-count ml-20">
-                                                    <img src="images/icons/heart-gray.svg" alt=""> 
+                                                    <img src="/web-assets/images/icons/heart-gray.svg" alt=""> 
                                                     <span class="count text-latin">123</span>
                                                 </div>
                                             </div>
@@ -1397,11 +684,11 @@
                                     <div class="post-item-6">
                                         <div class="thumb">
                                             <div class="icon-star">
-                                                <img src="images/icons/star-yellow.svg" alt="">
+                                                <img src="/web-assets/images/icons/star-yellow.svg" alt="">
                                             </div>
                                             <a href="feature-detail.html">
                                                 <div class="ratio thumb-image thumb-hover-anim">
-                                                    <img src="images/demo/1.png" alt="">
+                                                    <img src="/web-assets/images/demo/1.png" alt="">
                                                 </div>
                                             </a>
                                         </div>
@@ -1413,7 +700,7 @@
                                                 <div class="area d-flex align-items-center">
                                                     <div class="icon"></div>
                                                     <div>
-                                                        <img src="images/area/akita.svg" alt="">
+                                                        <img src="/web-assets/images/area/akita.svg" alt="">
                                                     </div>
                                                 </div>
                                             </div>
@@ -1426,7 +713,7 @@
                                             <div class="item-desc">秋田県雄勝郡羽後町足田字五輪坂下43-4</div>
                                             <div class="counters d-flex align-items-center justify-content-end"> 
                                                 <div class="favorite-count ml-20">
-                                                    <img src="images/icons/heart-gray.svg" alt=""> 
+                                                    <img src="/web-assets/images/icons/heart-gray.svg" alt=""> 
                                                     <span class="count text-latin">123</span>
                                                 </div>
                                             </div>
@@ -1437,11 +724,11 @@
                                     <div class="post-item-6">
                                         <div class="thumb">
                                             <div class="icon-star">
-                                                <img src="images/icons/star-yellow.svg" alt="">
+                                                <img src="/web-assets/images/icons/star-yellow.svg" alt="">
                                             </div>
                                             <a href="feature-detail.html">
                                                 <div class="ratio thumb-image thumb-hover-anim">
-                                                    <img src="images/demo/1.png" alt="">
+                                                    <img src="/web-assets/images/demo/1.png" alt="">
                                                 </div>
                                             </a>
                                         </div>
@@ -1453,7 +740,7 @@
                                                 <div class="area d-flex align-items-center">
                                                     <div class="icon"></div>
                                                     <div>
-                                                        <img src="images/area/akita.svg" alt="">
+                                                        <img src="/web-assets/images/area/akita.svg" alt="">
                                                     </div>
                                                 </div>
                                             </div>
@@ -1466,7 +753,7 @@
                                             <div class="item-desc">秋田県雄勝郡羽後町足田字五輪坂下43-4</div>
                                             <div class="counters d-flex align-items-center justify-content-end"> 
                                                 <div class="favorite-count ml-20">
-                                                    <img src="images/icons/heart-gray.svg" alt=""> 
+                                                    <img src="/web-assets/images/icons/heart-gray.svg" alt=""> 
                                                     <span class="count text-latin">123</span>
                                                 </div>
                                             </div>
@@ -1477,11 +764,11 @@
                                     <div class="post-item-6">
                                         <div class="thumb">
                                             <div class="icon-star">
-                                                <img src="images/icons/star-yellow.svg" alt="">
+                                                <img src="/web-assets/images/icons/star-yellow.svg" alt="">
                                             </div>
                                             <a href="feature-detail.html">
                                                 <div class="ratio thumb-image thumb-hover-anim">
-                                                    <img src="images/demo/1.png" alt="">
+                                                    <img src="/web-assets/images/demo/1.png" alt="">
                                                 </div>
                                             </a>
                                         </div>
@@ -1493,7 +780,7 @@
                                                 <div class="area d-flex align-items-center">
                                                     <div class="icon"></div>
                                                     <div>
-                                                        <img src="images/area/akita.svg" alt="">
+                                                        <img src="/web-assets/images/area/akita.svg" alt="">
                                                     </div>
                                                 </div>
                                             </div>
@@ -1506,7 +793,7 @@
                                             <div class="item-desc">秋田県雄勝郡羽後町足田字五輪坂下43-4</div>
                                             <div class="counters d-flex align-items-center justify-content-end"> 
                                                 <div class="favorite-count ml-20">
-                                                    <img src="images/icons/heart-gray.svg" alt=""> 
+                                                    <img src="/web-assets/images/icons/heart-gray.svg" alt=""> 
                                                     <span class="count text-latin">123</span>
                                                 </div>
                                             </div>
@@ -1516,7 +803,7 @@
                             </div>
                         </div>
                         <div class="mt-30 d-flex justify-content-center">
-                            <a href="events.html" class="button-style-1 button">イベントを探す</a>
+                            <a href="" class="button-style-1 button">イベントを探す</a>
                         </div>
                     </section>
 
@@ -1525,7 +812,7 @@
                             <div class="section-header">
                                 <div class="title d-flex align-items-center justify-content-md-center pb-0 pb-md-30">
                                     <div>
-                                        <img src="images/tohoku-goods.svg" alt="">
+                                        <img src="/web-assets/images/tohoku-goods.svg" alt="">
                                     </div>
                                     <span class="ml-30">ポイント交換グッズ</span>
                                 </div>                                
@@ -1538,7 +825,7 @@
                                         <div class="thumb">                                            
                                             <a href="good-detail.html">
                                                 <div class="ratio thumb-image">
-                                                    <img src="images/demo/1.png" alt="">
+                                                    <img src="/web-assets/images/demo/1.png" alt="">
                                                 </div>
                                             </a>
                                         </div>
@@ -1554,7 +841,7 @@
                                         <div class="thumb">                                            
                                             <a href="good-detail.html">
                                                 <div class="ratio thumb-image">
-                                                    <img src="images/demo/1.png" alt="">
+                                                    <img src="/web-assets/images/demo/1.png" alt="">
                                                 </div>
                                             </a>
                                         </div>
@@ -1570,7 +857,7 @@
                                         <div class="thumb">                                            
                                             <a href="good-detail.html">
                                                 <div class="ratio thumb-image">
-                                                    <img src="images/demo/1.png" alt="">
+                                                    <img src="/web-assets/images/demo/1.png" alt="">
                                                 </div>
                                             </a>
                                         </div>
@@ -1586,7 +873,7 @@
                                         <div class="thumb">                                            
                                             <a href="good-detail.html">
                                                 <div class="ratio thumb-image">
-                                                    <img src="images/demo/1.png" alt="">
+                                                    <img src="/web-assets/images/demo/1.png" alt="">
                                                 </div>
                                             </a>
                                         </div>
@@ -1619,17 +906,17 @@
                         <ul class="footer-social-buttons d-flex align-items-center justify-content-center">
                             <li>
                                 <a href="">
-                                    <img src="images/icons/twitter.svg" alt="">
+                                    <img src="/web-assets/images/icons/twitter.svg" alt="">
                                 </a>
                             </li>
                             <li>
                                 <a href="">
-                                    <img src="images/icons/instagram.svg" alt="">
+                                    <img src="/web-assets/images/icons/instagram.svg" alt="">
                                 </a>
                             </li>
                             <li>
                                 <a href="">
-                                    <img src="images/icons/tiktok.svg" alt="">
+                                    <img src="/web-assets/images/icons/tiktok.svg" alt="">
                                 </a>
                             </li>
                         </ul>
@@ -1735,38 +1022,38 @@
                 </div>
                 <div class="panel_body flex-fill">
                     <div class="number-6">
-                        <img src="images/number-6.svg" alt="">
+                        <img src="/web-assets/images/number-6.svg" alt="">
                     </div>
                     <div class="d-flex justify-content-center">
                         <ul class="area-selection-list">
                             <li>
                                 <label class="custom-radio-2">
-                                    <input type="radio" name="area-select"> <span class="checkmark"></span> <img src="images/area/akita.svg" alt="">
+                                    <input type="radio" name="area-select"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">
                                 </label>
                             </li>
                             <li>
                                 <label class="custom-radio-2">
-                                    <input type="radio" name="area-select"> <span class="checkmark"></span> <img src="images/area/akita.svg" alt="">
+                                    <input type="radio" name="area-select"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">
                                 </label>
                             </li>
                             <li>
                                 <label class="custom-radio-2">
-                                    <input type="radio" name="area-select" checked> <span class="checkmark"></span> <img src="images/area/akita.svg" alt="">
+                                    <input type="radio" name="area-select" checked> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">
                                 </label>
                             </li>
                             <li>
                                 <label class="custom-radio-2">
-                                    <input type="radio" name="area-select"> <span class="checkmark"></span> <img src="images/area/akita.svg" alt="">
+                                    <input type="radio" name="area-select"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">
                                 </label>
                             </li>
                             <li>
                                 <label class="custom-radio-2">
-                                    <input type="radio" name="area-select"> <span class="checkmark"></span> <img src="images/area/akita.svg" alt="">
+                                    <input type="radio" name="area-select"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">
                                 </label>
                             </li>
                             <li>
                                 <label class="custom-radio-2">
-                                    <input type="radio" name="area-select"> <span class="checkmark"></span> <img src="images/area/akita.svg" alt="">
+                                    <input type="radio" name="area-select"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">
                                 </label>
                             </li>
                         </ul>
@@ -1792,44 +1079,44 @@
                         <div class="row space-x-20 space-y-20">
                             <div class="col-6">
                                 <label class="custom-radio">
-                                    <input type="radio" name="category-select"> <span class="checkmark"></span> グルメ
+                                    <input type="radio" name="category-select" value="1"> <span class="checkmark"></span> グルメ
                                 </label>
                             </div>
                             <div class="col-6">
                                 <label class="custom-radio">
-                                    <input type="radio" name="category-select"> <span class="checkmark"></span> ショッピング
+                                    <input type="radio" name="category-select" value="2"> <span class="checkmark"></span> ショッピング
                                 </label>
                             </div>
                             <div class="col-6">
                                 <label class="custom-radio">
-                                    <input type="radio" name="category-select" checked> <span class="checkmark"></span> 宿泊
+                                    <input type="radio" name="category-select" value="3"> <span class="checkmark"></span> 宿泊
                                 </label>
                             </div>
                             <div class="col-6">
                                 <label class="custom-radio">
-                                    <input type="radio" name="category-select"> <span class="checkmark"></span> 体験
+                                    <input type="radio" name="category-select" value="4"> <span class="checkmark"></span> 体験
                                 </label>
                             </div>
                             <div class="col-6">
                                 <label class="custom-radio">
-                                    <input type="radio" name="category-select"> <span class="checkmark"></span> 自然
+                                    <input type="radio" name="category-select" value="5"> <span class="checkmark"></span> 自然
                                 </label>
                             </div>
                             <div class="col-6">
                                 <label class="custom-radio">
-                                    <input type="radio" name="category-select"> <span class="checkmark"></span> SNS映え
+                                    <input type="radio" name="category-select" value="6"> <span class="checkmark"></span> SNS映え
                                 </label>
                             </div>
                             <div class="col-6">
                                 <label class="custom-radio">
-                                    <input type="radio" name="category-select"> <span class="checkmark"></span> 歴史
+                                    <input type="radio" name="category-select" value="7" > <span class="checkmark"></span> 歴史
                                 </label>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="flex-auto panel_footer text-align-center">
-                    <div class="button button-style-1">
+                    <div class="button button-style-1" onclick="test()">
                         絞り込む
                     </div>
                 </div>
@@ -1839,15 +1126,17 @@
 
         <div class="fixed-number-6 d-flex align-items-center justify-content-center" data-show-modal="#number-6-button-actions">
             <div>
-                <img src="images/number-6.svg" alt="" class="d-block">
+                <img src="/web-assets/images/number-6.svg" alt="" class="d-block">
             </div>
         </div>
-
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.js"></script>
         
-        <script src="js/components.js"></script>
-        <script src="js/main.js"></script>
-        <script src="js/tohoku-calendar.js"></script>
+        <script src="/web-assets/js/components.js"></script>
+        <script src="/web-assets/js/main.js"></script>
+        <script src="/web-assets/js/tohoku-calendar.js"></script>
+        <script src="/web-assets/js/index.js"></script>
         
     </body>
 
 </html>
+@endif

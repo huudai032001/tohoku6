@@ -5,6 +5,8 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="csrf-token" content="{{ csrf_token() }}" />
+
         <title>Spot detail</title>
 
         <link rel="stylesheet" href="/web-assets/css/framework-full.css">
@@ -153,12 +155,18 @@
                                 <span class="tag">自然</span>
                                 <span class="tag">宿泊</span>
                             </div>
+                            @if(Auth::check())
+                            <a onclick="favorite()">
+                            @else
+                            <a >
+                            @endif
                             <div class="favorite-count d-flex align-items-center">
                                 <div class="icon">
                                     <img src="/web-assets/images/icons/heart-gray.svg" alt="">
                                 </div>
-                                <div class="count-number">123</div>
+                                <div class="count-number">{{$info_spot->favorite}}</div>
                             </div>
+                            </a>
                         </div>                        
                     </div>
                     <div class="spot-images">
@@ -203,26 +211,49 @@
                     </div>
                     <div class="toggle-content">
                         <div class="post-my-review-form">
+                        @if(Auth::check())
+                            <form action="{{route('spotComment')}}" method="post">
+                            <input type="hidden" name="_token" value="{{csrf_token()}}">
+                            <input type="hidden" name="user_id" id="user_id" value="{{$user->id}}">
+                            <input type="hidden" name="posts_id" id="posts_id" value="{{$info_spot->id}}">
+                            <input type="hidden" name="name_user" id="name_user" value="{{$user->name}}">
+
                             <div class="container">
                                 <div class="d-flex align-items-center">
                                     <div class="avatar">
                                         <img src="/web-assets/images/profile.svg" alt="">
                                     </div>
                                     <div class="user-name">
-                                        TOGASHI-DANGAN
+                                        {{$user->name}}
                                     </div>
                                 </div>
                                 <div class="ml-50">
-                                    <textarea class="textarea review-content-input" rows="4"></textarea>
+                                    <textarea class="textarea review-content-input" rows="4" name="comment"></textarea>
+                                    @error('comment')
+                                    <div class="form-error-msg">{{ $message }}</div>
+                                    @enderror
                                 </div>
+
                                 <div class="text-align-center">
                                     <button class="button button-style-3">口コミを投稿する</button>
                                 </div>
                             </div>
+                            </form>
+                        @endif
                         </div>
                         <div class="review-list">
                             <div class="post-container">
-                                <div class="post-row row">
+                                <div class="post-row row" id="list_comment">
+                                    @foreach($list_comment as $value)
+                                    
+                                    <?php
+                                        date_default_timezone_set('Asia/Ho_Chi_Minh');
+                                        $time_com = strtotime($value->created_at);
+                                        $get_time = time();
+                                        $hours = intval(($get_time - $time_com)/ 3600);
+                                        $mins = intval(($get_time - $time_com)/ 60);
+
+                                    ?>
                                     <div class="col-12">
                                         <div class="review-item">
                                             <div class="d-flex justify-content-between">
@@ -231,12 +262,12 @@
                                                         <img src="/web-assets/images/profile.svg" alt="">
                                                     </div>
                                                     <div class="user-name">
-                                                        TOGASHI-DANGAN
+                                                        {{$value->name_user}}
                                                     </div>
                                                 </div>
                                                 <div class="d-flex align-items-center">
-                                                    <div class="review-time">1日前</div>
-                                                    <div class="toggle-action-button d-flex align-items-center" data-show-modal="#modal-review-actions">
+                                                    <div class="review-time">{{$hours}}:{{$mins}}日前</div>
+                                                    <div class="toggle-action-button d-flex align-items-center" data-show-modal="#modal-review-actions" data-id="{{$value->id}}">
                                                         <span></span>
                                                         <span></span>
                                                         <span></span>
@@ -244,40 +275,16 @@
                                                 </div>
                                             </div>
                                             <div class="review-content">
-                                                仙台から全国へ弾丸する男子仙台から全国へ弾丸する男子仙台から全国へ弾丸する男子仙台から全国へ弾丸する男子仙台から全国へ弾丸する男子仙台から全国へ弾丸する男子仙台から全国へ弾丸
+                                            {{$value->content}}
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-12">
-                                        <div class="review-item">
-                                            <div class="d-flex justify-content-between">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="avatar">
-                                                        <img src="/web-assets/images/profile.svg" alt="">
-                                                    </div>
-                                                    <div class="user-name">
-                                                        TOGASHI-DANGAN
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="review-time">1日前</div>
-                                                    <div class="toggle-action-button d-flex align-items-center" data-show-modal="#modal-review-actions">
-                                                        <span></span>
-                                                        <span></span>
-                                                        <span></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="review-content">
-                                                仙台から全国へ弾丸する男子仙台から全国へ弾丸する男子仙台から全国へ弾丸する男子仙台から全国へ弾丸する男子仙台から全国へ弾丸する男子仙台から全国へ弾丸する男子仙台から全国へ弾丸
-                                            </div>
-                                        </div>
-                                    </div>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
                         <div class="load-more-review text-align-center">
-                            <button class="button button-style-3">もっと見る（12件）</button>
+                            <button class="button button-style-3" onclick="all_comment({{$info_spot->id}})">もっと見る（12件）</button>
                         </div>
                     </div>
                 </section>
@@ -547,14 +554,16 @@
             </div>
         </div>
 
-        <div id="modal-review-actions" class="modal">
+        <div id="modal-review-actions" class="modal modal_comment">
+            <input type="hidden" id="id_comment" value="">
             <div class="modal_backdrop"></div>
             <div class="modal_dialog">
                 <div class="modal_close">×</div>
                 <div class="modal_title">この口コミについて</div>
                 <ul class="modal_menu">
                     <li>
-                        <a href="#" data-to-delete-review>削除する</a>
+                        
+                        <a onclick="delete_comment()" data-to-delete-review>削除する</a>
                     </li>
                     <li>
                         <a href="#" data-to-report-review>事務局に報告する</a>
@@ -679,6 +688,8 @@
         <script src="/web-assets/js/components.js"></script>
         <script src="/web-assets/js/main.js"></script>
         <script src="/web-assets/js/tohoku-calendar.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="/web-assets/js/spot-detail.js"></script>
         
     </body>
 

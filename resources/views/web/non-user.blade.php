@@ -5,7 +5,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Preview spot</title>
+        <title></title>
 
         <link rel="stylesheet" href="/web-assets/css/framework-full.css">
 
@@ -31,7 +31,7 @@
 
 
                 <!-- Menu bar -->
-                <div class="nav-bar d-flex align-items-center justify-content-between">
+                <div class="nav-bar nav-bar-dark d-flex align-items-center justify-content-between">
                     <div class="nav-bar-left d-flex">
                         <div class="menu-button" data-toggle="nav-bar-panel">
                             <span></span>
@@ -39,30 +39,14 @@
                             <span></span>
                         </div>
                     </div>
-                    <div class="nav-bar-center d-flex justify-content-center">
-                        <div class="logo">
-                            <a href="index.html">
-                                <img src="/web-assets/images/number-6.svg" alt="Tohoku 6">
+                    
+                    <div class="nav-bar-right d-flex justify-content-end flex-fill">
+                        <div class="non-user-menu-buttons d-flex align-items-center">
+                            <a href="{{route('signin')}}" class="login-button button">
+                                ログイン
                             </a>
-                        </div>
-                    </div>
-                    <div class="nav-bar-right d-flex justify-content-end">
-                        <div class="user-menu-icons d-flex">
-                            <div data-show-modal="#user-notification-modal">
-                                <div class="icon">
-                                    <img src="/web-assets/images/icons/notification.svg" alt="notification">
-                                    <div class="has-notification-sight"></div>
-                                </div>
-                            </div>
-                            <a href="">
-                                <div class="icon">
-                                    <img src="/web-assets/images/icons/star.svg" alt="favorite">
-                                </div>
-                            </a>
-                            <a href="">
-                                <div class="icon">
-                                    <img src="/web-assets/images/icons/search.svg" alt="search">
-                                </div>
+                            <a href="{{route('signup')}}" class="register-button button">
+                                新規登録
                             </a>
                         </div>
                     </div>
@@ -70,14 +54,7 @@
 
                 <div class="nav-bar-panel">
                     <div class="button-close" data-toggle="nav-bar-panel">×</div>
-                    <div class="profile-button">
-                        <a href="my-profile.html">
-                            <div class="profile-image">
-                                <img width="75" src="/web-assets/images/profile.svg" alt="profile">
-                            </div>
-                            <div class="profile-label">プロフィール</div>
-                        </a>
-                    </div>
+                    
                     <div class="nav-menu">
                         <ul class="ul-lv-1">
                             <li class="li-lv-1">
@@ -122,49 +99,7 @@
                 </div>
                 <!-- /Menu bar -->
 
-                <section class="spot-editing-form">
-                    <form action="{{route('PostSpotPreview')}}" method="post">
-                        <input type="hidden" name="_token" value="{{csrf_token()}}">
-                        <input type="hidden" value="{{$spot->id}}" name="id">
-                        <input type="hidden" value="{{$spot->name}}" name="name">
-                        <input type="hidden" value="{{$spot->location}}" name="location">
-                        <input type="hidden" value="{{$spot->intro}}" name="intro">
-                        <input type="hidden" value="{{$spot->name}}" name="name">
-                        <input type="hidden" value="{{$spot->image}}" name="image">
-                        <input type="hidden" value="{{$spot->category}}" name="category">
-
-                        <input type="hidden" value="{{$spot->sub_image}}" name="sub_image">
-
-                        <div class="section_header-2">
-                            <div class="container">                                
-                                <div class="title">
-                                    プレビュー
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="container px-0">
-                            <div style="background-color: #E3E3E3; height: 300px;"></div>
-                        </div>
-
-                        <div class="section-footer form-action-buttons">
-                            <div class="container">
-                                <div class="action-notice">こちらで投稿しますか？</div>
-                                <div class="row justify-content-center" style="--col-space-y: 15px;">
-                                    <div class="col-12 col-md-6">
-                                        <input class="button button-style-3 form-button" type="submit" value="次へ">
-                                        </a>
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <a href="#" class="button button-style-3 form-button" type="button" >戻る
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </form>
-                </section>
+              
 
                 <!-- Footer -->
                 <div id="footer" class="bg-white">

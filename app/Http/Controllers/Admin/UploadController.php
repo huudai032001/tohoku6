@@ -12,10 +12,10 @@ use Illuminate\Support\Facades\Storage;
 
 class UploadController
 {
-    public function index()
-    {        
-        return view('admin.upload.index');
-    }
+    // public function index()
+    // {        
+    //     return view('admin.upload.index');
+    // }
 
     public function getFileManagerItems(Request $request)
     {
@@ -24,7 +24,7 @@ class UploadController
         $items = [];
         if (!$files->isEmpty()) {            
             foreach ($files as $file) {
-                $items[] = $file->getJSData();
+                $items[] = $file->getJsData();
             }
                     
             $response_data['has_more'] = $files->hasMorePages();
@@ -41,16 +41,9 @@ class UploadController
 
         $file = $request->file('upload_file');
 
-        $result = \App\API\FileUpload::handleUploadFile($file);
+        $uploadService = new \App\Services\UploadService;
 
-        $responseData = [
-            'success' => $result->success,
-            'error_msg' => implode(', ', $result->messages),
-            'fatal_error' => $result->error,            
-            'file_data' => $result->success ? $result->getData('model')->getJSData() : null
-        ];
-
-        return response()->json($responseData);
+        return response()->json($uploadService->handleUploadFile($file));
     }
     
 }

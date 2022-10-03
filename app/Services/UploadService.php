@@ -9,13 +9,22 @@ use Illuminate\Support\Facades\Storage;
 
 class UploadService
 {
-    public static function handleUploadFile($file)
+    public function handleUploadFile($file)
     {
-        $result = new APIResult;
+        $result = [
+            'success' => false,
+            'error' => false,
+            'msg' => '',
+            'file_info' => null
+        ];
+        
+        // sleep(1);
+        // return $this->fakeResult();
 
         $is_image = substr($file->getMimeType(), 0, 5) == 'image';
         if (!$is_image) {
-            return $result->fail('This file type is not allowed.');
+            $result['msg'] = 'This file type is not allowed.';
+            return $result;
         }
 
         \DB::beginTransaction();
@@ -26,76 +35,106 @@ class UploadService
             $data->extension = $file->extension();
             $data->file_name = $file->hashName();
             $data->mime_type = $file->getMimeType();
-            $data->size = $file->getSize();
+            $data->file_size = $file->getSize();
 
             $file_info = getimagesize($file);
-            list($width, $height) = $file_info;
+            list($original_width, $original_height) = $file_info;
 
-            $fields = [
-                'width' => $width,
-                'height' => $height                    
+            $data_file_info = [
+                'width' => $original_width,
+                'height' => $original_height,
+                'versions' => []
             ];
             
+            $versions = [
+                'thumbnail' => [
+                    'max_width' => 256,
+                    'max_height' => 256   
+                ],
+                'medium' => [
+                    'max_width' => 512,
+                    'max_height' => 512   
+                ],
+                'large' => [
+                    'max_width' => 1200,
+                    'max_height' => 1200   
+                ],
+            ];            
 
             $pathinfo = pathinfo($data->file_name);
 
-            $thumbnail = Image::make($file)->resize(256, 256, function ($constraint) {
-                $constraint->aspectRatio();
-                $constraint->upsize();
-            });
-            $thumbnail_file_name = $pathinfo['filename'] . '-thumbnail.' . $data->extension;
+            foreach ($versions as $version_name => &$version) {
+                if ($original_width > $version['max_width'] || $original_height > $version['max_height']) {
 
-            $medium = Image::make($file)->resize(512, 512, function ($constraint) {
-                $constraint->aspectRatio();
-                $constraint->upsize();
-            });
-            $medium_file_name = $pathinfo['filename'] . '-medium.' . $data->extension;
+                    $version['file'] = Image::make($file)->resize($version['max_width'], $version['max_height'], function ($constraint) {
+                        $constraint->aspectRatio();
+                        $constraint->upsize();
+                    });
 
-            $large = Image::make($file)->resize(1200, 1200, function ($constraint) {
-                $constraint->aspectRatio();
-                $constraint->upsize();
-            });
-            $large_file_name = $pathinfo['filename'] . '-large.' . $data->extension;
+                    $version['max_width'] = 100;
 
-            // bug: filesize() return original file size
-            $fields['sizes'] = [
-                'thumbnail' => [
-                    'width' => '',
-                    'height' => '',                        
-                    'file_name' => $thumbnail_file_name
-                ],
-                'medium' => [
-                    'width' => '',
-                    'height' => '', 
-                    'file_name' => $medium_file_name
-                ],
-                'large' => [
-                    'width' => '',
-                    'height' => '',
-                    'file_name' => $large_file_name
-                ]
-            ];
+                    $version['file_name'] = sprintf(
+                        '%s-%s.%s',
+                        $pathinfo['filename'],
+                        $version_name,
+                        $data->extension
+                    );  
+                    
+                    // bug: filesize() return original file size
+                    $data_file_info['versions'][$version_name] = [
+                        'width' => '',
+                        'height' => '',                        
+                        'file_name' => $version['file_name']
+                    ];
 
-            $data->fields = $fields;
+                }
+            }           
+            
+
+            $data->file_info = $data_file_info;
 
             $file->storePublicly('/', 'public');
-            Storage::disk('public')->put($thumbnail_file_name, $thumbnail->stream(), 'public');
-            Storage::disk('public')->put($medium_file_name, $medium->stream(), 'public');
-            Storage::disk('public')->put($large_file_name, $large->stream(), 'public');
 
-            $data->save();
+            foreach ($versions as $version_name => $version) {
+                if (!empty($version['file']) && !empty($version['file_name'])) {
+                    Storage::disk('public')->put($version['file_name'], $version['file']->stream(), 'public');
+                }
+            }
 
-        $result->addData('model', $data);
-
+            $data->save();            
             \DB::commit();
 
-        } catch (\Exception $e) {
+            $result['success'] = true;
+            $result['file_info'] = $data->getJsData();
 
-            \DB::rollBack();   
+        } catch (\Exception $e) {
             
-            $result->error();
+            \DB::rollBack();
+            
+            \Log::error(sprintf(
+                '%s (%s line %s)',
+                $e->getMessage(),
+                $e->getFile(),
+                $e->getLine()
+            )); 
+            $result['error'] = 'true';
+            $result['msg'] = 'System error';     
         }
         
         return $result;
+    }
+
+    protected function fakeResult()
+    {
+        $success = rand(0, 1);
+        //$success = 1;
+        //$error = rand(0, 1);
+        $error = 0;
+        return [
+            'success' => $success == 1 ? true : false,
+            'error' => $error == 1 ? true : false,
+            'msg' => 'Error message.',
+            'file_info' => []
+        ];
     }
 }
