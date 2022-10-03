@@ -42,7 +42,14 @@ class UserController extends CommonDataController
     public function initDataTable($dataTable)
     {
         $dataTable->addSimpleColumn('login_name', __('user.login_name'));
-        $dataTable->addSimpleColumn('name', __('user.name'));
+        $dataTable->addColumn('name', __('user.name'), function ($item)
+        {
+            return $item->getName();
+        });
+        $dataTable->addColumn('name_kana', __('user.name_kana'), function ($item)
+        {
+            return $item->getNameKana();
+        });
         $dataTable->addSimpleColumn('email', __('common.email'));
         $dataTable->addColumn('role', __('user.role'), function ($item)
         {
@@ -118,14 +125,35 @@ class UserController extends CommonDataController
             ])
         ]);
 
+        $form->addGroups([
+            new Form\Upload([
+                'name' => 'avatar_image_id',
+                'label' => __('user.avatar'),
+                'multiple' => false,
+                'data' => $dataItem->avatar_image_id
+            ]),
+            new Form\Radio([
+                'name' => 'gender',
+                'label' => __('user.gender'),
+                'options' => [
+                    'male' => __('user.genders.male'),
+                    'female' => __('user.genders.female'),
+                    'secret' => __('user.genders.secret')
+                ],
+                'data' => $dataItem->gender,
+                'inline' => true
+            ]),
+           
+        ]);
+
     }
 
     public function ruleEdit($item)
     {
         $rule = [
             'login_name' => ['required', 'between:2,32', 'alpha_dash', 
-                    Rule::unique('users')->ignore($item->id),],
-            'email' => ['nullable', 'email'],
+                    Rule::unique('users')->ignore($item->id)],
+            'email' => ['nullable', 'email', Rule::unique('users')->ignore($item->id)],
             'password' => [],
             'role' => ['required'],
             'status' => ['required'],
@@ -138,14 +166,19 @@ class UserController extends CommonDataController
 
 
     protected function updateItem(Request $request, $item) {
+        if(!$item->id) {
+            $item->password = Hash::make($request->input('password'));
+            $item->fields = [];
+        }
         $item->login_name = $request->input('login_name');
-        
+        $item->sei = $request->input('name.sei');
+        $item->mei = $request->input('name.mei');
+        $item->sei_kana = $request->input('name.sei_kana');
+        $item->mei_kana = $request->input('name.mei_kana');
         $item->email = $request->input('email');
         $item->role = $request->input('role');
         $item->status = $request->input('status');
-        if(!$item->id) {
-            $item->password = Hash::make($request->input('password'));            
-        }        
+              
         $item->save();
     }
 

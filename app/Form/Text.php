@@ -6,20 +6,22 @@ use Illuminate\Http\Request;
 class Text extends FormGroup
 {
     public $type;
+    public $inline = false;
 
     public function __construct ($options = [])
     {
         parent::__construct($options);        
         $this->type = $options['type'] ?? 'text';
-
+        $this->inline = $options['inline'] ?? '';
         $session = request()->session();
         $this->value = $session->hasOldInput() ? old($this->name) : $this->data;
     }
    
     public function editMode()
     {
-        return sprintf('<input type="%s" class="form-control" name="%s" value="%s">', 
+        return sprintf('<input type="%s" class="form-control %s" name="%s" value="%s">', 
             $this->type,
+            $this->inline ? 'form-control-inline' : '',
             $this->name, 
             $this->value
         );

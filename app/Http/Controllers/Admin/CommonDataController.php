@@ -43,16 +43,15 @@ class CommonDataController extends Controller {
 
     public function __construct()
     {        
-        $this->modelName = $this->modelClass::getModelName();
         $this->modelSlug = Str::kebab(class_basename($this->modelClass));
         if (!$this->routeBase) {
             $this->routeBase = 'admin.' . $this->modelSlug . '.';
         }
         if (!$this->viewBase) {
             $this->viewBase = 'admin.data-management.' . $this->modelSlug . '.';
-        }
-        
-        View::share('modelName', $this->modelName);
+        }        
+
+        View::share('modelClass', $this->modelClass);    
         View::share('modelSlug', $this->modelSlug);
         View::share('viewBase', $this->viewBase);
         View::share('routeBase', $this->routeBase);        
@@ -171,8 +170,13 @@ class CommonDataController extends Controller {
         } catch (\Exception $e) {
             DB::rollBack();
             $this->hasTransactionError = true;
-            // FlashMsg::addError($e->getMessage());
-            Log::error($e->getMessage());            
+            
+            Log::error(sprintf(
+                '%s (%s line %s)',
+                $e->getMessage(),
+                $e->getFile(),
+                $e->getLine()
+            ));            
         }
     }
 
@@ -322,30 +326,25 @@ class CommonDataController extends Controller {
         $request->validate($this->ruleCreate($dataItem));
 
         $this->DBTransaction([$this, 'saveNew'], [$request, $dataItem]);
-        // dd($this->hasTransactionError);
 
         if($this->hasTransactionError) {
             FlashMsg::addError(__('message.unknown_error'));
             return back()->withInput();
         }
 
-        FlashMsg::addSuccess(__('message.item_created', ['item' => $this->modelName]));
+        FlashMsg::addSuccess(__('message.item_created', ['item' => $this->modelClass::getModelName()]));
         return redirect()->route($this->routeBase . 'index', ['sort' => 'newest']);
     }
 
     public function ruleCreate($item)
     {
-
         return $this->ruleEdit($item);
     }
 
     
     protected function saveNew(Request $request, $item)
     {
-        // dd($this->updateItem($request, $item));
-
         return $this->updateItem($request, $item);
-
     }
 
 
@@ -402,7 +401,7 @@ class CommonDataController extends Controller {
             return back()->withInput();
         }
 
-        FlashMsg::addSuccess(__('common.item_updated', ['item' => $this->modelName]));
+        FlashMsg::addSuccess(__('message.item_updated', ['item' => $this->modelClass::getModelName()]));
 
         return redirect()->route(                
             $this->routeBase . 'item-action',
@@ -435,7 +434,7 @@ class CommonDataController extends Controller {
         
         return $this->getView('bulk-delete')->with([
             'dataList' => $dataList,
-            'pageTitle' => __('common.delete_item', ['item' => $this->modelName])
+            'pageTitle' => __('common.delete_item', ['item' => $this->modelClass::getModelName()])
         ]);
     }
 

@@ -7,14 +7,14 @@
 
 @foreach ($form->getGroups() as $formGroup)
 
-    <div class="form-group row">
-        <div class="col-lg-2">
+    <div class="crud-form-group row" data-mode="{{ $mode }}">
+        <div class="col-md-2 mb-1 mb-md-0">
             {{ $formGroup->label }}
-            @if ($formGroup->required)
+            @if (($mode == 'edit') && $formGroup->required)
             <span class="text-danger">*</span>
             @endif
         </div>
-        <div class="col-lg-10">
+        <div class="col-md-10">
             <div class="form-control-wrap">
                 {!! $formGroup->{($mode ?: 'edit') . 'Mode'}() !!}
             </div>

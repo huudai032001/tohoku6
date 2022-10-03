@@ -102,6 +102,10 @@
                         </span>
                     </a>
                 </li> --}}
+
+                <li class="nav-item">
+                    <a href="{{ route('admin.file-library') }}" class="nav-link"><i class="icon-images2"></i> <span>{{ __('common.file_library') }}</span></a>
+                </li>
                 
                 <li class="nav-item">
                     <a href="{{ route('admin.user.index') }}" class="nav-link"><i class="icon-users"></i> <span>{{ __('common.user') }}</span></a>                    

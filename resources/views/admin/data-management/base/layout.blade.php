@@ -3,12 +3,12 @@
 @section('page-header-buttons')
 
     <a href="{{ route($routeBase . 'index') }}" class="btn btn-link btn-float text-body">
-        <i class="icon-list text-primary"></i> <span>{{ __('List') }}</span>
+        <i class="icon-list text-primary"></i> <span>{{ __('common.list') }}</span>
     </a>
     
     @if ($controller->createAble())
         <a href="{{ route($routeBase . 'general-action', ['action' => 'create']) }}" class="btn btn-link btn-float text-body">
-            <i class="icon-plus3 text-primary"></i> <span>{{ __('Create') }}</span>
+            <i class="icon-plus3 text-primary"></i> <span>{{ __('common.create') }}</span>
         </a>
     @endif
 

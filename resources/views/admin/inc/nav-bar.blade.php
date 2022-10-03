@@ -131,7 +131,7 @@
                 @endphp
                 @foreach ($langs as $lang_code => $lang)
                     @if ($lang_code == $current_lang)
-                        <img src="/admin-assets/images/flags/{{ $lang['flag'] }}" class="img-flag mr-2" alt="">
+                        <img src="/share-assets/flags/{{ $lang['flag'] }}" class="img-flag mr-2" alt="">
                         {{ $lang['name'] }}
                     @endif
                 @endforeach
@@ -140,7 +140,7 @@
         
             <div class="dropdown-menu">
                 @foreach ($langs as $lang_code => $lang)
-                    <a href="?setLocale={{ $lang_code }}" class="dropdown-item"><img src="/admin-assets/images/flags/{{ $lang['flag'] }}"
+                    <a href="?setLocale={{ $lang_code }}" class="dropdown-item"><img src="/share-assets/flags/{{ $lang['flag'] }}"
                             class="img-flag" alt=""> {{ $lang['name'] }}</a>                    
                 @endforeach               
             </div>
@@ -151,14 +151,14 @@
         @endphp
         <li class="nav-item nav-item-dropdown-lg dropdown dropdown-user h-100">
             <a href="#" class="navbar-nav-link navbar-nav-link-toggler dropdown-toggle d-inline-flex align-items-center h-100" data-toggle="dropdown">
-                <img src="/admin-assets/images/avatar-placeholder.png" class="rounded-pill mr-lg-2" width="34" alt="">
+                <img src="{{ ($image = $user->avatarImage) ? $image->getUrl('thumbnail') : '/admin-assets/images/avatar-placeholder.png' }}" class="rounded-pill mr-lg-2 nav-bar-avatar-image" width="34" height="34" alt="">
                 <span class="d-none d-lg-inline-block">{{ $user->display_name ?: $user->login_name ?: $user->email }}</span>
             </a>
 
             <div class="dropdown-menu dropdown-menu-right">
                 {{-- <a href="#" class="dropdown-item"><i class="icon-user"></i> Edit profile</a>--}}
                 <div class="dropdown-divider"></div>                
-                <a href="{{ route('logout', ['relogin_redirect' => request()->fullUrl()]) }}" class="dropdown-item"><i class="icon-switch2"></i> {{ __('Logout') }}</a>
+                <a href="{{ route('logout', ['relogin_redirect' => request()->fullUrl()]) }}" class="dropdown-item"><i class="icon-switch2"></i> {{ __('common.logout') }}</a>
             </div>
         </li>
     </ul>

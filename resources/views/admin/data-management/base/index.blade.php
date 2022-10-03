@@ -11,9 +11,9 @@
                     @if ($controller->searchAble())
                         <div class="col-md-auto">
                             @section('index-search')                        
-                                <div>Search</div>
+                                <div>{{ __('common.search') }}</div>
                                 <input type="search" class="form-control" name="search" value="{{ request()->input('search') }}"
-                                    placeholder="{{ __('Keyword') }}">
+                                    placeholder="{{ __('common.keyword') }}">
                             @show                            
                         </div>
                     @endif
@@ -27,7 +27,7 @@
                         @section('index-sort')                        
                             @include('admin.data-management.base.inc.index-sort', [
                                 'options' => [
-                                    'newest' => __('commom.newest'),
+                                    'newest' => __('common.newest'),
                                     'oldest' => __('common.oldest')
                                 ]
                             ])
@@ -50,9 +50,12 @@
 
                     <thead class="bg-secondary text-white">
                         <th data-column-name="id">
-                            <label class="custom-checkbox mr-4" style="font-size: inherit;">
-                                <input id="dataTableToggleSelectAllItems" type="checkbox" name="select_all"> <span class="checkmark"></span> <span>ID</span>
-                            </label>                        
+
+                            <label class="custom-control custom-checkbox">
+                                <input id="dataTableToggleSelectAllItems" type="checkbox" name="select_all" class="custom-control-input">
+                                <span class="custom-control-label">ID</span>
+                            </label>
+                                                
                         </th>
                         @foreach ($dataTable->getColumns() as $name => $column)
                             <th data-column-name="{{ $name }}">{{ $dataTable->getHeading($name) }}</th>
@@ -64,9 +67,12 @@
                         @foreach ($dataList as $dataItem)
                             <tr>
                                 <td data-column-name="id">
-                                    <label class="custom-checkbox">
-                                        <input type="checkbox" name="ids[]" value="{{ $dataItem->id }}"><span class="checkmark"></span> <span>{{ $dataItem->id }}</span>
+
+                                    <label class="custom-control custom-checkbox">
+                                        <input type="checkbox" name="ids[]" value="{{ $dataItem->id }}" class="custom-control-input">
+                                        <span class="custom-control-label">{{ $dataItem->id }}</span>
                                     </label>
+
                                 </td>
 
                                 @foreach ($dataTable->getColumns() as $name => $column)
@@ -103,7 +109,7 @@
                                                 <span class="text">@trans('common.edit')</span>
                                             </a>
                                         @endif                                  
- 
+
 
                                         @if (!empty($moreItemActions = $controller->moreItemActions($dataItem)))
                                             <div class="dropdown position-static cursor-pointer">
@@ -136,7 +142,7 @@
 
     @else
         <div class="alert alert-primary alert-styled-left alert-dismissible">
-            {{ __('message.no_item_found') }}
+            {{ __('message.no_item_found.') }}
         </div>
     @endif
 

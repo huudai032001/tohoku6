@@ -11,22 +11,30 @@
 	<meta name="_csrf" content="{{ csrf_token() }}">
 
 	<!-- vendor -->
-	<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
-	<link href="/core-assets/global_assets/css/icons/icomoon/styles.min.css" rel="stylesheet" type="text/css">
-	<link href="/core-assets/layout_1/LTR/default/full/assets/css/all.min.css" rel="stylesheet" type="text/css">
 	
-	<script src="/core-assets/global_assets/js/main/jquery.min.js"></script>
-	<script src="/admin-assets/vendor/jquery-ui.1.13.0.min.js"></script>
-	<script src="/core-assets/global_assets/js/main/bootstrap.bundle.min.js"></script>
-	
-	{{-- <script src="/core-assets/js/plugins/visualization/d3/d3.min.js"></script>
-	<script src="/core-assets/js/plugins/visualization/d3/d3_tooltip.js"></script>
-	<script src="/core-assets/js/plugins/ui/moment/moment.min.js"></script>
-	<script src="/core-assets/js/plugins/pickers/daterangepicker.js"></script> --}}
+	@if (App::isLocale('ja'))
+		<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+	@else
+		<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+	@endif
 
-	<script src="/core-assets/global_assets/js/plugins/forms/tags/tagsinput.min.js"></script>
-	<script src="/core-assets/global_assets/js/plugins/forms/tags/tokenfield.min.js"></script>
-	<script src="/core-assets/global_assets/js/plugins/editors/summernote/summernote.min.js"></script>
+	<link href="/vendor/limitless/css/icons/icomoon/styles.min.css" rel="stylesheet" type="text/css">
+	<link href="/vendor/limitless/css/all.min.css" rel="stylesheet" type="text/css">
+	
+	<script src="/vendor/limitless/js/main/jquery.min.js"></script>
+	<script src="/vendor/jquery-ui.1.13.0.min.js"></script>
+	<script src="/vendor/limitless/js/main/bootstrap.bundle.min.js"></script>
+	
+	{{-- <script src="/vendor/limitless/js/plugins/visualization/d3/d3.min.js"></script>
+	<script src="/vendor/limitless/js/plugins/visualization/d3/d3_tooltip.js"></script>
+	<script src="/vendor/limitless/js/plugins/ui/moment/moment.min.js"></script>
+	<script src="/vendor/limitless/js/plugins/pickers/daterangepicker.js"></script> --}}
+
+	<script src="/vendor/limitless/js/plugins/forms/tags/tagsinput.min.js"></script>
+	<script src="/vendor/limitless/js/plugins/forms/tags/tokenfield.min.js"></script>
+	{{-- <script src="/vendor/limitless/js/plugins/editors/summernote/summernote.min.js"></script> --}}
+	<script src="/vendor/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
+
 
 	
 	<link href="/admin-assets/css/admin-template-customize.css" rel="stylesheet" type="text/css">

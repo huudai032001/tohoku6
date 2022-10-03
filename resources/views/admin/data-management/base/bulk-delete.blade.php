@@ -22,11 +22,13 @@
                 @endphp
                 @foreach ($dataList as $dataItem)
                     <div class="my-1">
-                        @if ($controller->deleteAble($dataItem))                            
-                            <label class="custom-checkbox">
-                                <input type="checkbox" name="ids[]" value="{{ $dataItem->id }}" checked><span class="checkmark"></span>
-                                <span>(ID: {{ $dataItem->id }}) {{ $dataItem->getName() }}</span>
+                        @if ($controller->deleteAble($dataItem))      
+                        
+                            <label class="custom-control custom-checkbox">
+                                <input  type="checkbox" name="ids[]" value="{{ $dataItem->id }}" checked class="custom-control-input">
+                                <span class="custom-control-label">(ID: {{ $dataItem->id }}) {{ $dataItem->getName() }}</span>
                             </label>
+                            
                             @php
                                 $deleteAbleCount++;
                             @endphp
@@ -35,7 +37,7 @@
                                 {{ __('message.item_can_not_be_deleted', 
                                 ['item' => sprintf(
                                     '[%s ID %s] "%s" ',
-                                    $modelName,
+                                    $modelClass::getModelName(),
                                     $dataItem->id,
                                     $dataItem->getName()
                                 )])  }}
@@ -50,8 +52,7 @@
                             <p class="mb-3">
                                 <label class="custom-checkbox">
                                     <input type="checkbox" name="confirm" value="1" required><span class="checkmark"></span>
-                                    <span>{{ __('message.item_delete_confirm', ['item' => $modelName]) }}</span>
-                                    
+                                    <span>{{ __('message.item_delete_confirm', ['item' => $modelClass::getModelName()]) }}</span>
                                 </label>
                             </p> 
                             <div class="row justify-content-center">

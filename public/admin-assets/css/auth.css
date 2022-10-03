@@ -1,0 +1,7 @@
+html[lang="ja"] body {
+    font-family: 'Noto Sans JP', 'Roboto', sans-serif;
+}
+.login-form {
+    width: 400px;
+    max-width: 90vw;
+}

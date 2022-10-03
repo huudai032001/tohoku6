@@ -36,7 +36,7 @@
 
 .file-manager .folder-tree {   
     width: 220px;    
-    padding: 5px 10px;
+    padding: 5px;
     border-right: 1px solid #bbb;  
     background-color: rgba(255,255, 255, 0.7);
     margin-right: 10px;
@@ -48,17 +48,21 @@
     
 }
 
-.file-manager .folder-list li{
+.file-manager .folder-list li {
     margin: 5px 0;
-    padding: 5px 0;
+    padding: 5px;
     cursor: pointer;
 }
+.file-manager .folder-list li.selected {
+    color: white;
+    background: #497bc3;
+}
 .file-manager .files {
-    /* padding: 10px;
+    /* /* padding: 10px;
     background-color: #bbb; */
-    display: grid;
+    /* display: grid; */
     /* grid-template-columns: 1fr; */
-    grid-template-rows: auto max-content;
+    /* grid-template-rows: auto max-content; */ 
 }
 .file-manager .files-container {
     display: grid;
@@ -94,7 +98,25 @@
     -webkit-overflow-y: auto;
 }
 
-
+.file-manager .path-breadcrumb {
+    background-color: #fafafa;
+    color: #333;
+    border-radius: 0.1875rem;
+    padding-left: 5px;
+    padding-right: 5px;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+.file-manager .path-breadcrumb .sep {
+    margin: 0 5px;
+}
+.file-manager .path-breadcrumb .path-breadcrumb-folder {
+    padding: 3px 10px;
+    background-color: #e6e6e6;
+    cursor: pointer;
+    border-radius: 3px;
+}
 /* ------------------------------------------ */
 .form-control-upload .items-wrap {
     display: grid;

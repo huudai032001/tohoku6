@@ -1,4 +1,4 @@
-<div>Sort</div>   
+<div>{{ __('common.sort') }}</div>   
 <select name="sort" class="form-control auto-submit">
     <option value="">{{ __('common.default') }}</option>
     @foreach ($options as $key => $label)

@@ -42,11 +42,19 @@ Route::crud('event', AdminControllers\EventController::class);
 
 // Route::crud('inquiry', Controllers\InquiryController::class);
 
+Route::get('file-library', [AdminControllers\FileManagerController::class, 'fileLibrary'])->name('file-library');
+
 Route::prefix('file-manager')->name('file-manager.')->group(function ()
 {
-    // Route::get('/', [Controllers\UploadController::class, 'index'])->name('index');
-    Route::get('/fetch-item', [AdminControllers\UploadController::class, 'getFileManagerItems'])->name('fetch-item');
-    Route::post('/upload', [AdminControllers\UploadController::class, 'handleAjaxUpload']);
+    Route::get('/fetch-data', [AdminControllers\FileManagerController::class, 'fetchData'])->name('fetch-data');
+
+    Route::post('/create-folder', [AdminControllers\FileManagerController::class, 'createFolder'])->name('create-folder');
+
+    Route::post('/delete-folder', [AdminControllers\FileManagerController::class, 'deleteFolder'])->name('delete-folder');
+
+    Route::post('/upload', [AdminControllers\FileManagerController::class, 'upload']);
+
+    Route::post('/delete-file', [AdminControllers\FileManagerController::class, 'deleteFile'])->name('delete-file');
 });
 
 Route::get('tool/log-viewer', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);

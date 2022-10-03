@@ -12,7 +12,7 @@ use App\Models\Base\BaseModel;
 
 use App\Models\Traits;
 use App\Models\Casts;
-use Eloquent;
+
 class Upload extends BaseModel
 {
     //use HasFactory;
@@ -29,9 +29,13 @@ class Upload extends BaseModel
         'file_info' => Casts\Json::class,
     ];
 
-
-    // return /uploads/dir/filename.ext
+    
     public function getUrl($version = '')
+    {
+        return Storage::disk('public')->url($this->getPath($version));   
+    }
+
+    public function getPath($version = '')
     {
         if ($version && ($version_file_name =  $this->getJson('file_info', 'versions.' . $version . '.file_name' ))) {
             $file_name = $version_file_name;
@@ -39,11 +43,10 @@ class Upload extends BaseModel
             $file_name = $this->file_name;
         }
         if ( $this->folder_path) {
-            $file_path = $this->folder_path . '/' . $file_name;
+            return $this->folder_path . '/' . $file_name;
         } else {
-            $file_path = $this->file_name;
+            return $file_name;
         }   
-        return Storage::disk('public')->url($file_path);   
     }
 
 
@@ -97,14 +100,5 @@ class Upload extends BaseModel
             'file_size' => $this->getHumanSize(),
             'versions' => $this->getJson('file_info', 'versions') ?: [],
         ];
-    }
-
-    public function event() {
-        return $this->hasMany('App\Models\Event');
-    }
-
-    public function getEvent()
-    {
-        return $this->belongsTo('App\Models\Event');
     }
 }

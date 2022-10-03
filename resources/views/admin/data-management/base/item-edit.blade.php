@@ -28,7 +28,7 @@
            </fieldset>
 
            <div class="text-right">
-               <button type="submit" class="btn btn-primary">{{ __('conmon.submit') }} <i class="icon-paperplane ml-2"></i></button>
+               <button-submit class="btn btn-primary">{{ __('common.submit') }} <i class="icon-paperplane ml-2"></i></button-submit>
            </div>
            
        </form>
