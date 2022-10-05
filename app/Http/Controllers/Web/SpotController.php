@@ -25,9 +25,10 @@ class SpotController extends Controller
             $search = $_GET['search'];
             // $list_spot = Spot::paginate(6);
             $list_spot = Spot::where('spots.name', 'like', '%' . $search . '%')
-            ->join('uploads', 'uploads.id', '=', 'spots.upload_id')
+            ->join('uploads', 'uploads.id', '=', 'spots.image_id')
             ->select(['spots.*','uploads.file_name'])
-            ->paginate(6);
+            ->orderBy('created_at','DESC')
+            ->take(6)->get();
 
         }else {
             $list_spot = Spot::with('upload')->paginate(6);
@@ -38,14 +39,12 @@ class SpotController extends Controller
     }
 
     public function spot_detail($id){
-  
         $list_spot = Spot::paginate(6);
         $info_spot = Spot::where('id',$id)->first(); 
-
+        // dd($list_spot);
         // $list_comment = Spot::with('comment')->first();
         $list_comment = Comment::where('spot_id',$id)->orderBy('created_at','DESC')->limit(5)->get();
 
-        // dd($list_comment);
         if(Auth::check()){
             $user = Auth::user();
         }
@@ -83,20 +82,26 @@ class SpotController extends Controller
             'category.required'=>'必須項目です',
 
         ]);
+
         $file = $req->file('image');
         $sub_image_01 = $req->file('sub_image_01');
         $sub_image_02 = $req->file('sub_image_02');
         $sub_image_03 = $req->file('sub_image_03');
+        $uploadService = new \App\Services\UploadService;
 
-        $sub_img = json_encode([$sub_image_01->getClientOriginalName(),$sub_image_02->getClientOriginalName(),$sub_image_03->getClientOriginalName()]);
+        $images_01 =  $uploadService->handleUploadFile($sub_image_01,'')['file_info']['id'];
+        $images_02 =  $uploadService->handleUploadFile($sub_image_02,'')['file_info']['id'];
+        $images_03 =  $uploadService->handleUploadFile($sub_image_03,'')['file_info']['id'];
 
-        $file->move(base_path('\upload'), $file->getClientOriginalName());
+        $sub_img = "$images_01,$images_02,$images_03";
+
         $spot = new Spot();
         $spot->location = $req->input('location');
         $spot->name = $req->input('name');
         $spot->intro = $req->input('intro');
-        $spot->image = $file->getClientOriginalName();
+        $spot->image = $uploadService->handleUploadFile($file,"")['file_info']['id'];
         $spot->sub_image = $sub_img;
+        // $spot->save();
 
         $spot->category = implode(",",$req->input('category'));
         // dd(($req->file('image')));
@@ -114,19 +119,21 @@ class SpotController extends Controller
     }
 
     public function PostSpotPreview(Request $req){
+        $arr = explode(",",$req->input('sub_image'));
+        $example = array("$arr[0]","$arr[1]","$arr[2]");
+        $user = Auth::user();
         if($req->input('id') == null){
+            $exampleEncoded = json_encode($example);
             $spot = new Spot();
             $spot->location = $req->input('location');
             $spot->name = $req->input('name');
             $spot->intro = $req->input('intro');
-            // de tam 1
-            // $spot->image_id = $req->input('image');
-            $spot->upload_id = 1;
-
-            $spot->sub_image = $req->input('sub_image');
+            $spot->image_id = $req->input('image');
+            $spot->images_id = $example;
             $spot->favorite = 0;
+            $spot->count_comment = 0;
             $spot->address = $req->input('location');
-    
+            $spot->author = $user->id;
             $spot->category = $req->input('category');
             $spot->save();
 
@@ -140,22 +147,20 @@ class SpotController extends Controller
             $spot->location = $req->input('location');
             $spot->name = $req->input('name');
             $spot->intro = $req->input('intro');
-            $spot->image = $req->input('image');
-            $spot->sub_image = $req->input('sub_image');
-
+            $spot->image_id = $req->input('image');
+            $spot->images_id = $example;
+            $spot->author = $user->id;
             $spot->category = $req->input('category');
             $spot->save();
         }
-
-
         return redirect('list-spot');
-
     }
 
 
     // edit
 
     public function spotEdit($id){
+        // dd($alias);
         $info_spot = Spot::findorfail($id);
         return view('web.spot-edit',compact('info_spot','id'));
     }
@@ -184,46 +189,59 @@ class SpotController extends Controller
         $sub_image_01 = $req->file('sub_image_01');
         $sub_image_02 = $req->file('sub_image_02');
         $sub_image_03 = $req->file('sub_image_03');
+        $uploadService = new \App\Services\UploadService;
 
+        $sub_01_hide = $req->input('sub_image_01_hide');
+        $sub_02_hide = $req->input('sub_image_02_hide');
+        $sub_03_hide = $req->input('sub_image_03_hide');
+
+
+        
         if($sub_image_01 == null && $sub_image_02 != null && $sub_image_03 != null){
-            $sub_img = json_encode([$req->input('sub_image_01_hide'),$sub_image_02->getClientOriginalName(),$sub_image_03->getClientOriginalName()]);
+            $images_02 =  $uploadService->handleUploadFile($sub_image_02,'')['file_info']['id'];
+            $images_03 =  $uploadService->handleUploadFile($sub_image_03,'')['file_info']['id'];
+            $sub_img = "$sub_01_hide,$images_02,$images_03";
         }
         elseif($sub_image_01 == null && $sub_image_02 == null && $sub_image_03 != null){
-            $sub_img = json_encode([$req->input('sub_image_01_hide'),$req->input('sub_image_02_hide'),$sub_image_03->getClientOriginalName()]);
+            $images_03 =  $uploadService->handleUploadFile($sub_image_03,'')['file_info']['id'];
+            $sub_img = "$sub_01_hide,$sub_02_hide,$images_03";
         }
         elseif($sub_image_01 == null && $sub_image_02 == null && $sub_image_03 == null){
-            $sub_img = json_encode([$req->input('sub_image_01_hide'),$req->input('sub_image_02_hide'),$req->input('sub_image_03_hide')]);
+            $sub_img = "$sub_01_hide,$sub_02_hide,$sub_03_hide";
         }
         elseif($sub_image_01 == null && $sub_image_02 != null && $sub_image_03 == null){
-            $sub_img = json_encode([$req->input('sub_image_01_hide'),$sub_image_02->getClientOriginalName(),$req->input('sub_image_03_hide')]);
-
+            $images_02 =  $uploadService->handleUploadFile($sub_image_02,'')['file_info']['id'];
+            $sub_img = "$sub_01_hide,$images_02,$sub_03_hide";
         }
         elseif($sub_image_01 != null && $sub_image_02 == null && $sub_image_03 != null){
-            $sub_img = json_encode([$sub_image_01->getClientOriginalName(),$req->input('sub_image_02_hide'),$sub_image_03->getClientOriginalName()]);
+            $images_03 =  $uploadService->handleUploadFile($sub_image_03,'')['file_info']['id'];
+            $sub_img = "$images_01,$sub_02_hide,$images_03";
         }
         elseif($sub_image_01 != null && $sub_image_02 == null && $sub_image_03 == null){
-            $sub_img = json_encode([$sub_image_01->getClientOriginalName(),$req->input('sub_image_02_hide'),$req->input('sub_image_03_hide')]);
-
+            $images_01 =  $uploadService->handleUploadFile($sub_image_01,'')['file_info']['id'];
+            $sub_img = "$images_01,$sub_02_hide,$sub_03_hide";
         }
         elseif($sub_image_01 != null && $sub_image_02 != null && $sub_image_03 == null){
-            $sub_img = json_encode([$sub_image_01->getClientOriginalName(),$sub_image_02->getClientOriginalName(),$req->input('sub_image_03_hide')]);
-
+            $images_01 =  $uploadService->handleUploadFile($sub_image_01,'')['file_info']['id'];
+            $images_02 =  $uploadService->handleUploadFile($sub_image_02,'')['file_info']['id'];
+            $sub_img = "$images_01,$images_02,$sub_03_hide";
         }
         else {
-            $sub_img = json_encode([$sub_image_01->getClientOriginalName(),$sub_image_02->getClientOriginalName(),$sub_image_03->getClientOriginalName()]);
+            $images_01 =  $uploadService->handleUploadFile($sub_image_01,'')['file_info']['id'];
+            $images_02 =  $uploadService->handleUploadFile($sub_image_02,'')['file_info']['id'];
+            $images_03 =  $uploadService->handleUploadFile($sub_image_03,'')['file_info']['id'];
+            $sub_img = "$images_01,$images_02,$images_03";
         }
 
-        if($file != null){
-            $file->move(base_path('\upload'), $file->getClientOriginalName());
-        }
-        // var_dump($sub_img);
-        // die;
         $spot = Spot::findorfail($id);
         $spot->location = $req->input('location');
         $spot->name = $req->input('name');
         $spot->intro = $req->input('intro');
         if($file == null){
-            $spot->image = $req->input('image_hide');
+            $spot->image_id = $req->input('image_hide');
+        }
+        else {
+            $spot->image_id = $uploadService->handleUploadFile($file,"")['file_info']['id'];
         }
         $spot->sub_image = $sub_img;
 
@@ -241,15 +259,16 @@ class SpotController extends Controller
             'comment.required'=>'必須項目です',
         ]);
         $comment = new Comment();
-        $comment->user_id = $req->input('user_id');
+        $comment->user_id = Auth::user()->id;
         $comment->spot_id = $req->input('posts_id');
         $comment->content = $req->input('comment');
         $comment->name_user = $req->input('name_user');
 
         $comment->save();
 
-        $spot = Spot::where($posts_id)->first();
+        $spot = Spot::where('id',$req->input('posts_id') )->first();
         $spot->count_comment = $spot->count_comment + 1;
+        $spot->save();
         return redirect()->back();
     }
 
@@ -259,4 +278,21 @@ class SpotController extends Controller
         $com->delete();
         echo json_encode(['res'=>true]);
     }
+
+    public function postfindByCategorySpot(){
+        if($_POST){
+            $category = $_POST['category'];
+            $arr_image = [];
+
+            $list_category = Spot::where('category','like',"%{$category}%")->take(6)->get();
+            // dd($list_category);
+
+            foreach($list_category as $value){
+                $arr_image [] = ($value->image)->getUrl(); 
+            }
+            echo json_encode(['list_category'=>$list_category,'arr_image'=>$arr_image]);
+            
+        }
+    }
+
 }

@@ -16,22 +16,23 @@ function find_by_day(year,month,day){
         contentType: false,
         data: formData,
         success: function (data) {
-            if(data.data.length > 0){
+
+            if(data.list_event.length > 0){
                 var html = ``;
-                for(var i = 0;i<data.data.length;i++){
+                for(var i = 0;i<data.list_event.length;i++){
                     
                     html += `
                     <div class="item">
                         <div class="post-item-1">
                             <a href="event-detail.html">
                                 <div class="thumb ratio thumb-hover-anim">
-                                    <img src="/upload/`+ data.data[i].upload.file_name +`" alt="">
+                                    <img src="`+ data.arr_image[i] +`" alt="">
                                 </div>
                             </a>
                             <div class="item-content">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="flex-fill">
-                                        <div class="date text-latin">`+ data.data[i].created_at +` UP!</div>
+                                        <div class="date text-latin">`+ data.list_event[i].created_at +` UP!</div>
                                     </div>
                                     <div class="flex-auto ml-20">
                                         <img width="16" src="/web-assets/images/icons/heart-gray.svg" alt=""> 
@@ -40,7 +41,7 @@ function find_by_day(year,month,day){
                                 </div>
                                 <div class="title">
                                     <a href="event-detail.html">
-                                    `+ data.data[i].name +`
+                                    `+ data.list_event[i].name +`
                                     </a>
                                 </div>
                             </div>
@@ -82,30 +83,31 @@ function find_category(){
                 contentType: false,
                 data: formData,
                 success: function (data) {
-                    if(data.data.length > 0){
+                    console.log(data);
+                    if(data.list_category.length > 0){
                         var html = ``;
-                        for(var i = 0; i< data.data.length;i++){
+                        for(var i = 0; i< data.list_category.length;i++){
                             html += `
                             <div class="item">
                                 <div class="post-item-2">
-                                    <a href="spot-detail/`+ data.data[i].id +`">
+                                    <a href="spot-detail/`+ data.list_category[i].id +`">
                                         <div class="thumb ratio thumb-hover-anim">
-                                            <img src="/uploads/`+ data.data[i].upload.file_name +`" alt="">
+                                            <img src="`+ data.arr_image[i] +`" alt="">
                                         </div>
                                     </a>
                                     <div class="item-content">
                                         <div class="d-none d-sm-flex justify-content-end align-items-center">
                                             <div class="comment-count">
                                                 コメント
-                                                <div class="count text-latin ml-10">`+ data.data[i].favorite +`</div>
+                                                <div class="count text-latin ml-10">`+ data.list_category[i].favorite +`</div>
                                             </div>
                                             <div class="favorite-count ml-20">
                                                 <img width="16" src="/web-assets/images/icons/heart-gray.svg" alt=""> 
-                                                <span class="count text-latin">`+ data.data[i].count_comment +`</span>
+                                                <span class="count text-latin">`+ data.list_category[i].count_comment +`</span>
                                             </div>
                                         </div>
                                         <div class="title">
-                                            <a href="post-detail.html">`+ data.data[i].name +`・RISING SUN</a>
+                                            <a href="post-detail.html">`+ data.list_category[i].name +`・RISING SUN</a>
                                         </div>
                                     </div>
                                 </div>

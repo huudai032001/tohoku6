@@ -1,28 +1,12 @@
+@extends('web.layouts.default')
 @if(Auth::check())
-<!DOCTYPE html>
-<html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>My profile</title>
+        @section('link_css')
 
-        <link rel="stylesheet" href="/web-assets/css/framework-full.css">
-
-        <link rel="stylesheet" href="fonts/Fontawesome/4.7/css/font-awesome.min.css">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
-
-        <link rel="stylesheet" href="/web-assets/css/owl-customized.css">
-        <link rel="stylesheet" href="/web-assets/css/main.css">
         <link rel="stylesheet" href="/web-assets/css/profile.css">
+        @endsection
 
-        <script src="/web-assets/libs/jquery/jquery-3.6.0.min.js"></script>
-        <script src="/web-assets/libs/owl-carousel/owl.carousel.min.js"></script>
-        
-    </head>
+        @section('content')
 
     <body class="my-profile-page">
 
@@ -127,10 +111,10 @@
                     <div class="container">
                         <div class="div_1 d-flex align-items-center justify-content-between">
                             <div class="flex-fill">
-                                <div class="user-name">{{$info['name']}}</div>
+                                <div class="user-name">{{$user['name']}}</div>
                                 <ul class="social-icons d-flex align-items-center">
                                     <?php
-                                        $a = trim($info->sns_active , '"[]');
+                                        $a = trim($user->sns_active , '"[]');
                                         $sns_active = explode(",",$a);
                                         for($i=0; $i<count($sns_active);$i++)
                                         {
@@ -139,7 +123,7 @@
                                             {
                                     ?>
                                     <li>
-                                        <a href="{{$info->twitter_url}}">
+                                        <a href="{{$user->twitter_url}}">
                                             <img src="/web-assets/images/icons/twitter.svg" alt="">
                                         </a>
                                     </li>
@@ -149,7 +133,7 @@
                                             {
                                     ?>
                                     <li>
-                                        <a href="{{$info->instagram_url}}">
+                                        <a href="{{$user->instagram_url}}">
                                             <img src="/web-assets/images/icons/instagram.svg" alt="">
                                         </a>
                                     </li>
@@ -159,7 +143,7 @@
                                             {
                                     ?>
                                     <li>
-                                        <a href="{{$info->tiktok_url}}">
+                                        <a href="{{$user->tiktok_url}}">
                                             <img src="/web-assets/images/icons/tiktok.svg" alt="">
                                         </a>
                                     </li>
@@ -169,12 +153,14 @@
                                     ?>
                                 </ul>
                             </div>
+                            @if($image = $user->image)
                             <div class="avatar flex-auto">
-                                <img src="/web-assets/images/profile.svg" alt="">
+                                <img src="{{$image->getUrl()}}" alt="">
                             </div>
+                            @endif
                         </div>
                         <div class="div_2 d-flex justify-content-center">
-                            <a href="{{route('profileEdit',$info->id)}}">
+                            <a href="{{route('profileEdit')}}">
                                 <div class="profile-edit-button button d-inline-flex align-items-center">
                                     <div class="icon">
                                         <img width="13" src="/web-assets/images/icons/config.svg" alt="">
@@ -189,14 +175,16 @@
                             現在のポイント：<span class="point">256pt</span>
                         </div>
                         <div class="div_3 d-flex justify-content-center">
-                            <div class="point-exchange-button button">
-                                ポイントを交換する
-                            </div>
+                            <a href="{{route('list_goods')}}">
+                                <div class="point-exchange-button button">
+                                    ポイントを交換する
+                                </div>
+                            </a>
                         </div>
                         <div class="self-introduction">
                             <div class="self-introduction_title">自己紹介：</div>
                             <div class="self-introduction_content">
-                               {{$info['intro']}}
+                               {{$user['intro']}}
                             </div>
                         </div>
                     </div>
@@ -234,7 +222,7 @@
                             <div class="tab-panel active" data-tab="my-posts">
                                 <div class="post-container">
                                     <div class="post-row row">
-                                        @foreach($list_spot as $value)
+                                        @foreach($user_spot_posts as $value)
                                         <div class="col-sm-6 col-lg-4">
                                             <div class="post-item-5 d-flex">
                                                 <div class="thumb">
@@ -242,9 +230,11 @@
                                                         <img src="/web-assets/images/icons/star-yellow.svg" alt="">
                                                     </div>
                                                     <a href="{{route('spot_detail',$value->id)}}">
+                                                        @if($image = $value->image)
                                                         <div class="ratio thumb-image">
-                                                            <img src="/upload/{{$value->image}}" alt="">
+                                                            <img src="{{$image->getUrl()}}" alt="">
                                                         </div>
+                                                        @endif
                                                     </a>
                                                 </div>
                                                 <div class="item-content flex-fill d-flex flex-column justify-content-between">
@@ -260,11 +250,11 @@
                                                     <div class="counters d-flex align-items-center justify-content-end justify-content-lg-start">
                                                         <div class="comment-count">
                                                             コメント
-                                                            <div class="count text-latin ml-10">123</div>
+                                                            <div class="count text-latin ml-10">{{$value->count_comment}}</div>
                                                         </div>
                                                         <div class="favorite-count ml-20">
                                                             <img src="/web-assets/images/icons/heart-gray.svg" alt=""> 
-                                                            <span class="count text-latin">123</span>
+                                                            <span class="count text-latin">{{$value->favorite}}</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -280,12 +270,15 @@
                             <div class="tab-panel" data-tab="my-reviews">
                                 <div class="post-container">
                                     <div class="post-row row">
+                                        @foreach($user_comment as $value)
                                         <div class="col-md-6">
                                             <div class="review-item-2">
                                                 <div class="d-flex justify-content-between">
+                                                    @if($comment = $value->spots)
                                                     <div class="post-title">
-                                                        グランピング・<span class="text-latin">RISING SUN</span>
+                                                        {{$comment->name}}・<span class="text-latin">RISING SUN</span>
                                                     </div>
+                                                    @endif
                                                     <div class="d-flex align-items-center">
                                                         <div class="review-time">1日前</div>
                                                         <div class="toggle-action-button d-flex align-items-center">
@@ -296,70 +289,11 @@
                                                     </div>
                                                 </div>
                                                 <div class="review-content">
-                                                    仙台から全国へ弾丸する男子仙台から全国へ弾丸する男子仙台から全国へ弾丸する男子仙台から全国へ弾丸する男子仙台から全国へ弾丸する男子仙台から全国へ弾丸する男子仙台から全国へ弾丸
+                                                    {{$value->content}}
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="review-item-2">
-                                                <div class="d-flex justify-content-between">
-                                                    <div class="post-title">
-                                                        グランピング・<span class="text-latin">RISING SUN</span>
-                                                    </div>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="review-time">1日前</div>
-                                                        <div class="toggle-action-button d-flex align-items-center">
-                                                            <span></span>
-                                                            <span></span>
-                                                            <span></span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="review-content">
-                                                    仙台から全国へ弾丸する男子仙台から全国へ弾丸する男子仙台から全国へ弾丸する男子仙台から全国へ弾丸する男子仙台から全国へ弾丸する男子仙台から全国へ弾丸する男子仙台から全国へ弾丸
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="review-item-2">
-                                                <div class="d-flex justify-content-between">
-                                                    <div class="post-title">
-                                                        グランピング・<span class="text-latin">RISING SUN</span>
-                                                    </div>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="review-time">1日前</div>
-                                                        <div class="toggle-action-button d-flex align-items-center">
-                                                            <span></span>
-                                                            <span></span>
-                                                            <span></span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="review-content">
-                                                    仙台から全国へ弾丸する男子仙台から全国へ弾丸する男子仙台から全国へ弾丸する男子仙台から全国へ弾丸する男子仙台から全国へ弾丸する男子仙台から全国へ弾丸する男子仙台から全国へ弾丸
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="review-item-2">
-                                                <div class="d-flex justify-content-between">
-                                                    <div class="post-title">
-                                                        グランピング・<span class="text-latin">RISING SUN</span>
-                                                    </div>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="review-time">1日前</div>
-                                                        <div class="toggle-action-button d-flex align-items-center">
-                                                            <span></span>
-                                                            <span></span>
-                                                            <span></span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="review-content">
-                                                    仙台から全国へ弾丸する男子仙台から全国へ弾丸する男子仙台から全国へ弾丸する男子仙台から全国へ弾丸する男子仙台から全国へ弾丸する男子仙台から全国へ弾丸する男子仙台から全国へ弾丸
-                                                </div>
-                                            </div>
-                                        </div>
+                                        @endforeach
                                     </div>
                                 </div>
                                 <div class="load-more-button">
@@ -369,16 +303,19 @@
                             <div class="tab-panel" data-tab="favorite-posts">
                                <div class="post-container">
                                    <div class="post-row row">
-                                    <div class="col-sm-6 col-lg-4">
+                                    @foreach($user_spot_posts as $value)
+                                        <div class="col-sm-6 col-lg-4">
                                            <div class="post-item-5 d-flex">
                                                <div class="thumb">
                                                    <div class="icon-star">
                                                        <img src="/web-assets/images/icons/star-yellow.svg" alt="">
                                                    </div>
                                                    <a href="spot-detail.html">
-                                                       <div class="ratio thumb-image">
-                                                           <img src="/web-assets/images/demo/1.png" alt="">
-                                                       </div>
+                                                        @if($image = $value->image)
+                                                        <div class="ratio thumb-image">
+                                                            <img src="{{$image->getUrl()}}" alt="">
+                                                        </div>
+                                                        @endif
                                                    </a>
                                                </div>
                                                <div class="item-content flex-fill d-flex flex-column justify-content-between">
@@ -389,196 +326,22 @@
                                                        </div>
                                                    </div>
                                                    <a href="spot-detail.html">
-                                                       <div class="item-title">グランピング・<span class="text-latin">RISING SUN</span></div>
+                                                       <div class="item-title">{{$value->name}}・<span class="text-latin">RISING SUN</span></div>
                                                    </a>
                                                    <div class="counters d-flex align-items-center justify-content-end justify-content-lg-start">
                                                        <div class="comment-count">
                                                            コメント
-                                                           <div class="count text-latin ml-10">123</div>
+                                                           <div class="count text-latin ml-10">{{$value->count_comment}}</div>
                                                        </div>
                                                        <div class="favorite-count ml-20">
                                                            <img src="/web-assets/images/icons/heart-gray.svg" alt=""> 
-                                                           <span class="count text-latin">123</span>
+                                                           <span class="count text-latin">{{$value->favorite}}</span>
                                                        </div>
                                                    </div>
                                                </div>
                                            </div>
-                                       </div>
-                                       <div class="col-sm-6 col-lg-4">
-                                           <div class="post-item-5 d-flex">
-                                               <div class="thumb">
-                                                   <div class="icon-star">
-                                                       <img src="/web-assets/images/icons/star-yellow.svg" alt="">
-                                                   </div>
-                                                   <a href="spot-detail.html">
-                                                       <div class="ratio thumb-image">
-                                                           <img src="/web-assets/images/demo/1.png" alt="">
-                                                       </div>
-                                                   </a>
-                                               </div>
-                                               <div class="item-content flex-fill d-flex flex-column justify-content-between">
-                                                   <div class="area d-flex align-items-center">
-                                                       <div class="icon"></div>
-                                                       <div>
-                                                           <img src="/web-assets/images/area/akita.svg" alt="">
-                                                       </div>
-                                                   </div>
-                                                   <a href="spot-detail.html">
-                                                       <div class="item-title">グランピング・<span class="text-latin">RISING SUN</span></div>
-                                                   </a>
-                                                   <div class="counters d-flex align-items-center justify-content-end justify-content-lg-start">
-                                                       <div class="comment-count">
-                                                           コメント
-                                                           <div class="count text-latin ml-10">123</div>
-                                                       </div>
-                                                       <div class="favorite-count ml-20">
-                                                           <img src="/web-assets/images/icons/heart-gray.svg" alt=""> 
-                                                           <span class="count text-latin">123</span>
-                                                       </div>
-                                                   </div>
-                                               </div>
-                                           </div>
-                                       </div>
-                                       <div class="col-sm-6 col-lg-4">
-                                           <div class="post-item-5 d-flex">
-                                               <div class="thumb">
-                                                   <div class="icon-star">
-                                                       <img src="/web-assets/images/icons/star-yellow.svg" alt="">
-                                                   </div>
-                                                   <a href="spot-detail.html">
-                                                       <div class="ratio thumb-image">
-                                                           <img src="/web-assets/images/demo/1.png" alt="">
-                                                       </div>
-                                                   </a>
-                                               </div>
-                                               <div class="item-content flex-fill d-flex flex-column justify-content-between">
-                                                   <div class="area d-flex align-items-center">
-                                                       <div class="icon"></div>
-                                                       <div>
-                                                           <img src="/web-assets/images/area/akita.svg" alt="">
-                                                       </div>
-                                                   </div>
-                                                   <a href="spot-detail.html">
-                                                       <div class="item-title">グランピング・<span class="text-latin">RISING SUN</span></div>
-                                                   </a>
-                                                   <div class="counters d-flex align-items-center justify-content-end justify-content-lg-start">
-                                                       <div class="comment-count">
-                                                           コメント
-                                                           <div class="count text-latin ml-10">123</div>
-                                                       </div>
-                                                       <div class="favorite-count ml-20">
-                                                           <img src="/web-assets/images/icons/heart-gray.svg" alt=""> 
-                                                           <span class="count text-latin">123</span>
-                                                       </div>
-                                                   </div>
-                                               </div>
-                                           </div>
-                                       </div>
-                                       <div class="col-sm-6 col-lg-4">
-                                           <div class="post-item-5 d-flex">
-                                               <div class="thumb">
-                                                   <div class="icon-star">
-                                                       <img src="/web-assets/images/icons/star-yellow.svg" alt="">
-                                                   </div>
-                                                   <a href="spot-detail.html">
-                                                       <div class="ratio thumb-image">
-                                                           <img src="/web-assets/images/demo/1.png" alt="">
-                                                       </div>
-                                                   </a>
-                                               </div>
-                                               <div class="item-content flex-fill d-flex flex-column justify-content-between">
-                                                   <div class="area d-flex align-items-center">
-                                                       <div class="icon"></div>
-                                                       <div>
-                                                           <img src="/web-assets/images/area/akita.svg" alt="">
-                                                       </div>
-                                                   </div>
-                                                   <a href="spot-detail.html">
-                                                       <div class="item-title">グランピング・<span class="text-latin">RISING SUN</span></div>
-                                                   </a>
-                                                   <div class="counters d-flex align-items-center justify-content-end justify-content-lg-start">
-                                                       <div class="comment-count">
-                                                           コメント
-                                                           <div class="count text-latin ml-10">123</div>
-                                                       </div>
-                                                       <div class="favorite-count ml-20">
-                                                           <img src="/web-assets/images/icons/heart-gray.svg" alt=""> 
-                                                           <span class="count text-latin">123</span>
-                                                       </div>
-                                                   </div>
-                                               </div>
-                                           </div>
-                                       </div>
-                                       <div class="col-sm-6 col-lg-4">
-                                           <div class="post-item-5 d-flex">
-                                               <div class="thumb">
-                                                   <div class="icon-star">
-                                                       <img src="/web-assets/images/icons/star-yellow.svg" alt="">
-                                                   </div>
-                                                   <a href="spot-detail.html">
-                                                       <div class="ratio thumb-image">
-                                                           <img src="/web-assets/images/demo/1.png" alt="">
-                                                       </div>
-                                                   </a>
-                                               </div>
-                                               <div class="item-content flex-fill d-flex flex-column justify-content-between">
-                                                   <div class="area d-flex align-items-center">
-                                                       <div class="icon"></div>
-                                                       <div>
-                                                           <img src="/web-assets/images/area/akita.svg" alt="">
-                                                       </div>
-                                                   </div>
-                                                   <a href="spot-detail.html">
-                                                       <div class="item-title">グランピング・<span class="text-latin">RISING SUN</span></div>
-                                                   </a>
-                                                   <div class="counters d-flex align-items-center justify-content-end justify-content-lg-start">
-                                                       <div class="comment-count">
-                                                           コメント
-                                                           <div class="count text-latin ml-10">123</div>
-                                                       </div>
-                                                       <div class="favorite-count ml-20">
-                                                           <img src="/web-assets/images/icons/heart-gray.svg" alt=""> 
-                                                           <span class="count text-latin">123</span>
-                                                       </div>
-                                                   </div>
-                                               </div>
-                                           </div>
-                                       </div>
-                                       <div class="col-sm-6 col-lg-4">
-                                           <div class="post-item-5 d-flex">
-                                               <div class="thumb">
-                                                   <div class="icon-star">
-                                                       <img src="/web-assets/images/icons/star-yellow.svg" alt="">
-                                                   </div>
-                                                   <a href="spot-detail.html">
-                                                       <div class="ratio thumb-image">
-                                                           <img src="/web-assets/images/demo/1.png" alt="">
-                                                       </div>
-                                                   </a>
-                                               </div>
-                                               <div class="item-content flex-fill d-flex flex-column justify-content-between">
-                                                   <div class="area d-flex align-items-center">
-                                                       <div class="icon"></div>
-                                                       <div>
-                                                           <img src="/web-assets/images/area/akita.svg" alt="">
-                                                       </div>
-                                                   </div>
-                                                   <a href="spot-detail.html">
-                                                       <div class="item-title">グランピング・<span class="text-latin">RISING SUN</span></div>
-                                                   </a>
-                                                   <div class="counters d-flex align-items-center justify-content-end justify-content-lg-start">
-                                                       <div class="comment-count">
-                                                           コメント
-                                                           <div class="count text-latin ml-10">123</div>
-                                                       </div>
-                                                       <div class="favorite-count ml-20">
-                                                           <img src="/web-assets/images/icons/heart-gray.svg" alt=""> 
-                                                           <span class="count text-latin">123</span>
-                                                       </div>
-                                                   </div>
-                                               </div>
-                                           </div>
-                                       </div>                          
+                                        </div>  
+                                        @endforeach                     
                                    </div>
                                </div>
                                <div class="load-more-button">
@@ -588,7 +351,7 @@
                             <div class="tab-panel" data-tab="favorite-events">
                                 <div class="post-container">
                                     <div class="post-row row">
-                                        @foreach($list_event as $value)
+                                        @foreach($user_favorite_events as $value)
                                         <div class="col-md-6 col-lg-4">
                                             <div class="post-item-6">
                                                 <div class="thumb">
@@ -596,9 +359,11 @@
                                                         <img src="/web-assets/images/icons/star-yellow.svg" alt="">
                                                     </div>
                                                     <a href="{{route('featureDetail',$value->id)}}">
+                                                        @if($image = $value->image)
                                                         <div class="ratio thumb-image thumb-hover-anim">
-                                                            <img src="/upload/{{$value->image}}" alt="">
+                                                            <img src="{{$image->getUrl()}}" alt="">
                                                         </div>
+                                                        @endif
                                                     </a>
                                                 </div>
                                                 <div class="item-content">
@@ -623,7 +388,7 @@
                                                     <div class="counters d-flex align-items-center justify-content-end"> 
                                                         <div class="favorite-count ml-20">
                                                             <img src="/web-assets/images/icons/heart-gray.svg" alt=""> 
-                                                            <span class="count text-latin">123</span>
+                                                            <span class="count text-latin">{{$value->favorite}}</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -882,7 +647,7 @@
         <script src="/web-assets/js/tohoku-calendar.js"></script>
         
     </body>
+    @endsection
 
-</html>
 
 @endif

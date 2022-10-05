@@ -130,7 +130,7 @@
                         <input type="hidden" value="{{$spot->location}}" name="location">
                         <input type="hidden" value="{{$spot->intro}}" name="intro">
                         <input type="hidden" value="{{$spot->name}}" name="name">
-                        <input type="hidden" value="{{$spot->image}}" name="image">
+                        <input type="hidden" value="{{$spot->image_id}}" name="image">
                         <input type="hidden" value="{{$spot->category}}" name="category">
 
                         <input type="hidden" value="{{$spot->sub_image}}" name="sub_image">

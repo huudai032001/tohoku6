@@ -1,28 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.default')
 
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title></title>
 
-        <link rel="stylesheet" href="/web-assets/css/framework-full.css">
-
-        <link rel="stylesheet" href="fonts/Fontawesome/4.7/css/font-awesome.min.css">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
-
-        <link rel="stylesheet" href="/web-assets/css/owl-customized.css">
-        <link rel="stylesheet" href="/web-assets/css/main.css">
-        <link rel="stylesheet" href="/web-assets/css/spot-editing.css">
-
-        <script src="/web-assets/libs/jquery/jquery-3.6.0.min.js"></script>
-        <script src="/web-assets/libs/owl-carousel/owl.carousel.min.js"></script>
-        
-    </head>
-
+@section('content')
     <body>
 
 
@@ -209,5 +188,4 @@
         <script src="/web-assets/js/tohoku-calendar.js"></script>
         
     </body>
-
-</html>
+@endsection

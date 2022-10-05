@@ -125,7 +125,8 @@ upload_avatar.bind("change keyup", function() {
                 contentType: false,
                 data: formData,
                 success: function (response) {
-                    result = response;
+                    // result = response;
+                    console.log(response);
                 },
             });
             document.getElementById("file_upload").src = "/uploads/"+ file['name'];

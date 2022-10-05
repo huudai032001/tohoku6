@@ -16,10 +16,10 @@ function find_by_day(year,month,day){
         contentType: false,
         data: formData,
         success: function (data) {
-            console.log(data);
-            if(data.data.length > 0){
+            // console.log(data.arr_image);
+            if(data.list_event.length > 0){
                 var html = ``;
-                for(var i = 0;i<data.data.length;i++){
+                for(var i = 0;i<data.list_event.length;i++){
                     html += `
                     <div class="col-md-6 col-lg-4">
                         <div class="post-item-9">
@@ -27,16 +27,16 @@ function find_by_day(year,month,day){
                                 <div class="icon-star">
                                     <img src="/web-assets/images/icons/star-yellow.svg" alt="">
                                 </div>
-                                <a href="event-detail/`+ data.data[i].id +`">
+                                <a href="event-detail/`+ data.list_event[i].id +`">
                                     <div class="ratio thumb-image thumb-hover-anim">
-                                        <img src="/web-assets/images/demo/1.png" alt="">
+                                        <img src="`+ data.arr_image[i] +`" alt="">
                                     </div>
                                 </a>
                             </div>
                             <div class="item-content">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="date">
-                                        `+ data.data[i].created_at +`<span class="day-of-week">[sun]</span>
+                                        `+ data.list_event[i].created_at +`<span class="day-of-week">[sun]</span>
                                     </div>
                                     <div class="area d-flex align-items-center">
                                         <div class="icon"></div>
@@ -47,11 +47,11 @@ function find_by_day(year,month,day){
                                 </div>
                                 <div class="line"></div>
                                 <div class="item-title">
-                                    <a href="event-detail/`+ data.data[i].id +`">
-                                    `+ data.data[i].name +`
+                                    <a href="event-detail/`+ data.list_event[i].id +`">
+                                    `+ data.list_event[i].name +`
                                     </a>
                                 </div>
-                                <div class="item-desc">`+ data.data[i].location +`</div>
+                                <div class="item-desc">`+ data.list_event[i].location +`</div>
                                 <div class="counters d-flex align-items-center justify-content-between"> 
                                     <div class="tags d-flex align-items-center">
                                         <span class="tag">花火</span>
@@ -59,7 +59,7 @@ function find_by_day(year,month,day){
                                     </div>
                                     <div class="favorite-count ml-20">
                                         <img src="/web-assets/images/icons/heart-gray.svg" alt=""> 
-                                        <span class="count text-latin">`+ data.data[i].favorite +`</span>
+                                        <span class="count text-latin">`+ data.list_event[i].favorite +`</span>
                                     </div>
                                 </div>
                             </div>

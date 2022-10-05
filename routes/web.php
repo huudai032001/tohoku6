@@ -18,14 +18,13 @@ Route::post('/login', [Controllers\AuthController::class, 'postLogin']);
 Route::get('/logout', [Controllers\AuthController::class, 'logout'])->name('logout');
 
 
-
 // non user
-// Route::get('/', [App\Http\Controllers\Web\HomeController::class, 'nonUser'])->name('nonUser');
+Route::get('/test-layout', [App\Http\Controllers\Web\HomeController::class, 'nonUser'])->name('nonUser');
 
 //index
 Route::get('/', [App\Http\Controllers\Web\HomeController::class, 'index'])->name('index');
-Route::post('/', [App\Http\Controllers\Web\HomeController::class, 'postIndex'])->name('postIndex');
-Route::post('/postfindByCategory', [App\Http\Controllers\Web\HomeController::class, 'postfindByCategory'])->name('postfindByCategory');
+Route::post('/', [App\Http\Controllers\Web\HandleController::class, 'postIndex'])->name('postIndex');
+Route::post('/postfindByCategory', [App\Http\Controllers\Web\HandleController::class, 'postfindByCategory'])->name('postfindByCategory');
 
 // profile
 Route::middleware(['login'])->group(function ()
@@ -33,35 +32,37 @@ Route::middleware(['login'])->group(function ()
     Route::get('/my-profile', [App\Http\Controllers\Web\HomeController::class, 'myProfile'])->name('myProfile');
 
     Route::get('/profile-edit', [App\Http\Controllers\Web\HomeController::class, 'profileEdit'])->name('profileEdit');
-    Route::post('/profile-edit', [App\Http\Controllers\Web\HomeController::class, 'postProfileEdit'])->name('postProfileEdit');
+    Route::post('/profile-edit', [App\Http\Controllers\Web\HandleController::class, 'postProfileEdit'])->name('postProfileEdit');
 });
 
 
 //spot
 Route::get('/list-spot', [App\Http\Controllers\Web\SpotController::class, 'list_spot'])->name('list_spot');
 Route::get('/spot-detail/{id}', [App\Http\Controllers\Web\SpotController::class, 'spot_detail'])->name('spot_detail');
-//comment
-Route::post('/spot-comment', [App\Http\Controllers\Web\SpotController::class, 'spotComment'])->name('spotComment');
-Route::post('/delete-comment', [App\Http\Controllers\Web\SpotController::class, 'deleteComment'])->name('deleteComment');
-Route::post('/all-comment', [App\Http\Controllers\Web\HomeController::class, 'allComment'])->name('allComment');
-
-// like 
-Route::post('/favourite', [App\Http\Controllers\Web\HomeController::class, 'favourite'])->name('favourite');
+Route::post('/postfindByCategorySpot', [App\Http\Controllers\Web\SpotController::class, 'postfindByCategorySpot'])->name('postfindByCategorySpot');
+Route::get('/spot-edit/{id}', [App\Http\Controllers\Web\SpotController::class, 'spotEdit'])->name('spotEdit');
+Route::post('/spot-edit/{id}', [App\Http\Controllers\Web\SpotController::class, 'postSpotEdit'])->name('postSpotEdit');
 
 Route::get('/spot-register', [App\Http\Controllers\Web\SpotController::class, 'spotRegister'])->name('spotRegister');
 Route::post('/spot-register', [App\Http\Controllers\Web\SpotController::class, 'postSpotRegister'])->name('postSpotRegister');
+
+//comment
+Route::post('/spot-comment', [App\Http\Controllers\Web\SpotController::class, 'spotComment'])->name('spotComment');
+Route::post('/delete-comment', [App\Http\Controllers\Web\SpotController::class, 'deleteComment'])->name('deleteComment');
+Route::post('/all-comment', [App\Http\Controllers\Web\HandleController::class, 'allComment'])->name('allComment');
+
+// like 
+Route::post('/favourite', [App\Http\Controllers\Web\HandleController::class, 'favourite'])->name('favourite');
+
 
 Route::get('/spot-preview', [App\Http\Controllers\Web\SpotController::class, 'spotEdttingComplete'])->name('spotEdttingComplete');
 Route::post('/spot-preview', [App\Http\Controllers\Web\SpotController::class, 'PostSpotPreview'])->name('PostSpotPreview');
 // Route::post('/spot-preview-edit/{id}', [App\Http\Controllers\Web\SpotController::class, 'PostSpotPreviewEdit'])->name('PostSpotPreviewEdit');
 
-Route::get('/spot-edit/{id}', [App\Http\Controllers\Web\SpotController::class, 'spotEdit'])->name('spotEdit');
-Route::post('/spot-edit/{id}', [App\Http\Controllers\Web\SpotController::class, 'postSpotEdit'])->name('postSpotEdit');
-
 
 // event
-Route::get('/list-events', [App\Http\Controllers\Web\HomeController::class, 'list_events'])->name('list_events');
-Route::get('/event-detail/{id}', [App\Http\Controllers\Web\HomeController::class, 'event_detail'])->name('event_detail');
+Route::get('/list-events', [App\Http\Controllers\Web\EventController::class, 'list_events'])->name('list_events');
+Route::get('/event-detail/{id}', [App\Http\Controllers\Web\EventController::class, 'event_detail'])->name('event_detail');
 
 // feature
 Route::get('/feature', [App\Http\Controllers\Web\HomeController::class, 'feature'])->name('feature');
@@ -70,19 +71,25 @@ Route::get('/feature-detail/{id}', [App\Http\Controllers\Web\HomeController::cla
 // goods
 Route::get('/list-goods', [App\Http\Controllers\Web\HomeController::class, 'list_goods'])->name('list_goods');
 Route::get('/goods-detail/{id}', [App\Http\Controllers\Web\HomeController::class, 'goods_detail'])->name('goods_detail');
+Route::get('/exchange-goods/{id}', [App\Http\Controllers\Web\HomeController::class, 'exchangeGoods'])->name('exchangeGoods');
+Route::post('/exchange-goods/{id}', [App\Http\Controllers\Web\HandleController::class, 'postExchangeGoods'])->name('postExchangeGoods');
 
+Route::get('/good-exchange-confirm', [App\Http\Controllers\Web\HomeController::class, 'goodExchangeConfirm'])->name('goodExchangeConfirm');
+Route::post('/good-exchange-confirm', [App\Http\Controllers\Web\HandleController::class, 'postGoodExchangeConfirm'])->name('postGoodExchangeConfirm');
+
+Route::get('/good-exchange-complete', [App\Http\Controllers\Web\HomeController::class, 'goodExchangeComplete'])->name('goodExchangeComplete');
 
 // test email
 Route::get('/signin', [App\Http\Controllers\Web\HomeController::class, 'signin'])->name('signin');
-Route::post('/signin', [App\Http\Controllers\Web\HomeController::class, 'postSignin'])->name('postSignin');
+Route::post('/signin', [App\Http\Controllers\Web\HandleController::class, 'postSignin'])->name('postSignin');
 // Email related routes
 Route::get('mail/send', [App\Http\Controllers\MailController::class], 'send_email')->name('postSignin');
 //register
 Route::get('/register', [App\Http\Controllers\Web\HomeController::class, 'signup'])->name('signup');
-Route::post('/register', [App\Http\Controllers\Web\HomeController::class, 'postSignup'])->name('postSignup');
+Route::post('/register', [App\Http\Controllers\Web\HandleController::class, 'postSignup'])->name('postSignup');
 
 Route::get('/register-edit-profile/{id}', [App\Http\Controllers\Web\HomeController::class, 'edit_profile'])->name('edit_profile');
-Route::post('/register-edit-profile/{id}', [App\Http\Controllers\Web\HomeController::class, 'post_edit_profile'])->name('post_edit_profile');
+Route::post('/register-edit-profile/{id}', [App\Http\Controllers\Web\HandleController::class, 'post_edit_profile'])->name('post_edit_profile');
 
 Route::get('/signup-complete', [App\Http\Controllers\Web\HomeController::class, 'signup_complete'])->name('signup_complete');
 
@@ -103,20 +110,21 @@ Route::prefix('facebook')->name('facebook.')->group( function(){
 // Route::delete('/task/{task}', [App\Http\Controllers\TaskController::class, 'delete'])->name('delete.task');
 
 Route::get('/signup-verify/{id}',[App\Http\Controllers\Web\HomeController::class, 'signup_verify'])->name('signup_verify');
-Route::post('/signup-verify/{id}', [App\Http\Controllers\Web\HomeController::class, 'postSignupVerify'])->name('postSignupVerify');
+Route::post('/signup-verify/{id}', [App\Http\Controllers\Web\HandleController::class, 'postSignupVerify'])->name('postSignupVerify');
 
 //reset password
 Route::get('/password-reset',[App\Http\Controllers\Web\HomeController::class, 'passwordReset'])->name('passwordReset');
-Route::post('/password-reset',[App\Http\Controllers\Web\HomeController::class, 'postPasswordReset'])->name('postPasswordReset');
+Route::post('/password-reset',[App\Http\Controllers\Web\HandleController::class, 'postPasswordReset'])->name('postPasswordReset');
 
 Route::get('/password-reset-verify/{id}',[App\Http\Controllers\Web\HomeController::class, 'passwordResetVerify'])->name('passwordResetVerify');
-Route::post('/password-reset-verify/{id}',[App\Http\Controllers\Web\HomeController::class, 'postPasswordResetVerify'])->name('postPasswordResetVerify');
+Route::post('/password-reset-verify/{id}',[App\Http\Controllers\Web\HandleController::class, 'postPasswordResetVerify'])->name('postPasswordResetVerify');
 
 Route::get('/password-reset-complete/{id}',[App\Http\Controllers\Web\HomeController::class, 'passwordResetComplete'])->name('passwordResetComplete');
-Route::post('/password-reset-complete/{id}',[App\Http\Controllers\Web\HomeController::class, 'postPasswordResetComplete'])->name('postPasswordResetComplete');
+Route::post('/password-reset-complete/{id}',[App\Http\Controllers\Web\HandleController::class, 'postPasswordResetComplete'])->name('postPasswordResetComplete');
 
 Route::get('/set-new-password/{id}',[App\Http\Controllers\Web\HomeController::class, 'setNewPassword'])->name('setNewPassword');
-Route::post('/set-new-password/{id}',[App\Http\Controllers\Web\HomeController::class, 'postSetNewPassword'])->name('postSetNewPassword');
+Route::post('/set-new-password/{id}',[App\Http\Controllers\Web\HandleController::class, 'postSetNewPassword'])->name('postSetNewPassword');
 
 
 Route::post('/upload_img',[App\Http\Controllers\Web\SpotController::class, 'upload_img'])->name('upload_img');
+Route::post('/sort_spot',[App\Http\Controllers\Web\HandleController::class, 'sortSpot'])->name('sortSpot');

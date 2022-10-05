@@ -66,6 +66,8 @@ class User extends BaseModel implements
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'image_id'=> Casts\Json::class,
+
     ];    
     
 
@@ -118,4 +120,13 @@ class User extends BaseModel implements
         }
     }
 
+    public function image()
+    {
+        return $this->belongsTo(\App\Models\Upload::class, 'avatar_image_id');
+    }
+
+    public function getImages()
+    {
+        return \App\Models\Upload::whereIn('id', $this->avatar_image_id)->get();
+    }
 }

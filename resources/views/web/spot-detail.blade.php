@@ -130,11 +130,15 @@
                             <div class="section_title">
                                 <img src="/web-assets/images/tohoku-6-spot.svg" alt="">
                             </div>
-                            <div class="action-button" data-show-modal="#modal-spot-actions">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
+                            @if(Auth::check())
+                                @if(Auth::user()->id == $info_spot->author)
+                                    <div class="action-button" data-show-modal="#modal-spot-actions">
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                    </div>
+                                @endif
+                            @endif
                         </div>
                         <div class="mb-20 d-flex justify-content-between">
                             <div class="area d-flex align-items-center">
@@ -174,6 +178,7 @@
                         <div class="container">
                             <div class="slider owl-carousel">
                                 @foreach ($images as $image)
+
                                 <div class="item">
                                     <img src="{{ $image->getUrl() }}" alt="">
                                 </div>       
@@ -274,7 +279,7 @@
                             </div>
                         </div>
                         <div class="load-more-review text-align-center">
-                            <button class="button button-style-3" onclick="all_comment({{$info_spot->id}})">もっと見る（12件）</button>
+                            <button class="button button-style-3" onclick="all_comment({{$info_spot->id}})">もっと見る（ {{$info_spot->count_comment}} 件）</button>
                         </div>
                     </div>
                 </section>
@@ -535,7 +540,7 @@
                 <div class="modal_title">このスポットについて</div>
                 <ul class="modal_menu">
                     <li>
-                        <a href="edit-edit.html">編集する</a>
+                        <a href="{{route('spotEdit',$info_spot->id)}}">編集する</a>
                     </li>
                     <li>
                         <a href="#" data-to-report-spot>事務局に報告する</a>

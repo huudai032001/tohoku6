@@ -15,4 +15,9 @@ class Comment extends Model
     public function spot() {
         return $this->belongsTo('App\Models\Spot');
     }
+
+    public function spots()
+    {
+        return $this->belongsTo(\App\Models\Spot::class, 'spot_id');
+    }
 }

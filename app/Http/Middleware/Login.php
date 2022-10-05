@@ -18,7 +18,7 @@ class Login
     public function handle(Request $request, Closure $next)
     {        
         if (!Auth::check()) {
-            return redirect()->route('login', ['redirect' => $request->fullUrl()]);
+            return redirect()->route('signin', ['redirect' => $request->fullUrl()]);
         }
         
         return $next($request);

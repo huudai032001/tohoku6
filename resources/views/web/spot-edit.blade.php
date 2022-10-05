@@ -1,128 +1,18 @@
+@extends('web.layouts.default')
 @if(Auth::check())
 
-<!DOCTYPE html>
-<html lang="en">
+    @section('link_css')
 
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Edit spot</title>
-
-        <link rel="stylesheet" href="/web-assets/css/framework-full.css">
-
-        <link rel="stylesheet" href="fonts/Fontawesome/4.7/css/font-awesome.min.css">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
-
-        <link rel="stylesheet" href="/web-assets/css/owl-customized.css">
-        <link rel="stylesheet" href="/web-assets/css/main.css">
         <link rel="stylesheet" href="/web-assets/css/spot-editing.css">
+    @endsection
 
-        <script src="/web-assets/libs/jquery/jquery-3.6.0.min.js"></script>
-        <script src="/web-assets/libs/owl-carousel/owl.carousel.min.js"></script>
-        
-    </head>
+    @section('content')
 
     <body>
 
 
         <div id="wrapper">
             <div id="inner-wrapper">
-
-
-                <!-- Menu bar -->
-                <div class="nav-bar d-flex align-items-center justify-content-between">
-                    <div class="nav-bar-left d-flex">
-                        <div class="menu-button" data-toggle="nav-bar-panel">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-                    </div>
-                    <div class="nav-bar-center d-flex justify-content-center">
-                        <div class="logo">
-                            <a href="index.html">
-                                <img src="/web-assets/images/number-6.svg" alt="Tohoku 6">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="nav-bar-right d-flex justify-content-end">
-                        <div class="user-menu-icons d-flex">
-                            <div data-show-modal="#user-notification-modal">
-                                <div class="icon">
-                                    <img src="/web-assets/images/icons/notification.svg" alt="notification">
-                                    <div class="has-notification-sight"></div>
-                                </div>
-                            </div>
-                            <a href="">
-                                <div class="icon">
-                                    <img src="/web-assets/images/icons/star.svg" alt="favorite">
-                                </div>
-                            </a>
-                            <a href="">
-                                <div class="icon">
-                                    <img src="/web-assets/images/icons/search.svg" alt="search">
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="nav-bar-panel">
-                    <div class="button-close" data-toggle="nav-bar-panel">×</div>
-                    <div class="profile-button">
-                        <a href="my-profile.html">
-                            <div class="profile-image">
-                                <img width="75" src="/web-assets/images/profile.svg" alt="profile">
-                            </div>
-                            <div class="profile-label">プロフィール</div>
-                        </a>
-                    </div>
-                    <div class="nav-menu">
-                        <ul class="ul-lv-1">
-                            <li class="li-lv-1">
-                                <a href="spot-register.html">スポット登録をする</a>
-                            </li>
-                            <li class="li-lv-1">
-                                <a href="my-profile.html">お気に入り</a>
-                            </li>
-                            <li class="li-lv-1">
-                                <a href="posts.html">スポットを探す</a>
-                            </li>
-                            <li class="li-lv-1">
-                                <a href="events.html">イベントを探す</a>
-                            </li>
-                            <li class="li-lv-1">
-                                <a href="features.html">フィーチャー記事</a>
-                            </li>
-                            <li class="li-lv-1">
-                                <a href="good-exchange.html">トウホクポイントを使う</a>
-                            </li>
-                            <li class="li-lv-1 menu-item-small-text">
-                                <a href="about.html">トウホクシックスとは？</a>
-                            </li>
-                            <li class="li-lv-1 menu-item-small-text">
-                                <a href="about-point.html">トウホクポイントとは？</a>
-                            </li>
-                            <li class="li-lv-1 menu-item-small-text">
-                                <a href="faq.html">よくあるご質問</a>
-                            </li>
-                            <li class="li-lv-1 menu-item-small-text">
-                                <a href="privacy-policy.html">プライバシーポリシー</a>
-                            </li>
-                            <li class="li-lv-1 menu-item-small-text">
-                                <a href="term-of-service.html">利用規約</a>
-                            </li>
-                            <li class="li-lv-1 menu-item-small-text">
-                                <a href="inquiry.html">お問い合わせ</a>
-                            </li>
-                           
-                        </ul>
-                    </div>
-                </div>
-                <!-- /Menu bar -->
 
                 <section class="spot-editing-form">
                     <form action="{{route('postSpotEdit',$id)}}" method="post" enctype="multipart/form-data">
@@ -193,15 +83,16 @@
                                             <div class="col-12">
                                                 <label class="custom-input-image">
                                                     <div class="preview-image ratio">
-                                                        <img src="/upload/{{$info_spot->image}}" alt="" id="myImg">
-                                                        <input type="hidden" name="image_hide" id="" value="{{$info_spot->image}}">
+                                                    @if ($image = $info_spot->image)
+
+                                                        <img src="{{$image->getUrl()}}" alt="" id="myImg">
+                                                    @endif
+                                                        <input type="hidden" name="image_hide" id="" value="{{$image->id}}">
                                                     </div>
                                                     <input type="file" accept="image/*" name="image" id="upload_img">
                                                 </label>
                                             </div>
                                             <?php
-                                                $sub_image = trim($info_spot->sub_image , '"[]');
-                                                $arr = explode(",", $sub_image);
                                                 $arr_category = [
                                                     0=>'宿泊',
                                                     1=>'グルメ',
@@ -212,23 +103,21 @@
                                                 ];
 
                                                 $category = explode(',',$info_spot->category);
-                                                for($i =0;$i< count($arr);$i++)
-                                                {
-                                                    $value = trim($arr[$i] , '"');
-
                                             ?>
+                                        @if ($images = $info_spot->getImages())
+
+                                            @foreach ($images as $image)
                                             <div class="col-4">
                                                 <label class="custom-input-image">
                                                     <div class="preview-image ratio">
-                                                        <img src="/upload/{{$value}}" alt="" id="myImg0<?=$i+1?>" name="test">
-                                                        <input type="hidden" name="sub_image_0<?=$i+1?>_hide" id="" value="{{$value}}">
+                                                        <img src="{{$image->getUrl()}}" alt="" id="myImg0{{$image->id}}" name="test">
+                                                        <input type="hidden" name="sub_image_0{{$image->id}}_hide" id="" value="{{$image->id}}">
                                                     </div>
-                                                    <input type="file" accept="image/*" name="sub_image_0<?=$i+1?>" id="sub_image_0<?=$i+1?>">
+                                                    <input type="file" accept="image/*" name="sub_image_0{{$image->id}}" id="sub_image_0{{$image->id}}">
                                                 </label>
                                             </div>
-                                            <?php
-                                                }
-                                            ?>
+                                            @endforeach
+                                        @endif
                                         </div>
                                     </div>
                                     @error('image')
@@ -292,42 +181,6 @@
 
                     </form>
                 </section>
-
-                <!-- Footer -->
-                <div id="footer" class="bg-white">
-                    <section class="footer-site-map">
-                        <div style="display: flex ;justify-content: center; align-items: center; height: 420px; background-color: #B4B4B4;color: #fff;">
-                            <b style="font-size: 16px;">サイトマップ</b>
-                        </div>                        
-                    </section>
-
-                    <div class="container">
-                        <ul class="footer-social-buttons d-flex align-items-center justify-content-center">
-                            <li>
-                                <a href="">
-                                    <img src="/web-assets/images/icons/twitter.svg" alt="">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <img src="/web-assets/images/icons/instagram.svg" alt="">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <img src="/web-assets/images/icons/tiktok.svg" alt="">
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    
-                    <div class="copyright">
-                        <div class="container">
-                            tohoku6.co.jp
-                        </div>
-                    </div>
-                </div>
-                <!-- /Footer -->
 
             </div> <!-- /inner-wrapper -->
         </div> <!-- /wrapper -->
@@ -401,6 +254,6 @@
         <script src="/web-assets/js/tohoku-calendar.js"></script>
         <script src="/web-assets/js/spot_upload_image.js"></script>        
     </body>
+    @endsection
 
-</html>
 @endif
