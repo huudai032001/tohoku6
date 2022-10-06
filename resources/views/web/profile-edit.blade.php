@@ -52,7 +52,7 @@
                                 <div class="form-group form-group-horizontal">
                                     <div class="form-group-label">メール</div>
                                     <div class="form-control-wrap">
-                                        <input type="email" class="input-text" name="email" value="{{$user->email}}">
+                                        <input type="email" class="input-text" name="email" value="{{$user->email}}" disabled>
                                     </div>
                                 </div>
                                 <div class="form-group form-group-horizontal">
@@ -104,7 +104,7 @@
                                     <div class="form-group-label">生年月日</div>
                                     <div class="form-control-wrap">
                                         <div class="row align-items-center space-y-10 space-x-10">
-                                            <input type="date" name="birth_day" value="{{$user->birth_day}}">
+                                            <input type="date" name="birth_day" value="{{$user->birth_day}}" class="input-text">
                                             <!-- <div class="col-auto d-flex align-items-center">
                                                 <select name="" class="select">
                                                     <option value=""></option>
@@ -192,7 +192,7 @@
                                     <button class="button-style-1">完了</button>
                                 </div>
                                 <div class="user-resign-text">
-                                    退会は<a href="">こちら</a>
+                                    退会は<a onclick="cancel()">こちら</a>
                                 </div>
                             </div>
 

@@ -23,15 +23,14 @@ class SpotController extends Controller
     public function list_spot(){
         if($_GET){
             $search = $_GET['search'];
-            // $list_spot = Spot::paginate(6);
             $list_spot = Spot::where('spots.name', 'like', '%' . $search . '%')
-            ->join('uploads', 'uploads.id', '=', 'spots.image_id')
-            ->select(['spots.*','uploads.file_name'])
+            // ->join('uploads', 'uploads.id', '=', 'spots.image_id')
+            // ->select(['spots.*','uploads.file_name'])
             ->orderBy('created_at','DESC')
             ->take(6)->get();
 
         }else {
-            $list_spot = Spot::with('upload')->paginate(6);
+            $list_spot = Spot::with('upload')->orderBy('created_at','DESC')->take(6)->get();
 
         }
         // dd($list_spot);
@@ -39,7 +38,7 @@ class SpotController extends Controller
     }
 
     public function spot_detail($id){
-        $list_spot = Spot::paginate(6);
+        $list_spot = Spot::take(6)->get();
         $info_spot = Spot::where('id',$id)->first(); 
         // dd($list_spot);
         // $list_comment = Spot::with('comment')->first();
@@ -99,16 +98,11 @@ class SpotController extends Controller
         $spot->location = $req->input('location');
         $spot->name = $req->input('name');
         $spot->intro = $req->input('intro');
-        $spot->image = $uploadService->handleUploadFile($file,"")['file_info']['id'];
+        $spot->image_id = $uploadService->handleUploadFile($file,"")['file_info']['id'];
         $spot->sub_image = $sub_img;
-        // $spot->save();
-
         $spot->category = implode(",",$req->input('category'));
-        // dd(($req->file('image')));
+
         return view('web./spot-preview',['spot'=> $spot]);
-
-        // $spot->save();
-
     }
     public function upload_img(){
         $img = $_FILES['file'];
@@ -153,16 +147,24 @@ class SpotController extends Controller
             $spot->category = $req->input('category');
             $spot->save();
         }
-        return redirect('list-spot');
+        return view('web.spot-edtting-complete');
     }
 
 
     // edit
 
     public function spotEdit($id){
-        // dd($alias);
         $info_spot = Spot::findorfail($id);
-        return view('web.spot-edit',compact('info_spot','id'));
+        if(Auth::check()){
+            if($info_spot->author == Auth::user()->id){
+                return view('web.spot-edit',compact('info_spot','id'));
+            }else {
+                return abort(404);
+            }
+        }else {
+            return abort(404);
+        }
+
     }
 
     public function postSpotEdit(Request $req,$id){
@@ -251,7 +253,6 @@ class SpotController extends Controller
     }
 
     public function spotComment(Request $req){
-        // var_dump($req);
         $this->validate($req,[
             'comment'=>'required',
         ],
@@ -273,7 +274,6 @@ class SpotController extends Controller
     }
 
     public function deleteComment(){
-        // var_dump('a');
         $com = Comment::findorfail($_POST['id']);
         $com->delete();
         echo json_encode(['res'=>true]);

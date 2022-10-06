@@ -94,7 +94,7 @@ class HomeController extends Controller
 
     public function signin(){
         // $list_events = Event::paginate(6);
-        return view('web.register');
+        return view('web.signin');
     }
     // signin edit profile
 
@@ -103,9 +103,9 @@ class HomeController extends Controller
         return view('web.signup-complete');
     }
 
-    public function edit_profile($id){
+    public function edit_profile(){
         // $list_events = Event::paginate(6);
-        $info_user = User::where('id',$id)->first();
+        $info_user = Auth::user();
         return view('web.signup-profile-edit',compact('info_user'));
     }
 
@@ -120,9 +120,8 @@ class HomeController extends Controller
 
     public function goods_detail($id){
         $info_goods = Goods::where('id',$id)->first(); 
-        $list_goods = Goods::where('name', 'like', "%$info_goods->name%");
-        $list_goods->take(10)->get();
-        // var_dump($list_goods);
+        $list_goods = Goods::where('name', 'like', "%$info_goods->name%")->take(10)->get();
+
         return view('web.good-detail',['info_goods'=>$info_goods,'list_goods'=>$list_goods]);
     }
 
@@ -131,8 +130,8 @@ class HomeController extends Controller
     }
 
     // signup-verify
-    public function signup_verify($id){
-        return view('web.signup-verify',compact('id'));
+    public function signup_verify(){
+        return view('web.signup-verify');
     }
 
     public function exchangeGoods($id){
@@ -158,8 +157,8 @@ class HomeController extends Controller
 
 
 
-    public function passwordResetVerify($id){
-        return view('web.password-reset-verify',['id'=>$id]);
+    public function passwordResetVerify(){
+        return view('web.password-reset-verify');
     }
 
 

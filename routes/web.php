@@ -88,8 +88,8 @@ Route::get('mail/send', [App\Http\Controllers\MailController::class], 'send_emai
 Route::get('/register', [App\Http\Controllers\Web\HomeController::class, 'signup'])->name('signup');
 Route::post('/register', [App\Http\Controllers\Web\HandleController::class, 'postSignup'])->name('postSignup');
 
-Route::get('/register-edit-profile/{id}', [App\Http\Controllers\Web\HomeController::class, 'edit_profile'])->name('edit_profile');
-Route::post('/register-edit-profile/{id}', [App\Http\Controllers\Web\HandleController::class, 'post_edit_profile'])->name('post_edit_profile');
+Route::get('/register-edit-profile', [App\Http\Controllers\Web\HomeController::class, 'edit_profile'])->name('edit_profile');
+Route::post('/register-edit-profile', [App\Http\Controllers\Web\HandleController::class, 'post_edit_profile'])->name('post_edit_profile');
 
 Route::get('/signup-complete', [App\Http\Controllers\Web\HomeController::class, 'signup_complete'])->name('signup_complete');
 
@@ -109,21 +109,21 @@ Route::prefix('facebook')->name('facebook.')->group( function(){
 // Route::post('/task', [App\Http\Controllers\TaskController::class, 'store'])->name('task');
 // Route::delete('/task/{task}', [App\Http\Controllers\TaskController::class, 'delete'])->name('delete.task');
 
-Route::get('/signup-verify/{id}',[App\Http\Controllers\Web\HomeController::class, 'signup_verify'])->name('signup_verify');
-Route::post('/signup-verify/{id}', [App\Http\Controllers\Web\HandleController::class, 'postSignupVerify'])->name('postSignupVerify');
+Route::get('/signup-verify',[App\Http\Controllers\Web\HomeController::class, 'signup_verify'])->name('signup_verify');
+Route::post('/signup-verify', [App\Http\Controllers\Web\HandleController::class, 'postSignupVerify'])->name('postSignupVerify');
 
 //reset password
 Route::get('/password-reset',[App\Http\Controllers\Web\HomeController::class, 'passwordReset'])->name('passwordReset');
 Route::post('/password-reset',[App\Http\Controllers\Web\HandleController::class, 'postPasswordReset'])->name('postPasswordReset');
 
-Route::get('/password-reset-verify/{id}',[App\Http\Controllers\Web\HomeController::class, 'passwordResetVerify'])->name('passwordResetVerify');
-Route::post('/password-reset-verify/{id}',[App\Http\Controllers\Web\HandleController::class, 'postPasswordResetVerify'])->name('postPasswordResetVerify');
+Route::get('/password-reset-verify',[App\Http\Controllers\Web\HomeController::class, 'passwordResetVerify'])->name('passwordResetVerify');
+Route::post('/password-reset-verify',[App\Http\Controllers\Web\HandleController::class, 'postPasswordResetVerify'])->name('postPasswordResetVerify');
 
-Route::get('/password-reset-complete/{id}',[App\Http\Controllers\Web\HomeController::class, 'passwordResetComplete'])->name('passwordResetComplete');
-Route::post('/password-reset-complete/{id}',[App\Http\Controllers\Web\HandleController::class, 'postPasswordResetComplete'])->name('postPasswordResetComplete');
+Route::get('/password-reset-complete',[App\Http\Controllers\Web\HomeController::class, 'passwordResetComplete'])->name('passwordResetComplete');
+Route::post('/password-reset-complete',[App\Http\Controllers\Web\HandleController::class, 'postPasswordResetComplete'])->name('postPasswordResetComplete');
 
-Route::get('/set-new-password/{id}',[App\Http\Controllers\Web\HomeController::class, 'setNewPassword'])->name('setNewPassword');
-Route::post('/set-new-password/{id}',[App\Http\Controllers\Web\HandleController::class, 'postSetNewPassword'])->name('postSetNewPassword');
+Route::get('/set-new-password',[App\Http\Controllers\Web\HomeController::class, 'setNewPassword'])->name('setNewPassword');
+Route::post('/set-new-password',[App\Http\Controllers\Web\HandleController::class, 'postSetNewPassword'])->name('postSetNewPassword');
 
 
 Route::post('/upload_img',[App\Http\Controllers\Web\SpotController::class, 'upload_img'])->name('upload_img');

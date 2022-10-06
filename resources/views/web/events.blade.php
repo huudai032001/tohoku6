@@ -7,7 +7,6 @@
 
     <body>
 
-
         <div id="wrapper">
             <div id="inner-wrapper">
                 <div class="page-header">
@@ -115,13 +114,21 @@
                 <div style="padding: 25px 0;">
                     <div class="container">
                         <div class="simple-paginator d-flex justify-content-between align-items-center">
-                            <a href="#" class="prev">
+                            @if($total_page >1)
+                            <a href="?page={{$total_page - 1}}" class="prev">
+                            @else
+                            <a href="" class="prev">
+                            @endif
                                 <img src="/web-assets/images/angle-left.svg" alt="">
                             </a>
                             <div class="page-num">
-                                <span class="current-page-num">1</span>/<span class="total-page-num">20</span>
+                                <span class="current-page-num">1</span>/<span class="total-page-num">{{$total_page}}</span>
                             </div>
-                            <a href="#" class="next">
+                            @if($total_page == 1)
+                            <a href="" class="next">
+                            @else
+                            <a href="?page={{$total_page + 1}}" class="next">
+                            @endif
                                 <img src="/web-assets/images/angle-right.svg" alt="">
                             </a>
                         </div>

@@ -39,6 +39,7 @@
                     <input type="hidden" name="zip_code" id="" value="{{$exchange->zip_code}}">
                     <input type="hidden" name="address" id="" value="{{$exchange->address}}">
                     <input type="hidden" name="home_address" id="" value="{{$exchange->home_address}}">
+                    <input type="hidden" name="point" id="" value="{{$point}}">
 
                         <div class="container">
 

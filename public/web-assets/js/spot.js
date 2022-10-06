@@ -72,30 +72,8 @@ function find_category(){
                     $('.list-category').html(html);
         
                     // $('.list-category').data('owl.carousel').destroy(); 
-                    $('.list-category').owlCarousel({touchDrag: false, mouseDrag: false});
-                    var owl = $("#dom");
-                        owl.owlCarousel({
-                        autoPlay: false,
-                        dots: false,
-                        nav: true,
-                        margin: 20,
-                        navText: ['', ''],
-                        slideBy: 'page',        
-                        responsive: {
-                            0: {
-                                items: 1,
-                                autoWidth: true
-                            },
-                            576: {
-                                items: 2,
-                                autoWidth: true          
-                            },
-                            992: {
-                                items: 3,
-                                autoWidth: false
-                            }
-                        }
-                    });
+                    // $('.list-category').owlCarousel({touchDrag: false, mouseDrag: false});
+
                 }
             });
 
@@ -167,7 +145,9 @@ function sort(id){
                 var html = '';
             }
             $('.list-category').html(html);
-            
+            $('.post-list-sort-options a').removeClass('active');
+            $('.sort_0'+id).addClass('active');
+
                     // $('.list-category').owlCarousel({touchDrag: false, mouseDrag: false});
 
         }

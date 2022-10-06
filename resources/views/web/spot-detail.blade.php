@@ -152,7 +152,7 @@
                         <h1 class="spot-title">{{$info_spot->name}}・<span class="text-latin">RISING SUN</span></h1>
                         <div class="location">{{$info_spot->location}}</div>
                         <div class="author">
-                            <span class="text-author">投稿者：</span> <span class="author-name">{{$info_spot->author}}</span>
+                            <span class="text-author">投稿者：</span> <span class="author-name">{{$info_spot->user->name}}</span>
                         </div>
                         <div class="d-flex justify-content-between">
                             <div class="tags">

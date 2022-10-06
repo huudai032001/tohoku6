@@ -226,3 +226,10 @@
     });
 
 })(jQuery);
+
+function cancel(){
+    $check = confirm("本当にキャンセルしますか？");
+    if($check == true){
+        window.location.href = "/my-profile";
+    }
+}

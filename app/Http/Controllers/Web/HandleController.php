@@ -25,6 +25,30 @@ use App\Jobs\SendEmailResetPass;
 class HandleController extends Controller
 {
     public function postExchangeGoods(Request $req,$id){
+        $this->validate($req,[
+            'name'=>'required|max:100',
+            'furigana'=>'required|max:100',
+            'phone'=>'required|min:10|max:20',
+            'zip_code'=>'required|min:6',
+            'address'=>'required',
+            'home_address'=>'required',
+        ],[
+            'name.required'=>'必須項目です',
+            'name.max'=>'100文字以上入力しないでください', 
+
+            'furigana.required'=>'必須項目です',
+            'furigana.max'=>'100文字以上入力しないでください',
+
+            'phone.required'=>'必須項目です',
+            'phone.min'=>'パスワードは半角英数字を含む10文字以上を設定してください',
+            'phone.max'=>'20文字以上入力しないでください',
+
+            'zip_code.required'=>'必須項目です',
+            'zip_code.min'=>'パスワードは半角英数字を含む10文字以上を設定してください',
+
+            'address.required'=>'必須項目です',
+            'home_address.required'=>'必須項目です',
+        ]);
         $exchange = new ExchangeGoods;
         $exchange->name = $req->input('name');
         $exchange->phone = $req->input('phone');
@@ -50,6 +74,10 @@ class HandleController extends Controller
         $exchange->zip_code = $req->input('zip_code');
         $exchange->furigana = $req->input('furigana');
         $exchange->save();
+
+        $user = Auth::user();
+        $user->point = $req->input('point');
+        $user->save();
 
         return redirect('/good-exchange-complete');
     }
@@ -164,6 +192,19 @@ class HandleController extends Controller
     }
     // login
     public function postSignin(Request $req){
+        $this->validate($req,[
+            'email'=>'required|min:6|max:50',
+            'password'=>'required|min:6|max:50',
+
+        ],
+        [
+            'email.required'=>'必須項目です',
+            'email.min'=>'パスワードは半角英数字を含む6文字以上を設定してください',
+            'email.max'=>'50文字以上入力しないでください', 
+            'password.required'=>'必須項目です',
+            'password.min'=>'パスワードは半角英数字を含む6文字以上を設定してください',
+            'password.max'=>'50文字以上入力しないでください',  
+        ]);
         $credentials= ([
             'email'=>$req->input('email'),
             'password'=>($req->input('password'))
@@ -172,20 +213,42 @@ class HandleController extends Controller
         if(Auth::attempt($credentials)){
             $check = Auth::user();
             if($check['status'] == 'active'){
-                return redirect('index'); 
+                return redirect('/'); 
             }
             else {
-                return redirect('signup-verify/'. $check['id']); 
+                // $otp = rand(10,100000);
+                // $message = [
+                //     'type' => 'Create task',
+                //     'task' => $otp,
+                //     'content' => 'has been created!',
+                // ];
+                // SendEmail::dispatch($message, $req->input('email'))->delay(now()->addMinute(1));
+
+                return view('web.signup-verify')->with(['id'=>$check['id']]); 
             }
         }
         else{
-            return redirect()->back()->with('thongbao','Tài khoản hoặc mật khẩu không chính xác!');
+            return redirect()->back()->with('thongbao','アカウントのパスワードが正しくありません!');
 
         }
     }
         // test email 
         public function postSignup(Request $req){
+            $this->validate($req,[
+                'email'=>'required|min:6|max:50',
+                'password'=>'required|min:6|max:50',
+    
+            ],
+            [
+                'email.required'=>'必須項目です',
+                'email.min'=>'パスワードは半角英数字を含む6文字以上を設定してください',
+                'email.max'=>'50文字以上入力しないでください', 
+                'password.required'=>'必須項目です',
+                'password.min'=>'パスワードは半角英数字を含む6文字以上を設定してください',
+                'password.max'=>'50文字以上入力しないでください',  
+            ]);
             $check = User::where('email',$req->input('email'))->first();
+            // dd($check);
             $otp = rand(10,100000);
     
             $users = $req->input('email');
@@ -203,20 +266,46 @@ class HandleController extends Controller
                 $user->otp = $otp;
                 $user->role = 'member';
                 $user->save();
-                $checks = User::where('email',$req->input('email'))->first();
-                
-                return redirect('signup-verify/'. $checks['id']); 
+                // $checks = User::where('email',$req->input('email'))->first();
+                // dd($checks->id);
+                return view('web.signup-verify')->with('id',$check->id); 
+            }
+            else {
+                if($check->status == 'disabled'){
+                    return view('web.signup-verify')->with('id',$check->id); 
+                }
+                else {
+                    return redirect()->back()->with('error','アカウントはすでに存在しています');
+                }
+
             }
         }
-        public function post_edit_profile(Request $req,$id){
-            $sv = User::where('id',$id)->first();
+        public function post_edit_profile(Request $req){
+            $this->validate($req,[
+                'name'=>'required|max:50',
+                'gender'=>'required',
+                'intro'=>'required',
+                'location'=>'required',
+                'birth_day'=>'required',
+
+            ],
+            [
+                'name.required'=> '必須項目です',
+                'name.max'=> '50文字以上入力しないでください',
+
+                'gender.required'=> '必須項目です',
+                'intro.required'=> '必須項目です',
+                'location.required'=> '必須項目です',
+                'birth_day.required'=> '必須項目です'
+
+            ]);
             $birth_day = $req->input('day') ."-". $req->input('month') . "-" . $req->input('year');
-    
-            $list_user = User::findOrFail($id);
+            
+            $list_user = Auth::user();
             $list_user->name = $req->input('name');
             $list_user->gender = $req->input('gender');
             $list_user->intro = $req->input('intro');
-            $list_user->email = $req->input('email');
+            // $list_user->email = $req->input('email');
             $list_user->location = $req->input('location');
             $list_user->birth_day = $req->input('birth_day');
             $list_user->save();
@@ -228,26 +317,35 @@ class HandleController extends Controller
             return redirect()->route('signup_complete');
     
         }
-        public function postSignupVerify(Request $req,$id){
-            $checks = User::where(['id'=>$id,'otp'=>$req->input('otp')])->first();
+        public function postSignupVerify(Request $req){
+            $this->validate($req,[
+                'otp'=>'required',
+
+            ],
+            [
+                'otp.required'=> '必須項目です'
+            ]
+        );
+            $checks = User::where(['id'=>$req->input('id'),'otp'=>$req->input('otp')])->first();
             if($checks != null){
-                $user = User::findOrFail($id);
+                $user = User::findOrFail($checks->id);
                 $user->status = 'active';
                 $user->save();
-                return redirect('register-edit-profile/'.$id);
+                Auth::loginUsingId($checks->id);
+
+                return redirect('register-edit-profile');
             }
             else {
-                return redirect('signup-verify/'. $id); 
+                $check = User::findorfail($req->input('id'));
+                return view('web.signup-verify')->with(['id'=>$check->id,'error'=>'OTP コードが正しくありません']); 
     
             }
-            // return view('web.signup-verify');
         }
         public function postPasswordReset(Request $req){
 
             $check = User::where('email',$req->input('email'))->first();
             $otp = rand(10,100000);
-            // var_dump($check);
-            // die;
+
             if($check){
     
                 $message = [
@@ -259,31 +357,38 @@ class HandleController extends Controller
                 $user->otp = $otp;
                 $user->save();
                 SendEmailResetPass::dispatch($message, $req->input('email'))->delay(now()->addMinute(1));
-            
-                return redirect('password-reset-verify/'.$user->id);
+                // dd($user->id);
+                return view('web.password-reset-verify')
+                ->with([
+                    'user_id'=>$user->id
+                ]);
             }
             else {
                 return redirect()->back()->with('thongbao','Không tìm thấy tài khoản này!');
     
             }
         }
-        public function postPasswordResetVerify(Request $req,$id){
-            $user = User::findorfail($id);
+        public function postPasswordResetVerify(Request $req){
+            $user = User::findorfail($req->input('user_id'));
             if($user->otp == $req->input('otp')){
-                return redirect("set-new-password/".$user->id);
+                return view("web.set-new-password")
+                ->with([
+                    'id'=>$user->id
+                ]);
             }
             else{
                 return redirect()->back()->with('thongbao','Mã OTP không chính xác!');
     
             }
         }
-        public function postPasswordResetComplete(Request $req,$id){
-            $user = User::findorfail($id);
+        public function postPasswordResetComplete(Request $req){
+            $user = User::findorfail($req->input('id'));
             $user->password = bcrypt($req->input('pass_new'));
             $user->save();
-            // dd($user->password);
+            dd($user->password);
+            return view('web.sns-reset-pass');
         }
-        public function postSetNewPassword(Request $req,$id){
+        public function postSetNewPassword(Request $req){
             $this->validate($req,[
                 'pass_new'=>'required|min:6|max:50',
                 're_pass_new'=>'required|same:pass_new|min:6|max:50',
@@ -302,7 +407,11 @@ class HandleController extends Controller
             ]);
     
     
-            return redirect('password-reset-complete/'.$id)->with('pass_new',$req->input('pass_new'));
+            return view('web.password-reset-complete')
+            ->with([
+                'pass_new'=>$req->input('pass_new'),
+                'id'=>$req->input('id')
+            ]);
         }
         public function sortSpot(){
             $sort = $_POST['id'];

@@ -41,7 +41,7 @@
                     </div>
 
                     <div class="text-align-center">
-                        <a href="signin.html" class="button button-style-3">次へ</a>
+                        <a href="{{route('signin')}}" class="button button-style-3">次へ</a>
                     </div>       
 
                 </div>

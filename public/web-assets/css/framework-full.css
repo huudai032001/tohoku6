@@ -65,6 +65,11 @@ h1 {
 }
 
 @media (min-width: 1200px) {
+  input#upload_avatar {
+    opacity: 0;
+    position: absolute;
+    width: 11%;
+  }
   h1 {
     font-size: 2.5rem;
   }
@@ -467,20 +472,31 @@ img {
 }
 
 @media (min-width: 576px) {
+  input#upload_avatar {
+
+    width: 23%;
+  }
   .container {
     max-width: 540px;
   }
 }
 
 @media (min-width: 768px) {
+  input#upload_avatar {
+    width: 18%;
+  }
   .container {
     max-width: 720px;
   }
+
 }
 
 @media (min-width: 992px) {
   .container {
     max-width: 960px;
+  }
+  input#upload_avatar {
+    width: 14%;
   }
 }
 
@@ -1631,6 +1647,9 @@ img {
 }
 
 @media (min-width: 1600px) {
+  input#upload_avatar {
+    width: 9%;
+  }
   .col-xxl,
   .col-xxl-fill {
     -ms-flex: 1 0 0%;
@@ -5841,7 +5860,12 @@ img {
     text-align: right;
   }
 }
+@media (min-width: 320px) {
+  input#upload_avatar {
 
+    width: 36%;
+}
+}
 img.fit-cover {
   -o-object-fit: cover;
      object-fit: cover;

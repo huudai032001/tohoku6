@@ -52,10 +52,10 @@
                 <div class="post-list-sort-options">
                     <div class="container">
                         <div class="d-flex align-items-center justify-content-center">
-                            <a onclick="sort(1)" class="active">新着順</a>
-                            <a onclick="sort(2)">いいね順</a>
-                            <a onclick="sort(3)">口コミ数順</a>
-                            <a onclick="sort(4)">ポイント順</a>
+                            <a onclick="sort(1)" class="sort_01 active">新着順</a>
+                            <a onclick="sort(2)" class="sort_02">いいね順</a>
+                            <a onclick="sort(3)" class="sort_03">口コミ数順</a>
+                            <a onclick="sort(4)" class="sort_04">ポイント順</a>
                         </div>
                     </div>
                 </div>
@@ -76,7 +76,6 @@
                                             <a href="{{route('spot_detail',$value->id)}}">
                                                 <div class="ratio thumb-image">
                                                     @if($image = $value->image)
-
                                                     <img src="{{$image->getUrl()}}" alt="">
                                                     @endif
                                                 </div>
@@ -120,7 +119,6 @@
                                 </div>          
                             @endforeach                
                             </div>
-                            {!! $list_spot->appends(['nickname'=>'huudai'])->links() !!}
 
                         </div>
                         <div class="load-more-button">

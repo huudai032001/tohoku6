@@ -40,10 +40,20 @@ class EventController extends Controller
 
         }
         $date = ($get_date['year'] . "-" . $mon . "-" . $day);
+        $limit = 2;
+        if(isset($_GET['page'])){
+            $page = $_GET['page'];
+        }else {
+            $page = 2;
+        }
+        $start = ($limit * ($page-1));
+        if($start < 0){
+            $start = 0;
+        }
+        $list_events = Event::whereDate('time_start', $date)->offset($start)->paginate($limit);
+        $total_page = ceil(count($list_events) / $limit);
 
-        $list_events = Event::whereDate('time_start', $date)->paginate(6);
-        // $list_events = Event::paginate(6);
-        return view('web.events',compact('list_events'));
+        return view('web.events',compact('list_events','total_page'));
     }
 
     public function event_detail($id){

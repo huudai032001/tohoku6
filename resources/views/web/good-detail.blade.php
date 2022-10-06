@@ -57,7 +57,7 @@
                         </div>
 
                         <div class="text-align-center">
-                            <a href="good-exchange.html" class="button button-style-1">交換する</a>
+                            <a href="{{route('exchangeGoods',$info_goods->id)}}" class="button button-style-1">交換する</a>
                         </div>
 
                     </div>
@@ -71,9 +71,11 @@
                             <div class="col-6 col-md-3 col-xl-2">
                                 <div class="good-item">
                                     <a href="{{route('goods_detail',$value->id)}}">
+                                        @if($image = $value->image)
                                         <div class="thumb ratio ratio-1x1 thumb-hover-anim">
-                                            <img src="/web-asseemo/1.png" alt="">
+                                            <img src="{{$image->getUrl()}}" alt="">
                                         </div>
+                                        @endif
                                     </a>
                                     <div class="good-name">{{$value->name}}</div>
                                     <div class="good-cost">{{$value->point}}pt</div>

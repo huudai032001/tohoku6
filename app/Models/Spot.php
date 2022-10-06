@@ -40,4 +40,9 @@ class Spot extends BaseModel
     {
         return \App\Models\Upload::whereIn('id', $this->images_id)->get();
     }
+
+    public function user()
+    {
+        return $this->belongsTo(\App\Models\User::class, 'author');
+    }
 }

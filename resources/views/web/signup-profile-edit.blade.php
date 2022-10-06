@@ -43,13 +43,17 @@
                                     <div class="form-group-label">名前</div>
                                     <div class="form-control-wrap">
                                         <input type="text" class="input-text" name="name" value="{{$info_user->name}}">
+                                        @error('name')
+                                            <br>
+                                            <div class="form-error-msg">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                                 
                                 <div class="form-group form-group-horizontal">
                                     <div class="form-group-label">メール</div>
                                     <div class="form-control-wrap">
-                                        <input type="text" class="input-text"name="email" value="{{$info_user->email}}">
+                                        <input type="text" class="input-text"name="email" value="{{$info_user->email}}" disabled>
                                     </div>
                                 </div>
                                 <div class="form-group form-group-horizontal">
@@ -82,9 +86,11 @@
                                                 </div>
                                             </div>
                                         </div>
-                                       
                                     </div>
                                 </div>
+                                @error('gender')
+                                    <div class="form-error-msg">{{ $message }}</div>
+                                @enderror
                                 <div class="form-group form-group-horizontal">
                                     <div class="form-group-label">居住地
                                         <div class="form-group-instruction">※非公開</div>
@@ -98,82 +104,20 @@
                                         </select>
                                     </div>
                                 </div>
+                                @error('location')
+                                    <div class="form-error-msg">{{ $message }}</div>
+                                @enderror
                                 <div class="form-group form-group-horizontal">
                                     <div class="form-group-label">生年月日
                                         <div class="form-group-instruction">※非公開</div>
                                     </div>
                                     <div class="form-control-wrap">
                                         <div class="row align-items-center space-y-10 space-x-10">
-                                            <input type="date" name="birth_day" value="{{$info_user->birth_day}}">
-                                            <!-- <div class="col-auto d-flex align-items-center">
-                                                <select name="" class="select">
-                                                    <option value=""></option>
-                                                    <option value="1999">1999</option>
-                                                    <option value="2000" selected>2000</option>
-                                                    <option value="2001">2001</option>
-                                                    <option value="2002">2002</option>
-                                                    <option value="2003">2003</option>
-                                                    <option value="2004">2004</option>
-                                                </select>
-                                                <span class="ml-10">年</span>
-                                            </div>
-
-                                            <div class="col-auto d-flex align-items-center">
-                                                <select name="" class="select">
-                                                    <option value="1">1</option>
-                                                    <option value="2">2</option>
-                                                    <option value="3">3</option>
-                                                    <option value="4">4</option>
-                                                    <option value="5">5</option>
-                                                    <option value="6">6</option>
-                                                    <option value="7">7</option>
-                                                    <option value="8">8</option>
-                                                    <option value="9">9</option>
-                                                    <option value="10">10</option>
-                                                    <option value="11">11</option>
-                                                    <option value="12">12</option>
-                                                </select>
-                                                <span class="ml-10">月</span>
-                                            </div>
-
-                                            <div class="col-auto d-flex align-items-center">
-                                                <select name="" class="select">
-                                                    <option value="1">1</option>
-                                                    <option value="2">2</option>
-                                                    <option value="3">3</option>
-                                                    <option value="4">4</option>
-                                                    <option value="5">5</option>
-                                                    <option value="6">6</option>
-                                                    <option value="7">7</option>
-                                                    <option value="8">8</option>
-                                                    <option value="9">9</option>
-                                                    <option value="10">10</option>
-                                                    <option value="11">11</option>
-                                                    <option value="12">12</option>
-                                                    <option value="13">13</option>
-                                                    <option value="14">14</option>
-                                                    <option value="15">15</option>
-                                                    <option value="16">16</option>
-                                                    <option value="17">17</option>
-                                                    <option value="18">18</option>
-                                                    <option value="19">19</option>
-                                                    <option value="20">20</option>
-                                                    <option value="21">21</option>
-                                                    <option value="22">22</option>
-                                                    <option value="23">23</option>
-                                                    <option value="24">24</option>
-                                                    <option value="25">25</option>
-                                                    <option value="26">26</option>
-                                                    <option value="27">27</option>
-                                                    <option value="28">28</option>
-                                                    <option value="29">29</option>
-                                                    <option value="30">30</option>
-                                                    <option value="31">31</option>
-                                                </select>
-                                                <span class="ml-10">日</span>
-                                            </div> -->
+                                            <input type="date" name="birth_day" value="{{$info_user->birth_day}}" class="input-text">                                             
                                         </div>                                       
-                                        
+                                        @error('birth_day')
+                                            <div class="form-error-msg">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="form-group form-group-horizontal">
@@ -182,6 +126,9 @@
                                         <textarea class="textarea" rows="6" name="intro">{{$info_user->intro}}</textarea>
                                     </div>
                                 </div>
+                                @error('intro')
+                                    <div class="form-error-msg">{{ $message }}</div>
+                                @enderror
                                 <div style="margin-top: 35px;text-align: center;margin-bottom: 50px;">
                                     <button class="button-style-1">完了</button>
                                 </div>
