@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 05, 2022 at 09:08 AM
+-- Generation Time: Oct 06, 2022 at 08:44 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -151,13 +151,19 @@ INSERT INTO `favorite` (`id`, `posts_id`, `type_posts`, `user_id`, `created_at`,
 (16, 5, 1, NULL, '2022-10-03 02:30:48', '2022-10-03 02:30:48'),
 (17, 6, 1, NULL, '2022-10-03 03:08:33', '2022-10-03 03:08:33'),
 (18, 7, 1, NULL, '2022-10-03 03:14:23', '2022-10-03 03:14:23'),
-(19, 8, 1, NULL, '2022-10-03 03:15:28', '2022-10-03 03:15:28'),
+(19, 8, 1, '47', '2022-10-03 03:15:28', '2022-10-05 19:41:00'),
 (20, 9, 1, NULL, '2022-10-03 03:16:48', '2022-10-03 03:16:48'),
 (21, 10, 1, NULL, '2022-10-03 03:20:16', '2022-10-03 03:20:16'),
 (22, 11, 1, NULL, '2022-10-03 03:24:37', '2022-10-03 03:24:37'),
 (23, 1, 1, NULL, '2022-10-03 18:42:53', '2022-10-03 18:42:53'),
 (24, 2, 1, NULL, '2022-10-04 21:42:03', '2022-10-04 21:42:03'),
-(25, 5, 2, '27', NULL, '2022-10-05 00:03:13');
+(25, 5, 2, '27', NULL, '2022-10-05 00:03:13'),
+(26, 3, 1, NULL, '2022-10-05 19:24:44', '2022-10-05 19:24:44'),
+(27, 4, 1, NULL, '2022-10-05 19:29:10', '2022-10-05 19:29:10'),
+(28, 5, 1, NULL, '2022-10-05 19:30:14', '2022-10-05 19:30:14'),
+(29, 6, 1, NULL, '2022-10-05 19:31:05', '2022-10-05 19:31:05'),
+(30, 7, 1, NULL, '2022-10-05 19:31:07', '2022-10-05 19:31:07'),
+(31, 8, 1, NULL, '2022-10-05 19:37:16', '2022-10-05 19:37:16');
 
 -- --------------------------------------------------------
 
@@ -292,7 +298,13 @@ CREATE TABLE `spots` (
 
 INSERT INTO `spots` (`id`, `name`, `image_id`, `images_id`, `address`, `location`, `category`, `intro`, `author`, `favorite`, `count_comment`, `created_at`, `updated_at`) VALUES
 (1, 'ハノイでのコンサート', 4, '[\"1\",\"2\",\"3\"]', 'hanoi', 'hanoi', '2,3,7', 'とてもかっこいい', '27', 1, 7, '2022-10-03 18:42:53', '2022-10-04 02:12:16'),
-(2, '音楽祭ネタ', 11, '[\"8\",\"9\",\"10\"]', 'kawa', 'kawa', '1,2', '音楽祭ネタ', '27', 0, 0, '2022-10-04 21:42:03', '2022-10-04 21:42:03');
+(2, '音楽祭ネタ', 11, '[\"8\",\"9\",\"10\"]', 'kawa', 'kawa', '1,2', '音楽祭ネタ', '27', 0, 0, '2022-10-04 21:42:03', '2022-10-04 21:42:03'),
+(3, '魔法のサーカス行為', 20, '[\"13\",\"14\",\"15\"]', 'kina', 'kina', '2', '魔法のサーカス行為', '47', 0, 0, '2022-10-05 19:24:44', '2022-10-05 19:24:44'),
+(4, 'サーカスアクト hana,m', 20, '[\"17\",\"18\",\"19\"]', 'tokyo', 'tokyo', '3,4', 'サーカスアクト hana,m', '47', 0, 0, '2022-10-05 19:29:10', '2022-10-05 19:29:10'),
+(5, 'サーカスアクト hana,m', 20, '[\"17\",\"18\",\"19\"]', 'tokyo', 'tokyo', '3,4', 'サーカスアクト hana,m', '47', 0, 0, '2022-10-05 19:30:14', '2022-10-05 19:30:14'),
+(6, 'サーカスアクト hana,m', 20, '[\"17\",\"18\",\"19\"]', 'tokyo', 'tokyo', '3,4', 'サーカスアクト hana,m', '47', 0, 0, '2022-10-05 19:31:05', '2022-10-05 19:31:05'),
+(7, 'サーカスアクト hana,m', 20, '[\"17\",\"18\",\"19\"]', 'tokyo', 'tokyo', '3,4', 'サーカスアクト hana,m', '47', 0, 0, '2022-10-05 19:31:07', '2022-10-05 19:31:07'),
+(8, 'カントリーミュージック', 36, '[\"33\",\"34\",\"35\"]', 'kawa', 'kawa', '2,3', 'カントリーミュージック', '47', 1, 0, '2022-10-05 19:37:16', '2022-10-05 19:41:00');
 
 -- --------------------------------------------------------
 
@@ -368,7 +380,32 @@ INSERT INTO `uploads` (`id`, `name`, `folder_path`, `file_name`, `extension`, `m
 (8, 'anh1', '', 'Dw6FehDTlX4WxvShVMnndtwr7XDBWO4Ml2LoqHou.png', 'png', 'image/png', 140572, '{\"width\":1672,\"height\":805,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":123,\"file_name\":\"Dw6FehDTlX4WxvShVMnndtwr7XDBWO4Ml2LoqHou-thumbnail.png\"},\"small\":{\"width\":1329,\"height\":640,\"file_name\":\"Dw6FehDTlX4WxvShVMnndtwr7XDBWO4Ml2LoqHou-small.png\"}}}', '2022-10-04 21:42:00', '2022-10-04 21:42:00'),
 (9, 'anh2', '', '8ScSi6wShveQK5qA3KEQcD44ldaTl5if0O2dwruc.png', 'png', 'image/png', 140572, '{\"width\":1672,\"height\":805,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":123,\"file_name\":\"8ScSi6wShveQK5qA3KEQcD44ldaTl5if0O2dwruc-thumbnail.png\"},\"small\":{\"width\":1329,\"height\":640,\"file_name\":\"8ScSi6wShveQK5qA3KEQcD44ldaTl5if0O2dwruc-small.png\"}}}', '2022-10-04 21:42:00', '2022-10-04 21:42:00'),
 (10, 'Screenshot 2022-08-12 182711', '', '0YK3G4r1j1Zcdej3SDrlgzo9dhhTZa5oVssItgWA.png', 'png', 'image/png', 258088, '{\"width\":1399,\"height\":793,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":145,\"file_name\":\"0YK3G4r1j1Zcdej3SDrlgzo9dhhTZa5oVssItgWA-thumbnail.png\"},\"small\":{\"width\":1129,\"height\":640,\"file_name\":\"0YK3G4r1j1Zcdej3SDrlgzo9dhhTZa5oVssItgWA-small.png\"}}}', '2022-10-04 21:42:01', '2022-10-04 21:42:01'),
-(11, 'Screenshot 2022-05-09 100156', '', 'lXON50e24TtxFDF06xVsRlxMYx9zIwgCBq1P8lAD.png', 'png', 'image/png', 181017, '{\"width\":913,\"height\":487,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":137,\"file_name\":\"lXON50e24TtxFDF06xVsRlxMYx9zIwgCBq1P8lAD-thumbnail.png\"}}}', '2022-10-04 21:42:01', '2022-10-04 21:42:01');
+(11, 'Screenshot 2022-05-09 100156', '', 'lXON50e24TtxFDF06xVsRlxMYx9zIwgCBq1P8lAD.png', 'png', 'image/png', 181017, '{\"width\":913,\"height\":487,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":137,\"file_name\":\"lXON50e24TtxFDF06xVsRlxMYx9zIwgCBq1P8lAD-thumbnail.png\"}}}', '2022-10-04 21:42:01', '2022-10-04 21:42:01'),
+(12, '62bf13c6e02706.54663818', '', 'gh0RcDu94EYN3pP7iOMTBmve8YzEyEF81MHGpcL3.png', 'png', 'image/png', 62456, '{\"width\":200,\"height\":200,\"versions\":[]}', '2022-10-05 00:14:37', '2022-10-05 00:14:37'),
+(13, '5917 1', '', 'Q2Bw7GmHM6j0feJ4IuHgPqVD6zFzFvwK0z081n4X.png', 'png', 'image/png', 38683, '{\"width\":374,\"height\":243,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":166,\"file_name\":\"Q2Bw7GmHM6j0feJ4IuHgPqVD6zFzFvwK0z081n4X-thumbnail.png\"}}}', '2022-10-05 19:24:31', '2022-10-05 19:24:31'),
+(14, '62bf13c6e02706.54663818', '', 'lmKI9oinBRmxWLsK7vAN8WQxqOfS6GDYK43QVPPc.png', 'png', 'image/png', 62456, '{\"width\":200,\"height\":200,\"versions\":[]}', '2022-10-05 19:24:31', '2022-10-05 19:24:31'),
+(15, '6311cd2d78de25.73278519.banner onl 1', '', 't0jAsd7PdkVLXINPvcCJhMBoaBbnny9txqkLhIUC.png', 'png', 'image/png', 764038, '{\"width\":1366,\"height\":596,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":112,\"file_name\":\"t0jAsd7PdkVLXINPvcCJhMBoaBbnny9txqkLhIUC-thumbnail.png\"}}}', '2022-10-05 19:24:32', '2022-10-05 19:24:32'),
+(16, '62ad7579756253.85112626', '', 'UuSvMJJUqRKJAIC6UVJK3tncQEiKCjQFyyOi1vq0.jpg', 'jpg', 'image/jpeg', 2800145, '{\"width\":3840,\"height\":2160,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":144,\"file_name\":\"UuSvMJJUqRKJAIC6UVJK3tncQEiKCjQFyyOi1vq0-thumbnail.jpg\"},\"small\":{\"width\":1138,\"height\":640,\"file_name\":\"UuSvMJJUqRKJAIC6UVJK3tncQEiKCjQFyyOi1vq0-small.jpg\"},\"medium\":{\"width\":2276,\"height\":1280,\"file_name\":\"UuSvMJJUqRKJAIC6UVJK3tncQEiKCjQFyyOi1vq0-medium.jpg\"},\"large\":{\"width\":3413,\"height\":1920,\"file_name\":\"UuSvMJJUqRKJAIC6UVJK3tncQEiKCjQFyyOi1vq0-large.jpg\"}}}', '2022-10-05 19:24:36', '2022-10-05 19:24:36'),
+(17, '6317db4ce2d4f2.29158913.aerial-view-business-team 1', '', 'FL9BIVtGomblkCarKB1BKsarzN6CdjYWZcpn4Egx.png', 'png', 'image/png', 851452, '{\"width\":1366,\"height\":435,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":82,\"file_name\":\"FL9BIVtGomblkCarKB1BKsarzN6CdjYWZcpn4Egx-thumbnail.png\"}}}', '2022-10-05 19:29:06', '2022-10-05 19:29:06'),
+(18, '5917 1', '', '4Ym7I0N2AQDjylbtafDW0zCqgPbW1iBd27ydVxV4.png', 'png', 'image/png', 38683, '{\"width\":374,\"height\":243,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":166,\"file_name\":\"4Ym7I0N2AQDjylbtafDW0zCqgPbW1iBd27ydVxV4-thumbnail.png\"}}}', '2022-10-05 19:29:06', '2022-10-05 19:29:06'),
+(19, '63088b9c00f048.41413655.anh1', '', 'joKhAD7gTSDuR5rpBYXhhIZwWztQuihCRrjAUBjY.png', 'png', 'image/png', 140572, '{\"width\":1672,\"height\":805,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":123,\"file_name\":\"joKhAD7gTSDuR5rpBYXhhIZwWztQuihCRrjAUBjY-thumbnail.png\"},\"small\":{\"width\":1329,\"height\":640,\"file_name\":\"joKhAD7gTSDuR5rpBYXhhIZwWztQuihCRrjAUBjY-small.png\"}}}', '2022-10-05 19:29:06', '2022-10-05 19:29:06'),
+(20, '6311cebf8771c7.36857817.banner_user', '', 'Kq7cVfl4MepUmEsN8IOnqY5CNgTTFNDH6YzkuWX8.png', 'png', 'image/png', 356693, '{\"width\":941,\"height\":340,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":92,\"file_name\":\"Kq7cVfl4MepUmEsN8IOnqY5CNgTTFNDH6YzkuWX8-thumbnail.png\"}}}', '2022-10-05 19:29:06', '2022-10-05 19:29:06'),
+(21, '63088b01f13ec9.47722173.anh2', '', 'hVPvyMkAYbTdshqFIwC4dqR3Ysjj4YHrMdz4KZdH.png', 'png', 'image/png', 140572, '{\"width\":1672,\"height\":805,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":123,\"file_name\":\"hVPvyMkAYbTdshqFIwC4dqR3Ysjj4YHrMdz4KZdH-thumbnail.png\"},\"small\":{\"width\":1329,\"height\":640,\"file_name\":\"hVPvyMkAYbTdshqFIwC4dqR3Ysjj4YHrMdz4KZdH-small.png\"}}}', '2022-10-05 19:34:45', '2022-10-05 19:34:45'),
+(22, '6317db4ce2d4f2.29158913.aerial-view-business-team 1', '', 'MiGq5eyIWWWiMKyyv3cPxmKjgHe6ZgLrFnNo6s0H.png', 'png', 'image/png', 851452, '{\"width\":1366,\"height\":435,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":82,\"file_name\":\"MiGq5eyIWWWiMKyyv3cPxmKjgHe6ZgLrFnNo6s0H-thumbnail.png\"}}}', '2022-10-05 19:34:45', '2022-10-05 19:34:45'),
+(23, '63087be169fae2.45985627.anh2', '', 'benO1cgU9IqOZaDrEaGazcGq9gi3jzIn1beZCOns.png', 'png', 'image/png', 140572, '{\"width\":1672,\"height\":805,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":123,\"file_name\":\"benO1cgU9IqOZaDrEaGazcGq9gi3jzIn1beZCOns-thumbnail.png\"},\"small\":{\"width\":1329,\"height\":640,\"file_name\":\"benO1cgU9IqOZaDrEaGazcGq9gi3jzIn1beZCOns-small.png\"}}}', '2022-10-05 19:34:46', '2022-10-05 19:34:46'),
+(24, '63088a62a7d3f3.99856021.screenshot 2022-05-09 100156', '', 'Lr2bKywlWFBIvXu2K7dTZkzgIBAg5kDxyUcghaJZ.png', 'png', 'image/png', 181017, '{\"width\":913,\"height\":487,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":137,\"file_name\":\"Lr2bKywlWFBIvXu2K7dTZkzgIBAg5kDxyUcghaJZ-thumbnail.png\"}}}', '2022-10-05 19:34:46', '2022-10-05 19:34:46'),
+(25, '63088b01f13ec9.47722173.anh2', '', 'aTtSbzot4w511x5rmHoleSQ0Wk3DBi5Gu3YgwJyw.png', 'png', 'image/png', 140572, '{\"width\":1672,\"height\":805,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":123,\"file_name\":\"aTtSbzot4w511x5rmHoleSQ0Wk3DBi5Gu3YgwJyw-thumbnail.png\"},\"small\":{\"width\":1329,\"height\":640,\"file_name\":\"aTtSbzot4w511x5rmHoleSQ0Wk3DBi5Gu3YgwJyw-small.png\"}}}', '2022-10-05 19:35:57', '2022-10-05 19:35:57'),
+(26, '6317db4ce2d4f2.29158913.aerial-view-business-team 1', '', 'WLQkO0i9JZAWOFXfjnV69Dd9GeInJ6aKT4wi9zfm.png', 'png', 'image/png', 851452, '{\"width\":1366,\"height\":435,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":82,\"file_name\":\"WLQkO0i9JZAWOFXfjnV69Dd9GeInJ6aKT4wi9zfm-thumbnail.png\"}}}', '2022-10-05 19:35:57', '2022-10-05 19:35:57'),
+(27, '63087be169fae2.45985627.anh2', '', 'n2HlxIid8Rd1kS8EEUTk28TjxeT7VVVwnkmuEpyh.png', 'png', 'image/png', 140572, '{\"width\":1672,\"height\":805,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":123,\"file_name\":\"n2HlxIid8Rd1kS8EEUTk28TjxeT7VVVwnkmuEpyh-thumbnail.png\"},\"small\":{\"width\":1329,\"height\":640,\"file_name\":\"n2HlxIid8Rd1kS8EEUTk28TjxeT7VVVwnkmuEpyh-small.png\"}}}', '2022-10-05 19:35:57', '2022-10-05 19:35:57'),
+(28, '63088a62a7d3f3.99856021.screenshot 2022-05-09 100156', '', 'dvFGlR9Y71LZCzI3z7ph3Ep0JDeoBDq1LI5HN9KI.png', 'png', 'image/png', 181017, '{\"width\":913,\"height\":487,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":137,\"file_name\":\"dvFGlR9Y71LZCzI3z7ph3Ep0JDeoBDq1LI5HN9KI-thumbnail.png\"}}}', '2022-10-05 19:35:57', '2022-10-05 19:35:57'),
+(29, '63088b01f13ec9.47722173.anh2', '', 'VG8CSqEIryIPlYuJZAVZCEBzP0GSAGYuJ24ZdnKJ.png', 'png', 'image/png', 140572, '{\"width\":1672,\"height\":805,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":123,\"file_name\":\"VG8CSqEIryIPlYuJZAVZCEBzP0GSAGYuJ24ZdnKJ-thumbnail.png\"},\"small\":{\"width\":1329,\"height\":640,\"file_name\":\"VG8CSqEIryIPlYuJZAVZCEBzP0GSAGYuJ24ZdnKJ-small.png\"}}}', '2022-10-05 19:36:54', '2022-10-05 19:36:54'),
+(30, '6317db4ce2d4f2.29158913.aerial-view-business-team 1', '', '2tvwk8KzajgKzhSvOw0wYKaDjjjaLE77dkPsWULc.png', 'png', 'image/png', 851452, '{\"width\":1366,\"height\":435,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":82,\"file_name\":\"2tvwk8KzajgKzhSvOw0wYKaDjjjaLE77dkPsWULc-thumbnail.png\"}}}', '2022-10-05 19:36:54', '2022-10-05 19:36:54'),
+(31, '63087be169fae2.45985627.anh2', '', 'OvN6kuk35piUa661YKzWqJzvf9F4VP9B86K0mcK7.png', 'png', 'image/png', 140572, '{\"width\":1672,\"height\":805,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":123,\"file_name\":\"OvN6kuk35piUa661YKzWqJzvf9F4VP9B86K0mcK7-thumbnail.png\"},\"small\":{\"width\":1329,\"height\":640,\"file_name\":\"OvN6kuk35piUa661YKzWqJzvf9F4VP9B86K0mcK7-small.png\"}}}', '2022-10-05 19:36:54', '2022-10-05 19:36:54'),
+(32, '63088a62a7d3f3.99856021.screenshot 2022-05-09 100156', '', '0TRQ7pCayhoX21gzkdeESHDxTQtLgu8caSWct23M.png', 'png', 'image/png', 181017, '{\"width\":913,\"height\":487,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":137,\"file_name\":\"0TRQ7pCayhoX21gzkdeESHDxTQtLgu8caSWct23M-thumbnail.png\"}}}', '2022-10-05 19:36:54', '2022-10-05 19:36:54'),
+(33, '63088b01f13ec9.47722173.anh2', '', 'COOgdVv90FvRkn9BF3lphu2zN1uiAxJTz7kqjt3N.png', 'png', 'image/png', 140572, '{\"width\":1672,\"height\":805,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":123,\"file_name\":\"COOgdVv90FvRkn9BF3lphu2zN1uiAxJTz7kqjt3N-thumbnail.png\"},\"small\":{\"width\":1329,\"height\":640,\"file_name\":\"COOgdVv90FvRkn9BF3lphu2zN1uiAxJTz7kqjt3N-small.png\"}}}', '2022-10-05 19:37:03', '2022-10-05 19:37:03'),
+(34, '6317db4ce2d4f2.29158913.aerial-view-business-team 1', '', 'cFhX11d296Mre6yMeMEdLiRc8Ik4Lfdhm6WuxTLO.png', 'png', 'image/png', 851452, '{\"width\":1366,\"height\":435,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":82,\"file_name\":\"cFhX11d296Mre6yMeMEdLiRc8Ik4Lfdhm6WuxTLO-thumbnail.png\"}}}', '2022-10-05 19:37:03', '2022-10-05 19:37:03'),
+(35, '63087be169fae2.45985627.anh2', '', '5as2zS5VTDXJMOeIV6bVYrQItUUUuq1v3FaD5uKM.png', 'png', 'image/png', 140572, '{\"width\":1672,\"height\":805,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":123,\"file_name\":\"5as2zS5VTDXJMOeIV6bVYrQItUUUuq1v3FaD5uKM-thumbnail.png\"},\"small\":{\"width\":1329,\"height\":640,\"file_name\":\"5as2zS5VTDXJMOeIV6bVYrQItUUUuq1v3FaD5uKM-small.png\"}}}', '2022-10-05 19:37:03', '2022-10-05 19:37:03'),
+(36, '63088a62a7d3f3.99856021.screenshot 2022-05-09 100156', '', 'lRyUL4WBKe0JKgGrc7eetISODf8RPxUbMNTlHgAv.png', 'png', 'image/png', 181017, '{\"width\":913,\"height\":487,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":137,\"file_name\":\"lRyUL4WBKe0JKgGrc7eetISODf8RPxUbMNTlHgAv-thumbnail.png\"}}}', '2022-10-05 19:37:03', '2022-10-05 19:37:03');
 
 -- --------------------------------------------------------
 
@@ -398,7 +435,7 @@ CREATE TABLE `users` (
   `twitter_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `tiktok_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `instagram_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `sns_active` varchar(11) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sns_active` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `google_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `facebook_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `twitter_id` int(11) DEFAULT NULL,
@@ -419,8 +456,8 @@ INSERT INTO `users` (`id`, `login_name`, `name`, `avatar_image_id`, `role`, `gen
 (14, 'ssssssssss', NULL, NULL, 'admin', NULL, NULL, '', 'aa@gmail.com', NULL, '$2y$10$s6VtXvq1IXYbxmMo685DMued8egIOhza5QcFEiMYJ4DiarSNgrRVG', NULL, NULL, NULL, NULL, NULL, 'disabled', '', NULL, NULL, NULL, '0', '0', NULL, 0, '2022-09-21 00:15:16', '2022-09-21 19:51:11'),
 (16, NULL, NULL, NULL, NULL, NULL, NULL, '', 'huudai001@gmail.com', NULL, '1111', NULL, NULL, NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, '0', '0', NULL, 0, '2022-09-21 21:44:00', '2022-09-21 21:44:00'),
 (19, NULL, NULL, NULL, NULL, NULL, NULL, '', 'dangm452@gmail.com', NULL, '$2y$10$85t2tSr49WzGYnU5tjabUefDArQP.vGpM.R77gjUmF8GP3DoCgTP2', NULL, NULL, NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, '0', NULL, NULL, 0, '2022-09-22 02:38:56', '2022-09-22 02:38:56'),
-(27, NULL, 'Đại Hữu Nguyễn', 7, NULL, 3, '2022-09-21', 'hhhss', 'huudai032001@gmail.com', '川崎', '$2y$10$IUk1oNmK8Wjz82VghmVRVOjI5v.tVxAAI/OznEnoYKpcN/5f6/RSW', NULL, NULL, NULL, NULL, '3000', 'active', '', 'https://www.youtube.com/watch?v=XFJ09PqqwU8&list=RDMM&index=6', 'dasd', 'dasdasd', '[\"1\",\"2\"]', '109829984724144315607', '3226743507581614', NULL, '2022-09-22 20:52:43', '2022-10-04 23:49:51'),
-(36, NULL, 'da', NULL, 'member', 1, '2022-09-28', 'adada', 'dai20010301@gmail.com', '大沢', '$2y$10$bE5kfO0rtJmJYi8r8Av.g.rNwd5PvszTHoBCp7xYXVSLlUQ7Ik9V6', NULL, NULL, NULL, NULL, NULL, 'active', '52638', NULL, NULL, NULL, '0', '117606606609355028013', NULL, NULL, '2022-09-25 18:26:00', '2022-09-27 00:45:02');
+(27, NULL, 'Đại Hữu Nguyễn', 12, NULL, 3, '2022-09-21', 'hhhss', 'huudai032001@gmail.com', '川崎', '$2y$10$IUk1oNmK8Wjz82VghmVRVOjI5v.tVxAAI/OznEnoYKpcN/5f6/RSW', NULL, NULL, NULL, NULL, '3000', 'active', '', 'https://www.youtube.com/watch?v=XFJ09PqqwU8&list=RDMM&index=6', 'dasd', 'dasdasd', '[\"1\",\"2\",\"3\"]', '109829984724144315607', '3226743507581614', NULL, '2022-09-22 20:52:43', '2022-10-05 21:17:31'),
+(47, NULL, 'dai huu', NULL, 'member', 1, '2022-09-28', 'sda', 'dai20010301@gmail.com', '川崎', '$2y$10$HiYtwOy1RXEOZO5WlFcU0e3lvHqZ3y1yUE3hlAU1TF1Zn9hsCOx7K', NULL, NULL, NULL, NULL, NULL, 'active', '92155', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-05 02:15:25', '2022-10-05 20:05:12');
 
 -- --------------------------------------------------------
 
@@ -437,6 +474,13 @@ CREATE TABLE `zip_code` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `zip_code`
+--
+
+INSERT INTO `zip_code` (`id`, `code`, `city`, `district`, `town`, `created_at`, `updated_at`) VALUES
+(1, '113-0024', '東京都', '文京区', '西片', NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -575,7 +619,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `favorite`
 --
 ALTER TABLE `favorite`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `goods`
@@ -611,7 +655,7 @@ ALTER TABLE `sample_term_map`
 -- AUTO_INCREMENT for table `spots`
 --
 ALTER TABLE `spots`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `tasks`
@@ -623,19 +667,19 @@ ALTER TABLE `tasks`
 -- AUTO_INCREMENT for table `uploads`
 --
 ALTER TABLE `uploads`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT for table `zip_code`
 --
 ALTER TABLE `zip_code`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

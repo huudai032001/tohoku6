@@ -63,10 +63,10 @@ class HomeController extends Controller
     public function myProfile(){
         $user = Auth::user();
         
-        $user_spot_posts = Spot::where('author',$user->id)->take(6)->get();
+        $user_spot_posts = Spot::where('author',$user->id)->orderBy('created_at','DESC')->take(6)->get();
         $user_favorite_events = Event::where('author',$user->id)->orderBy('favorite','DESC')->take(6)->get();
-        $user_comment = Comment::where('user_id',$user->id)->take(4)->get();
-        $user_goods = Goods::where('author',$user->id)->take(6)->get();
+        $user_comment = Comment::where('user_id',$user->id)->orderBy('created_at','DESC')->take(4)->get();
+        $user_goods = Goods::where('author',$user->id)->orderBy('created_at','DESC')->take(6)->get();
 
         return view('web.my-profile', compact(
             'user_spot_posts',

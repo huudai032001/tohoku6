@@ -16,6 +16,7 @@ use App\Models\Upload;
 use App\Models\Favorite;
 use App\Models\Comment;
 use App\Models\ExchangeGoods;
+use App\Models\ZipCode;
 
 use App\Models\Goods;
 use App\Models\User;
@@ -415,11 +416,12 @@ class HandleController extends Controller
         }
         public function sortSpot(){
             $sort = $_POST['id'];
-            if($sort = 1){
+
+            if($sort == 1){
                 $list_spot = Spot::orderBy('created_at','DESC')->take(6)->get();
-            }elseif($sort = 2){
+            }elseif($sort == 2){
                 $list_spot = Spot::orderBy('favorite','DESC')->take(6)->get();
-            }elseif($sort = 3){
+            }elseif($sort == 3){
                 $list_spot = Spot::orderBy('count_comment','DESC')->take(6)->get();
                 
             }else {
@@ -452,5 +454,59 @@ class HandleController extends Controller
             }
             echo json_encode(['arr_image'=>$arr_image,'list_event'=>$list_event]);
     
+        }
+        public function loadMore(){
+            $sort = $_POST['id'];
+            $count = $_POST['count'] + 12;
+
+            if($sort == 1){
+                $list_spot = Spot::orderBy('created_at','DESC')->take($count)->get();
+            }elseif($sort == 2){
+                $list_spot = Spot::orderBy('favorite','DESC')->take($count)->get();
+            }elseif($sort == 3){
+                $list_spot = Spot::orderBy('count_comment','DESC')->take($count)->get();
+                
+            }else {
+                $list_spot = Spot::orderBy('created_at','DESC')->take($count)->get();
+            }
+            foreach($list_spot as $value){
+                $arr_image [] = ($value->image)->getUrl(); 
+            }
+            echo json_encode(['list_spot'=>$list_spot , 'arr_image'=>$arr_image]);
+
+            // dd($id,$count);
+
+        }
+
+
+        public function loadParamProfile(){
+            $user = Auth::user();
+            $sort = $_POST['id'];
+            $count = $_POST['count'] + 12;
+
+            if($sort == 1){
+                $list = Spot::where('author',$user->id)->orderBy('created_at','DESC')->take($count)->get();
+            }elseif($sort == 2){
+                $list = Comment::where('user_id',$user->id)->orderBy('created_at','DESC')->take($count)->get();
+            }elseif($sort == 3){
+                $list = Spot::where('author',$user->id)->orderBy('favorite','DESC')->take($count)->get();
+                
+            }else {
+                $list = Event::where('author',$user->id)->orderBy('created_at','DESC')->take($count)->get();
+            }
+            foreach($list as $value){
+                $arr_image [] = ($value->image)->getUrl(); 
+            }
+            echo json_encode(['list'=>$list , 'arr_image'=>$arr_image]);
+
+        }
+
+        function findByZipCode(){
+            // $code = $_POST['code'];
+            // var_dump($code);
+            // die;
+
+            // $post_office =  ZipCode::where('code',$code)->first();
+
         }
 }

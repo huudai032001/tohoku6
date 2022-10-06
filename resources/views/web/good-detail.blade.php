@@ -48,7 +48,7 @@
                             <div class="good-cost">{{$info_goods->point}}pt</div>
                             <div class="my-own-point">
                                 <span class="_label">あなたの所有ポイント</span>
-                                <span class="num">4,300pt</span>
+                                <span class="num">{{number_format(Auth::user()->point)}}pt</span>
                             </div>
                         </div>
 

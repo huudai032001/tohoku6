@@ -61,8 +61,13 @@
                                 </ul>
                             </div>
                             @if($image = $user->image)
+                            @dump('a')
                             <div class="avatar flex-auto">
-                                <img src="{{$image->getUrl()}}" alt="">
+                                <img src="{{$image->getUrl()}}" alt="" onerror='this.onerror=null;this.src="images/profile.svg"'>
+                            </div>
+                            @else
+                            <div class="avatar flex-auto">
+                                <img src="/web-assets/images/profile.svg" alt="">
                             </div>
                             @endif
                         </div>
@@ -128,7 +133,7 @@
                         <div class="tab-panels">
                             <div class="tab-panel active" data-tab="my-posts">
                                 <div class="post-container">
-                                    <div class="post-row row">
+                                    <div class="post-row row list-param-01">
                                         @foreach($user_spot_posts as $value)
                                         <div class="col-sm-6 col-lg-4">
                                             <div class="post-item-5 d-flex">
@@ -170,13 +175,15 @@
                                         @endforeach                       
                                     </div>
                                 </div>
-                                <div class="load-more-button">
-                                    <img src="/web-assets/images/icons/reload.svg" alt="">
+                                <div class="dom-load_01">
+                                    <div class="load-more-button" onclick="load_more(1)">
+                                        <img src="/web-assets/images/icons/reload.svg" alt="">
+                                    </div>
                                 </div>
                             </div>
                             <div class="tab-panel" data-tab="my-reviews">
                                 <div class="post-container">
-                                    <div class="post-row row">
+                                    <div class="post-row row list-param-02">
                                         @foreach($user_comment as $value)
                                         <div class="col-md-6">
                                             <div class="review-item-2">
@@ -203,13 +210,15 @@
                                         @endforeach
                                     </div>
                                 </div>
-                                <div class="load-more-button">
-                                    <img src="/web-assets/images/icons/reload.svg" alt="">
+                                <div class="dom-load_02">
+                                    <div class="load-more-button" onclick="load_more(2)">
+                                        <img src="/web-assets/images/icons/reload.svg" alt="">
+                                    </div>
                                 </div>
                             </div>
                             <div class="tab-panel" data-tab="favorite-posts">
                                <div class="post-container">
-                                   <div class="post-row row">
+                                   <div class="post-row row list-param-03">
                                     @foreach($user_spot_posts as $value)
                                         <div class="col-sm-6 col-lg-4">
                                            <div class="post-item-5 d-flex">
@@ -251,13 +260,15 @@
                                         @endforeach                     
                                    </div>
                                </div>
-                               <div class="load-more-button">
-                                   <img src="/web-assets/images/icons/reload.svg" alt="">
-                               </div>
+                                <div class="dom-load_03">
+                                    <div class="load-more-button" onclick="load_more(3)">
+                                        <img src="/web-assets/images/icons/reload.svg" alt="">
+                                    </div>
+                                </div>
                             </div>
                             <div class="tab-panel" data-tab="favorite-events">
                                 <div class="post-container">
-                                    <div class="post-row row">
+                                    <div class="post-row row list-param-04">
                                         @foreach($user_favorite_events as $value)
                                         <div class="col-md-6 col-lg-4">
                                             <div class="post-item-6">
@@ -304,8 +315,10 @@
                                         @endforeach
                                     </div>
                                 </div>
-                                <div class="load-more-button">
-                                    <img src="/web-assets/images/icons/reload.svg" alt="">
+                                <div class="dom-load_04">
+                                    <div class="load-more-button" onclick="load_more(4)">
+                                        <img src="/web-assets/images/icons/reload.svg" alt="">
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -517,6 +530,7 @@
         <script src="/web-assets/js/components.js"></script>
         <script src="/web-assets/js/main.js"></script>
         <script src="/web-assets/js/tohoku-calendar.js"></script>
+        <script src="/web-assets/js/my-profile.js"></script>
         
     </body>
     @endsection

@@ -40,7 +40,7 @@
                 <a href="signin" class="login-button button">
                     ログイン
                 </a>
-                <a href="signup" class="register-button button">
+                <a href="register" class="register-button button">
                     新規登録
                 </a>
             </div>

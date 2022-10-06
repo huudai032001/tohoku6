@@ -121,10 +121,11 @@
                             </div>
 
                         </div>
-                        <div class="load-more-button">
-                            <img src="/web-assets/images/icons/reload.svg" alt="">
+                        <div class="dom-load">
+                            <div class="load-more-button" onclick="load_more(1)">
+                                <img src="/web-assets/images/icons/reload.svg" alt="">
+                            </div>
                         </div>
-
                     </div>
 
                 </section>

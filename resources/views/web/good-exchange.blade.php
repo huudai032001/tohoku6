@@ -1,10 +1,10 @@
 @extends('web.layouts.default')
     @section('link_css')
+
         <link rel="stylesheet" href="/web-assets/libs/lightslider/css/lightslider.min.css">
         <link rel="stylesheet" href="/web-assets/css/point-exchange.css">
         <script src="/web-assets/libs/lightslider/js/lightslider.min.js"></script>
     @endsection
-
     @section('content')
 
     <body class="my-profile-page">
@@ -80,7 +80,7 @@
                                                 <input type="text" class="input-text" name="zip_code">
                                             </div>
                                             <div class="col-5">
-                                                <button class="button form-control-button">検索</button>
+                                                <a class="button form-control-button" onclick="zip_code()">検索</a>
                                             </div>
                                         </div>
                                     </div>
@@ -149,4 +149,5 @@
         <script src="/web-assets/js/tohoku-calendar.js"></script>
         
     </body>
+
     @endsection

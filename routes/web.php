@@ -128,3 +128,7 @@ Route::post('/set-new-password',[App\Http\Controllers\Web\HandleController::clas
 
 Route::post('/upload_img',[App\Http\Controllers\Web\SpotController::class, 'upload_img'])->name('upload_img');
 Route::post('/sort_spot',[App\Http\Controllers\Web\HandleController::class, 'sortSpot'])->name('sortSpot');
+Route::post('/load_more_spot',[App\Http\Controllers\Web\HandleController::class, 'loadMore'])->name('loadMore');
+Route::post('/load_param_profile',[App\Http\Controllers\Web\HandleController::class, 'loadParamProfile'])->name('loadParamProfile');
+Route::post('/find_by_zip_code',[App\Http\Controllers\Web\HandleController::class, 'findByZipCode'])->name('findByZipCode');
+
