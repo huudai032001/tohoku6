@@ -150,7 +150,7 @@ function sort(id){
             </div>
             `;
             $('.dom-load').html(load);
-
+            $('#form_sort').val(id);
             $('.list-category').html(html);
             $('.post-list-sort-options a').removeClass('active');
             $('.sort_0'+id).addClass('active');

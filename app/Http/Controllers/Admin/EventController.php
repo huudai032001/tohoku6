@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -15,6 +16,7 @@ use App\Misc\DataTable;
 use App\Misc\HTML;
 use App\Misc\FlashMsg;
 use App\Misc\Helper;
+
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use App\Form;
 
@@ -111,13 +113,7 @@ class EventController extends CommonDataController {
                 'required' => true,
                 'data' => $dataItem->name
             ]),
-            new Form\Text([
-                'name' => 'location',                
-                'label' => 'Location',
-                'required' => false,
-                'data' => $dataItem->location
-            ]),
-            new Form\Text([
+            new Form\date([
                 'name' => 'time_start',    
                 'type'=>'datetime-local',            
                 'label' => 'Time Start',
@@ -129,6 +125,51 @@ class EventController extends CommonDataController {
                 'label' => 'Intro',
                 'required' => false,
                 'data' => $dataItem->intro
+            ]),
+            new Form\Upload([
+                'name' => 'image',
+                'label' => 'Image',
+                'multiple' => false,
+                'required' => true,
+                'data' => $dataItem->image_id
+            ]),
+            new Form\Upload([
+                'name' => 'images',
+                'label' => 'Images',
+                'multiple' => true,
+                'required' => true,
+                'data' => $dataItem->images_id
+            ]),
+            new Form\Checkbox([
+                'name' => 'category[]',
+                'label' => 'Category',
+                'options' => [
+                    1 => 'グルメ',
+                    2 => 'ショッピング',
+                    3 => '宿泊',
+                    4 => '体験',
+                    5 => '自然',
+                    6 => 'SNS映え',
+                    7 => '歴史'
+                ],
+                'data' => $dataItem->category,
+                'inline' => true
+            ]),
+        ]);
+        $form->addGroups([
+            new Form\Select([
+                'name' => 'location',
+                'label' => 'Location',
+                'options' => [
+                    'Akita'=>'Akita',
+                    'Aomori'=>'Aomori',
+                    'Fukushima'=>'Fukushima',
+                    'Iwate'=>'Iwate',
+                    'Miyagi'=>'Miyagi',
+                    'Yamagate'=>'Yamagate',
+                ],
+                'required' => true,
+                'data' => $dataItem->status
             ])
         ]);
     }
@@ -146,8 +187,22 @@ class EventController extends CommonDataController {
         $item->intro = $request->input('intro');
         $item->time_start = $request->input('time_start');
         $item->location = $request->input('location');
+        $item->image_id = $request->input('image');
+        $item->images_id = $request->input('images');
+        $item->favorite = 0;
+        $item->count_comment = 0;
+        $item->author = Auth::user()->id;
+        $item->category = implode(',',$request->input('category'));
+        $item->location = $request->input('location');
 
         $item->save();
+
+
+        $favorite = new Favorite();
+        $favorite->user_id = Auth::user()->id;
+        $favorite->posts_id = $item->id;
+        $favorite->type_posts = 2;
+        $favorite->save();
     }    
 
     // protected function delete($dataItem)

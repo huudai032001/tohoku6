@@ -68,9 +68,9 @@ return [
     'debug_log' => 'デバッグ ログ',
 
 
-    'spot' => 'スポット',
-    'event' => 'イベント',
-    'goods'=>'品',
+    'Spot' => 'スポット',
+    'Event' => 'イベント',
+    'Goods'=>'品',
 
 
     'Name'=>'名前',

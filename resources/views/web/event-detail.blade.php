@@ -310,54 +310,16 @@
                 <div class="modal_close">×</div>
                 <div class="modal_title">通知</div>
                 <ul class="user-notification_list custom-scrollbar">
-                    <li class="d-flex align-items-center">
-                        <div class="date">2022.10.10</div>
-                        <div class="flex-fill content">投稿スポットが公開されました</div>
-                    </li>
-                    <li class="d-flex align-items-center">
-                        <div class="date">2022.10.10</div>
-                        <div class="flex-fill content">投稿スポットが公開されました</div>
-                    </li>
-                    <li class="d-flex align-items-center">
-                        <div class="date">2022.10.10</div>
-                        <div class="flex-fill content">投稿スポットが公開されました</div>
-                    </li>
-                    <li class="d-flex align-items-center">
-                        <div class="date">2022.10.10</div>
-                        <div class="flex-fill content">投稿スポットが公開されました</div>
-                    </li>
-                    <li class="d-flex align-items-center">
-                        <div class="date">2022.10.10</div>
-                        <div class="flex-fill content">投稿スポットが公開されました</div>
-                    </li>
-                    <li class="d-flex align-items-center">
-                        <div class="date">2022.10.10</div>
-                        <div class="flex-fill content">投稿スポットが公開されました</div>
-                    </li>
-                    <li class="d-flex align-items-center">
-                        <div class="date">2022.10.10</div>
-                        <div class="flex-fill content">投稿スポットが公開されました</div>
-                    </li>
-                    <li class="d-flex align-items-center">
-                        <div class="date">2022.10.10</div>
-                        <div class="flex-fill content">投稿スポットが公開されました</div>
-                    </li>
-                    <li class="d-flex align-items-center">
-                        <div class="date">2022.10.10</div>
-                        <div class="flex-fill content">投稿スポットが公開されました</div>
-                    </li>
-                    <li class="d-flex align-items-center">
-                        <div class="date">2022.10.10</div>
-                        <div class="flex-fill content">投稿スポットが公開されました</div>
-                    </li>
-                    <li class="d-flex align-items-center">
-                        <div class="date">2022.10.10</div>
-                        <div class="flex-fill content">投稿スポットが公開されました</div>
-                    </li>
-                    <li class="d-flex align-items-center">
-                        <div class="date">2022.10.10</div>
-                        <div class="flex-fill content">投稿スポットが公開されました</div>
-                    </li>
+                    @if(Auth::check())
+                        @if($notifi = Auth::user()->getNotifi())
+                            @foreach($notifi as $noti)
+                            <li class="d-flex align-items-center">
+                                <div class="date">{{$noti->created_at}}</div>
+                                <div class="flex-fill content">投稿スポットが公開されました</div>
+                            </li>
+                            @endforeach
+                        @endif
+                    @endif
                 </ul>
             </div>
         </div>

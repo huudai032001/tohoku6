@@ -6,7 +6,8 @@
     @section('content')
 
     <body>
-
+        <input type="hidden" value="{{url()->full()}}" id="base_url">
+        <input type="hidden" value="{{url()->current()}}" id="base_url_current">
         <div id="wrapper">
             <div id="inner-wrapper">
                 <div class="page-header">
@@ -96,8 +97,11 @@
                                     <div class="item-desc">{{$value->location}}</div>
                                     <div class="counters d-flex align-items-center justify-content-between"> 
                                         <div class="tags d-flex align-items-center">
-                                            <span class="tag">花火</span>
-                                            <span class="tag">夏祭り</span>
+                                            @if($categorys = $value->getCategory())
+                                            @foreach($categorys as $category)
+                                            <span class="tag">{{$category->name}}</span>
+                                            @endforeach
+                                            @endif
                                         </div>
                                         <div class="favorite-count ml-20">
                                             <img src="/web-assets/images/icons/heart-gray.svg" alt=""> 
@@ -110,24 +114,23 @@
                         @endforeach
                     </div>
                 </div>
-                {!! $list_events->appends(['nickname'=>'huudai'])->links() !!}
                 <div style="padding: 25px 0;">
                     <div class="container">
                         <div class="simple-paginator d-flex justify-content-between align-items-center">
-                            @if($total_page >1)
-                            <a href="?page={{$total_page - 1}}" class="prev">
+                            @if($total_page >1 && ($page-1) >0)
+                            <a href="{{url()->full()}}&page={{$page - 1}}" class="prev" id="prev">
                             @else
-                            <a href="" class="prev">
+                            <a href="" class="prev" id="prev">
                             @endif
                                 <img src="/web-assets/images/angle-left.svg" alt="">
                             </a>
                             <div class="page-num">
-                                <span class="current-page-num">1</span>/<span class="total-page-num">{{$total_page}}</span>
+                                <span class="current-page-num">{{$page}}</span>/<span class="total-page-num">{{$total_page}}</span>
                             </div>
-                            @if($total_page == 1)
-                            <a href="" class="next">
+                            @if($total_page == 1 || $page == $total_page)
+                            <a href="" class="next" id="next">
                             @else
-                            <a href="?page={{$total_page + 1}}" class="next">
+                            <a href="{{url()->full()}}&page={{$page + 1}}" class="next" id="next">
                             @endif
                                 <img src="/web-assets/images/angle-right.svg" alt="">
                             </a>
@@ -151,54 +154,16 @@
                 <div class="modal_close">×</div>
                 <div class="modal_title">通知</div>
                 <ul class="user-notification_list custom-scrollbar">
-                    <li class="d-flex align-items-center">
-                        <div class="date">2022.10.10</div>
-                        <div class="flex-fill content">投稿スポットが公開されました</div>
-                    </li>
-                    <li class="d-flex align-items-center">
-                        <div class="date">2022.10.10</div>
-                        <div class="flex-fill content">投稿スポットが公開されました</div>
-                    </li>
-                    <li class="d-flex align-items-center">
-                        <div class="date">2022.10.10</div>
-                        <div class="flex-fill content">投稿スポットが公開されました</div>
-                    </li>
-                    <li class="d-flex align-items-center">
-                        <div class="date">2022.10.10</div>
-                        <div class="flex-fill content">投稿スポットが公開されました</div>
-                    </li>
-                    <li class="d-flex align-items-center">
-                        <div class="date">2022.10.10</div>
-                        <div class="flex-fill content">投稿スポットが公開されました</div>
-                    </li>
-                    <li class="d-flex align-items-center">
-                        <div class="date">2022.10.10</div>
-                        <div class="flex-fill content">投稿スポットが公開されました</div>
-                    </li>
-                    <li class="d-flex align-items-center">
-                        <div class="date">2022.10.10</div>
-                        <div class="flex-fill content">投稿スポットが公開されました</div>
-                    </li>
-                    <li class="d-flex align-items-center">
-                        <div class="date">2022.10.10</div>
-                        <div class="flex-fill content">投稿スポットが公開されました</div>
-                    </li>
-                    <li class="d-flex align-items-center">
-                        <div class="date">2022.10.10</div>
-                        <div class="flex-fill content">投稿スポットが公開されました</div>
-                    </li>
-                    <li class="d-flex align-items-center">
-                        <div class="date">2022.10.10</div>
-                        <div class="flex-fill content">投稿スポットが公開されました</div>
-                    </li>
-                    <li class="d-flex align-items-center">
-                        <div class="date">2022.10.10</div>
-                        <div class="flex-fill content">投稿スポットが公開されました</div>
-                    </li>
-                    <li class="d-flex align-items-center">
-                        <div class="date">2022.10.10</div>
-                        <div class="flex-fill content">投稿スポットが公開されました</div>
-                    </li>
+                    @if(Auth::check())
+                        @if($notifi = Auth::user()->getNotifi())
+                            @foreach($notifi as $noti)
+                            <li class="d-flex align-items-center">
+                                <div class="date">{{$noti->created_at}}</div>
+                                <div class="flex-fill content">投稿スポットが公開されました</div>
+                            </li>
+                            @endforeach
+                        @endif
+                    @endif
                 </ul>
             </div>
         </div>
@@ -206,54 +171,61 @@
         <div class="area-select-panel toggle-select-panel d-flex justify-content-lg-center align-items-lg-center">
             <div class="backdrop"></div>
             <div class="toggle-select-panel_dialog  d-flex flex-column">
-                <div class="flex-auto panel_header">
-                    <div class="panel_title">エリアを選択</div>
-                    <div class="button-close">×</div>
-                </div>
-                <div class="panel_body flex-fill">
-                    <div class="number-6">
-                        <img src="/web-assets/images/number-6.svg" alt="">
+                <form action="">
+                    <div class="flex-auto panel_header">
+                        <div class="panel_title">エリアを選択</div>
+                        <div class="button-close">×</div>
                     </div>
-                    <div class="d-flex justify-content-center">
-                        <ul class="area-selection-list">
-                            <li>
-                                <label class="custom-radio-2">
-                                    <input type="radio" name="area-select"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">
-                                </label>
-                            </li>
-                            <li>
-                                <label class="custom-radio-2">
-                                    <input type="radio" name="area-select"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">
-                                </label>
-                            </li>
-                            <li>
-                                <label class="custom-radio-2">
-                                    <input type="radio" name="area-select" checked> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">
-                                </label>
-                            </li>
-                            <li>
-                                <label class="custom-radio-2">
-                                    <input type="radio" name="area-select"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">
-                                </label>
-                            </li>
-                            <li>
-                                <label class="custom-radio-2">
-                                    <input type="radio" name="area-select"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">
-                                </label>
-                            </li>
-                            <li>
-                                <label class="custom-radio-2">
-                                    <input type="radio" name="area-select"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">
-                                </label>
-                            </li>
-                        </ul>
+                    <div class="panel_body flex-fill">
+                        <div class="number-6">
+                            <img src="/web-assets/images/number-6.svg" alt="">
+                        </div>
+                        @if(isset($_GET['year']))
+                            <input type="hidden" name="year" id="" value="{{$_GET['year']}}">
+                            <input type="hidden" name="month" id="" value="{{$_GET['month']}}">
+                            <input type="hidden" name="day" id="" value="{{$_GET['day']}}">
+                        @endif
+                        <div class="d-flex justify-content-center dom-location">
+                            <ul class="area-selection-list">
+                                <li>
+                                    <label class="custom-radio-2">
+                                        <input type="radio" name="area-select" value="Akita"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">Akita
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="custom-radio-2">
+                                        <input type="radio" name="area-select" value="Aomori"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">Aomori
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="custom-radio-2">
+                                        <input type="radio" name="area-select" checked value="Fukushima"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">Fukushima
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="custom-radio-2">
+                                        <input type="radio" name="area-select" value="Iwate"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">Iwate
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="custom-radio-2">
+                                        <input type="radio" name="area-select" value="Miyagi"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">Miyagi
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="custom-radio-2">
+                                        <input type="radio" name="area-select" value="Yamagata"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">Yamagata
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                <div class="flex-auto panel_footer text-align-center">
-                    <div class="button button-style-1">
-                        絞り込む
+                    <div class="flex-auto panel_footer text-align-center">
+                        <input type="submit" class="button button-style-1" value="絞り込む">
+                            
+                        
                     </div>
-                </div>
+                </form>
             </div>
         </div>
 

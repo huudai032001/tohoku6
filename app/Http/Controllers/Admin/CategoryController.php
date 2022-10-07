@@ -19,11 +19,14 @@ use App\Misc\Helper;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use App\Form;
 
-use App\Models\Goods;
+use App\Models\Category;
+use App\Models\Upload;
+use App\Models\Notification;
 
-class GoodsController extends CommonDataController {
 
-    protected $modelClass = Goods::class;
+class CategoryController extends CommonDataController {
+
+    protected $modelClass = Category::class;
     // protected $modelName;
     // protected $modelSlug;
     
@@ -60,15 +63,13 @@ class GoodsController extends CommonDataController {
     
 
     protected function initDataTable($dataTable) {
-        $dataTable->addSimpleColumn('name', 'Name');
-        $dataTable->addSimpleColumn('point', 'Point');
-        $dataTable->addSimpleColumn('intro', 'Intro');
+        $dataTable->addSimpleColumn('name', 'Ten');
+
+        // $dataTable->addSimpleColumn('upload', 'upload');
+
         // $dataTable->addSimpleColumn('location', 'Dia Diem');
 
-        // $dataTable->addColumn('role', __('common.common'), function ($item)
-        // {
-        //     return $item->name;
-        // });
+        
     }
 
     // protected function indexQuery($query){
@@ -111,35 +112,9 @@ class GoodsController extends CommonDataController {
                 'label' => 'Name',
                 'required' => true,
                 'data' => $dataItem->name
-            ]),
-            new Form\Text([
-                'name' => 'intro',                
-                'label' => 'Intro',
-                'required' => false,
-                'data' => $dataItem->intro
-            ]),
-            new Form\Text([
-                'name' => 'point',                
-                'label' => 'Point',
-                'required' => false,
-                'data' => $dataItem->point
-            ]),
-            new Form\Upload([
-                'name' => 'image',
-                'label' => 'Image',
-                'multiple' => false,
-                'required' => true,
-                'data' => $dataItem->image_id
-            ]),
-            new Form\Upload([
-                'name' => 'images',
-                'label' => 'Images',
-                'multiple' => true,
-                'required' => true,
-                'data' => $dataItem->images_id
-            ]),
-        ]);
+            ])
 
+        ]);
     }
 
     public function ruleEdit($item)
@@ -151,13 +126,13 @@ class GoodsController extends CommonDataController {
 
     protected function updateItem(Request $request, $item)
     {
+        // var_dump($item->category);
+        // die;
         $item->name = $request->input('name');
-        $item->intro = $request->input('intro');
-        $item->point = $request->input('point');
-        $item->author = Auth::user()->id;
-        $item->image_id = $request->input('image');
-        $item->images_id = $request->input('images');
+
+
         $item->save();
+
     }    
 
     // protected function delete($dataItem)

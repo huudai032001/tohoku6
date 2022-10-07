@@ -9,9 +9,9 @@ use App\Models\Base\BaseModel;
 use App\Models\Traits;
 use App\Models\Casts;
 
-class Spot extends BaseModel
+class Category extends BaseModel
 {
-     protected $table = "spots";
+     protected $table = "category";
 
     protected $casts = [
         'images_id' => Casts\Json::class,
@@ -41,11 +41,6 @@ class Spot extends BaseModel
         return \App\Models\Upload::whereIn('id', $this->images_id)->get();
     }
 
-    public function getCategory()
-    {
-        return \App\Models\Category::whereIn('id', explode(",",$this->category))->get();
-    }
-
     public function user()
     {
         return $this->belongsTo(\App\Models\User::class, 'author');
@@ -63,4 +58,5 @@ class Spot extends BaseModel
             return __('status.' . $this->status);
         }
     }
+
 }

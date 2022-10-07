@@ -15,6 +15,7 @@
             <div id="inner-wrapper">
                 <div class="spot-search-form">
                     <form action="">
+                        <input type="hidden" value="" name="sort" id="form_sort">
                         <div class="container">
                             <div class="py-30 row space-x-10 space-y-10 justify-content-center">
                                 <div class="col-auto">
@@ -161,54 +162,16 @@
                 <div class="modal_close">×</div>
                 <div class="modal_title">通知</div>
                 <ul class="user-notification_list custom-scrollbar">
-                    <li class="d-flex align-items-center">
-                        <div class="date">2022.10.10</div>
-                        <div class="flex-fill content">投稿スポットが公開されました</div>
-                    </li>
-                    <li class="d-flex align-items-center">
-                        <div class="date">2022.10.10</div>
-                        <div class="flex-fill content">投稿スポットが公開されました</div>
-                    </li>
-                    <li class="d-flex align-items-center">
-                        <div class="date">2022.10.10</div>
-                        <div class="flex-fill content">投稿スポットが公開されました</div>
-                    </li>
-                    <li class="d-flex align-items-center">
-                        <div class="date">2022.10.10</div>
-                        <div class="flex-fill content">投稿スポットが公開されました</div>
-                    </li>
-                    <li class="d-flex align-items-center">
-                        <div class="date">2022.10.10</div>
-                        <div class="flex-fill content">投稿スポットが公開されました</div>
-                    </li>
-                    <li class="d-flex align-items-center">
-                        <div class="date">2022.10.10</div>
-                        <div class="flex-fill content">投稿スポットが公開されました</div>
-                    </li>
-                    <li class="d-flex align-items-center">
-                        <div class="date">2022.10.10</div>
-                        <div class="flex-fill content">投稿スポットが公開されました</div>
-                    </li>
-                    <li class="d-flex align-items-center">
-                        <div class="date">2022.10.10</div>
-                        <div class="flex-fill content">投稿スポットが公開されました</div>
-                    </li>
-                    <li class="d-flex align-items-center">
-                        <div class="date">2022.10.10</div>
-                        <div class="flex-fill content">投稿スポットが公開されました</div>
-                    </li>
-                    <li class="d-flex align-items-center">
-                        <div class="date">2022.10.10</div>
-                        <div class="flex-fill content">投稿スポットが公開されました</div>
-                    </li>
-                    <li class="d-flex align-items-center">
-                        <div class="date">2022.10.10</div>
-                        <div class="flex-fill content">投稿スポットが公開されました</div>
-                    </li>
-                    <li class="d-flex align-items-center">
-                        <div class="date">2022.10.10</div>
-                        <div class="flex-fill content">投稿スポットが公開されました</div>
-                    </li>
+                    @if(Auth::check())
+                        @if($notifi = Auth::user()->getNotifi())
+                            @foreach($notifi as $noti)
+                            <li class="d-flex align-items-center">
+                                <div class="date">{{$noti->created_at}}</div>
+                                <div class="flex-fill content">投稿スポットが公開されました</div>
+                            </li>
+                            @endforeach
+                        @endif
+                    @endif
                 </ul>
             </div>
         </div>
@@ -229,32 +192,32 @@
                         <ul class="area-selection-list">
                             <li>
                                 <label class="custom-radio-2">
-                                    <input type="radio" name="area-select"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">
+                                    <input type="radio" name="area-select" value="Akita"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">Akita
                                 </label>
                             </li>
                             <li>
                                 <label class="custom-radio-2">
-                                    <input type="radio" name="area-select" value="2"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">
+                                    <input type="radio" name="area-select" value="Aomori"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">Aomori
                                 </label>
                             </li>
                             <li>
                                 <label class="custom-radio-2">
-                                    <input type="radio" name="area-select" value="3"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">
+                                    <input type="radio" name="area-select" checked value="Fukushima"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">Fukushima
                                 </label>
                             </li>
                             <li>
                                 <label class="custom-radio-2">
-                                    <input type="radio" name="area-select" value="4"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">
+                                    <input type="radio" name="area-select" value="Iwate"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">Iwate
                                 </label>
                             </li>
                             <li>
                                 <label class="custom-radio-2">
-                                    <input type="radio" name="area-select" value="5"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">
+                                    <input type="radio" name="area-select" value="Miyagi"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">Miyagi
                                 </label>
                             </li>
                             <li>
                                 <label class="custom-radio-2">
-                                    <input type="radio" name="area-select" value="6"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">
+                                    <input type="radio" name="area-select" value="Yamagata"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">Yamagata
                                 </label>
                             </li>
                         </ul>
@@ -278,41 +241,13 @@
                 <div class="panel_body flex-fill">                    
                     <div class="category-selection-list">
                         <div class="row space-x-20 space-y-20">
+                        @foreach($category as $value)
                             <div class="col-6">
                                 <label class="custom-radio">
-                                    <input type="radio" name="category-select" value="1"> <span class="checkmark"></span> グルメ
+                                    <input type="radio" name="category-select" value="{{$value->id}}"> <span class="checkmark"></span> {{$value->name}}
                                 </label>
                             </div>
-                            <div class="col-6">
-                                <label class="custom-radio">
-                                    <input type="radio" name="category-select" value="2"> <span class="checkmark"></span> ショッピング
-                                </label>
-                            </div>
-                            <div class="col-6">
-                                <label class="custom-radio">
-                                    <input type="radio" name="category-select" checked  value="3"> <span class="checkmark"></span> 宿泊
-                                </label>
-                            </div>
-                            <div class="col-6">
-                                <label class="custom-radio">
-                                    <input type="radio" name="category-select"  value="4"> <span class="checkmark"></span> 体験
-                                </label>
-                            </div>
-                            <div class="col-6">
-                                <label class="custom-radio">
-                                    <input type="radio" name="category-select"  value="5"> <span class="checkmark"></span> 自然
-                                </label>
-                            </div>
-                            <div class="col-6">
-                                <label class="custom-radio">
-                                    <input type="radio" name="category-select" value="6"> <span class="checkmark"></span> SNS映え
-                                </label>
-                            </div>
-                            <div class="col-6">
-                                <label class="custom-radio">
-                                    <input type="radio" name="category-select" value="7"> <span class="checkmark"></span> 歴史
-                                </label>
-                            </div>
+                        @endforeach
                         </div>
                     </div>
                 </div>

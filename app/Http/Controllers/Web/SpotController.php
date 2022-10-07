@@ -14,6 +14,7 @@ use App\Models\Spot;
 use App\Models\Comment;
 use App\Models\Favorite;
 use App\Models\User;
+use App\Models\Category;
 
 // use App\Jobs\SendEmail;
 // use App\Jobs\SendEmailResetPass;
@@ -33,6 +34,7 @@ class SpotController extends Controller
             $list_spot = Spot::with('upload')->orderBy('created_at','DESC')->take(6)->get();
 
         }
+        $category = Category::all();
         // dd($list_spot);
         return view('web.spots',compact('list_spot'));
     }
@@ -100,7 +102,11 @@ class SpotController extends Controller
         $spot->intro = $req->input('intro');
         $spot->image_id = $uploadService->handleUploadFile($file,"")['file_info']['id'];
         $spot->sub_image = $sub_img;
-        $spot->category = implode(",",$req->input('category'));
+        $spot->category = $req->input('category');
+        // $spot->save();
+        // $spot->category = implode(",",$req->input('category'));
+
+        // dd($req->input('category'));
 
         return view('web./spot-preview',['spot'=> $spot]);
     }
@@ -115,9 +121,13 @@ class SpotController extends Controller
     public function PostSpotPreview(Request $req){
         $arr = explode(",",$req->input('sub_image'));
         $example = array("$arr[0]","$arr[1]","$arr[2]");
+        $exampleEncoded = json_encode($example);
+
+        // $arr_cate = explode(",",$req->input('category'));
+        // $example_cate = array("$arr[0]","$arr[1]","$arr[2]");
+        // dd($req->input('category'));
         $user = Auth::user();
         if($req->input('id') == null){
-            $exampleEncoded = json_encode($example);
             $spot = new Spot();
             $spot->location = $req->input('location');
             $spot->name = $req->input('name');
@@ -128,6 +138,8 @@ class SpotController extends Controller
             $spot->count_comment = 0;
             $spot->address = $req->input('location');
             $spot->author = $user->id;
+            $spot->status = 'disabled';
+
             $spot->category = $req->input('category');
             $spot->save();
 

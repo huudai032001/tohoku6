@@ -13,6 +13,7 @@ Route::crud('user', AdminControllers\UserController::class);
 Route::crud('spot', AdminControllers\SpotController::class);
 Route::crud('goods', AdminControllers\GoodsController::class);
 Route::crud('event', AdminControllers\EventController::class);
+Route::crud('category', AdminControllers\CategoryController::class);
 
 
 // Route::crud('page', Controllers\PageController::class);

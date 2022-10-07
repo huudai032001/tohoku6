@@ -151,3 +151,94 @@ function find_category(){
         }
     }
 }
+
+function find_location(){
+    var location;
+    var checkbox = document.getElementsByName("area-select");
+    for (var i = 0; i < checkbox.length; i++){
+        if (checkbox[i].checked === true){
+            location = checkbox[i].value;
+        }
+    }
+    // console.log(location);
+    var formData = new FormData();
+    formData.append('location',location);
+
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+        url: "find_by_location",
+        type: 'post',
+        dataType: "json",
+        async: false,
+        processData: false,
+        contentType: false,
+        data: formData,
+        success: function (data) {
+            console.log(data.list_spot);
+            if(data.list_spot.length > 0){
+                var html = ``;
+                for(var i = 0; i< data.list_spot.length;i++){
+                    html += `
+                    <div class="item">
+                        <div class="post-item-2">
+                            <a href="spot-detail/`+ data.list_spot[i].id +`">
+                                <div class="thumb ratio thumb-hover-anim">
+                                    <img src="`+ data.arr_image[i] +`" alt="">
+                                </div>
+                            </a>
+                            <div class="item-content">
+                                <div class="d-none d-sm-flex justify-content-end align-items-center">
+                                    <div class="comment-count">
+                                        コメント
+                                        <div class="count text-latin ml-10">`+ data.list_spot[i].favorite +`</div>
+                                    </div>
+                                    <div class="favorite-count ml-20">
+                                        <img width="16" src="/web-assets/images/icons/heart-gray.svg" alt=""> 
+                                        <span class="count text-latin">`+ data.list_spot[i].count_comment +`</span>
+                                    </div>
+                                </div>
+                                <div class="title">
+                                    <a href="post-detail.html">`+ data.list_spot[i].name +`・RISING SUN</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
+
+                }
+            }
+            else {
+                var html = '';
+            }
+            $('.list-category').html(html);
+
+            $('.list-category').data('owl.carousel').destroy(); 
+            $('.list-category').owlCarousel({touchDrag: false, mouseDrag: false});
+            var owl = $("#dom");
+                owl.owlCarousel({
+                autoPlay: false,
+                dots: false,
+                nav: true,
+                margin: 20,
+                navText: ['', ''],
+                slideBy: 'page',        
+                responsive: {
+                    0: {
+                        items: 1,
+                        autoWidth: true
+                    },
+                    576: {
+                        items: 2,
+                        autoWidth: true          
+                    },
+                    992: {
+                        items: 3,
+                        autoWidth: false
+                    }
+                }
+            });
+        }
+    });
+
+}

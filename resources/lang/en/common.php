@@ -68,6 +68,8 @@ return [
     
     'spot' => 'Spot',
     'event' => 'Event',
-    'goods' => 'Goods'
+    'goods' => 'Goods',
+    'tag' => 'Tag'
+
 
 ];

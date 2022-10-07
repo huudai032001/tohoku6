@@ -37,18 +37,19 @@ Route::middleware(['login'])->group(function ()
 
 
 //spot
-Route::get('/list-spot', [App\Http\Controllers\Web\SpotController::class, 'list_spot'])->name('list_spot');
-Route::get('/spot-detail/{id}', [App\Http\Controllers\Web\SpotController::class, 'spot_detail'])->name('spot_detail');
-Route::post('/postfindByCategorySpot', [App\Http\Controllers\Web\SpotController::class, 'postfindByCategorySpot'])->name('postfindByCategorySpot');
-Route::get('/spot-edit/{id}', [App\Http\Controllers\Web\SpotController::class, 'spotEdit'])->name('spotEdit');
-Route::post('/spot-edit/{id}', [App\Http\Controllers\Web\SpotController::class, 'postSpotEdit'])->name('postSpotEdit');
+Route::get('/list-spot', [App\Http\Controllers\Web\HomeController::class, 'list_spot'])->name('list_spot');
+Route::get('/spot-detail/{id}', [App\Http\Controllers\Web\HomeController::class, 'spot_detail'])->name('spot_detail');
 
-Route::get('/spot-register', [App\Http\Controllers\Web\SpotController::class, 'spotRegister'])->name('spotRegister');
-Route::post('/spot-register', [App\Http\Controllers\Web\SpotController::class, 'postSpotRegister'])->name('postSpotRegister');
+Route::post('/postfindByCategorySpot', [App\Http\Controllers\Web\HandleController::class, 'postfindByCategorySpot'])->name('postfindByCategorySpot');
+Route::get('/spot-edit/{id}', [App\Http\Controllers\Web\HomeController::class, 'spotEdit'])->name('spotEdit');
+Route::post('/spot-edit/{id}', [App\Http\Controllers\Web\HandleController::class, 'postSpotEdit'])->name('postSpotEdit');
+
+Route::get('/spot-register', [App\Http\Controllers\Web\HomeController::class, 'spotRegister'])->name('spotRegister');
+Route::post('/spot-register', [App\Http\Controllers\Web\HandleController::class, 'postSpotRegister'])->name('postSpotRegister');
 
 //comment
-Route::post('/spot-comment', [App\Http\Controllers\Web\SpotController::class, 'spotComment'])->name('spotComment');
-Route::post('/delete-comment', [App\Http\Controllers\Web\SpotController::class, 'deleteComment'])->name('deleteComment');
+Route::post('/spot-comment', [App\Http\Controllers\Web\HandleController::class, 'spotComment'])->name('spotComment');
+Route::post('/delete-comment', [App\Http\Controllers\Web\HandleController::class, 'deleteComment'])->name('deleteComment');
 Route::post('/all-comment', [App\Http\Controllers\Web\HandleController::class, 'allComment'])->name('allComment');
 
 // like 
@@ -56,13 +57,13 @@ Route::post('/favourite', [App\Http\Controllers\Web\HandleController::class, 'fa
 
 
 Route::get('/spot-preview', [App\Http\Controllers\Web\SpotController::class, 'spotEdttingComplete'])->name('spotEdttingComplete');
-Route::post('/spot-preview', [App\Http\Controllers\Web\SpotController::class, 'PostSpotPreview'])->name('PostSpotPreview');
+Route::post('/spot-preview', [App\Http\Controllers\Web\HandleController::class, 'PostSpotPreview'])->name('PostSpotPreview');
 // Route::post('/spot-preview-edit/{id}', [App\Http\Controllers\Web\SpotController::class, 'PostSpotPreviewEdit'])->name('PostSpotPreviewEdit');
 
 
 // event
-Route::get('/list-events', [App\Http\Controllers\Web\EventController::class, 'list_events'])->name('list_events');
-Route::get('/event-detail/{id}', [App\Http\Controllers\Web\EventController::class, 'event_detail'])->name('event_detail');
+Route::get('/list-events', [App\Http\Controllers\Web\HomeController::class, 'list_events'])->name('list_events');
+Route::get('/event-detail/{id}', [App\Http\Controllers\Web\HomeController::class, 'event_detail'])->name('event_detail');
 
 // feature
 Route::get('/feature', [App\Http\Controllers\Web\HomeController::class, 'feature'])->name('feature');
@@ -126,9 +127,10 @@ Route::get('/set-new-password',[App\Http\Controllers\Web\HomeController::class, 
 Route::post('/set-new-password',[App\Http\Controllers\Web\HandleController::class, 'postSetNewPassword'])->name('postSetNewPassword');
 
 
-Route::post('/upload_img',[App\Http\Controllers\Web\SpotController::class, 'upload_img'])->name('upload_img');
+Route::post('/upload_img',[App\Http\Controllers\Web\HandleController::class, 'upload_img'])->name('upload_img');
 Route::post('/sort_spot',[App\Http\Controllers\Web\HandleController::class, 'sortSpot'])->name('sortSpot');
 Route::post('/load_more_spot',[App\Http\Controllers\Web\HandleController::class, 'loadMore'])->name('loadMore');
 Route::post('/load_param_profile',[App\Http\Controllers\Web\HandleController::class, 'loadParamProfile'])->name('loadParamProfile');
-Route::post('/find_by_zip_code',[App\Http\Controllers\Web\HandleController::class, 'findByZipCode'])->name('findByZipCode');
+Route::get('/find_by_zip_code',[App\Http\Controllers\Web\HandleController::class, 'findByZipCode'])->name('findByZipCode');
+Route::post('/find_by_location',[App\Http\Controllers\Web\HandleController::class, 'findByLocation'])->name('findByZipCode');
 

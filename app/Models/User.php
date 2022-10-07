@@ -129,4 +129,9 @@ class User extends BaseModel implements
     {
         return \App\Models\Upload::whereIn('id', $this->avatar_image_id)->get();
     }
+
+    public function getNotifi()
+    {
+        return \App\Models\Notification::where('user_id', $this->id)->get();
+    }
 }

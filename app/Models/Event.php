@@ -40,4 +40,8 @@ class Event extends BaseModel
     {
         return \App\Models\Upload::whereIn('id', $this->images_id)->get();
     }
+    public function getCategory()
+    {
+        return \App\Models\Category::whereIn('id', explode(",",$this->category))->get();
+    }
 }

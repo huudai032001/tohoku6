@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -20,6 +21,8 @@ use App\Form;
 
 use App\Models\Spot;
 use App\Models\Upload;
+use App\Models\Notification;
+use App\Models\Favorite;
 
 
 class SpotController extends CommonDataController {
@@ -65,7 +68,13 @@ class SpotController extends CommonDataController {
         $dataTable->addSimpleColumn('location', 'Dia Diem');
         $dataTable->addSimpleColumn('category', 'Danh muc');
         $dataTable->addSimpleColumn('intro', 'Mo ta');
-        $dataTable->addSimpleColumn('address', 'Address');
+        $dataTable->addSimpleColumn('address', 'Address'); 
+        $dataTable->addLabelColumn('status','Status', function ($item)
+        {
+            return [$item->status, $item->statusName()];
+        },[
+            'active' => 'badge badge-success'
+        ]);
         // $dataTable->addSimpleColumn('upload', 'upload');
 
         // $dataTable->addSimpleColumn('location', 'Dia Diem');
@@ -136,65 +145,40 @@ class SpotController extends CommonDataController {
                 'name' => 'image',
                 'label' => 'Image',
                 'multiple' => false,
+                'required' => true,
                 'data' => $dataItem->image_id
             ]),
             new Form\Upload([
                 'name' => 'images',
-                'label' => 'Image',
+                'label' => 'Images',
                 'multiple' => true,
+                'required' => true,
                 'data' => $dataItem->images_id
             ]),
-            // cate
-            // new Form\Text([
-            //     'name' => 'category',                
-            //     'label' => '宿泊',
-            //     'value'=> '1',
-            //     'type' => 'checkbox',            
-            //     'required' => false,
-            //     'data' => $dataItem->category
-            // ]),
-            // new Form\Text([
-            //     'name' => 'category', 
-            //     'type' => 'checkbox',            
-            //     'label' => 'グルメ',
-            //     'required' => false,
-            //     'data' => $dataItem->category
-            // ]),
-            // new Form\Text([
-            //     'name' => 'category',    
-            //     'type' => 'checkbox',            
-            //     'label' => 'ショッピング',
-            //     'required' => false,
-            //     'data' => $dataItem->category
-            // ]),
-            // new Form\Text([
-            //     'name' => 'category',   
-            //     'type' => 'checkbox',            
-            //     'label' => '自然',
-            //     'required' => false,
-            //     'data' => $dataItem->category
-            // ]),
-            // new Form\Text([
-            //     'name' => 'category',  
-            //     'type' => 'checkbox',            
-            //     'label' => '体験',
-            //     'required' => false,
-            //     'data' => $dataItem->category
-            // ]),
-            // new Form\Text([
-            //     'name' => 'category',    
-            //     'type' => 'checkbox',            
-            //     'label' => '歴史',
-            //     'required' => false,
-            //     'data' => $dataItem->category
-            // ]),
-            // new Form\Text([
-            //     'name' => 'category',      
-            //     'type' => 'checkbox',            
-            //     'label' => 'SNS映え',
-            //     'required' => false,
-            //     'data' => $dataItem->category
-            // ])
+            new Form\Checkbox([
+                'name' => 'category[]',
+                'label' => 'Category',
+                'options' => [
+                    1 => 'グルメ',
+                    2 => 'ショッピング',
+                    3 => '宿泊',
+                    4 => '体験',
+                    5 => '自然',
+                    6 => 'SNS映え',
+                    7 => '歴史'
+                ],
+                'data' => $dataItem->category,
+                'inline' => true
+            ]),
+        ]);
+        $form->addGroups([
+            new Form\Select([
+                'name' => 'status',
+                'label' => 'Status',
+                'options' => Spot::statusList(),
+                'required' => true,
+                'data' => $dataItem->status
+            ])
         ]);
     }
 
@@ -207,16 +191,32 @@ class SpotController extends CommonDataController {
 
     protected function updateItem(Request $request, $item)
     {
-        // var_dump($item->category);
-        // die;
+
         $item->name = $request->input('name');
         $item->location = $request->input('location');
         $item->intro = $request->input('intro');
         $item->address = $request->input('address');
-        $item->category = $request->input('category');
+        // $item->category = $request->input('category');
         $item->image_id = $request->input('image');
         $item->images_id = $request->input('images');
+        $item->category = implode(',',$request->input('category'));
+        $item->status = $request->input('status');
+        $item->favorite = 0;
+        $item->count_comment = 0;
+        $item->author = Auth::user()->id;
         $item->save();
+
+        $noti = new  Notification();
+        $noti->posts_id = $item->id;
+        $noti->user_id = $item->author;
+        $noti->save();
+
+        $favorite = new Favorite();
+        $favorite->user_id = Auth::user()->id;
+        $favorite->posts_id = $item->id;
+        $favorite->type_posts = 1;
+        $favorite->save();
+
     }    
 
     // protected function delete($dataItem)

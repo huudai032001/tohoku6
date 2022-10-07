@@ -43,9 +43,13 @@
                         </div>
                         <div class="d-flex justify-content-between">
                             <div class="tags">
-                                <span class="tag">自然</span>
-                                <span class="tag">宿泊</span>
+                            @if($category = $info_spot->getCategory())
+                                @foreach($category as $cate)
+                                    <span class="tag">{{$cate->name}}</span>
+                                @endforeach
+                            @endif
                             </div>
+
                             @if(Auth::check())
                             <a onclick="favorite()">
                             @else
@@ -464,54 +468,16 @@
                 <div class="modal_close">×</div>
                 <div class="modal_title">通知</div>
                 <ul class="user-notification_list custom-scrollbar">
-                    <li class="d-flex align-items-center">
-                        <div class="date">2022.10.10</div>
-                        <div class="flex-fill content">投稿スポットが公開されました</div>
-                    </li>
-                    <li class="d-flex align-items-center">
-                        <div class="date">2022.10.10</div>
-                        <div class="flex-fill content">投稿スポットが公開されました</div>
-                    </li>
-                    <li class="d-flex align-items-center">
-                        <div class="date">2022.10.10</div>
-                        <div class="flex-fill content">投稿スポットが公開されました</div>
-                    </li>
-                    <li class="d-flex align-items-center">
-                        <div class="date">2022.10.10</div>
-                        <div class="flex-fill content">投稿スポットが公開されました</div>
-                    </li>
-                    <li class="d-flex align-items-center">
-                        <div class="date">2022.10.10</div>
-                        <div class="flex-fill content">投稿スポットが公開されました</div>
-                    </li>
-                    <li class="d-flex align-items-center">
-                        <div class="date">2022.10.10</div>
-                        <div class="flex-fill content">投稿スポットが公開されました</div>
-                    </li>
-                    <li class="d-flex align-items-center">
-                        <div class="date">2022.10.10</div>
-                        <div class="flex-fill content">投稿スポットが公開されました</div>
-                    </li>
-                    <li class="d-flex align-items-center">
-                        <div class="date">2022.10.10</div>
-                        <div class="flex-fill content">投稿スポットが公開されました</div>
-                    </li>
-                    <li class="d-flex align-items-center">
-                        <div class="date">2022.10.10</div>
-                        <div class="flex-fill content">投稿スポットが公開されました</div>
-                    </li>
-                    <li class="d-flex align-items-center">
-                        <div class="date">2022.10.10</div>
-                        <div class="flex-fill content">投稿スポットが公開されました</div>
-                    </li>
-                    <li class="d-flex align-items-center">
-                        <div class="date">2022.10.10</div>
-                        <div class="flex-fill content">投稿スポットが公開されました</div>
-                    </li>
-                    <li class="d-flex align-items-center">
-                        <div class="date">2022.10.10</div>
-                        <div class="flex-fill content">投稿スポットが公開されました</div>
-                    </li>
+                    @if(Auth::check())
+                        @if($notifi = Auth::user()->getNotifi())
+                            @foreach($notifi as $noti)
+                            <li class="d-flex align-items-center">
+                                <div class="date">{{$noti->created_at}}</div>
+                                <div class="flex-fill content">投稿スポットが公開されました</div>
+                            </li>
+                            @endforeach
+                        @endif
+                    @endif
                 </ul>
             </div>
         </div>

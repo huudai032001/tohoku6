@@ -35,7 +35,9 @@
                 </li>
 
                 <li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs">{{ __('Data management') }}</div> <i class="icon-menu"></i></li>
-                
+                <li class="nav-item">
+                    <a href="{{ route('admin.category.index') }}" class="nav-link"><i class="icon-file-text3"></i> <span> {{ __('Category') }}</span></a>                    
+                </li> 
                 <li class="nav-item">
                     <a href="{{ route('admin.spot.index') }}" class="nav-link"><i class="icon-file-text3"></i> <span> {{ __('Spot') }}</span></a>                    
                 </li> 

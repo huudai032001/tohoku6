@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 06, 2022 at 08:44 AM
+-- Generation Time: Oct 07, 2022 at 12:06 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -20,6 +20,32 @@ SET time_zone = "+00:00";
 --
 -- Database: `tohoku6`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `category`
+--
+
+CREATE TABLE `category` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `category`
+--
+
+INSERT INTO `category` (`id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'グルメ', NULL, NULL),
+(2, 'ショッピング', NULL, NULL),
+(3, '宿泊', '2022-10-06 02:17:29', '2022-10-06 02:17:29'),
+(4, '体験', NULL, NULL),
+(5, '自然', NULL, NULL),
+(6, 'SNS映え', NULL, NULL),
+(7, '歴史', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -66,7 +92,7 @@ CREATE TABLE `event` (
   `image_id` int(11) DEFAULT NULL,
   `images_id` text DEFAULT NULL,
   `author` int(11) DEFAULT NULL,
-  `category` int(11) DEFAULT NULL,
+  `category` varchar(255) DEFAULT NULL,
   `favorite` int(11) NOT NULL,
   `count_comment` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -78,8 +104,10 @@ CREATE TABLE `event` (
 --
 
 INSERT INTO `event` (`id`, `name`, `location`, `time_start`, `intro`, `image_id`, `images_id`, `author`, `category`, `favorite`, `count_comment`, `created_at`, `updated_at`) VALUES
-(5, '上品な音楽祭', 'tokio', '2022-10-05 07:03:13', '上品な音楽祭', 1, '[\"1\",\"2\",\"3\"]', 27, 1, 1, 0, '2022-10-03 21:46:21', '2022-10-05 00:03:13'),
-(6, 'ギフト共有パーティー', 'tokio', '2022-10-04 04:48:29', '上品な音楽祭', 1, '[\"1\",\"2\",\"3\"]', 27, 1, 0, 0, '2022-10-03 21:46:39', '2022-10-03 21:46:39');
+(5, '上品な音楽祭', 'Akita', '2022-10-07 07:53:01', '上品な音楽祭', 1, '[\"1\",\"2\",\"3\"]', 27, '1', 1, 0, '2022-10-03 21:46:21', '2022-10-05 00:03:13'),
+(6, 'ギフト共有パーティー', 'tokio', '2022-10-08 08:46:48', '上品な音楽祭', 1, '[\"1\",\"2\",\"3\"]', 27, '1', 3, 0, '2022-10-03 21:46:39', '2022-10-07 01:46:48'),
+(7, 'Dai Huu', 'Akita', '2022-10-06 18:20:00', 'sss', 6, '[\"5\",\"6\"]', 1, '2,3', 0, 0, '2022-10-06 20:25:14', '2022-10-06 20:35:18'),
+(8, 'ハノイ音楽祭', 'Fukushima', '2022-10-06 17:00:00', 'dsf', 42, '[\"41\",\"6\",\"5\"]', 1, '1,3', 0, 0, '2022-10-06 20:55:39', '2022-10-06 20:55:39');
 
 -- --------------------------------------------------------
 
@@ -161,9 +189,10 @@ INSERT INTO `favorite` (`id`, `posts_id`, `type_posts`, `user_id`, `created_at`,
 (26, 3, 1, NULL, '2022-10-05 19:24:44', '2022-10-05 19:24:44'),
 (27, 4, 1, NULL, '2022-10-05 19:29:10', '2022-10-05 19:29:10'),
 (28, 5, 1, NULL, '2022-10-05 19:30:14', '2022-10-05 19:30:14'),
-(29, 6, 1, NULL, '2022-10-05 19:31:05', '2022-10-05 19:31:05'),
-(30, 7, 1, NULL, '2022-10-05 19:31:07', '2022-10-05 19:31:07'),
-(31, 8, 1, NULL, '2022-10-05 19:37:16', '2022-10-05 19:37:16');
+(29, 6, 2, '1', '2022-10-05 19:31:05', '2022-10-07 01:46:48'),
+(30, 7, 2, NULL, '2022-10-05 19:31:07', '2022-10-05 19:31:07'),
+(32, 12, 1, NULL, NULL, NULL),
+(33, 8, 2, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -178,6 +207,7 @@ CREATE TABLE `goods` (
   `images_id` text DEFAULT NULL,
   `intro` text NOT NULL,
   `point` varchar(30) NOT NULL,
+  `location` varchar(255) NOT NULL,
   `author` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
@@ -187,8 +217,9 @@ CREATE TABLE `goods` (
 -- Dumping data for table `goods`
 --
 
-INSERT INTO `goods` (`id`, `name`, `image_id`, `images_id`, `intro`, `point`, `author`, `created_at`, `updated_at`) VALUES
-(2, 'Dai Huu', 1, NULL, 'sss', '222', 27, '2022-10-04 09:20:28', '2022-10-04 09:20:28');
+INSERT INTO `goods` (`id`, `name`, `image_id`, `images_id`, `intro`, `point`, `location`, `author`, `created_at`, `updated_at`) VALUES
+(2, 'Dai Huu', 1, NULL, 'sss', '222', '', 27, '2022-10-04 09:20:28', '2022-10-04 09:20:28'),
+(3, 'new', 6, '[\"42\"]', 'depdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', '200', '', 1, '2022-10-06 20:42:53', '2022-10-06 20:42:53');
 
 -- --------------------------------------------------------
 
@@ -208,6 +239,30 @@ CREATE TABLE `migrations` (
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (1, '2014_10_12_000000_create_users_table', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `notification`
+--
+
+CREATE TABLE `notification` (
+  `id` int(11) NOT NULL,
+  `posts_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `notification`
+--
+
+INSERT INTO `notification` (`id`, `posts_id`, `user_id`, `created_at`, `updated_at`) VALUES
+(1, 5, 47, '2022-10-06 00:21:25', '2022-10-06 00:21:25'),
+(2, 10, 1, '2022-10-06 01:48:59', '2022-10-06 01:48:59'),
+(3, 11, 1, '2022-10-06 18:37:58', '2022-10-06 18:37:58'),
+(4, 12, 1, '2022-10-06 18:50:15', '2022-10-06 18:50:15');
 
 -- --------------------------------------------------------
 
@@ -286,6 +341,7 @@ CREATE TABLE `spots` (
   `category` varchar(50) DEFAULT NULL,
   `intro` text NOT NULL,
   `author` varchar(50) DEFAULT NULL,
+  `status` varchar(20) NOT NULL,
   `favorite` int(11) NOT NULL,
   `count_comment` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -296,15 +352,17 @@ CREATE TABLE `spots` (
 -- Dumping data for table `spots`
 --
 
-INSERT INTO `spots` (`id`, `name`, `image_id`, `images_id`, `address`, `location`, `category`, `intro`, `author`, `favorite`, `count_comment`, `created_at`, `updated_at`) VALUES
-(1, 'ハノイでのコンサート', 4, '[\"1\",\"2\",\"3\"]', 'hanoi', 'hanoi', '2,3,7', 'とてもかっこいい', '27', 1, 7, '2022-10-03 18:42:53', '2022-10-04 02:12:16'),
-(2, '音楽祭ネタ', 11, '[\"8\",\"9\",\"10\"]', 'kawa', 'kawa', '1,2', '音楽祭ネタ', '27', 0, 0, '2022-10-04 21:42:03', '2022-10-04 21:42:03'),
-(3, '魔法のサーカス行為', 20, '[\"13\",\"14\",\"15\"]', 'kina', 'kina', '2', '魔法のサーカス行為', '47', 0, 0, '2022-10-05 19:24:44', '2022-10-05 19:24:44'),
-(4, 'サーカスアクト hana,m', 20, '[\"17\",\"18\",\"19\"]', 'tokyo', 'tokyo', '3,4', 'サーカスアクト hana,m', '47', 0, 0, '2022-10-05 19:29:10', '2022-10-05 19:29:10'),
-(5, 'サーカスアクト hana,m', 20, '[\"17\",\"18\",\"19\"]', 'tokyo', 'tokyo', '3,4', 'サーカスアクト hana,m', '47', 0, 0, '2022-10-05 19:30:14', '2022-10-05 19:30:14'),
-(6, 'サーカスアクト hana,m', 20, '[\"17\",\"18\",\"19\"]', 'tokyo', 'tokyo', '3,4', 'サーカスアクト hana,m', '47', 0, 0, '2022-10-05 19:31:05', '2022-10-05 19:31:05'),
-(7, 'サーカスアクト hana,m', 20, '[\"17\",\"18\",\"19\"]', 'tokyo', 'tokyo', '3,4', 'サーカスアクト hana,m', '47', 0, 0, '2022-10-05 19:31:07', '2022-10-05 19:31:07'),
-(8, 'カントリーミュージック', 36, '[\"33\",\"34\",\"35\"]', 'kawa', 'kawa', '2,3', 'カントリーミュージック', '47', 1, 0, '2022-10-05 19:37:16', '2022-10-05 19:41:00');
+INSERT INTO `spots` (`id`, `name`, `image_id`, `images_id`, `address`, `location`, `category`, `intro`, `author`, `status`, `favorite`, `count_comment`, `created_at`, `updated_at`) VALUES
+(1, 'ハノイでのコンサート', 4, '[\"1\",\"2\",\"3\"]', '2,3,7', 'Akita', '1,2', 'とてもかっこいい', '27', 'active', 1, 7, '2022-10-03 18:42:53', '2022-10-06 00:09:16'),
+(2, '音楽祭ネタ', 11, '[\"8\",\"9\",\"10\"]', 'kawa', 'kawa', '1,2', '音楽祭ネタ', '27', 'disabled', 0, 0, '2022-10-04 21:42:03', '2022-10-04 21:42:03'),
+(3, '魔法のサーカス行為', 20, '[\"13\",\"14\",\"15\"]', 'kina', 'kina', '2', '魔法のサーカス行為', '47', 'active', 0, 0, '2022-10-05 19:24:44', '2022-10-05 19:24:44'),
+(4, 'サーカスアクト hana,m', 20, '[\"17\",\"18\",\"19\"]', 'tokyo', 'tokyo', '1,2', 'サーカスアクト hana,m', '47', 'disabled', 0, 0, '2022-10-05 19:29:10', '2022-10-05 19:29:10'),
+(5, 'サーカスアクト hana,m', 20, '[\"17\",\"18\",\"19\"]', '3,4', 'tokyo', '1,2', 'サーカスアクト hana,m', '47', 'active', 0, 0, '2022-10-05 19:30:14', '2022-10-06 00:21:25'),
+(6, 'サーカスアクト hana,m', 20, '[\"17\",\"18\",\"19\"]', 'tokyo', 'tokyo', '1,2', 'サーカスアクト hana,m', '47', 'disabled', 0, 0, '2022-10-05 19:31:05', '2022-10-05 19:31:05'),
+(7, 'サーカスアクト hana,m', 20, '[\"17\",\"18\",\"19\"]', 'tokyo', 'tokyo', '1,2', 'サーカスアクト hana,m', '47', 'active', 0, 0, '2022-10-05 19:31:07', '2022-10-05 19:31:07'),
+(8, 'カントリーミュージック', 36, '[\"33\",\"34\",\"35\"]', '2,3', 'kawa', '1,2', 'カントリーミュージック', '47', 'active', 1, 0, '2022-10-05 19:37:16', '2022-10-06 03:01:26'),
+(11, 'Dai Huu', 41, '[\"41\",\"6\",\"5\"]', 'ha noi', 'hanoi', '2', 'depdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', '1', 'active', 0, 0, '2022-10-06 18:37:58', '2022-10-06 18:37:58'),
+(12, 'fsd', 41, '[\"41\"]', 'fsd', 'fsd', '2,3', 'sdf', '1', 'active', 0, 0, '2022-10-06 18:50:15', '2022-10-06 18:50:15');
 
 -- --------------------------------------------------------
 
@@ -405,7 +463,13 @@ INSERT INTO `uploads` (`id`, `name`, `folder_path`, `file_name`, `extension`, `m
 (33, '63088b01f13ec9.47722173.anh2', '', 'COOgdVv90FvRkn9BF3lphu2zN1uiAxJTz7kqjt3N.png', 'png', 'image/png', 140572, '{\"width\":1672,\"height\":805,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":123,\"file_name\":\"COOgdVv90FvRkn9BF3lphu2zN1uiAxJTz7kqjt3N-thumbnail.png\"},\"small\":{\"width\":1329,\"height\":640,\"file_name\":\"COOgdVv90FvRkn9BF3lphu2zN1uiAxJTz7kqjt3N-small.png\"}}}', '2022-10-05 19:37:03', '2022-10-05 19:37:03'),
 (34, '6317db4ce2d4f2.29158913.aerial-view-business-team 1', '', 'cFhX11d296Mre6yMeMEdLiRc8Ik4Lfdhm6WuxTLO.png', 'png', 'image/png', 851452, '{\"width\":1366,\"height\":435,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":82,\"file_name\":\"cFhX11d296Mre6yMeMEdLiRc8Ik4Lfdhm6WuxTLO-thumbnail.png\"}}}', '2022-10-05 19:37:03', '2022-10-05 19:37:03'),
 (35, '63087be169fae2.45985627.anh2', '', '5as2zS5VTDXJMOeIV6bVYrQItUUUuq1v3FaD5uKM.png', 'png', 'image/png', 140572, '{\"width\":1672,\"height\":805,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":123,\"file_name\":\"5as2zS5VTDXJMOeIV6bVYrQItUUUuq1v3FaD5uKM-thumbnail.png\"},\"small\":{\"width\":1329,\"height\":640,\"file_name\":\"5as2zS5VTDXJMOeIV6bVYrQItUUUuq1v3FaD5uKM-small.png\"}}}', '2022-10-05 19:37:03', '2022-10-05 19:37:03'),
-(36, '63088a62a7d3f3.99856021.screenshot 2022-05-09 100156', '', 'lRyUL4WBKe0JKgGrc7eetISODf8RPxUbMNTlHgAv.png', 'png', 'image/png', 181017, '{\"width\":913,\"height\":487,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":137,\"file_name\":\"lRyUL4WBKe0JKgGrc7eetISODf8RPxUbMNTlHgAv-thumbnail.png\"}}}', '2022-10-05 19:37:03', '2022-10-05 19:37:03');
+(36, '63088a62a7d3f3.99856021.screenshot 2022-05-09 100156', '', 'lRyUL4WBKe0JKgGrc7eetISODf8RPxUbMNTlHgAv.png', 'png', 'image/png', 181017, '{\"width\":913,\"height\":487,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":137,\"file_name\":\"lRyUL4WBKe0JKgGrc7eetISODf8RPxUbMNTlHgAv-thumbnail.png\"}}}', '2022-10-05 19:37:03', '2022-10-05 19:37:03'),
+(37, '6311cebf8771c7.36857817.banner_user', '', 'eN8qSSYKrTOT22IjxGhOHoYxAT8HH3ppkYG1RrkS.png', 'png', 'image/png', 356693, '{\"width\":941,\"height\":340,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":92,\"file_name\":\"eN8qSSYKrTOT22IjxGhOHoYxAT8HH3ppkYG1RrkS-thumbnail.png\"}}}', '2022-10-06 03:09:04', '2022-10-06 03:09:04'),
+(38, '63087c767b1ee4.76135030.anh2', '', 'SkwqKIzH7zbo0CEGb0jY9slW7b7H2a0ubEAej093.png', 'png', 'image/png', 140572, '{\"width\":1672,\"height\":805,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":123,\"file_name\":\"SkwqKIzH7zbo0CEGb0jY9slW7b7H2a0ubEAej093-thumbnail.png\"},\"small\":{\"width\":1329,\"height\":640,\"file_name\":\"SkwqKIzH7zbo0CEGb0jY9slW7b7H2a0ubEAej093-small.png\"}}}', '2022-10-06 03:09:05', '2022-10-06 03:09:05'),
+(39, '63087be169e6f5.75996806.anh1', '', 'AIkHe37bgwhW5RYuz1Q56wq9Q7NixhjvJiDTEgRi.png', 'png', 'image/png', 140572, '{\"width\":1672,\"height\":805,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":123,\"file_name\":\"AIkHe37bgwhW5RYuz1Q56wq9Q7NixhjvJiDTEgRi-thumbnail.png\"},\"small\":{\"width\":1329,\"height\":640,\"file_name\":\"AIkHe37bgwhW5RYuz1Q56wq9Q7NixhjvJiDTEgRi-small.png\"}}}', '2022-10-06 03:09:05', '2022-10-06 03:09:05'),
+(40, '62bf13c6e02706.54663818', '', 'XGWamYn3ZjcfXSbVyYfxoj7HOUFh0JhIxrZ3yiom.png', 'png', 'image/png', 62456, '{\"width\":200,\"height\":200,\"versions\":[]}', '2022-10-06 03:09:05', '2022-10-06 03:09:05'),
+(41, '63087be169e6f5.75996806.anh1', NULL, 'oZbATLnQquFDeLTGayHa7iba9nWtNmON71wnnse3.png', 'png', 'image/png', 140572, '{\"width\":1672,\"height\":805,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":123,\"file_name\":\"oZbATLnQquFDeLTGayHa7iba9nWtNmON71wnnse3-thumbnail.png\"},\"small\":{\"width\":1329,\"height\":640,\"file_name\":\"oZbATLnQquFDeLTGayHa7iba9nWtNmON71wnnse3-small.png\"}}}', '2022-10-06 18:37:39', '2022-10-06 18:37:39'),
+(42, '6317daba5502b1.23939962.5917 1', NULL, 'oZ7nEahkIS8lJKw1xOkPzZrVbe4MyS0maU8qxlh0.png', 'png', 'image/png', 38683, '{\"width\":374,\"height\":243,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":166,\"file_name\":\"oZ7nEahkIS8lJKw1xOkPzZrVbe4MyS0maU8qxlh0-thumbnail.png\"}}}', '2022-10-06 20:42:25', '2022-10-06 20:42:25');
 
 -- --------------------------------------------------------
 
@@ -487,6 +551,12 @@ INSERT INTO `zip_code` (`id`, `code`, `city`, `district`, `town`, `created_at`, 
 --
 
 --
+-- Indexes for table `category`
+--
+ALTER TABLE `category`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `comment`
 --
 ALTER TABLE `comment`
@@ -527,6 +597,12 @@ ALTER TABLE `goods`
 -- Indexes for table `migrations`
 --
 ALTER TABLE `migrations`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `notification`
+--
+ALTER TABLE `notification`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -592,6 +668,12 @@ ALTER TABLE `zip_code`
 --
 
 --
+-- AUTO_INCREMENT for table `category`
+--
+ALTER TABLE `category`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
 -- AUTO_INCREMENT for table `comment`
 --
 ALTER TABLE `comment`
@@ -601,7 +683,7 @@ ALTER TABLE `comment`
 -- AUTO_INCREMENT for table `event`
 --
 ALTER TABLE `event`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `exchange_goods`
@@ -619,19 +701,25 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `favorite`
 --
 ALTER TABLE `favorite`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `goods`
 --
 ALTER TABLE `goods`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `notification`
+--
+ALTER TABLE `notification`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -655,7 +743,7 @@ ALTER TABLE `sample_term_map`
 -- AUTO_INCREMENT for table `spots`
 --
 ALTER TABLE `spots`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `tasks`
@@ -667,7 +755,7 @@ ALTER TABLE `tasks`
 -- AUTO_INCREMENT for table `uploads`
 --
 ALTER TABLE `uploads`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT for table `users`
