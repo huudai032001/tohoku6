@@ -138,7 +138,7 @@
                                         $get_time = time();
                                         $hours = intval(($get_time - $time_com)/ 3600);
                                         $mins = intval(($get_time - $time_com)/ 60);
-
+                                        // var_dump($hours / 24);
                                     ?>
                                     <div class="col-12">
                                         <div class="review-item">

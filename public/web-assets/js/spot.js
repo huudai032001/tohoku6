@@ -1,9 +1,7 @@
 function find_category(){
     var checkbox = document.getElementsByName("category-select");
-    // alert(checkbox);
     for (var i = 0; i < checkbox.length; i++){
         if (checkbox[i].checked === true){
-            // alert(checkbox[i].value);
             let num = checkbox[i].value;
             console.log(String(num));
             var formData = new FormData();
