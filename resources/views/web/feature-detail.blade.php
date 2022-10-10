@@ -26,36 +26,20 @@
                     <div class="container">
 
                         <div class="image-gallery">
-                            <div class="item" data-thumb="/web-assets/images/demo/1.png">
-                                <img src="/upload/{{$feature->image}}" alt="">
+                            @if($image = $feature->image)
+                            <div class="item" data-thumb="{{$image->getUrl()}}">
+                                <img src="{{$image->getUrl()}}" alt="">
                             </div>
-                            <div class="item" data-thumb="/web-assets/images/demo/1.png">
-                                <img src="/web-assets/images/demo/1.png" alt="">
+                            @endif
+
+                            @if($images = $feature->getImages())
+                            @foreach($images as $img)
+                            <div class="item" data-thumb="{{$img->getUrl()}}">
+                                <img src="{{$img->getUrl()}}" alt="">
                             </div>
-                            <div class="item" data-thumb="/web-assets/images/demo/1.png">
-                                <img src="/web-assets/images/demo/1.png" alt="">
-                            </div>
-                            <div class="item" data-thumb="/web-assets/images/demo/1.png">
-                                <img src="/web-assets/images/demo/1.png" alt="">
-                            </div>
-                            <div class="item" data-thumb="/web-assets/images/demo/1.png">
-                                <img src="/web-assets/images/demo/1.png" alt="">
-                            </div>
-                            <div class="item" data-thumb="/web-assets/images/demo/1.png">
-                                <img src="/web-assets/images/demo/1.png" alt="">
-                            </div>
-                            <div class="item" data-thumb="/web-assets/images/demo/1.png">
-                                <img src="/web-assets/images/demo/1.png" alt="">
-                            </div>
-                            <div class="item" data-thumb="/web-assets/images/demo/1.png">
-                                <img src="/web-assets/images/demo/1.png" alt="">
-                            </div>
-                            <div class="item" data-thumb="/web-assets/images/demo/1.png">
-                                <img src="/web-assets/images/demo/1.png" alt="">
-                            </div>
-                            <div class="item" data-thumb="/web-assets/images/demo/1.png">
-                                <img src="/web-assets/images/demo/1.png" alt="">
-                            </div>
+                            @endforeach
+                            @endif
+
                         </div>
 
                         <div style="padding: 15px 0 20px;">
@@ -64,7 +48,7 @@
 
                             <div class="d-flex justify-content-end">
                                 @if(Auth::check())
-                                <input type="hidden" name="user_id" id="user_id" value="{{$user->id}}">
+                                <input type="hidden" name="user_id" id="user_id" value="{{Auth::user()->id}}">
                                 <input type="hidden" name="posts_id" id="posts_id" value="{{$feature->id}}">
                                 <a onclick="favorite()">
                                 @else
@@ -84,21 +68,13 @@
                     <div class="image-carousel">
                         <div class="container">
                             <div class="slider owl-carousel">
-                                <?php
-                                $sub_image = trim($feature->sub_image , '"[]');
-                                $arr = explode(",", $sub_image);
-                                if($arr[0] != ''){
-                                    for($i =0;$i< count($arr);$i++)
-                                    {
-                                        $value = trim($arr[$i] , '"');
-                                ?>
+                            @if($images = $feature->getImages())
+                            @foreach($images as $img)
                                 <div class="item">
-                                    <img src="/upload/{{$value}}" alt="" onerror='this.onerror=null;this.src="/web-assets/images/demo/1.png"'>
+                                    <img src="{{$img->getUrl()}}" alt="">
                                 </div>
-                                <?php
-                                    }
-                                }
-                                ?>
+                                @endforeach
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -110,7 +86,9 @@
                             {{$feature->intro}}
                             </p>
                             <figure class="aligncenter">
-                                <img src="/upload/{{$feature->image}}" alt="">
+                            @if($image = $feature->image)
+                                <img src="{{$image->getUrl()}}" alt="">
+                            @endif
                             </figure>
                             <!-- <h3>はやぶさとこまちの連結・切り離し</h3>
                             <p>

@@ -191,6 +191,7 @@ class SpotController extends CommonDataController {
 
     protected function updateItem(Request $request, $item)
     {
+        $alias = Str::slug($request->input('name'), "-");
 
         $item->name = $request->input('name');
         $item->location = $request->input('location');
@@ -204,11 +205,14 @@ class SpotController extends CommonDataController {
         $item->favorite = 0;
         $item->count_comment = 0;
         $item->author = Auth::user()->id;
+        $item->alias = $alias;
         $item->save();
 
         $noti = new  Notification();
         $noti->posts_id = $item->id;
         $noti->user_id = $item->author;
+        $noti->feedback = "承認された投稿";
+        $noti->type_posts = "spots";
         $noti->save();
 
         $favorite = new Favorite();

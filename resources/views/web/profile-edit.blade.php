@@ -14,17 +14,19 @@
                         <input type="hidden" name="_token" value="{{csrf_token()}}">
 
                             <div class="d-flex justify-content-center">
-                                @if($image = $user->image)
                                 <div class="avatar">
+                                    @if($image = $user->image)
                                     <img src="{{$image->getUrl()}}" alt="" id="file_upload">
+                                    @else
+                                    <img src="/web-assets/images/profile.svg" alt="" id="file_upload">
+                                    @endif    
                                 </div>      
-                                @endif                      
+                                                  
                             </div>
                             <div class="text-align-center ">
                                 <input type="file" accept="image/*" name="image" id="upload_avatar" class="@error('image') is-invalid @enderror">
                                 <span class="text-avatar-change">プロフィール写真を変更</span>
                             </div>
-                        
                             <div class="form-layout-1 mt-40">
                                 <div class="form-group form-group-horizontal">
                                     <div class="form-group-label">名前</div>
@@ -52,7 +54,9 @@
                                 <div class="form-group form-group-horizontal">
                                     <div class="form-group-label">メール</div>
                                     <div class="form-control-wrap">
-                                        <input type="email" class="input-text" name="email" value="{{$user->email}}" disabled>
+                                        <input type="email" class="input-text" value="{{$user->email}}" disabled>
+                                        <input type="hidden" class="input-text" name="email" value="{{$user->email}}">
+
                                     </div>
                                 </div>
                                 <div class="form-group form-group-horizontal">

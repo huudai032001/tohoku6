@@ -130,3 +130,39 @@ function showModal(){
 
     $('#modal-review-actions').addClass('active');
 }
+
+function feedback(){
+    var id_com = $("#id_comment").val();
+    var feedback = $("#feedback").val();
+    var formData = new FormData();
+    formData.append('feedback', feedback);
+    formData.append('id_com', id_com);
+
+    var check = false;
+    if(feedback.length > 0){
+
+    }else{
+        document.getElementById("error").innerHTML = "必須項目です";
+        check = true;
+    }
+
+    if(check){
+        return false;
+    }
+
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+        url: "/feedback",
+        type: 'post',
+        dataType: "json",
+        async: false,
+        processData: false,
+        contentType: false,
+        data: formData,
+        success: function (data) {
+            
+        }
+    });
+}

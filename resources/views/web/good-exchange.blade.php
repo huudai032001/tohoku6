@@ -39,7 +39,7 @@
                 <section class="point-exchange-form">
                     <div class="container">
                         
-                        <form action="{{route('postExchangeGoods',$id)}}" method="post">
+                        <form action="{{route('postExchangeGoods',$alias)}}" method="post">
                         <input type="hidden" name="_token" value="{{csrf_token()}}">
                         <input type="hidden" name="image" value="{{$image->getUrl()}}">
                         <input type="hidden" name="name_item" value="{{$goods->name}}">

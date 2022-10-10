@@ -74,7 +74,7 @@
                                             <div class="icon-star">
                                                 <img src="($value->image())->getUrl()" alt="">
                                             </div>
-                                            <a href="{{route('spot_detail',$value->id)}}">
+                                            <a href="{{route('spot_detail',$value->alias)}}">
                                                 <div class="ratio thumb-image">
                                                     @if($image = $value->image)
                                                     <img src="{{$image->getUrl()}}" alt="">
@@ -89,7 +89,7 @@
                                                     <img src="/web-assets/images/area/akita.svg" alt="">
                                                 </div>
                                             </div>
-                                            <a href="{{route('spot_detail',$value->id)}}">
+                                            <a href="{{route('spot_detail',$value->alias)}}">
                                                 <?php
                                                     $string = strip_tags($value->name);
                                                     if (strlen($string) > 20) {

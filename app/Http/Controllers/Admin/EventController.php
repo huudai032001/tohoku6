@@ -183,6 +183,8 @@ class EventController extends CommonDataController {
 
     protected function updateItem(Request $request, $item)
     {
+        $alias = Str::slug($request->input('name'), "-");
+
         $item->name = $request->input('name');
         $item->intro = $request->input('intro');
         $item->time_start = $request->input('time_start');
@@ -194,6 +196,7 @@ class EventController extends CommonDataController {
         $item->author = Auth::user()->id;
         $item->category = implode(',',$request->input('category'));
         $item->location = $request->input('location');
+        $item->alias = $alias;
 
         $item->save();
 

@@ -100,9 +100,10 @@
                         @if(Auth::check())
                             <form action="{{route('spotComment')}}" method="post">
                             <input type="hidden" name="_token" value="{{csrf_token()}}">
-                            <input type="hidden" name="user_id" id="user_id" value="{{$user->id}}">
+                            <input type="hidden" name="user_id" id="user_id" value="{{Auth::user()->id}}">
                             <input type="hidden" name="posts_id" id="posts_id" value="{{$info_spot->id}}">
-                            <input type="hidden" name="name_user" id="name_user" value="{{$user->name}}">
+                            <input type="hidden" name="name_user" id="name_user" value="{{Auth::user()->name}}">
+                            <input type="hidden" name="author" id="author" value="{{$info_spot->author}}">
 
                             <div class="container">
                                 <div class="d-flex align-items-center">
@@ -110,7 +111,7 @@
                                         <img src="/web-assets/images/profile.svg" alt="">
                                     </div>
                                     <div class="user-name">
-                                        {{$user->name}}
+                                        {{Auth::user()->name}}
                                     </div>
                                 </div>
                                 <div class="ml-50">
@@ -131,15 +132,7 @@
                             <div class="post-container">
                                 <div class="post-row row" id="list_comment">
                                     @foreach($list_comment as $value)
-                                    
-                                    <?php
-                                        date_default_timezone_set('Asia/Ho_Chi_Minh');
-                                        $time_com = strtotime($value->created_at);
-                                        $get_time = time();
-                                        $hours = intval(($get_time - $time_com)/ 3600);
-                                        $mins = intval(($get_time - $time_com)/ 60);
-                                        // var_dump($hours / 24);
-                                    ?>
+
                                     <div class="col-12">
                                         <div class="review-item">
                                             <div class="d-flex justify-content-between">
@@ -152,7 +145,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="d-flex align-items-center">
-                                                    <div class="review-time">{{$hours}}:{{$mins}}日前</div>
+                                                    <div class="review-time">{{$value->created_at}}</div>
                                                     <div class="toggle-action-button d-flex align-items-center" data-show-modal="#modal-review-actions" data-id="{{$value->id}}">
                                                         <span></span>
                                                         <span></span>
@@ -197,6 +190,7 @@
                     </div>
                     <div class="post-container">
                         <div class="post-row row">
+                        @foreach($recently as $value)      
                             <div class="col-sm-6 col-lg-4">
                                 <div class="post-item-8 d-flex align-items-center">
                                     <div class="thumb">
@@ -205,13 +199,15 @@
                                         </div>
                                         <a href="spot-detail.html">
                                             <div class="ratio thumb-image">
-                                                <img src="/web-assets/images/demo/1.png" alt="">
+                                                @if($image = $value->image)
+                                                <img src="{{$image->getUrl()}}" alt="">
+                                                @endif
                                             </div>
                                         </a>
                                     </div>
                                     <div class="item-content flex-fill d-flex">
                                         <div>
-                                            <div class="post-date">2022.10.10 UP!</div>
+                                            <div class="post-date">{{$value->time_start}} UP!</div>
                                             <div class="area d-flex align-items-center">
                                                 <div class="icon"></div>
                                                 <div>
@@ -219,114 +215,32 @@
                                                 </div>
                                             </div>
                                             <a href="spot-detail.html">
-                                                <div class="item-title">グランピング・<span class="text-latin">RISING SUN</span></div>
+                                                <div class="item-title">{{$value->name}} .<span class="text-latin">RISING SUN</span></div>
                                             </a>
                                             <div class="item-desc">
-                                                秋田県雄勝郡羽後町足田字五輪坂下43-4
+                                            {{$value->intro}}
                                             </div>
                                             <div class="d-flex align-items-center">
                                                 <div class="d-flex align-items-center"> 
                                                     <div class="tags">
-                                                        <span class="tag">アウトドア</span>
-                                                        <span class="sep">|</span>
-                                                        <span class="tag">いいね</span>
+                                                        @if($category = $value->getCategory())
+                                                            @foreach($category as $cate)
+                                                                <span class="tag">{{$cate->name}} |</span>
+                                                            @endforeach
+                                                        @endif
                                                     </div>                                               
                                                 </div>
                                                 <div class="favorite-count ml-20">
-                                                    <span class="count text-latin">123</span>
+                                                    <span class="count text-latin">{{$value->favorite}}</span>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-6 col-lg-4">
-                                <div class="post-item-8 d-flex align-items-center">
-                                    <div class="thumb">
-                                        <div class="icon-star">
-                                            <img src="/web-assets/images/icons/star-gray.svg" alt="">
-                                        </div>
-                                        <a href="spot-detail.html">
-                                            <div class="ratio thumb-image">
-                                                <img src="/web-assets/images/demo/1.png" alt="">
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="item-content flex-fill d-flex">
-                                        <div>
-                                            <div class="post-date">2022.10.10 UP!</div>
-                                            <div class="area d-flex align-items-center">
-                                                <div class="icon"></div>
-                                                <div>
-                                                    <img src="/web-assets/images/area/akita.svg" alt="">
-                                                </div>
-                                            </div>
-                                            <a href="spot-detail.html">
-                                                <div class="item-title">グランピング・<span class="text-latin">RISING SUN</span></div>
-                                            </a>
-                                            <div class="item-desc">
-                                                秋田県雄勝郡羽後町足田字五輪坂下43-4
-                                            </div>
-                                            <div class="d-flex align-items-center">
-                                                <div class="d-flex align-items-center"> 
-                                                    <div class="tags">
-                                                        <span class="tag">アウトドア</span>
-                                                        <span class="sep">|</span>
-                                                        <span class="tag">いいね</span>
-                                                    </div>                                               
-                                                </div>
-                                                <div class="favorite-count ml-20">
-                                                    <span class="count text-latin">123</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-lg-4">
-                                <div class="post-item-8 d-flex align-items-center">
-                                    <div class="thumb">
-                                        <div class="icon-star">
-                                            <img src="/web-assets/images/icons/star-gray.svg" alt="">
-                                        </div>
-                                        <a href="spot-detail.html">
-                                            <div class="ratio thumb-image">
-                                                <img src="/web-assets/images/demo/1.png" alt="">
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="item-content flex-fill d-flex">
-                                        <div>
-                                            <div class="post-date">2022.10.10 UP!</div>
-                                            <div class="area d-flex align-items-center">
-                                                <div class="icon"></div>
-                                                <div>
-                                                    <img src="/web-assets/images/area/akita.svg" alt="">
-                                                </div>
-                                            </div>
-                                            <a href="spot-detail.html">
-                                                <div class="item-title">グランピング・<span class="text-latin">RISING SUN</span></div>
-                                            </a>
-                                            <div class="item-desc">
-                                                秋田県雄勝郡羽後町足田字五輪坂下43-4
-                                            </div>
-                                            <div class="d-flex align-items-center">
-                                                <div class="d-flex align-items-center"> 
-                                                    <div class="tags">
-                                                        <span class="tag">アウトドア</span>
-                                                        <span class="sep">|</span>
-                                                        <span class="tag">いいね</span>
-                                                    </div>                                               
-                                                </div>
-                                                <div class="favorite-count ml-20">
-                                                    <span class="count text-latin">123</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>                            
+                            </div>   
+                        @endforeach                       
                         </div>
+                        
                     </div>
                 </section>
 
@@ -343,9 +257,11 @@
                                         <div class="icon-star">
                                             <img src="/web-assets/images/icons/star-gray.svg" alt="">
                                         </div>
-                                        <a href="{{route('spot_detail',$value->id)}}">
+                                        <a href="{{route('spot_detail',$value->alias)}}">
                                             <div class="ratio thumb-image">
-                                                <img src="/web-assets/images/demo/1.png" alt="">
+                                                @if($image = $value->image)
+                                                <img src="{{$image->getUrl()}}" alt="">
+                                                @endif
                                             </div>
                                         </a>
                                     </div>
@@ -358,7 +274,7 @@
                                                     <img src="/web-assets/images/area/akita.svg" alt="">
                                                 </div>
                                             </div>
-                                            <a href="{{route('spot_detail',$value->id)}}">
+                                            <a href="{{route('spot_detail',$value->alias)}}">
                                                 <div class="item-title">{{$value->name}}・<span class="text-latin">RISING SUN</span></div>
                                             </a>
                                             <div class="item-desc">
@@ -432,9 +348,10 @@
                         ガイドライン違反などお気付きの点があればお知らせください。 報告いただいた内容については、運営側で随時確認を行います。 返信は致しませんのでご了承ください。
                     </div>
                     <div class="form-layout-1">
-                        <textarea class="textarea report-content" rows="6"></textarea>
+                        <textarea class="textarea report-content" rows="6" id="feedback"></textarea>
+                        <div class="error" id="error"></div>
                         <div class="text-align-center" style="margin-top: 15px;">
-                            <button class="button button-style-1 button-form-submit">送信</button>
+                            <button class="button button-style-1 button-form-submit" onclick="feedback()">送信</button>
                         </div>
                     </div>
                 </div>
@@ -473,7 +390,7 @@
                             @foreach($notifi as $noti)
                             <li class="d-flex align-items-center">
                                 <div class="date">{{$noti->created_at}}</div>
-                                <div class="flex-fill content">投稿スポットが公開されました</div>
+                                <div class="flex-fill content">{{$noti->feedback}}</div>
                             </li>
                             @endforeach
                         @endif

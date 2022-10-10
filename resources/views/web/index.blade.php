@@ -72,9 +72,7 @@
                                     </div>
 
                                     <div class="calendar-posts" >
-                                        <!-- <div id="dom" class="aa owl-carousel owl-style-2 "></div> -->
                                         <div class="post-slider owl-carousel owl-style-2" id="dom">
-                                            <!-- <div id="dome"></div> -->
                                             @foreach($list_event as $value)
                                             <div class="item">
                                                 <div class="post-item-1">
@@ -183,7 +181,7 @@
                         <div class="slider owl-carousel owl-style-3">
                             @foreach($list_spot as $value)
                             <div class="post-item-3">
-                                <a href="{{route('spot_detail',$value->id)}}">
+                                <a href="{{route('spot_detail',$value->alias)}}">
                                     @if($image = $value->image)
                                     <div class="thumb ratio thumb-hover-anim">
                                         <img src="{{$image->getUrl()}}" alt="">
@@ -225,7 +223,7 @@
                                     <img src="{{$image->getUrl()}}" alt="">
                                 </div>
                                 @endif
-                                <a href="{{route('event_detail',$value->id)}}">
+                                <a href="{{route('event_detail',$value->alias)}}">
                                     <div class="item-content d-flex flex-column justify-content-end">
                                         <div class="type">EVENT</div>
                                         <div class="title">{{$faEvent->name}}</div>
@@ -249,7 +247,7 @@
                                     <img src="{{$image->getUrl()}}" alt="">
                                 </div>
                                 @endif
-                                <a href="{{route('spot_detail',$value->id)}}">
+                                <a href="{{route('spot_detail',$value->alias)}}">
                                     <div class="item-content d-flex flex-column justify-content-end">
                                         <div class="type">SPOT</div>
                                         <div class="title">{{$faSpot->name}}</div>
@@ -292,7 +290,7 @@
                                             <div class="icon-star">
                                                 <img src="/web-assets/images/icons/star-yellow.svg" alt="">
                                             </div>
-                                            <a href="{{route('event_detail',$value->id)}}">
+                                            <a href="{{route('event_detail',$value->alias)}}">
                                                 @if($image = $value->image)
                                                 <div class="ratio thumb-image">
                                                     <img src="{{$image->getUrl()}}" alt="">
@@ -307,7 +305,7 @@
                                                     <img src="/web-assets/images/area/akita.svg" alt="">
                                                 </div>
                                             </div>
-                                            <a href="{{route('spot_detail',$value->id)}}">
+                                            <a href="{{route('spot_detail',$value->alias)}}">
                                                 <div class="item-title">{{$value->name}}・<span class="text-latin">RISING SUN</span></div>
                                             </a>
                                             <div class="counters d-flex align-items-center justify-content-end justify-content-lg-start">
@@ -352,7 +350,7 @@
                                             <div class="icon-star">
                                                 <img src="/web-assets/images/icons/star-yellow.svg" alt="">
                                             </div>
-                                            <a href="{{route('featureDetail',$value->id)}}">
+                                            <a href="{{route('featureDetail',$value->alias)}}">
                                                 @if($image = $value->image)
                                                 <div class="ratio thumb-image thumb-hover-anim">
                                                     <img src="{{$image->getUrl()}}" alt="">
@@ -374,7 +372,7 @@
                                             </div>
                                             <div class="line"></div>
                                             <div class="item-title">
-                                                <a href="{{route('featureDetail',$value->id)}}">
+                                                <a href="{{route('featureDetail',$value->alias)}}">
                                                     {{$value->name}}
                                                 </a>
                                             </div>
@@ -413,7 +411,7 @@
                                 <div class="col-6 col-lg-3">
                                     <div class="post-item-7">
                                         <div class="thumb">                                            
-                                            <a href="{{route('goods_detail',$value->id)}}">
+                                            <a href="{{route('goods_detail',$value->alias)}}">
                                             @if($image = $value->image)
                                                 <div class="ratio thumb-image">
                                                     <img src="{{$image->getUrl()}}" alt="">
@@ -423,7 +421,7 @@
                                         </div>
                                         <div class="item-content">
                                             <div class="item-title">
-                                                <a href="{{route('goods_detail',$value->id)}}">{{$goods->name}}</a>
+                                                <a href="{{route('goods_detail',$value->alias)}}">{{$goods->name}}</a>
                                             </div>
                                         </div>
                                     </div>
@@ -474,7 +472,7 @@
                             @foreach($notifi as $noti)
                             <li class="d-flex align-items-center">
                                 <div class="date">{{$noti->created_at}}</div>
-                                <div class="flex-fill content">投稿スポットが公開されました</div>
+                                <div class="flex-fill content">{{$noti->feedback}}</div>
                             </li>
                             @endforeach
                         @endif

@@ -68,7 +68,7 @@
                                     <div class="icon-star">
                                         <img src="/web-assets/images/icons/star-yellow.svg" alt="">
                                     </div>
-                                    <a href="{{route('event_detail',$value->id)}}">
+                                    <a href="{{route('event_detail',$value->alias)}}">
                                         @if($image = $value->image)
                                         <div class="ratio thumb-image thumb-hover-anim">
                                             <img src="{{$image->getUrl()}}" alt="">
@@ -90,7 +90,7 @@
                                     </div>
                                     <div class="line"></div>
                                     <div class="item-title">
-                                        <a href="{{route('event_detail',$value->id)}}">
+                                        <a href="{{route('event_detail',$value->alias)}}">
                                             {{$value->name}}
                                         </a>
                                     </div>

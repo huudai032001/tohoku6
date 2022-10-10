@@ -4,8 +4,10 @@
     @endsection
     @section('content')
     <body>
+    <?php
 
-
+        $cate = implode(',',$spot->category);
+    ?>
         <div id="wrapper">
             <div id="inner-wrapper">
                 <section class="spot-editing-form">
@@ -16,10 +18,9 @@
                         <input type="hidden" value="{{$spot->location}}" name="location">
                         <input type="hidden" value="{{$spot->intro}}" name="intro">
                         <input type="hidden" value="{{$spot->name}}" name="name">
-                        <input type="hidden" value="{{$spot->image_id}}" name="image">
-                        <input type="hidden" value="{{$spot->category}}" name="category">
-
-                        <input type="hidden" value="{{$spot->sub_image}}" name="sub_image">
+                        <input type="hidden" value="{{$spot->image_id}}" name="image" id="image_id">
+                        <input type="hidden" value="{{$cate}}" name="category">
+                        <input type="hidden" value="{{$spot->sub_image}}" name="sub_image" id="sub_image">
 
                         <div class="section_header-2">
                             <div class="container">                                
@@ -42,7 +43,7 @@
                                         </a>
                                     </div>
                                     <div class="col-12 col-md-6">
-                                        <a href="#" class="button button-style-3 form-button" type="button" >戻る
+                                        <a  class="button button-style-3 form-button" type="button" onclick="delete_image()">戻る
                                         </a>
                                     </div>
                                 </div>
@@ -85,6 +86,7 @@
         <script src="/web-assets/js/components.js"></script>
         <script src="/web-assets/js/main.js"></script>
         <script src="/web-assets/js/tohoku-calendar.js"></script>
+        <script src="/web-assets/js/spot-preview.js"></script>
         
     </body>
     @endsection

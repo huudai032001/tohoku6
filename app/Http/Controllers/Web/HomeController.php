@@ -34,6 +34,9 @@ class HomeController extends Controller
 
         $today = \Carbon\Carbon::now();
         $list_event = Event::whereDate('time_start', $today->format('Y-m-d'))->take(6)->get();
+        if(count($list_event) == 0){
+            $list_event = Event::orderBy('time_start','DESC')->take(6)->get();
+        }
         $all_event = Event::with('upload')->take(6)->get();
         $list_spot = Spot::take(6)->get();
         $list_upcoming_spot = Event::where('location','like', '%tohoku%')->take(12)->get();
@@ -123,8 +126,11 @@ class HomeController extends Controller
 
 
 
-    public function goods_detail($id){
-        $info_goods = Goods::where('id',$id)->first(); 
+    public function goods_detail($alias){
+        $info_goods = Goods::where('alias',$alias)->first(); 
+        if( empty($info_goods)){
+            abort(404);
+        }
         $list_goods = Goods::where('name', 'like', "%$info_goods->name%")->take(10)->get();
 
         return view('web.good-detail',['info_goods'=>$info_goods,'list_goods'=>$list_goods]);
@@ -139,8 +145,11 @@ class HomeController extends Controller
         return view('web.signup-verify');
     }
 
-    public function exchangeGoods($id){
-        $goods = Goods::findorfail($id);
+    public function exchangeGoods($alias){
+        $goods = Goods::where('alias',$alias)->first();
+        if(empty($goods)){
+            abort(404);
+        }
         $user = Auth::user();
         return view('web.good-exchange')
         ->with([
@@ -184,18 +193,15 @@ class HomeController extends Controller
         return view('web.features',compact('list_feature'));
     }
 
-    public function featureDetail($id){
-        $feature = Event::findorfail($id);
-        if(Auth::check()){
-            $user = Auth::user();
+    public function featureDetail($alias){
+        $feature = Event::where('alias',$alias)->first();
+        if ( empty ($feature) ) {
+            abort (404);
         }
-        else {
-            $user = [];
-        }
-        return view('web.feature-detail',compact('feature','user'));
+        return view('web.feature-detail',compact('feature'));
     }    
 
-    public function list_events(){
+    public function list_events(Request $req){
 
         $get_date = getdate();
         if($get_date['mon'] < 10){
@@ -213,8 +219,8 @@ class HomeController extends Controller
         }
         $date = ($get_date['year'] . "-" . $mon . "-" . $day);
         $limit = 1;
-        if(isset($_GET['page'])){
-            $page = $_GET['page'];
+        if($req->input('page')){
+            $page = $req->input('page');
         }else {
             $page = 1;
         }
@@ -224,43 +230,43 @@ class HomeController extends Controller
         }
 
 
-        if(isset($_GET['area-select'])){
-            if(isset($_GET['year'])){
-                if($_GET['month'] < 10){
-                    $mon = "0" .$_GET['month'];
+        if($req->input('area-select')){
+            if($req->input('year')){
+                if($req->input('month') < 10){
+                    $mon = "0" .$req->input('month');
                 }
                 else {
-                    $mon = $_GET['month'];
+                    $mon = $req->input('month');
                 }
-                if($_GET['day'] < 10) {
-                    $day = "0" . $_GET['day'];
+                if($req->input('day') < 10) {
+                    $day = "0" . $req->input('day');
                 }
                 else {
-                    $day = $_GET['day'];
+                    $day = $req->input('day');
                 }
-                $date = ($_GET['year'] . "-" . $mon . "-" . $day);
+                $date = ($req->input('year') . "-" . $mon . "-" . $day);
             }
 
-            $location = $_GET['area-select'];
+            $location = $req->input('area-select');
             $list_events = Event::where('location',$location)->whereDate('time_start', $date)->offset($start)->limit($limit)->get();
             $count = count(Event::where('location',$location)->whereDate('time_start', $date)->get());
         }
         else {
 
-            if(isset($_GET['year'])){
-                if($_GET['month'] < 10){
-                    $mon = "0" .$_GET['month'];
+            if($req->input('year')){
+                if($req->input('month') < 10){
+                    $mon = "0" .$req->input('month');
                 }
                 else {
-                    $mon = $_GET['month'];
+                    $mon = $req->input('month');
                 }
-                if($_GET['day'] < 10) {
-                    $day = "0" . $_GET['day'];
+                if($req->input('day') < 10) {
+                    $day = "0" . $req->input('day');
                 }
                 else {
-                    $day = $_GET['day'];
+                    $day = $req->input('day');
                 }
-                $date = ($_GET['year'] . "-" . $mon . "-" . $day);
+                $date = ($req->input('day') . "-" . $mon . "-" . $day);
 
                 $list_events = Event::whereDate('time_start', $date)->offset($start)->limit($limit)->get();
                 $count = count(Event::whereDate('time_start', $date)->get());
@@ -271,6 +277,11 @@ class HomeController extends Controller
                 $count = count(Event::whereDate('time_start', $date)->get());
             }
         }
+
+        if(count($list_events) == 0){
+            $list_events = Event::orderBy('time_start', 'DESC')->offset($start)->paginate($limit);
+            $count = count(Event::orderBy('time_start', 'DESC')->get());
+        }
         $total_page = ceil($count / $limit);
         if($total_page == 0){
             $total_page = 1;
@@ -279,21 +290,23 @@ class HomeController extends Controller
         return view('web.events',compact('list_events','total_page','page'));
     }
 
-    public function event_detail($id){
-        $info_event = Event::where('id',$id)->first(); 
-        $list_event = Event::paginate(6);
-        if(Auth::check()){
-            $user = Auth::user();
+    public function event_detail($alias){
+        $info_event = Event::where('alias',$alias)->first(); 
+        if ( empty ($info_event) ) {
+            abort (404);
         }
-        else {
-            $user = [];
-        }
-        return view('web.event-detail',['info_event'=>$info_event,'list_event'=>$list_event,'user'=>$user]);
+        $recently = Event::where('location',$info_event->location)->take(3)->get();
+        $list_event = Event::take(6)->get();
+        return view('web.event-detail',[
+            'info_event'=>$info_event,
+            'list_event'=>$list_event,
+            'recently' => $recently
+        ]);
     }
-    public function list_spot(){
-        if(isset($_GET['search'])){
-            $search = $_GET['search'];
-            $sort = $_GET['sort'];
+    public function list_spot(Request $req){
+        if($req->input('search')){
+            $search = $req->input('search');
+            $sort = $req->input('sort');
             if($sort == 1){
                 $list_spot = Spot::where('spots.name', 'like', '%' . $search . '%')
                 ->orderBy('created_at','DESC')
@@ -320,20 +333,18 @@ class HomeController extends Controller
         // dd($list_spot);
         return view('web.spots',compact('list_spot','category'));
     }
-    public function spot_detail($id){
+    public function spot_detail($alias){
         $list_spot = Spot::take(6)->get();
-        $info_spot = Spot::where('id',$id)->first(); 
-        // dd($list_spot);
-        // $list_comment = Spot::with('comment')->first();
-        $list_comment = Comment::where('spot_id',$id)->orderBy('created_at','DESC')->limit(5)->get();
+        $info_spot = Spot::where('alias',$alias)->first();
+        // dd($info_spot);
+        if ( empty ($info_spot) ) {
+            abort (404);
+        }
+        $recently = Spot::where('location',$info_spot->location)->take(6)->get();
+        $list_comment = Comment::where('spot_id',$info_spot->id)->orderBy('created_at','DESC')->limit(5)->get();
 
-        if(Auth::check()){
-            $user = Auth::user();
-        }
-        else {
-            $user = [];
-        }
-        return view('web.spot-detail',['info_spot'=>$info_spot,'list_spot'=>$list_spot,'user'=>$user,'list_comment'=>$list_comment]);
+
+        return view('web.spot-detail',['info_spot'=>$info_spot,'list_spot'=>$list_spot,'list_comment'=>$list_comment,'recently'=>$recently]);
     }
 
     public function spotEdit($id){
@@ -345,7 +356,7 @@ class HomeController extends Controller
                 return abort(404);
             }
         }else {
-            return abort(404);
+            return redirect("/signin");
         }
 
     }

@@ -33,7 +33,7 @@
                         <div class="notation">・日付が複数の場合、範囲の場合の表記</div>
                         <div class="d-flex justify-content-end">
                         @if(Auth::check())
-                        <input type="hidden" name="user_id" id="user_id" value="{{$user->id}}">
+                        <input type="hidden" name="user_id" id="user_id" value="{{Auth::user()->id}}">
                         <input type="hidden" name="posts_id" id="posts_id" value="{{$info_event->id}}">
                         <a onclick="favorite()">
                         @else
@@ -91,39 +91,47 @@
                     </div>
                     <div class="post-container">
                         <div class="post-row row">
+                            @foreach($recently as $value)
                             <div class="col-sm-6 col-lg-4">
                                 <div class="post-item-8 d-flex align-items-center">
                                     <div class="thumb">
                                         <div class="icon-star">
                                             <img src="/web-assets/images/icons/star-gray.svg" alt="">
                                         </div>
-                                        <a href="spot-detail.html">
+                                        <a href="{{route('event_detail',$value->alias)}}">
                                             <div class="ratio thumb-image">
-                                                <img src="/web-assets/images/demo/1.png" alt="">
+                                                @if($image = $value->image)
+                                                <img src="{{$image->getUrl()}}" alt="">
+                                                @endif
                                             </div>
                                         </a>
                                     </div>
                                     <div class="item-content flex-fill d-flex">
                                         <div>
-                                            <div class="post-date">2022.10.10 UP!</div>
+                                            <div class="post-date">{{$value->time_start}} UP!</div>
                                             <div class="area d-flex align-items-center">
                                                 <div class="icon"></div>
                                                 <div>
                                                     <img src="/web-assets/images/area/akita.svg" alt="">
                                                 </div>
                                             </div>
-                                            <a href="spot-detail.html">
-                                                <div class="item-title">グランピング・<span class="text-latin">RISING SUN</span></div>
+                                            <a href="{{route('event_detail',$value->alias)}}">
+                                                <div class="item-title">{{$value->name}}・<span class="text-latin">RISING SUN</span></div>
                                             </a>
                                             <div class="item-desc">
-                                                秋田県雄勝郡羽後町足田字五輪坂下43-4
+                                            {{$value->intro}}
                                             </div>
                                             <div class="d-flex align-items-center">
                                                 <div class="d-flex align-items-center"> 
                                                     <div class="tags">
-                                                        <span class="tag">アウトドア</span>
-                                                        <span class="sep">|</span>
-                                                        <span class="tag">いいね</span>
+
+                                                    @if($categorys = $value->categorys())
+                                                    @foreach($categorys as $category)
+                                                        @if($cate = $category->getCategory)
+                                                            <span class="tag">{{$cate->name}} |</span>
+                                                        @endif
+                                                    @endforeach
+                                                    @endif
                                                     </div>                                               
                                                 </div>
                                                 <div class="favorite-count ml-20">
@@ -134,92 +142,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6 col-lg-4">
-                                <div class="post-item-8 d-flex align-items-center">
-                                    <div class="thumb">
-                                        <div class="icon-star">
-                                            <img src="/web-assets/images/icons/star-gray.svg" alt="">
-                                        </div>
-                                        <a href="spot-detail.html">
-                                            <div class="ratio thumb-image">
-                                                <img src="/web-assets/images/demo/1.png" alt="">
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="item-content flex-fill d-flex">
-                                        <div>
-                                            <div class="post-date">2022.10.10 UP!</div>
-                                            <div class="area d-flex align-items-center">
-                                                <div class="icon"></div>
-                                                <div>
-                                                    <img src="/web-assets/images/area/akita.svg" alt="">
-                                                </div>
-                                            </div>
-                                            <a href="spot-detail.html">
-                                                <div class="item-title">グランピング・<span class="text-latin">RISING SUN</span></div>
-                                            </a>
-                                            <div class="item-desc">
-                                                秋田県雄勝郡羽後町足田字五輪坂下43-4
-                                            </div>
-                                            <div class="d-flex align-items-center">
-                                                <div class="d-flex align-items-center"> 
-                                                    <div class="tags">
-                                                        <span class="tag">アウトドア</span>
-                                                        <span class="sep">|</span>
-                                                        <span class="tag">いいね</span>
-                                                    </div>                                               
-                                                </div>
-                                                <div class="favorite-count ml-20">
-                                                    <span class="count text-latin">123</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-lg-4">
-                                <div class="post-item-8 d-flex align-items-center">
-                                    <div class="thumb">
-                                        <div class="icon-star">
-                                            <img src="/web-assets/images/icons/star-gray.svg" alt="">
-                                        </div>
-                                        <a href="spot-detail.html">
-                                            <div class="ratio thumb-image">
-                                                <img src="/web-assets/images/demo/1.png" alt="">
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="item-content flex-fill d-flex">
-                                        <div>
-                                            <div class="post-date">2022.10.10 UP!</div>
-                                            <div class="area d-flex align-items-center">
-                                                <div class="icon"></div>
-                                                <div>
-                                                    <img src="/web-assets/images/area/akita.svg" alt="">
-                                                </div>
-                                            </div>
-                                            <a href="spot-detail.html">
-                                                <div class="item-title">グランピング・<span class="text-latin">RISING SUN</span></div>
-                                            </a>
-                                            <div class="item-desc">
-                                                秋田県雄勝郡羽後町足田字五輪坂下43-4
-                                            </div>
-                                            <div class="d-flex align-items-center">
-                                                <div class="d-flex align-items-center"> 
-                                                    <div class="tags">
-                                                        <span class="tag">アウトドア</span>
-                                                        <span class="sep">|</span>
-                                                        <span class="tag">いいね</span>
-                                                    </div>                                               
-                                                </div>
-                                                <div class="favorite-count ml-20">
-                                                    <span class="count text-latin">123</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>                            
+                           @endforeach
                         </div>
                     </div>
                 </section>
@@ -237,9 +160,11 @@
                                         <div class="icon-star">
                                             <img src="/web-assets/images/icons/star-gray.svg" alt="">
                                         </div>
-                                        <a href="{{route('event_detail',$value->id)}}">
+                                        <a href="{{route('event_detail',$value->alias)}}">
                                             <div class="ratio thumb-image">
-                                                <img src="/web-assets/images/demo/1.png" alt="">
+                                                @if($image = $value->image)
+                                                <img src="{{$image->getUrl()}}" alt="">
+                                                @endif
                                             </div>
                                         </a>
                                     </div>
@@ -252,7 +177,7 @@
                                                     <img src="/web-assets/images/area/akita.svg" alt="">
                                                 </div>
                                             </div>
-                                            <a href="{{route('event_detail',$value->id)}}">
+                                            <a href="{{route('event_detail',$value->alias)}}">
                                                 <div class="item-title">{{$value->name}}・<span class="text-latin">RISING SUN</span></div>
                                             </a>
                                             <div class="item-desc">
@@ -261,9 +186,13 @@
                                             <div class="d-flex align-items-center">
                                                 <div class="d-flex align-items-center"> 
                                                     <div class="tags">
-                                                        <span class="tag">アウトドア</span>
-                                                        <span class="sep">|</span>
-                                                        <span class="tag">いいね</span>
+                                                    @if($categorys = $value->categorys())
+                                                    @foreach($categorys as $category)
+                                                        @if($cate = $category->getCategory)
+                                                            <span class="tag">{{$cate->name}} |</span>
+                                                        @endif
+                                                    @endforeach
+                                                    @endif
                                                     </div>                                               
                                                 </div>
                                                 <div class="favorite-count ml-20">

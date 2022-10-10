@@ -26,7 +26,7 @@
                             @foreach($list_goods as $value)
                             <div class="col-6 col-md-3 col-xl-2">
                                 <div class="good-item">
-                                    <a href="{{route('goods_detail',$value->id)}}">
+                                    <a href="{{route('goods_detail',$value->alias)}}">
                                         @if($image = $value->image)
                                         <div class="thumb ratio ratio-1x1 thumb-hover-anim">
                                             <img src="{{$image->getUrl()}}" alt="">

@@ -25,7 +25,7 @@
                         
                         <div class="col-md-6 col-lg-4">
                             <div class="post-item-1">
-                                <a href="{{route('featureDetail',$value->id)}}">
+                                <a href="{{route('featureDetail',$value->alias)}}">
                                     <div class="thumb ratio thumb-hover-anim">
                                         <img src="/uploads/{{$value->file_name}}" alt="">
                                     </div>
@@ -41,7 +41,7 @@
                                         </div>
                                     </div>
                                     <div class="title">
-                                        <a href="{{route('featureDetail',$value->id)}}">
+                                        <a href="{{route('featureDetail',$value->alias)}}">
                                         {{$value->name}}
                                         </a>
                                     </div>

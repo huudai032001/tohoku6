@@ -151,11 +151,15 @@ class GoodsController extends CommonDataController {
 
     protected function updateItem(Request $request, $item)
     {
+        $alias = Str::slug($request->input('name'), "-");
+
         $item->name = $request->input('name');
         $item->intro = $request->input('intro');
         $item->point = $request->input('point');
         $item->author = Auth::user()->id;
         $item->image_id = $request->input('image');
+        $item->alias = $alias;
+
         $item->images_id = $request->input('images');
         $item->save();
     }    

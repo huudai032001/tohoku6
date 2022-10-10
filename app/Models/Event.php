@@ -44,4 +44,8 @@ class Event extends BaseModel
     {
         return \App\Models\Category::whereIn('id', explode(",",$this->category))->get();
     }
+
+    public function categorys(){
+        return \App\Models\Category_By_Posts::where('id_posts', $this->id)->get();
+    }
 }

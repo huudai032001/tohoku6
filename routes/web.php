@@ -38,7 +38,7 @@ Route::middleware(['login'])->group(function ()
 
 //spot
 Route::get('/list-spot', [App\Http\Controllers\Web\HomeController::class, 'list_spot'])->name('list_spot');
-Route::get('/spot-detail/{id}', [App\Http\Controllers\Web\HomeController::class, 'spot_detail'])->name('spot_detail');
+Route::get('/spot-detail/{alias}', [App\Http\Controllers\Web\HomeController::class, 'spot_detail'])->name('spot_detail');
 
 Route::post('/postfindByCategorySpot', [App\Http\Controllers\Web\HandleController::class, 'postfindByCategorySpot'])->name('postfindByCategorySpot');
 Route::get('/spot-edit/{id}', [App\Http\Controllers\Web\HomeController::class, 'spotEdit'])->name('spotEdit');
@@ -63,17 +63,17 @@ Route::post('/spot-preview', [App\Http\Controllers\Web\HandleController::class, 
 
 // event
 Route::get('/list-events', [App\Http\Controllers\Web\HomeController::class, 'list_events'])->name('list_events');
-Route::get('/event-detail/{id}', [App\Http\Controllers\Web\HomeController::class, 'event_detail'])->name('event_detail');
+Route::get('/event-detail/{alias}', [App\Http\Controllers\Web\HomeController::class, 'event_detail'])->name('event_detail');
 
 // feature
 Route::get('/feature', [App\Http\Controllers\Web\HomeController::class, 'feature'])->name('feature');
-Route::get('/feature-detail/{id}', [App\Http\Controllers\Web\HomeController::class, 'featureDetail'])->name('featureDetail');
+Route::get('/feature-detail/{alias}', [App\Http\Controllers\Web\HomeController::class, 'featureDetail'])->name('featureDetail');
 
 // goods
 Route::get('/list-goods', [App\Http\Controllers\Web\HomeController::class, 'list_goods'])->name('list_goods');
-Route::get('/goods-detail/{id}', [App\Http\Controllers\Web\HomeController::class, 'goods_detail'])->name('goods_detail');
-Route::get('/exchange-goods/{id}', [App\Http\Controllers\Web\HomeController::class, 'exchangeGoods'])->name('exchangeGoods');
-Route::post('/exchange-goods/{id}', [App\Http\Controllers\Web\HandleController::class, 'postExchangeGoods'])->name('postExchangeGoods');
+Route::get('/goods-detail/{alias}', [App\Http\Controllers\Web\HomeController::class, 'goods_detail'])->name('goods_detail');
+Route::get('/exchange-goods/{alias}', [App\Http\Controllers\Web\HomeController::class, 'exchangeGoods'])->name('exchangeGoods');
+Route::post('/exchange-goods/{alias}', [App\Http\Controllers\Web\HandleController::class, 'postExchangeGoods'])->name('postExchangeGoods');
 
 Route::get('/good-exchange-confirm', [App\Http\Controllers\Web\HomeController::class, 'goodExchangeConfirm'])->name('goodExchangeConfirm');
 Route::post('/good-exchange-confirm', [App\Http\Controllers\Web\HandleController::class, 'postGoodExchangeConfirm'])->name('postGoodExchangeConfirm');
@@ -133,4 +133,7 @@ Route::post('/load_more_spot',[App\Http\Controllers\Web\HandleController::class,
 Route::post('/load_param_profile',[App\Http\Controllers\Web\HandleController::class, 'loadParamProfile'])->name('loadParamProfile');
 Route::get('/find_by_zip_code',[App\Http\Controllers\Web\HandleController::class, 'findByZipCode'])->name('findByZipCode');
 Route::post('/find_by_location',[App\Http\Controllers\Web\HandleController::class, 'findByLocation'])->name('findByZipCode');
+Route::post('/un_file',[App\Http\Controllers\Web\HandleController::class, 'unFile'])->name('unFile');
+
+Route::post('/feedback',[App\Http\Controllers\Web\HandleController::class, 'feedback'])->name('feedback');
 
