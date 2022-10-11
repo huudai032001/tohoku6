@@ -54,21 +54,29 @@ class HandleController extends Controller
             'address.required'=>'必須項目です',
             'home_address.required'=>'必須項目です',
         ]);
-        $exchange = new ExchangeGoods;
-        $exchange->name = $req->input('name');
-        $exchange->phone = $req->input('phone');
-        $exchange->address = $req->input('address');
-        $exchange->home_address = $req->input('home_address');
-        $exchange->zip_code = $req->input('zip_code');
-        $exchange->furigana = $req->input('furigana');
+        // dd($req->input('point_remaining'));
+        if($req->input('point_remaining') > 0){
 
-        return view('web.good-exchange-confirm')
-        ->with([
-            'name_item'=>$req->name_item,
-            'image'=> $req->image,
-            'point'=> $req->point_remaining,
-            'exchange'=>$exchange
-        ]);
+            $exchange = new ExchangeGoods;
+            $exchange->name = $req->input('name');
+            $exchange->phone = $req->input('phone');
+            $exchange->address = $req->input('address');
+            $exchange->home_address = $req->input('home_address');
+            $exchange->zip_code = $req->input('zip_code');
+            $exchange->furigana = $req->input('furigana');
+
+            return view('web.good-exchange-confirm')
+            ->with([
+                'name_item'=>$req->name_item,
+                'image'=> $req->image,
+                'point'=> $req->point_remaining,
+                'exchange'=>$exchange
+            ]);
+        }else {
+            return redirect()->back()->with('error','あなたのスコアは十分ではありません');
+            
+        }
+
     }
     public function postGoodExchangeConfirm(Request $req){
         $alias = Str::slug($req->input('name'), "-");
@@ -310,12 +318,18 @@ class HandleController extends Controller
 
             ]);
             $birth_day = $req->input('day') ."-". $req->input('month') . "-" . $req->input('year');
-            
+            $file = $req->file('image');
+            $uploadService = new \App\Services\UploadService;
+
             $list_user = Auth::user();
             $list_user->name = $req->input('name');
             $list_user->gender = $req->input('gender');
             $list_user->intro = $req->input('intro');
             // $list_user->email = $req->input('email');
+            // dd($file);
+            if($file != null){
+                $list_user->avatar_image_id = $uploadService->handleUploadFile($file,"")['file_info']['id'];
+            }
             $list_user->location = $req->input('location');
             $list_user->birth_day = $req->input('birth_day');
             $list_user->save();

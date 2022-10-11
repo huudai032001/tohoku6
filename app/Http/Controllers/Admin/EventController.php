@@ -16,6 +16,7 @@ use App\Misc\DataTable;
 use App\Misc\HTML;
 use App\Misc\FlashMsg;
 use App\Misc\Helper;
+use App\Models\Category;
 
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use App\Form;
@@ -184,6 +185,7 @@ class EventController extends CommonDataController {
     protected function updateItem(Request $request, $item)
     {
         $alias = Str::slug($request->input('name'), "-");
+        $arr_cate = $request->input('category');
 
         $item->name = $request->input('name');
         $item->intro = $request->input('intro');
@@ -194,12 +196,17 @@ class EventController extends CommonDataController {
         $item->favorite = 0;
         $item->count_comment = 0;
         $item->author = Auth::user()->id;
-        $item->category = implode(',',$request->input('category'));
+        // $item->category = implode(',',$request->input('category'));
         $item->location = $request->input('location');
         $item->alias = $alias;
 
         $item->save();
 
+        $category = new Category();
+        for($i = 0; $i < count($arr_cate);$i++){
+            $category->name = $arr_cate[$i];
+            $category->save();
+        }
 
         $favorite = new Favorite();
         $favorite->user_id = Auth::user()->id;

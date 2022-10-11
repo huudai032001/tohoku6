@@ -204,7 +204,7 @@
                             @endforeach
                         </div>
                         <div class="d-flex justify-content-center">
-                            <a href="" class="view-more button button-style-2">もっと見る</a>
+                            <a href="{{route('list_spot')}}" class="view-more button button-style-2">もっと見る</a>
                         </div>
                     </div>
                 </section>
@@ -411,7 +411,7 @@
                                 <div class="col-6 col-lg-3">
                                     <div class="post-item-7">
                                         <div class="thumb">                                            
-                                            <a href="{{route('goods_detail',$value->alias)}}">
+                                            <a href="{{route('goods_detail',$goods->alias)}}">
                                             @if($image = $value->image)
                                                 <div class="ratio thumb-image">
                                                     <img src="{{$image->getUrl()}}" alt="">
@@ -421,7 +421,7 @@
                                         </div>
                                         <div class="item-content">
                                             <div class="item-title">
-                                                <a href="{{route('goods_detail',$value->alias)}}">{{$goods->name}}</a>
+                                                <a href="{{route('goods_detail',$goods->alias)}}">{{$goods->name}}</a>
                                             </div>
                                         </div>
                                     </div>

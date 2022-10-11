@@ -27,14 +27,19 @@
             <div id="inner-wrapper">
                 <section class="section-profile-edit">
                     <div class="container">
-                        <form action="{{route('post_edit_profile',$info_user->id)}}" method="post">
+                        <form action="{{route('post_edit_profile')}}" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="_token" value="{{csrf_token()}}">
                             <div class="d-flex justify-content-center">
                                 <div class="avatar">
-                                    <img src="/web-assets/images/profile.svg" alt="">
+                                    @if($image = Auth::user()->image)
+                                    <img src="{{$image->getUrl()}}" alt="" id="file_upload">
+                                    @else
+                                    <img src="/web-assets/images/profile.svg" alt="" id="file_upload">
+                                    @endif  
                                 </div>                            
                             </div>
                             <div class="text-align-center">
+                                <input type="file" accept="image/*" name="image" id="upload_avatar" class="@error('image') is-invalid @enderror">
                                 <span class="text-avatar-change">プロフィール写真を変更</span>
                             </div>
                         
@@ -149,6 +154,7 @@
         <script src="/web-assets/js/components.js"></script>
         <script src="/web-assets/js/main.js"></script>
         <script src="/web-assets/js/tohoku-calendar.js"></script>
+        <script src="/web-assets/js/spot_upload_image.js"></script>
         
     </body>
 

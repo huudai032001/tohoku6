@@ -18,6 +18,7 @@ use App\Misc\FlashMsg;
 use App\Misc\Helper;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use App\Form;
+use App\Models\Category;
 
 use App\Models\Spot;
 use App\Models\Upload;
@@ -191,6 +192,7 @@ class SpotController extends CommonDataController {
 
     protected function updateItem(Request $request, $item)
     {
+        $arr_cate = $request->input('category');
         $alias = Str::slug($request->input('name'), "-");
 
         $item->name = $request->input('name');
@@ -200,19 +202,24 @@ class SpotController extends CommonDataController {
         // $item->category = $request->input('category');
         $item->image_id = $request->input('image');
         $item->images_id = $request->input('images');
-        $item->category = implode(',',$request->input('category'));
+        // $item->category = implode(',',$request->input('category'));
         $item->status = $request->input('status');
         $item->favorite = 0;
         $item->count_comment = 0;
         $item->author = Auth::user()->id;
         $item->alias = $alias;
         $item->save();
+        $category = new Category();
+        for($i = 0; $i < count($arr_cate);$i++){
+            $category->name = $arr_cate[$i];
+            $category->save();
+        }
 
         $noti = new  Notification();
         $noti->posts_id = $item->id;
         $noti->user_id = $item->author;
         $noti->feedback = "承認された投稿";
-        $noti->type_posts = "spots";
+        // $noti->type_posts = "spots";
         $noti->save();
 
         $favorite = new Favorite();

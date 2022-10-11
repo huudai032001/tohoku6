@@ -61,7 +61,6 @@
                                 </ul>
                             </div>
                             @if($image = $user->image)
-                            @dump('a')
                             <div class="avatar flex-auto">
                                 <img src="{{$image->getUrl()}}" alt="" onerror='this.onerror=null;this.src="images/profile.svg"'>
                             </div>
@@ -356,13 +355,15 @@
                 <div class="modal_close">×</div>
                 <div class="modal_title">通知</div>
                 <ul class="user-notification_list custom-scrollbar">
-                    @if($notifi = $user->getNotifi())
-                        @foreach($notifi as $noti)
-                        <li class="d-flex align-items-center">
-                            <div class="date">{{$noti->created_at}}</div>
-                            <div class="flex-fill content">投稿スポットが公開されました</div>
-                        </li>
-                        @endforeach
+                    @if(Auth::check())
+                        @if($notifi = Auth::user()->getNotifi())
+                            @foreach($notifi as $noti)
+                            <li class="d-flex align-items-center">
+                                <div class="date">{{$noti->created_at}}</div>
+                                <div class="flex-fill content">{{$noti->feedback}}</div>
+                            </li>
+                            @endforeach
+                        @endif
                     @endif
                 </ul>
             </div>

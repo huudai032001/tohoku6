@@ -167,7 +167,7 @@
                             @foreach($notifi as $noti)
                             <li class="d-flex align-items-center">
                                 <div class="date">{{$noti->created_at}}</div>
-                                <div class="flex-fill content">投稿スポットが公開されました</div>
+                                <div class="flex-fill content">{{$noti->feedback}}</div>
                             </li>
                             @endforeach
                         @endif
@@ -175,7 +175,6 @@
                 </ul>
             </div>
         </div>
-
 
         <div class="area-select-panel toggle-select-panel d-flex justify-content-lg-center align-items-lg-center">
             <div class="backdrop"></div>

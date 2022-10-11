@@ -121,8 +121,14 @@ class GoodsController extends CommonDataController {
             new Form\Text([
                 'name' => 'point',                
                 'label' => 'Point',
-                'required' => false,
+                'required' => true,
                 'data' => $dataItem->point
+            ]),
+            new Form\Text([
+                'name' => 'location',                
+                'label' => 'Location',
+                'required' => true,
+                'data' => $dataItem->location
             ]),
             new Form\Upload([
                 'name' => 'image',
@@ -159,6 +165,7 @@ class GoodsController extends CommonDataController {
         $item->author = Auth::user()->id;
         $item->image_id = $request->input('image');
         $item->alias = $alias;
+        $item->location = $request->input('location');
 
         $item->images_id = $request->input('images');
         $item->save();

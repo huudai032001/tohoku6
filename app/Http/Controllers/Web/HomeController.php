@@ -39,7 +39,7 @@ class HomeController extends Controller
         }
         $all_event = Event::with('upload')->take(6)->get();
         $list_spot = Spot::take(6)->get();
-        $list_upcoming_spot = Event::where('location','like', '%tohoku%')->take(12)->get();
+        $list_upcoming_spot = Event::whereDate('time_start','>', $today->format('Y-m-d'))->take(12)->get();
         $list_feature = Event::orderBy('created_at','DESC')->take(6)->get();
         $list_goods = Goods::orderBy('created_at','DESC')->take(4)->get();
 
@@ -153,7 +153,7 @@ class HomeController extends Controller
         $user = Auth::user();
         return view('web.good-exchange')
         ->with([
-            'id'=>$id,
+            'alias'=>$alias,
             'goods'=>$goods,
             'user'=> $user
         ]);
@@ -362,6 +362,11 @@ class HomeController extends Controller
     }
     
     public function spotRegister(){
-        return view('web.spot-register');
+        if(Auth::check()){
+            return view('web.spot-register');
+        }
+        else {
+            return redirect("/signin");
+        }
     }
 }

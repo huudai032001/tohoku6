@@ -8,7 +8,9 @@
     @section('content')
 
     <body class="my-profile-page">
-
+        @if(Session::has('error'))
+            <h1 style="text-align: center;">{{Session::get('error')}}</h1>
+        @endif
 
         <div id="wrapper">
             <div id="inner-wrapper">

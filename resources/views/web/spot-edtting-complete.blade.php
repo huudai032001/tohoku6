@@ -32,10 +32,6 @@
             </div> <!-- /inner-wrapper -->
         </div> <!-- /wrapper -->
 
-       
-
-        
-
         <div id="user-notification-modal" class="modal user-notification-modal">
             <div class="modal_backdrop"></div>
             <div class="modal_dialog">
@@ -47,7 +43,7 @@
                             @foreach($notifi as $noti)
                             <li class="d-flex align-items-center">
                                 <div class="date">{{$noti->created_at}}</div>
-                                <div class="flex-fill content">投稿スポットが公開されました</div>
+                                <div class="flex-fill content">{{$noti->feedback}}</div>
                             </li>
                             @endforeach
                         @endif

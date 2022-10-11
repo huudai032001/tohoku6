@@ -15,26 +15,48 @@ class SNSController extends Controller
     }
     public function callbackFromGoogle()
     {
-        
         try {
             $user = Socialite::driver('google')->user();
             // Check Users Email If Already There
+
             $is_user = User::where('email', $user['email'])->first();
             if(!$is_user){
-                $check_googleId = User::where('google_id',$user['id']);
+                $check_googleId = User::where('google_id',$user['id'])->first();
+
                 if($check_googleId){
                     return redirect()->route('index');
                 }
                 else{
+                    $otp = rand(10,100000);
+                    // dd($otp);
                     $saveUser = User::updateOrCreate([
                         'google_id' => $user['id'],
+                        // 'otp'=> $otp,
+
                     ],[
-                        'login_name' => $user['name'],
+                        'name' => $user['name'],
                         'email' => $user['email'],
-                        'password' => Hash::make('12345@tohoku')
+                        'otp' => $otp,
+                        'password' => Hash::make('12345@tohoku'),
                     ]);
+
+                    $otp = rand(10,100000);
+    
+                    // $users = $req->input('email');
+                    $message = [
+                        'type' => 'Create task',
+                        'task' => $otp,
+                        'content' => 'has been created!',
+                    ];
+                    SendEmail::dispatch($message, $user['name'])->delay(now()->addMinute(1));
+                
+                    // dd($saveUser);
                     $get_user = User::where('email', $user['email'])->first();
-                    return redirect('register-edit-profile/'. $get_user['id']);
+                    $get_user->otp = $otp;
+                    $get_user->save();
+                    Auth::loginUsingId($get_user->id);
+                    return view('web.signup-verify')->with('id',$get_user->id); 
+
                 }
 
             }else{
