@@ -126,7 +126,7 @@ function find_by_day(year,month,day){
             else {
                 document.getElementById("next").href = url + "?year="+ year +"&month="+ month +"&day="+ day +"&page=2";
             }
-
+            console.log(html);
             $('.post-row').html(html);
             $('.dom-location').html(dom_sort);
         },

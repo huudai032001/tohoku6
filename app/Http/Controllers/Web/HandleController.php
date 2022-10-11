@@ -474,9 +474,6 @@ class HandleController extends Controller
             if($total_page == 0){
                 $total_page = 1;
             }
-            if(count($list_event) == 0){
-                $list_event = Event::orderBy('time_start','DESC')->take(6)->get();
-            }
             foreach($list_event as $value){
 
                 $arr_image [] = ($value->image)->getUrl(); 
