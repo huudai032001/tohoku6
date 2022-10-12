@@ -37,10 +37,10 @@
         @else
         <div class="nav-bar-right d-flex justify-content-end flex-fill">
             <div class="non-user-menu-buttons d-flex align-items-center">
-                <a href="signin" class="login-button button">
+                <a href="{{route('signin')}}" class="login-button button">
                     ログイン
                 </a>
-                <a href="register" class="register-button button">
+                <a href="{{route('signup')}}" class="register-button button">
                     新規登録
                 </a>
             </div>

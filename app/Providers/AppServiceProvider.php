@@ -59,6 +59,9 @@ class AppServiceProvider extends ServiceProvider
             $option = $segm[1];
             return "<?php (new $class($option))->editMode(); ?>";         
         });
+        Relation::morphMap([
+            'Event' => 'App\Models\Event',
+          ]);
 
     }
 }

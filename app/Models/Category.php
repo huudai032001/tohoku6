@@ -41,6 +41,11 @@ class Category extends BaseModel
         return \App\Models\Upload::whereIn('id', $this->images_id)->get();
     }
 
+    public function getSpot()
+    {
+        return \App\Models\Spot::whereIn('id', $this->id_posts)->get();
+    }
+
     public function user()
     {
         return $this->belongsTo(\App\Models\User::class, 'author');

@@ -19,7 +19,7 @@
                             </div>
                             @if(Auth::check())
                                 @if(Auth::user()->id == $info_spot->author)
-                                    <div class="action-button" data-show-modal="#modal-spot-actions">
+                                    <div class="action-button" data-show-modal="#modal-spot-actions-two" data-id="{{$info_spot->id}}">
                                         <span></span>
                                         <span></span>
                                         <span></span>
@@ -36,16 +36,20 @@
                                 <img src="/web-assets/images/icons/star-yellow.svg" alt="">
                             </div>
                         </div>
-                        <h1 class="spot-title">{{$info_spot->name}}・<span class="text-latin">RISING SUN</span></h1>
+                        <h1 class="spot-title">{{$info_spot->name}}・
+                            <!-- <span class="text-latin">RISING SUN</span> -->
+                        </h1>
                         <div class="location">{{$info_spot->location}}</div>
                         <div class="author">
                             <span class="text-author">投稿者：</span> <span class="author-name">{{$info_spot->user->name}}</span>
                         </div>
                         <div class="d-flex justify-content-between">
                             <div class="tags">
-                            @if($category = $info_spot->getCategory())
+                            @if($category = $info_spot->categoryDetail)
                                 @foreach($category as $cate)
-                                    <span class="tag">{{$cate->name}}</span>
+                                    @if($ca = $cate->category)
+                                    <span class="tag"> {{$ca->name}}|</span>
+                                    @endif
                                 @endforeach
                             @endif
                             </div>
@@ -197,10 +201,10 @@
                                         <div class="icon-star">
                                             <img src="/web-assets/images/icons/star-gray.svg" alt="">
                                         </div>
-                                        <a href="spot-detail.html">
+                                        <a href="{{route('spot_detail',$value->alias)}}">
                                             <div class="ratio thumb-image">
                                                 @if($image = $value->image)
-                                                <img src="{{$image->getUrl()}}" alt="">
+                                                <img src="{{$image->getUrl()}}" alt="" class="image">
                                                 @endif
                                             </div>
                                         </a>
@@ -214,8 +218,8 @@
                                                     <img src="/web-assets/images/area/akita.svg" alt="">
                                                 </div>
                                             </div>
-                                            <a href="spot-detail.html">
-                                                <div class="item-title">{{$value->name}} .<span class="text-latin">RISING SUN</span></div>
+                                            <a href="{{route('spot_detail',$value->alias)}}">
+                                                <div class="item-title">{{$value->name}} .</div>
                                             </a>
                                             <div class="item-desc">
                                             {{$value->intro}}
@@ -223,9 +227,11 @@
                                             <div class="d-flex align-items-center">
                                                 <div class="d-flex align-items-center"> 
                                                     <div class="tags">
-                                                        @if($category = $value->getCategory())
+                                                        @if($category = $value->categoryDetail)
                                                             @foreach($category as $cate)
-                                                                <span class="tag">{{$cate->name}} |</span>
+                                                                @if($ca = $cate->category)
+                                                                <span class="tag"> {{$ca->name}}|</span>
+                                                                @endif
                                                             @endforeach
                                                         @endif
                                                     </div>                                               
@@ -260,7 +266,7 @@
                                         <a href="{{route('spot_detail',$value->alias)}}">
                                             <div class="ratio thumb-image">
                                                 @if($image = $value->image)
-                                                <img src="{{$image->getUrl()}}" alt="">
+                                                <img src="{{$image->getUrl()}}" alt="" class="image">
                                                 @endif
                                             </div>
                                         </a>
@@ -275,7 +281,7 @@
                                                 </div>
                                             </div>
                                             <a href="{{route('spot_detail',$value->alias)}}">
-                                                <div class="item-title">{{$value->name}}・<span class="text-latin">RISING SUN</span></div>
+                                                <div class="item-title">{{$value->name}}・</div>
                                             </a>
                                             <div class="item-desc">
                                             {{$value->address}}
@@ -283,9 +289,13 @@
                                             <div class="d-flex align-items-center">
                                                 <div class="d-flex align-items-center"> 
                                                     <div class="tags">
-                                                        <span class="tag">アウトドア</span>
-                                                        <span class="sep">|</span>
-                                                        <span class="tag">いいね</span>
+                                                    @if($category = $value->categoryDetail)
+                                                        @foreach($category as $cate)
+                                                            @if($ca = $cate->category)
+                                                            <span class="tag"> {{$ca->name}}|</span>
+                                                            @endif
+                                                        @endforeach
+                                                    @endif
                                                     </div>                                               
                                                 </div>
                                                 <div class="favorite-count ml-20">
@@ -320,8 +330,25 @@
             </div>
         </div>
 
+        <div id="modal-spot-actions-two" class="modal">
+            <div class="modal_backdrop"></div>
+            <div class="modal_dialog">
+                <div class="modal_close">×</div>
+                <div class="modal_title">このスポットについて</div>
+                <ul class="modal_menu">
+                    <li>
+                        <a href="{{route('spotEdit',$info_spot->id)}}">編集する</a>
+                    </li>
+                    <li>
+                        <a data-show-modal="#modal-report-two">事務局に報告する</a>
+                    </li>                    
+                </ul>
+            </div>
+        </div>
+
         <div id="modal-review-actions" class="modal modal_comment">
             <input type="hidden" id="id_comment" value="">
+            <input type="hidden" id="id_posts" value="">
             <div class="modal_backdrop"></div>
             <div class="modal_dialog">
                 <div class="modal_close">×</div>
@@ -348,10 +375,30 @@
                         ガイドライン違反などお気付きの点があればお知らせください。 報告いただいた内容については、運営側で随時確認を行います。 返信は致しませんのでご了承ください。
                     </div>
                     <div class="form-layout-1">
-                        <textarea class="textarea report-content" rows="6" id="feedback"></textarea>
-                        <div class="error" id="error"></div>
+                        <textarea class="textarea report-content" rows="6" id="report"></textarea>
+                        <div class="error" id="error_report_comment"></div>
                         <div class="text-align-center" style="margin-top: 15px;">
-                            <button class="button button-style-1 button-form-submit" onclick="feedback()">送信</button>
+                            <button class="button button-style-1 button-form-submit" onclick="report()">送信</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="modal-report-two" class="modal modal-report">
+            <div class="modal_backdrop"></div>            
+            <div class="modal_dialog">
+                <div class="modal_close">×</div>
+                <div class="modal_title">事務局に報告する</div>
+                <div class="modal-report_form">
+                    <div class="note">
+                        ガイドライン違反などお気付きの点があればお知らせください。 報告いただいた内容については、運営側で随時確認を行います。 返信は致しませんのでご了承ください。
+                    </div>
+                    <div class="form-layout-1">
+                        <textarea class="textarea report-content" rows="6" id="report_two"></textarea>
+                        <div class="error" id="error_report_spot"></div>
+                        <div class="text-align-center" style="margin-top: 15px;">
+                            <button class="button button-style-1 button-form-submit" onclick="report_two()">送信</button>
                         </div>
                     </div>
                 </div>
@@ -402,7 +449,7 @@
         <div id="ajax-loading-overlay" class="ajax-loading-overlay">
             <div class="ajax-loading_container">
                 <div class="loading-icon"></div>
-                <div class="result-message"></div>
+                <div class="result-message" id="result-message"></div>
             </div>            
         </div>
 

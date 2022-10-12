@@ -37,15 +37,19 @@ Route::middleware(['login'])->group(function ()
 
 
 //spot
-Route::get('/list-spot', [App\Http\Controllers\Web\HomeController::class, 'list_spot'])->name('list_spot');
-Route::get('/spot-detail/{alias}', [App\Http\Controllers\Web\HomeController::class, 'spot_detail'])->name('spot_detail');
+Route::get('/list-spot', [App\Http\Controllers\Web\SpotController::class, 'list_spot'])->name('list_spot');
+Route::get('/spot-detail/{alias}', [App\Http\Controllers\Web\SpotController::class, 'spot_detail'])->name('spot_detail');
 
 Route::post('/postfindByCategorySpot', [App\Http\Controllers\Web\HandleController::class, 'postfindByCategorySpot'])->name('postfindByCategorySpot');
-Route::get('/spot-edit/{id}', [App\Http\Controllers\Web\HomeController::class, 'spotEdit'])->name('spotEdit');
-Route::post('/spot-edit/{id}', [App\Http\Controllers\Web\HandleController::class, 'postSpotEdit'])->name('postSpotEdit');
+Route::middleware(['login'])->group(function ()
+{
+    Route::get('/spot-edit/{id}', [App\Http\Controllers\Web\SpotController::class, 'spotEdit'])->name('spotEdit');
+    Route::post('/spot-edit/{id}', [App\Http\Controllers\Web\HandleController::class, 'postSpotEdit'])->name('postSpotEdit');
 
-Route::get('/spot-register', [App\Http\Controllers\Web\HomeController::class, 'spotRegister'])->name('spotRegister');
-Route::post('/spot-register', [App\Http\Controllers\Web\HandleController::class, 'postSpotRegister'])->name('postSpotRegister');
+    Route::get('/spot-register', [App\Http\Controllers\Web\SpotController::class, 'spotRegister'])->name('spotRegister');
+    Route::post('/spot-register', [App\Http\Controllers\Web\HandleController::class, 'postSpotRegister'])->name('postSpotRegister');
+});
+
 
 //comment
 Route::post('/spot-comment', [App\Http\Controllers\Web\HandleController::class, 'spotComment'])->name('spotComment');
@@ -62,8 +66,8 @@ Route::post('/spot-preview', [App\Http\Controllers\Web\HandleController::class, 
 
 
 // event
-Route::get('/list-events', [App\Http\Controllers\Web\HomeController::class, 'list_events'])->name('list_events');
-Route::get('/event-detail/{alias}', [App\Http\Controllers\Web\HomeController::class, 'event_detail'])->name('event_detail');
+Route::get('/list-events', [App\Http\Controllers\Web\EventController::class, 'list_events'])->name('list_events');
+Route::get('/event-detail/{alias}', [App\Http\Controllers\Web\EventController::class, 'event_detail'])->name('event_detail');
 
 // feature
 Route::get('/feature', [App\Http\Controllers\Web\HomeController::class, 'feature'])->name('feature');
@@ -135,5 +139,7 @@ Route::get('/find_by_zip_code',[App\Http\Controllers\Web\HandleController::class
 Route::post('/find_by_location',[App\Http\Controllers\Web\HandleController::class, 'findByLocation'])->name('findByZipCode');
 Route::post('/un_file',[App\Http\Controllers\Web\HandleController::class, 'unFile'])->name('unFile');
 
-Route::post('/feedback',[App\Http\Controllers\Web\HandleController::class, 'feedback'])->name('feedback');
+Route::post('/report-comment',[App\Http\Controllers\Web\HandleController::class, 'reportComment'])->name('reportComment');
+Route::post('/report-spot',[App\Http\Controllers\Web\HandleController::class, 'reportSpot'])->name('reportSpot');
+
 

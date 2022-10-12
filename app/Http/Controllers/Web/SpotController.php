@@ -11,50 +11,67 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Spot;
-use App\Models\Comment;
+use App\Models\Event;
+use App\Models\Upload;
 use App\Models\Favorite;
-use App\Models\User;
+use App\Models\Comment;
+use App\Models\Notification;
 use App\Models\Category;
 
-// use App\Jobs\SendEmail;
-// use App\Jobs\SendEmailResetPass;
+use App\Models\Goods;
+use App\Models\User;
+use App\Jobs\SendEmail;
+use App\Jobs\SendEmailResetPass;
 
 class SpotController extends Controller
 {
-    public function list_spot(){
-        if($_GET){
-            $search = $_GET['search'];
-            $list_spot = Spot::where('spots.name', 'like', '%' . $search . '%')
-            // ->join('uploads', 'uploads.id', '=', 'spots.image_id')
-            // ->select(['spots.*','uploads.file_name'])
-            ->orderBy('created_at','DESC')
-            ->take(6)->get();
-
+    public function list_spot(Request $req){
+        if($req->input('search')){
+            $search = $req->input('search');
+            $sort = $req->input('sort');
+            if($sort == 1){
+                $list_spot = Spot::where('spots.name', 'like', '%' . $search . '%')
+                ->where('status','active')
+                ->orderBy('created_at','DESC')
+                ->take(6)->get();
+            }else if($sort == 2){
+                $list_spot = Spot::where('spots.name', 'like', '%' . $search . '%')
+                ->where('status','active')
+                ->orderBy('favorite','DESC')
+                ->take(6)->get();
+            }
+            else if($sort ==3){
+                $list_spot = Spot::where('spots.name', 'like', '%' . $search . '%')
+                ->where('status','active')
+                ->orderBy('count_comment','DESC')
+                ->take(6)->get();
+            }else {
+                $list_spot = Spot::where('spots.name', 'like', '%' . $search . '%')
+                ->where('status','active')
+                ->orderBy('created_at','DESC')
+                ->take(6)->get();
+            }
         }else {
-            $list_spot = Spot::with('upload')->orderBy('created_at','DESC')->take(6)->get();
-
+            $list_spot = Spot::with('upload')->where('status','active')->orderBy('created_at','DESC')->take(6)->get();
         }
         $category = Category::all();
         // dd($list_spot);
-        return view('web.spots',compact('list_spot'));
+        return view('web.spots',compact('list_spot','category'));
     }
 
-    public function spot_detail($id){
+    public function spot_detail($alias){
         $list_spot = Spot::take(6)->get();
-        $info_spot = Spot::where('id',$id)->first(); 
-        // dd($list_spot);
-        // $list_comment = Spot::with('comment')->first();
-        $list_comment = Comment::where('spot_id',$id)->orderBy('created_at','DESC')->limit(5)->get();
+        $info_spot = Spot::where('alias',$alias)->first();
+        // dd($info_spot);
+        if ( empty ($info_spot) ) {
+            abort (404);
+        }
+        $recently = Spot::where('location',$info_spot->location)->take(6)->get();
+        $list_comment = Comment::where('spot_id',$info_spot->id)->orderBy('created_at','DESC')->limit(5)->get();
 
-        if(Auth::check()){
-            $user = Auth::user();
-        }
-        else {
-            $user = [];
-        }
-        return view('web.spot-detail',['info_spot'=>$info_spot,'list_spot'=>$list_spot,'user'=>$user,'list_comment'=>$list_comment]);
+
+        return view('web.spot-detail',['info_spot'=>$info_spot,'list_spot'=>$list_spot,'list_comment'=>$list_comment,'recently'=>$recently]);
     }
-
     public function spotRegister(){
         return view('web.spot-register');
     }
@@ -167,15 +184,11 @@ class SpotController extends Controller
 
     public function spotEdit($id){
         $info_spot = Spot::findorfail($id);
-        if(Auth::check()){
             if($info_spot->author == Auth::user()->id){
                 return view('web.spot-edit',compact('info_spot','id'));
             }else {
                 return abort(404);
             }
-        }else {
-            return abort(404);
-        }
 
     }
 

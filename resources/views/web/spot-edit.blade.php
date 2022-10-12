@@ -1,5 +1,4 @@
 @extends('web.layouts.default')
-@if(Auth::check())
 
     @section('link_css')
 
@@ -9,7 +8,9 @@
     @section('content')
 
     <body>
-
+        @if(Session::has('error'))
+            <h1 style="text-align: center; color:red;">{{Session::get('error')}}</h1>
+        @endif
 
         <div id="wrapper">
             <div id="inner-wrapper">
@@ -103,36 +104,43 @@
                                                 ];
 
                                                 $category = explode(',',$info_spot->category);
+                                                $count = 1;
+                                               
                                             ?>
                                         @if ($images = $info_spot->getImages())
-
                                             @foreach ($images as $image)
                                             <div class="col-4">
                                                 <label class="custom-input-image">
                                                     <div class="preview-image ratio">
-                                                        <img src="{{$image->getUrl()}}" alt="" id="myImg0{{$image->id}}" name="test">
-                                                        <input type="hidden" name="sub_image_0{{$image->id}}_hide" id="" value="{{$image->id}}">
+                                                        <img src="{{$image->getUrl()}}" alt="" id="myImg0{{$count}}" name="test">
+                                                        <input type="hidden" name="sub_image_0{{$count}}_hide" id="" value="{{$image->id}}">
                                                     </div>
-                                                    <input type="file" accept="image/*" name="sub_image_0{{$image->id}}" id="sub_image_0{{$image->id}}">
+                                                    <input type="file" accept="image/*" name="sub_image_0{{$count}}" id="sub_image_0{{$count}}">
                                                 </label>
                                             </div>
+                                            <?php
+                                                $count++;
+                                            ?>
                                             @endforeach
+                                            @for($i = 0; $i < (3 - count($images));$i++)
+                                            <div class="col-4">
+                                                <label class="custom-input-image">
+                                                    <div class="preview-image ratio">
+                                                        <img src="" alt="" id="myImg0{{$count}}" name="test">
+                                                        <input type="hidden" name="sub_image_0{{$i}}_hide" id="" value="{{$image->id}}">
+                                                    </div>
+                                                    <input type="file" accept="image/*" name="sub_image_0{{$count}}" id="sub_image_0{{$count}}">
+                                                </label>
+                                            </div>
+                                            <?php
+                                                $count++;
+                                            ?>
+
+                                            @endfor
                                         @endif
                                         </div>
                                     </div>
                                     @error('image')
-                                    <div class="form-error-msg">{{ $message }}</div>
-                                    @enderror
-
-                                    @error('sub_image_01')
-                                    <div class="form-error-msg">{{ $message }}</div>
-                                    @enderror
-
-                                    @error('sub_image_02')
-                                    <div class="form-error-msg">{{ $message }}</div>
-                                    @enderror
-
-                                    @error('sub_image_03')
                                     <div class="form-error-msg">{{ $message }}</div>
                                     @enderror
                                 </div>
@@ -142,12 +150,16 @@
                                     <div class="form-control-wrap">
                                         <div class="row" style="--col-space-x: 30px; --col-space-y: 26px;">
                                         <?php
+                                                $categoty_spot = $info_spot->getCategory();
                                             for($s=0;$s<count($arr_category);$s++)
                                             {
+                                                foreach($categoty_spot as $ca){
+                                                    // var_dump($arr_category[$s]);
+                                                }
                                         ?>
                                             <div class="col-auto">
                                                 <label class="custom-radio">
-                                                    <input type="checkbox" name="category[]" value="{{$s+1}}" <?php for($u = 0;$u< count($category);$u++){ if($category[$u] == $s+1){ echo 'checked'; } } ?>> <span class="checkmark"></span> {{$arr_category[$s]}}
+                                                    <input type="checkbox" name="category[]" value="{{$s+1}}" <?php foreach($categoty_spot as $ca){ if($s+1 == $ca->id){ echo 'checked'; } } ?>> <span class="checkmark"></span> {{$arr_category[$s]}}
                                                 </label>
                                             </div>
                                             <?php
@@ -155,7 +167,7 @@
                                             ?>
                                             <div class="col-4 col-sm-3">
                                                 <label class="custom-radio">
-                                                    <input type="checkbox" name="category[]" value="7" <?php for($u = 0;$u< count($category);$u++){ if($category[$u] == 7){ echo 'checked'; } } ?>> <span class="checkmark"></span> SNS映え
+                                                    <input type="checkbox" name="category[]" value="7" <?php foreach($categoty_spot as $ca){ if($s+1 == $ca->id){ echo 'checked'; } } ?>> <span class="checkmark"></span> SNS映え
                                                 </label>
                                             </div>                                            
                                         </div>
@@ -217,5 +229,3 @@
         <script src="/web-assets/js/spot_upload_image.js"></script>        
     </body>
     @endsection
-
-@endif

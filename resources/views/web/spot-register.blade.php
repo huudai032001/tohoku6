@@ -1,6 +1,5 @@
 @extends('web.layouts.default')
 
-@if(Auth::check())   
     @section('link_css')
         <link rel="stylesheet" href="/web-assets/css/spot-editing.css">
     @endsection
@@ -9,7 +8,9 @@
 
     <body>
 
-
+        @if(Session::has('error'))
+            <h1 style="text-align: center; color:red;">{{Session::get('error')}}</h1>
+        @endif
         <div id="wrapper">
             <div id="inner-wrapper">
 
@@ -224,5 +225,3 @@
     </body>
 
     @endsection
-
-@endif

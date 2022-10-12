@@ -103,7 +103,7 @@
                                                     }
                                                 ?>
 
-                                                <div class="item-title">{{$value->name}} .<span class="text-latin">RISING SUN</span></div>
+                                                <div class="item-title">{{$string}} .</div>
                                             </a>
                                             <div class="counters d-flex align-items-center justify-content-end justify-content-lg-start">
                                                 <div class="comment-count">

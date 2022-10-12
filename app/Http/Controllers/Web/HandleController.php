@@ -14,13 +14,15 @@ use App\Models\Spot;
 use App\Models\Event;
 use App\Models\Upload;
 use App\Models\Favorite;
-use App\Models\Category_By_Posts;
+use App\Models\Category_spot;
 use App\Models\Comment;
 use App\Models\ExchangeGoods;
 use App\Models\ZipCode;
 use Illuminate\Support\Str;
 use App\Models\Goods;
-use App\Models\Feedback;
+use App\Models\Report_comment;
+use App\Models\Report_spot;
+
 use App\Models\Notification;
 
 use App\Models\User;
@@ -40,17 +42,13 @@ class HandleController extends Controller
         ],[
             'name.required'=>'必須項目です',
             'name.max'=>'100文字以上入力しないでください', 
-
             'furigana.required'=>'必須項目です',
             'furigana.max'=>'100文字以上入力しないでください',
-
             'phone.required'=>'必須項目です',
             'phone.min'=>'パスワードは半角英数字を含む10文字以上を設定してください',
             'phone.max'=>'20文字以上入力しないでください',
-
             'zip_code.required'=>'必須項目です',
             'zip_code.min'=>'パスワードは半角英数字を含む10文字以上を設定してください',
-
             'address.required'=>'必須項目です',
             'home_address.required'=>'必須項目です',
         ]);
@@ -119,10 +117,6 @@ class HandleController extends Controller
             'name'=>'required|min:6|max:50',
             'email'=>'required',
             'location'=>'required',
-            'sns'=>'required',
-            // 'image'=>'required',
-            // 'tiktok'=>'required',
-            // 'instagram'=>'required',
             'birth_day'=>'required',
             'intro'=>'required',
 
@@ -131,14 +125,8 @@ class HandleController extends Controller
             'name.required'=>'必須項目です',
             'name.min'=>'パスワードは半角英数字を含む6文字以上を設定してください',
             'name.max'=>'50文字以上入力しないでください',   
-            // 'image.required'=>'必須項目です',
-            
             'email.required'=>'必須項目です',
             'location.required'=>'必須項目です',
-            'sns.required'=>'必須項目です',
-            // 'twitter.required'=>'必須項目です',
-            // 'tiktok.required'=>'必須項目です',
-            // 'instagram.required'=>'必須項目です',
             'birth_day.required'=>'必須項目です',
             'intro.required'=>'必須項目です',
 
@@ -146,7 +134,6 @@ class HandleController extends Controller
         $uploadService = new \App\Services\UploadService;
 
         $file = $req->file('image');
-        // dd($req->file('image'));
         $user = Auth::user();
         $user->name = $req->input('name');
         $user->email = $req->input('email');
@@ -174,46 +161,54 @@ class HandleController extends Controller
     }
     //favourite
 
-    public function favourite(){
-        $id_posts = $_POST['id_posts'];
-        $type_posts = $_POST['type_posts'];
-        $user_id = $_POST['user_id'];
+    public function favourite(Request $req){
+        $id_posts = $req->input('id_posts');
+        $type_posts = $req->input('type_posts');
+        $user_id = $req->input('user_id');
 
         $favorite = Favorite::where(['posts_id'=>$id_posts,'type_posts'=>$type_posts])->first();
-        // var_dump($id_posts,$type_posts);
-        // die;
         $array_user = explode(",",$favorite->user_id);
-
+        // dd(in_array($user_id, $array_user));
         if (in_array($user_id, $array_user)) {
             echo json_encode(['res'=>false]);
         }
         else {
-            if($favorite->user_id != null){
-                $favorite->user_id = $favorite->user_id ."," . $user_id;
+            try {
+                if($favorite->user_id != null){
+                    
+                    $favorite->user_id = $favorite->user_id ."," . $user_id;
+                    // $favorite->user_id = array_pu
+                }
+                else {
+                    $arr_user [] = $user_id;
+                    // $favorite->user_id = $arr_user;
+                    $favorite->user_id = $user_id;
+    
+                }
+                $favorite->save();
+                if($type_posts == 1){
+                    $posts = Spot::findorfail($id_posts);
+                    $posts->favorite = $posts->favorite + 1;
+                    $posts->save();
+                }  
+                else {
+                    $posts = Event::findorfail($id_posts);
+                    $posts->favorite = $posts->favorite + 1;
+                    $posts->save();
+                }
+    
+                // dd($posts->getName());
+                $noti = new Notification();
+                $noti->user_id = $_POST['user_id'];
+                $noti->posts_id = $id_posts;
+                $noti->feedback = Auth::user()->name . "が  " . $posts->name ."についての感情を表した";
+                $noti->save();
+    
+                echo json_encode(['res'=>true ,'count'=>$posts->favorite]);
+            } catch (\Throwable $th) {
+                //throw $th;\
+                echo \json_encode(['res'=>false]);
             }
-            else {
-                $favorite->user_id = $user_id;
-
-            }
-            $favorite->save();
-            if($type_posts == 1){
-                $posts = Spot::findorfail($id_posts);
-                $posts->favorite = $posts->favorite + 1;
-                $posts->save();
-            }  
-            else {
-                $posts = Event::findorfail($id_posts);
-                $posts->favorite = $posts->favorite + 1;
-                $posts->save();
-            }
-
-            $noti = new Notification();
-            $noti->user_id = $_POST['user_id'];
-            $noti->posts_id = $id_posts;
-            $noti->feedback = Auth::user()->name . "表現された感情";
-            $noti->save();
-
-            echo json_encode(['res'=>true ,'count'=>$posts->favorite]);
         }
     }
     // login
@@ -573,88 +568,54 @@ class HandleController extends Controller
     
             ],
             [
-                'image.required'=>'必須項目です',
-                'sub_image_01.required'=>'必須項目です',
-                'sub_image_02.required'=>'必須項目です',
-                'sub_image_03.required'=>'必須項目です',
                 'location.required'=>'必須項目です',
                 'name.required'=>'必須項目です',
                 'intro.required'=>'必須項目です',
                 'category.required'=>'必須項目です',
     
             ]);
+            $alias = Str::slug($req->input('name'), "-");
+
+            $check_name = Spot::where('alias',$alias)->where('author','!=',Auth::user()->id)->first();
+            if($check_name){
+                return redirect()->back()->with('error','タイトルは既に存在します');
+            }
+            
             $file = $req->file('image');
             $sub_image_01 = $req->file('sub_image_01');
             $sub_image_02 = $req->file('sub_image_02');
             $sub_image_03 = $req->file('sub_image_03');
             $uploadService = new \App\Services\UploadService;
     
-            $sub_01_hide = $req->input('sub_image_01_hide');
-            $sub_02_hide = $req->input('sub_image_02_hide');
-            $sub_03_hide = $req->input('sub_image_03_hide');
-    
-    
-            
-            if($sub_image_01 == null && $sub_image_02 != null && $sub_image_03 != null){
-                $images_02 =  $uploadService->handleUploadFile($sub_image_02,'')['file_info']['id'];
-                $images_03 =  $uploadService->handleUploadFile($sub_image_03,'')['file_info']['id'];
-                $sub_img = "$sub_01_hide,$images_02,$images_03";
-            }
-            elseif($sub_image_01 == null && $sub_image_02 == null && $sub_image_03 != null){
-                $images_03 =  $uploadService->handleUploadFile($sub_image_03,'')['file_info']['id'];
-                $sub_img = "$sub_01_hide,$sub_02_hide,$images_03";
-            }
-            elseif($sub_image_01 == null && $sub_image_02 == null && $sub_image_03 == null){
-                $sub_img = "$sub_01_hide,$sub_02_hide,$sub_03_hide";
-            }
-            elseif($sub_image_01 == null && $sub_image_02 != null && $sub_image_03 == null){
-                $images_02 =  $uploadService->handleUploadFile($sub_image_02,'')['file_info']['id'];
-                $sub_img = "$sub_01_hide,$images_02,$sub_03_hide";
-            }
-            elseif($sub_image_01 != null && $sub_image_02 == null && $sub_image_03 != null){
-                $images_03 =  $uploadService->handleUploadFile($sub_image_03,'')['file_info']['id'];
-                $sub_img = "$images_01,$sub_02_hide,$images_03";
-            }
-            elseif($sub_image_01 != null && $sub_image_02 == null && $sub_image_03 == null){
-                $images_01 =  $uploadService->handleUploadFile($sub_image_01,'')['file_info']['id'];
-                $sub_img = "$images_01,$sub_02_hide,$sub_03_hide";
-            }
-            elseif($sub_image_01 != null && $sub_image_02 != null && $sub_image_03 == null){
-                $images_01 =  $uploadService->handleUploadFile($sub_image_01,'')['file_info']['id'];
-                $images_02 =  $uploadService->handleUploadFile($sub_image_02,'')['file_info']['id'];
-                $sub_img = "$images_01,$images_02,$sub_03_hide";
-            }
-            else {
-                $images_01 =  $uploadService->handleUploadFile($sub_image_01,'')['file_info']['id'];
-                $images_02 =  $uploadService->handleUploadFile($sub_image_02,'')['file_info']['id'];
-                $images_03 =  $uploadService->handleUploadFile($sub_image_03,'')['file_info']['id'];
-                $sub_img = "$images_01,$images_02,$images_03";
-            }
-    
             $spot = Spot::findorfail($id);
             $spot->location = $req->input('location');
             $spot->name = $req->input('name');
             $spot->intro = $req->input('intro');
+            $arr_images = $spot->images_id;
+            for($u = 1;$u<=3;$u++){
+
+                if($req->file('sub_image_0'. $u) != null){
+                    $update_img = $uploadService->handleUploadFile($req->file('sub_image_0'. $u),'')['file_info']['id'];
+                    array_push($arr_images, "$update_img");
+                }
+            }
             if($file == null){
                 $spot->image_id = $req->input('image_hide');
             }
             else {
                 $spot->image_id = $uploadService->handleUploadFile($file,"")['file_info']['id'];
             }
-            $spot->sub_image = $sub_img;
-    
-            $spot->category = implode(",",$req->input('category'));
+            $spot->images_id = $arr_images;
+
+            $spot->category = $req->input('category');
             return view('web./spot-preview',['spot'=> $spot]);
     
         }
 
         public function postSpotRegister(Request $req){
+            
             $this->validate($req,[
                 'image'=>'required',
-                // 'sub_image_01'=>'required',
-                // 'sub_image_02'=>'required',
-                // 'sub_image_03'=>'required',
-    
                 'location'=>'required',
                 'name'=>'required',
                 'intro'=>'required',
@@ -663,72 +624,33 @@ class HandleController extends Controller
             ],
             [
                 'image.required'=>'必須項目です',
-                // 'sub_image_01.required'=>'必須項目です',
-                // 'sub_image_02.required'=>'必須項目です',
-                // 'sub_image_03.required'=>'必須項目です',
                 'location.required'=>'必須項目です',
                 'name.required'=>'必須項目です',
                 'intro.required'=>'必須項目です',
                 'category.required'=>'必須項目です',
     
             ]);
-    
+            $alias = Str::slug($req->input('name'), "-");
+
+            $check_name = Spot::where('name',$req->input('name'))->first();
+            if($check_name){
+                return redirect()->back()->with('error','タイトルは既に存在します');
+            }
             $file = $req->file('image');
-            $sub_image_01 = $req->file('sub_image_01');
-            $sub_image_02 = $req->file('sub_image_02');
-            $sub_image_03 = $req->file('sub_image_03');
+
             $uploadService = new \App\Services\UploadService;
-            
-            if($sub_image_01 == null && $sub_image_02 != null && $sub_image_03 != null){
-                $images_02 =  $uploadService->handleUploadFile($sub_image_02,'')['file_info']['id'];
-                $images_03 =  $uploadService->handleUploadFile($sub_image_03,'')['file_info']['id'];
-                $sub_img = "$images_02,$images_03";
-            }
-            else if($sub_image_01 != null && $sub_image_02 == null && $sub_image_03 != null){
-                $images_01 =  $uploadService->handleUploadFile($sub_image_01,'')['file_info']['id'];
-                $images_03 =  $uploadService->handleUploadFile($sub_image_03,'')['file_info']['id'];
-                $sub_img = "$images_01,$images_03";
-
-            }
-            else if($sub_image_01 != null && $sub_image_02 != null && $sub_image_03 == null){
-                $images_01 =  $uploadService->handleUploadFile($sub_image_01,'')['file_info']['id'];
-                $images_02 =  $uploadService->handleUploadFile($sub_image_02,'')['file_info']['id'];
-                $sub_img = "$images_01,$images_02";
-
-            }
-            else if($sub_image_01 == null && $sub_image_02 == null && $sub_image_03 != null){
-                $images_03 =  $uploadService->handleUploadFile($sub_image_03,'')['file_info']['id'];
-                $sub_img = "$images_03";
-            }
-            else if($sub_image_01 == null && $sub_image_02 != null && $sub_image_03 == null){
-                $images_02 =  $uploadService->handleUploadFile($sub_image_02,'')['file_info']['id'];
-                $sub_img = "$images_02";
-            }
-            else if($sub_image_01 != null && $sub_image_02 == null && $sub_image_03 == null){
-                $images_01 =  $uploadService->handleUploadFile($sub_image_01,'')['file_info']['id'];
-                $sub_img = "$images_01";
-            }
-            else if($sub_image_01 != null && $sub_image_02 != null && $sub_image_03 != null){
-                $images_01 =  $uploadService->handleUploadFile($sub_image_01,'')['file_info']['id'];
-                $images_02 =  $uploadService->handleUploadFile($sub_image_02,'')['file_info']['id'];
-                $images_03 =  $uploadService->handleUploadFile($sub_image_03,'')['file_info']['id'];
-                $sub_img = "$images_01,$images_02,$images_03";
-            }
-            else {
-                $sub_img = "";
+            for($u = 1;$u<3;$u++){
+                if($req->file('sub_image_0'. $u)){
+                    $sub_img [] = $uploadService->handleUploadFile($req->file('sub_image_0'. $u),'')['file_info']['id'];
+                }
             }
             $spot = new Spot();
             $spot->location = $req->input('location');
             $spot->name = $req->input('name');
             $spot->intro = $req->input('intro');
             $spot->image_id = $uploadService->handleUploadFile($file,"")['file_info']['id'];
-            $spot->sub_image = $sub_img;
+            $spot->images_id = $sub_img;
             $spot->category = $req->input('category');
-            // $spot->save();
-            // $spot->category = implode(",",$req->input('category'));
-    
-            // dd($spot->sub_image);
-    
             return view('web/spot-preview',['spot'=> $spot]);
         }
 
@@ -746,7 +668,7 @@ class HandleController extends Controller
             $comment->name_user = $req->input('name_user');
             $comment->save();
     
-            $spot = Spot::where('id',$req->input('posts_id') )->first();
+            $spot = Spot::findorfail($req->input('posts_id'));
             $spot->count_comment = $spot->count_comment + 1;
             $spot->save();
 
@@ -766,81 +688,49 @@ class HandleController extends Controller
         }
 
         public function PostSpotPreview(Request $req){
-            $alias = Str::slug("ベジタリアンイベント", "-");
-            // $name = $req->input('name');
-            // dd(Str::slug($name, "-"));
-        
+
+            $alias = Str::slug($req->input('name'), "-");
             if($req->input('sub_image') == ""){
                 $example = array("");
-
             }
             else {
-                $arr = explode(",",$req->input('sub_image'));
-                $count = count($arr);
-                if($count == 3){
-                    $example = array("$arr[0]","$arr[1]","$arr[2]");
-
-                }else if($count == 2){
-                    $example = array("$arr[0]","$arr[1]");
-
-                }else {
-                    $example = array("$arr[0]");
-                }
+                $example = explode(",",$req->input('sub_image'));
             }
-            // dd($req->input('category'));
-            $list_cate = explode(",",$req->input('category'));
 
+            $list_cate = explode(",",$req->input('category'));
             $exampleEncoded = json_encode($example);
             $user = Auth::user();
-            if($req->input('id') == null){
-                $spot = new Spot();
-                $spot->location = $req->input('location');
-                $spot->name = $req->input('name');
-                $spot->intro = $req->input('intro');
-                $spot->image_id = $req->input('image');
-                $spot->images_id = $example;
-                $spot->favorite = 0;
-                $spot->count_comment = 0;
-                $spot->address = $req->input('location');
-                $spot->author = $user->id;
-                $spot->status = 'disabled';
-                $spot->alias = $alias;
-                $spot->category = $req->input('category');
-                $spot->save();
-    
-                $favorite = new Favorite();
-                $favorite->posts_id = $spot->id;
-                $favorite->type_posts = 1;
-                $favorite->save();
+            if($alias == ""){
+                $alias = $req->input('name');
+            }
+            Spot::updateOrInsert([
+                'id'=> $req->input('id'),
+            ],[
+                'location'=> $req->input('location'),
+                'address'=> $req->input('location'),
+                'name'=> $req->input('name'),
+                'intro'=> $req->input('intro'),
+                'image_id'=> $req->input('image'),
+                'images_id'=> $exampleEncoded,
+                'author'=> $user->id,
+                'alias'=> $alias,
+                'favorite'=> 0,
+                'count_comment'=> 0,
+                'status'=> 'disabled'
+            ]);
 
-
-                for($i = 0;$i<count($list_cate);$i++){
-                    $category_by_posts = new Category_By_Posts();
-                    $category_by_posts->id_posts = $spot->id;
-                    $category_by_posts->type_posts = "spots";
-                    $category_by_posts->id_category = $list_cate[$i];
-                    $category_by_posts->save();
-                }
-            }else {
-                $spot = Spot::findorfail($req->input('id'));
-                $spot->location = $req->input('location');
-                $spot->name = $req->input('name');
-                $spot->intro = $req->input('intro');
-                $spot->image_id = $req->input('image');
-                $spot->images_id = $example;
-                $spot->author = $user->id;
-                $spot->alias = $alias;
-                $spot->category = $req->input('category');
-                $spot->save();
-
-
-                for($i = 0;$i<count($list_cate);$i++){
-                    $category_by_posts = Category_By_Posts::findorfail($list_cate[$i]);
-                    $category_by_posts->id_posts = $spot->id;
-                    $category_by_posts->type_posts = "spots";
-                    $category_by_posts->id_category = $list_cate[$i];
-                    $category_by_posts->save();
-                }
+            $spot  = Spot::where('alias',$alias)->first();
+            Category_spot::where('spot_id',$spot->id)->delete();
+            for($i = 0;$i < count($list_cate);$i++){
+                Category_spot::updateOrInsert(
+                    [
+                        'category_id'=>6,
+                    ],
+                    [
+                        'category_id'=>$list_cate[$i],
+                        'spot_id'=>$spot->id,
+                    ]
+                );
             }
             return view('web.spot-edtting-complete');
         }
@@ -854,33 +744,37 @@ class HandleController extends Controller
         }
 
         public function unFile(){
-            // dd('a');
             $image_id = $_POST['image'];
             $sub_image = explode(',',$_POST['sub_image']);
             $count = count($sub_image);
             for($i = 0;$i< $count;$i++){
-            // dd($sub_image[$i]);
-
                 $images = Upload::findorfail($sub_image[$i]);
-
                 unlink('uploads/'.$images->file_name);
                 $images->delete();
             }
             $image = Upload::findorfail($image_id);
-            // dd()
             unlink('uploads/'.$image->file_name);
             $image->delete();
 
             echo json_encode(['res'=>true]);
         }
 
-        public function feedback(Request $req){
-            $fe = new Feedback();
-            $fe->id_posts = $req->input('id_com');
-            $fe->content = $req->input('feedback');
-            $fe->id_user = Auth::user()->id;
+        public function reportComment(Request $req){
+            $report = new Report_comment();
+            $report->comment_id = $req->input('id_com');
+            $report->content = $req->input('report');
+            $report->user_id = Auth::user()->id;
+            $report->save();
 
-            $fe->save();
+            echo json_encode(['res'=>true]);
+        }
+
+        public function reportSpot(Request $req){
+            $report = new Report_spot();
+            $report->spot_id = $req->input('id_com');
+            $report->content = $req->input('report');
+            $report->user_id = Auth::user()->id;
+            $report->save();
 
             echo json_encode(['res'=>true]);
         }

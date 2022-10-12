@@ -124,14 +124,13 @@
                                             <div class="d-flex align-items-center">
                                                 <div class="d-flex align-items-center"> 
                                                     <div class="tags">
-
-                                                    @if($categorys = $value->categorys())
-                                                    @foreach($categorys as $category)
-                                                        @if($cate = $category->getCategory)
-                                                            <span class="tag">{{$cate->name}} |</span>
+                                                        @if($category = $value->categoryDetail)
+                                                            @foreach($category as $cate)
+                                                                @if($ca = $cate->category)
+                                                                <span class="tag"> {{$ca->name}}|</span>
+                                                                @endif
+                                                            @endforeach
                                                         @endif
-                                                    @endforeach
-                                                    @endif
                                                     </div>                                               
                                                 </div>
                                                 <div class="favorite-count ml-20">
@@ -186,12 +185,12 @@
                                             <div class="d-flex align-items-center">
                                                 <div class="d-flex align-items-center"> 
                                                     <div class="tags">
-                                                    @if($categorys = $value->categorys())
-                                                    @foreach($categorys as $category)
-                                                        @if($cate = $category->getCategory)
-                                                            <span class="tag">{{$cate->name}} |</span>
-                                                        @endif
-                                                    @endforeach
+                                                    @if($category = $value->categoryDetail)
+                                                        @foreach($category as $cate)
+                                                            @if($ca = $cate->category)
+                                                            <span class="tag"> {{$ca->name}}|</span>
+                                                            @endif
+                                                        @endforeach
                                                     @endif
                                                     </div>                                               
                                                 </div>

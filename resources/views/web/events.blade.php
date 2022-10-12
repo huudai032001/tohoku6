@@ -97,11 +97,13 @@
                                     <div class="item-desc">{{$value->location}}</div>
                                     <div class="counters d-flex align-items-center justify-content-between"> 
                                         <div class="tags d-flex align-items-center">
-                                            @if($categorys = $value->getCategory())
-                                            @foreach($categorys as $category)
-                                            <span class="tag">{{$category->name}}</span>
+                                        @if($category = $value->categoryDetail)
+                                            @foreach($category as $cate)
+                                                @if($ca = $cate->category)
+                                                <span class="tag"> {{$ca->name}}|</span>
+                                                @endif
                                             @endforeach
-                                            @endif
+                                        @endif
                                         </div>
                                         <div class="favorite-count ml-20">
                                             <img src="/web-assets/images/icons/heart-gray.svg" alt=""> 
@@ -116,7 +118,8 @@
                 </div>
                 <div style="padding: 25px 0;">
                     <div class="container">
-                        <div class="simple-paginator d-flex justify-content-between align-items-center">
+                    {!! $list_events->appends(['nickname'=>'huudai'])->links() !!}
+                        <!-- <div class="simple-paginator d-flex justify-content-between align-items-center">
                             @if($total_page >1 && ($page-1) >0)
                             <a href="{{url()->full()}}&page={{$page - 1}}" class="prev" id="prev">
                             @else
@@ -134,9 +137,14 @@
                             @endif
                                 <img src="/web-assets/images/angle-right.svg" alt="">
                             </a>
-                        </div>
+                        </div> -->
                         <div class="mt-20 text-align-center">
-                            <a href="#" class="button-style-1 button">次の10件を見る</a>
+                        @if($total_page > 9)
+                            <a href="{{url()->full()}}&page={{$page + 10}}" class="button-style-1 button">次の10件を見る</a>
+                        @else
+                            <a href="" class="button-style-1 button">次の10件を見る</a>
+                        @endif
+
                         </div>
                     </div>
                 </div>
@@ -222,8 +230,6 @@
                     </div>
                     <div class="flex-auto panel_footer text-align-center">
                         <input type="submit" class="button button-style-1" value="絞り込む">
-                            
-                        
                     </div>
                 </form>
             </div>

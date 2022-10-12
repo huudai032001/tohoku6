@@ -18,7 +18,7 @@ use App\Misc\FlashMsg;
 use App\Misc\Helper;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use App\Form;
-use App\Models\Category;
+use App\Models\Category_spot;
 
 use App\Models\Spot;
 use App\Models\Upload;
@@ -209,9 +209,10 @@ class SpotController extends CommonDataController {
         $item->author = Auth::user()->id;
         $item->alias = $alias;
         $item->save();
-        $category = new Category();
+        $category = new Category_spot();
         for($i = 0; $i < count($arr_cate);$i++){
-            $category->name = $arr_cate[$i];
+            $category->spot_id = $item->id;
+            $category->category_id = $arr_cate[$i];
             $category->save();
         }
 

@@ -21,8 +21,10 @@
                                 <div class="user-name">{{$user['name']}}</div>
                                 <ul class="social-icons d-flex align-items-center">
                                     <?php
+                                        // var_dump($user->sns_active);
                                         $a = trim($user->sns_active , '"[]');
                                         $sns_active = explode(",",$a);
+                                        if($user->sns_active != null){
                                         for($i=0; $i<count($sns_active);$i++)
                                         {
                                             $value = trim($sns_active[$i] , '"');
@@ -57,6 +59,7 @@
                                     <?php
                                             }
                                         }
+                                    }
                                     ?>
                                 </ul>
                             </div>
@@ -143,7 +146,7 @@
                                                     <a href="{{route('spot_detail',$value->alias)}}">
                                                         @if($image = $value->image)
                                                         <div class="ratio thumb-image">
-                                                            <img src="{{$image->getUrl()}}" alt="">
+                                                            <img src="{{$image->getUrl()}}" alt="" class="image">
                                                         </div>
                                                         @endif
                                                     </a>
@@ -156,7 +159,19 @@
                                                         </div>
                                                     </div>
                                                     <a href="{{route('spot_detail',$value->alias)}}">
-                                                        <div class="item-title">{{$value->name}}・<span class="text-latin">RISING SUN</span></div>
+                                                    <?php
+                                                        $string = strip_tags($value->name);
+                                                        if (strlen($string) > 25) {
+                                                            // truncate string
+                                                            $stringCut = substr($string, 0, 25);
+                                                            $endPoint = strrpos($stringCut, ' ');
+
+                                                            //if the string doesn't contain any space then it will cut without word basis.
+                                                            $string = $endPoint ? substr($stringCut, 0, $endPoint) : substr($stringCut, 0);
+                                                            $string .= '...';
+                                                        }
+                                                        ?>
+                                                        <div class="item-title">{{$string}}・</div>
                                                     </a>
                                                     <div class="counters d-flex align-items-center justify-content-end justify-content-lg-start">
                                                         <div class="comment-count">
@@ -189,7 +204,7 @@
                                                 <div class="d-flex justify-content-between">
                                                     @if($comment = $value->spots)
                                                     <div class="post-title">
-                                                        {{$comment->name}}・<span class="text-latin">RISING SUN</span>
+                                                        {{$comment->name}}・
                                                     </div>
                                                     @endif
                                                     <div class="d-flex align-items-center">
@@ -228,7 +243,7 @@
                                                    <a href="spot-detail.html">
                                                         @if($image = $value->image)
                                                         <div class="ratio thumb-image">
-                                                            <img src="{{$image->getUrl()}}" alt="">
+                                                            <img src="{{$image->getUrl()}}" alt="" class="image">
                                                         </div>
                                                         @endif
                                                    </a>
@@ -241,7 +256,19 @@
                                                        </div>
                                                    </div>
                                                    <a href="spot-detail.html">
-                                                       <div class="item-title">{{$value->name}}・<span class="text-latin">RISING SUN</span></div>
+                                                   <?php
+                                                        $string = strip_tags($value->name);
+                                                        if (strlen($string) > 25) {
+                                                            // truncate string
+                                                            $stringCut = substr($string, 0, 25);
+                                                            $endPoint = strrpos($stringCut, ' ');
+
+                                                            //if the string doesn't contain any space then it will cut without word basis.
+                                                            $string = $endPoint ? substr($stringCut, 0, $endPoint) : substr($stringCut, 0);
+                                                            $string .= '...';
+                                                        }
+                                                        ?>
+                                                       <div class="item-title">{{$string}}・</div>
                                                    </a>
                                                    <div class="counters d-flex align-items-center justify-content-end justify-content-lg-start">
                                                        <div class="comment-count">
@@ -278,7 +305,7 @@
                                                     <a href="{{route('featureDetail',$value->alias)}}">
                                                         @if($image = $value->image)
                                                         <div class="ratio thumb-image thumb-hover-anim">
-                                                            <img src="{{$image->getUrl()}}" alt="">
+                                                            <img src="{{$image->getUrl()}}" alt="" class="image">
                                                         </div>
                                                         @endif
                                                     </a>
@@ -298,7 +325,19 @@
                                                     <div class="line"></div>
                                                     <div class="item-title">
                                                         <a href="{{route('featureDetail',$value->alias)}}">
-                                                        {{$value->name}}
+                                                        <?php
+                                                        $string = strip_tags($value->name);
+                                                        if (strlen($string) > 25) {
+                                                            // truncate string
+                                                            $stringCut = substr($string, 0, 25);
+                                                            $endPoint = strrpos($stringCut, ' ');
+
+                                                            //if the string doesn't contain any space then it will cut without word basis.
+                                                            $string = $endPoint ? substr($stringCut, 0, $endPoint) : substr($stringCut, 0);
+                                                            $string .= '...';
+                                                        }
+                                                        ?>
+                                                        {{$string}}
                                                         </a>
                                                     </div>
                                                     <div class="item-desc">{{$value->location}}</div>

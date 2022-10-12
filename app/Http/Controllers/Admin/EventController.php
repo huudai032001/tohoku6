@@ -16,7 +16,7 @@ use App\Misc\DataTable;
 use App\Misc\HTML;
 use App\Misc\FlashMsg;
 use App\Misc\Helper;
-use App\Models\Category;
+use App\Models\Category_event;
 
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use App\Form;
@@ -202,9 +202,10 @@ class EventController extends CommonDataController {
 
         $item->save();
 
-        $category = new Category();
+        $category = new Category_event();
         for($i = 0; $i < count($arr_cate);$i++){
-            $category->name = $arr_cate[$i];
+            $category->spot_id = $item->id;
+            $category->category_id = $arr_cate[$i];
             $category->save();
         }
 

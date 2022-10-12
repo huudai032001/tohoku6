@@ -40,12 +40,8 @@ class Event extends BaseModel
     {
         return \App\Models\Upload::whereIn('id', $this->images_id)->get();
     }
-    public function getCategory()
+    public function categoryDetail()
     {
-        return \App\Models\Category::whereIn('id', explode(",",$this->category))->get();
-    }
-
-    public function categorys(){
-        return \App\Models\Category_By_Posts::where('id_posts', $this->id)->get();
+        return $this->hasMany(\App\Models\Category_event::class);
     }
 }

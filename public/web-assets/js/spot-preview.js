@@ -12,7 +12,7 @@ function delete_image(){
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
               },
-            url: "un_file",
+            url: "/un_file",
             type: 'post',
             dataType: "json",
             async: false,
@@ -21,10 +21,64 @@ function delete_image(){
             data: formData,
             success: function (data) {
                 if(data.res == true){
-                    window.location.href = 'list-spot'; 
+                    window.location.href = '/list-spot'; 
                 }
     
             }
         });
     }
 }
+
+$('.slider').owlCarousel({        
+    autoPlay: false,
+    dots: false,
+    nav: true,
+    margin: 20,
+    navText: ['', ''],
+    slideBy: 'page',        
+    responsive: {
+        0: {
+            items: 1,
+            autoWidth: true
+        },
+        576: {
+            items: 2,
+            autoWidth: true          
+        },
+        992: {
+            items: 3,
+            autoWidth: false
+        }
+    }
+});
+// $('.post-slider').owlCarousel({        
+//     autoPlay: false,
+//     dots: false,
+//     nav: true,
+//     margin: 20,
+//     navText: ['', ''],
+//     slideBy: 'page',
+//     autoWidth: true
+
+// });
+// $('.slider').owlCarousel({        
+//     autoPlay: false,
+//     dots: false,
+//     nav: false,
+//     margin: 16,
+//     navText: ['', ''],
+//     slideBy: 'page',
+//     autoWidth: true,
+//     responsive: {
+
+//         992: {
+//             dots:  true,
+//             dotsEach: 2
+//         },
+//         1600: {
+//             dots:  true,
+//             dotsEach: 3,
+//             margin: 28,
+//         }
+//     }
+// });

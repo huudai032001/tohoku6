@@ -5,7 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Feedback extends Model
+class Report_spot extends Model
 {
-    protected $table = "feedback";
+    protected $table = "report_spot";
+
 }

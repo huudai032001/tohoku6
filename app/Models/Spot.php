@@ -20,7 +20,7 @@ class Spot extends BaseModel
      public static function getModelName() {
         return __('common.spot');        
     }
-
+    protected $fillable = ['id'];
     public function getName() {
         return $this->name;
     }
@@ -36,6 +36,7 @@ class Spot extends BaseModel
         return $this->belongsTo(\App\Models\Upload::class, 'image_id');
     }
 
+
     public function getImages()
     {
         return \App\Models\Upload::whereIn('id', $this->images_id)->get();
@@ -43,7 +44,7 @@ class Spot extends BaseModel
 
     public function getCategory()
     {
-        return \App\Models\Category::whereIn('id', explode(",",$this->category))->get();
+        return \App\Models\Category_spot::where('spot_id', $this->id)->get();
     }
 
     public function user()
@@ -63,4 +64,10 @@ class Spot extends BaseModel
             return __('status.' . $this->status);
         }
     }
+
+    public function categoryDetail()
+    {
+        return $this->hasMany(\App\Models\Category_spot::class);
+    }
+
 }

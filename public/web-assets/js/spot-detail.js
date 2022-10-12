@@ -6,6 +6,12 @@ $(document).on("click", ".toggle-action-button", function () {
 
 });
 
+$(document).on("click", ".action-button", function () {
+    var com_id = $(this).data('id');
+    $(".modal_comment #id_posts").val( com_id );
+
+});
+
 function delete_comment(){
     $id_com = $("#id_comment").val();
     // console.log($id_com);
@@ -131,18 +137,18 @@ function showModal(){
     $('#modal-review-actions').addClass('active');
 }
 
-function feedback(){
+function report(){
     var id_com = $("#id_comment").val();
-    var feedback = $("#feedback").val();
+    var report = $("#report").val();
     var formData = new FormData();
-    formData.append('feedback', feedback);
+    formData.append('report', report);
     formData.append('id_com', id_com);
 
     var check = false;
-    if(feedback.length > 0){
+    if(report.length > 0){
 
     }else{
-        document.getElementById("error").innerHTML = "必須項目です";
+        document.getElementById("error_report_comment").innerHTML = "必須項目です";
         check = true;
     }
 
@@ -154,7 +160,7 @@ function feedback(){
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           },
-        url: "/feedback",
+        url: "/report-comment",
         type: 'post',
         dataType: "json",
         async: false,
@@ -163,6 +169,48 @@ function feedback(){
         data: formData,
         success: function (data) {
             
+        }
+    });
+}
+
+
+function report_two(){
+    var id_com = $("#id_posts").val();
+    var report = $("#report_two").val();
+    var formData = new FormData();
+    formData.append('report', report);
+    formData.append('id_com', id_com);
+
+    var check = false;
+    if(report.length > 0){
+
+    }else{
+        document.getElementById("error_report_spot").innerHTML = "必須項目です";
+        check = true;
+    }
+
+    if(check){
+        return false;
+    }
+
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+        url: "/report-spot",
+        type: 'post',
+        dataType: "json",
+        async: false,
+        processData: false,
+        contentType: false,
+        data: formData,
+        success: function (data) {
+            if(data.res == true){
+                // document.getElementById("result-message").style.display = "block"; 
+                // document.getElementById("ajax-loading-overlay").style.display = "block"; 
+                // document.getElementById("modal-spot-actions-two").style.display = "none";
+                alert("フィードバックを送信しました");
+            }
         }
     });
 }

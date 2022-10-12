@@ -9,6 +9,26 @@
   text-align: center;
   margin-bottom: 36px;
 }
+.spot-images {
+  border-top: 1px solid #E8E8E8;
+  border-bottom: 1px solid #E8E8E8;
+  padding: 11px 0;
+  margin: 15px 0;
+}
+img.images-spot {
+  min-height: 200px;
+}
+.owl-stage {
+  display: flex;
+  width: 795px !important;
+}
+.title {
+  text-align: center;
+  font-weight: 600;
+}
+.owl-nav {
+  display: none;
+}
 .spot-editing-form .section_header .image img {
   height: 18.5px;
   width: auto;

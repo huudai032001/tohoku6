@@ -24,6 +24,13 @@
           transform: translateY(-50%);
   right: 0;
 }
+.error {
+  color: red;
+}
+img.image{
+  min-height: 115px;
+  width: 100%;
+}
 .section-spot-detail .action-button span {
   display: block;
   width: 4px;

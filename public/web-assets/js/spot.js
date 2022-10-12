@@ -104,7 +104,7 @@ function sort(id){
                                 <div class="icon-star">
                                     <img src="upload/{{$value->image}}" alt="">
                                 </div>
-                                <a href="spot-detail/`+ data.list_spot[i].id +`">
+                                <a href="spot-detail/`+ data.list_spot[i].alias +`">
                                     <div class="ratio thumb-image">
                                         <img src="`+ data.arr_image[i] +`" alt="">
                                     </div>
@@ -117,7 +117,7 @@ function sort(id){
                                         <img src="/web-assets/images/area/akita.svg" alt="">
                                     </div>
                                 </div>
-                                <a href="spot-detail/`+ data.list_spot[i].id +`">
+                                <a href="spot-detail/`+ data.list_spot[i].alias +`">
         
 
                                     <div class="item-title">`+ data.list_spot[i].name +` .<span class="text-latin">RISING SUN</span></div>
@@ -197,7 +197,7 @@ function load_more(id){
                                 <div class="icon-star">
                                     <img src="upload/{{$value->image}}" alt="">
                                 </div>
-                                <a href="spot-detail/`+ data.list_spot[i].id +`">
+                                <a href="spot-detail/`+ data.list_spot[i].alias +`">
                                     <div class="ratio thumb-image">
                                         <img src="`+ data.arr_image[i] +`" alt="">
                                     </div>
@@ -210,7 +210,7 @@ function load_more(id){
                                         <img src="/web-assets/images/area/akita.svg" alt="">
                                     </div>
                                 </div>
-                                <a href="spot-detail/`+ data.list_spot[i].id +`">
+                                <a href="spot-detail/`+ data.list_spot[i].alias +`">
         
 
                                     <div class="item-title">`+ data.list_spot[i].name +` .<span class="text-latin">RISING SUN</span></div>

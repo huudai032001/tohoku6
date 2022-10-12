@@ -44,7 +44,7 @@ sub_image_01.bind("change", function() {
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
               },
-            url: "upload_img",
+            url: "/upload_img",
             type: 'post',
             dataType: "json",
             async: false,
@@ -68,7 +68,7 @@ sub_image_02.bind("change keyup", function() {
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
               },
-            url: "upload_img",
+            url: "/upload_img",
             type: 'post',
             dataType: "json",
             async: false,
@@ -92,7 +92,7 @@ sub_image_03.bind("change keyup", function() {
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
               },
-            url: "upload_img",
+            url: "/upload_img",
             type: 'post',
             dataType: "json",
             async: false,
@@ -117,7 +117,7 @@ upload_avatar.bind("change keyup", function() {
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                   },
-                url: "upload_img",
+                url: "/upload_img",
                 type: 'post',
                 dataType: "json",
                 async: false,

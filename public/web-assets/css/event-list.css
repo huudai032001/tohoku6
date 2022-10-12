@@ -19,3 +19,14 @@
   padding-left: 20px;
   padding-right: 20px;
 }
+a.page-link ,span.page-link{
+  font-size: 20px;
+}
+
+li.page-item.disabled::marker {
+  display: none !important;
+}
+
+li.page-item {
+  width: 100px !important;
+}
