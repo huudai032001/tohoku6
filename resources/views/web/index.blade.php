@@ -64,7 +64,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="area-select d-flex justify-content-center">
+                                    <div class="area-select-two d-flex justify-content-center">
                                         <div class="custom-select-button button">
                                             エリアを選択 <img src="/web-assets/images/triangle-down.svg" alt="Select">
                                             <input type="hidden" name="" id="">
@@ -76,7 +76,7 @@
                                             @foreach($list_event as $value)
                                             <div class="item">
                                                 <div class="post-item-1">
-                                                    <a href="event-detail.html">
+                                                    <a href="{{route('event_detail',$value->alias)}}">
                                                         @if($image = $value->image)
                                                         <div class="thumb ratio thumb-hover-anim">
                                                             <img src="{{$image->getUrl()}}" alt="">
@@ -94,7 +94,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="title">
-                                                            <a href="event-detail.html">
+                                                            <a href="{{route('event_detail',$value->alias)}}">
                                                             {{$value->name}}
                                                             </a>
                                                         </div>
@@ -135,7 +135,7 @@
                               
                                             <div class="item">
                                                 <div class="post-item-2">
-                                                    <a href="spot-detail.html">
+                                                    <a href="{{route('event_detail',$event->alias)}}">
                                                         @if($image = $event->image)
                                                         <div class="thumb ratio thumb-hover-anim">
                                                             <img src="{{$image->getUrl()}}" alt="">
@@ -154,7 +154,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="title">
-                                                            <a href="post-detail.html">{{$event->name}}・RISING SUN</a>
+                                                            <a href="{{route('event_detail',$event->alias)}}">{{$event->name}}・</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -179,23 +179,23 @@
                             <img src="/web-assets/images/tohoku-media.svg" alt="">
                         </div>
                         <div class="slider owl-carousel owl-style-3">
-                            @foreach($list_spot as $value)
+                            @foreach($list_spot as $spot)
                             <div class="post-item-3">
-                                <a href="{{route('spot_detail',$value->alias)}}">
-                                    @if($image = $value->image)
+                                <a href="{{route('spot_detail',$spot->alias)}}">
+                                    @if($image = $spot->image)
                                     <div class="thumb ratio thumb-hover-anim">
                                         <img src="{{$image->getUrl()}}" alt="">
                                     </div>
                                     @endif
                                     <div class="item-content d-flex flex-column justify-content-end">
-                                        <div class="title">{{$value->name}}</div>
+                                        <div class="title">{{$spot->name}}</div>
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div class="flex-fill">
-                                                <div class="date text-latin">{{$value->created_at}} UP!</div>
+                                                <div class="date text-latin">{{$spot->created_at}} UP!</div>
                                             </div>
                                             <div class="flex-auto ml-20">
                                                 <img width="16" src="/web-assets/images/icons/heart-white.svg" alt=""> 
-                                                <span class="count text-latin">{{$value->favorite}}</span>
+                                                <span class="count text-latin">{{$spot->favorite}}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -218,7 +218,7 @@
                         <div class="slider owl-carousel owl-style-3">
                             @foreach($favorite_event as $faEvent)
                             <div class="post-item-4">
-                                @if($image = $value->image)
+                                @if($image = $faEvent->image)
                                 <div class="thumb ratio thumb-hover-anim">
                                     <img src="{{$image->getUrl()}}" alt="">
                                 </div>
@@ -242,7 +242,7 @@
                             @endforeach
                             @foreach($favorite_spot as $faSpot)
                             <div class="post-item-4">
-                                @if($image = $value->image)
+                                @if($image = $faSpot->image)
                                 <div class="thumb ratio thumb-hover-anim">
                                     <img src="{{$image->getUrl()}}" alt="">
                                 </div>
@@ -306,7 +306,7 @@
                                                 </div>
                                             </div>
                                             <a href="{{route('spot_detail',$value->alias)}}">
-                                                <div class="item-title">{{$value->name}}・<span class="text-latin">RISING SUN</span></div>
+                                                <div class="item-title">{{$value->name}}・</div>
                                             </a>
                                             <div class="counters d-flex align-items-center justify-content-end justify-content-lg-start">
                                                 <div class="comment-count">
@@ -530,6 +530,60 @@
                 </div>
                 <div class="flex-auto panel_footer text-align-center">
                     <div class="button button-style-1" onclick="find_location()">
+                        絞り込む
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="area-select-panel-two toggle-select-panel d-flex justify-content-lg-center align-items-lg-center">
+            <div class="backdrop"></div>
+            <div class="toggle-select-panel_dialog  d-flex flex-column">
+                <div class="flex-auto panel_header">
+                    <div class="panel_title">エリアを選択</div>
+                    <div class="button-close">×</div>
+                </div>
+                <div class="panel_body flex-fill">
+                    <div class="number-6">
+                        <img src="/web-assets/images/number-6.svg" alt="">
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <ul class="area-selection-list">
+                            <li>
+                                <label class="custom-radio-2">
+                                    <input type="radio" name="area-select" value="Akita"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">Akita
+                                </label>
+                            </li>
+                            <li>
+                                <label class="custom-radio-2">
+                                    <input type="radio" name="area-select" value="Aomori"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">Aomori
+                                </label>
+                            </li>
+                            <li>
+                                <label class="custom-radio-2">
+                                    <input type="radio" name="area-select" checked value="Fukushima"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">Fukushima
+                                </label>
+                            </li>
+                            <li>
+                                <label class="custom-radio-2">
+                                    <input type="radio" name="area-select" value="Iwate"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">Iwate
+                                </label>
+                            </li>
+                            <li>
+                                <label class="custom-radio-2">
+                                    <input type="radio" name="area-select" value="Miyagi"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">Miyagi
+                                </label>
+                            </li>
+                            <li>
+                                <label class="custom-radio-2">
+                                    <input type="radio" name="area-select" value="Yamagata"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">Yamagata
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="flex-auto panel_footer text-align-center">
+                    <div class="button button-style-1" onclick="find_location_two()">
                         絞り込む
                     </div>
                 </div>

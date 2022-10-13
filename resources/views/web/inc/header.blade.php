@@ -33,6 +33,14 @@
                     <img src="/web-assets/images/icons/search.svg" alt="search">
                 </div>
             </a>
+            <a href="">
+                <div class="icon dropdown">
+                    <img src="/web-assets/images/icons/user_image.png" alt="search" style="width:23px; height:23px">
+                    <div class="dropdown-content">
+                        <a href="/logout-user">ログアウト</a>
+                    </div>
+                </div>
+            </a>
         </div>
         @else
         <div class="nav-bar-right d-flex justify-content-end flex-fill">

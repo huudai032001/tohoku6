@@ -16,6 +16,7 @@ use App\Models\Favorite;
 use App\Models\Comment;
 use App\Models\Notification;
 use App\Models\Category;
+use App\Models\Category_event;
 
 use App\Models\Goods;
 use App\Models\User;
@@ -105,6 +106,7 @@ class EventController extends Controller
             abort (404);
         }
         $recently = Event::where('location',$info_event->location)->take(3)->get();
+        // dd($recently);
         $list_event = Event::take(6)->get();
         return view('web.event-detail',[
             'info_event'=>$info_event,
@@ -112,4 +114,21 @@ class EventController extends Controller
             'recently' => $recently
         ]);
     }
+
+    //feature
+    public function feature(){
+
+        $list_feature = Event::orderBy('favorite','DESC')
+        ->join('uploads', 'uploads.id', '=', 'event.image_id')->get(['event.*','uploads.file_name']);
+
+        return view('web.features',compact('list_feature'));
+    }
+
+    public function featureDetail($alias){
+        $feature = Event::where('alias',$alias)->first();
+        if ( empty ($feature) ) {
+            abort (404);
+        }
+        return view('web.feature-detail',compact('feature'));
+    }    
 }

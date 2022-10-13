@@ -31,9 +31,9 @@
                         <div class="container">
                             <div class="form-layout-1">
                                 <div style="margin-bottom: 25px;">
-                                    <input type="text" class="input-text @error('location') is-invalid @enderror" placeholder="住所またはキーワード" name="location">
+                                    <input type="text" class="input-text @error('address') is-invalid @enderror" placeholder="住所またはキーワード" name="address">
                                 </div>
-                                @error('location')
+                                @error('address')
                                     <div class="form-error-msg">{{ $message }}</div>
                                 @enderror
                                 <div style="padding-bottom: 35px;">
@@ -63,6 +63,20 @@
                                         <textarea class="textarea @error('intro') is-invalid @enderror" rows="5" name="intro"></textarea>
                                     </div>
                                     @error('intro')
+                                    <div class="form-error-msg">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="form-group-label">スポット名</div>
+                                    <div class="form-control-wrap">
+                                        <select name="location" id="" class="select-text">
+                                            @for($u = 0 ; $u< count($listLocation);$u++)
+                                            <option value="{{$listLocation[$u]}}">{{$listLocation[$u]}}</option>
+                                            @endfor
+                                        </select>
+                                    </div>
+                                    @error('name')
                                     <div class="form-error-msg">{{ $message }}</div>
                                     @enderror
                                 </div>
@@ -193,30 +207,8 @@
 
             </div> <!-- /inner-wrapper -->
         </div> <!-- /wrapper -->
+        @include('web.inc.notification')        
 
-       
-        <div id="user-notification-modal" class="modal user-notification-modal">
-            <div class="modal_backdrop"></div>
-            <div class="modal_dialog">
-                <div class="modal_close">×</div>
-                <div class="modal_title">通知</div>
-                <ul class="user-notification_list custom-scrollbar">
-                    @if(Auth::check())
-                        @if($notifi = Auth::user()->getNotifi())
-                            @foreach($notifi as $noti)
-                            <li class="d-flex align-items-center">
-                                <div class="date">{{$noti->created_at}}</div>
-                                <div class="flex-fill content">{{$noti->feedback}}</div>
-                            </li>
-                            @endforeach
-                        @endif
-                    @endif
-                </ul>
-            </div>
-        </div>
-
-
-        
         <script src="/web-assets/js/components.js"></script>
         <script src="/web-assets/js/main.js"></script>
         <script src="/web-assets/js/tohoku-calendar.js"></script>

@@ -99,6 +99,10 @@
         $('.area-select-panel').addClass('active');
     });
 
+    $('.area-select-two').click(function(){
+        $('.area-select-panel-two').addClass('active');
+    });
+
     $('.category-select').click(function(){
         $('.category-select-panel').addClass('active');
     });

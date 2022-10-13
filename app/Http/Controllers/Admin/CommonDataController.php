@@ -430,6 +430,7 @@ class CommonDataController extends Controller {
 
     protected function getBulkDelete(Request $request)
     {
+
         $dataList = $this->modelClass::find($request->input('ids'));
         
         return $this->getView('bulk-delete')->with([
@@ -462,6 +463,7 @@ class CommonDataController extends Controller {
 
     protected function delete($dataItem)
     {
+
         $dataItem->delete();
     }
 

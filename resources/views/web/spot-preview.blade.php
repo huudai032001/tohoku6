@@ -8,7 +8,6 @@
         $cate = implode(',',$spot->category);
 
         $images = implode(',',$spot->images_id);
-    
     ?>
         <div id="wrapper">
             <div id="inner-wrapper">
@@ -23,6 +22,7 @@
                         <input type="hidden" value="{{$spot->image_id}}" name="image" id="image_id">
                         <input type="hidden" value="{{$cate}}" name="category">
                         <input type="hidden" value="{{$images}}" name="sub_image" id="sub_image">
+                        <input type="hidden" value="{{$spot->address}}" name="address" >
 
                         <div class="section_header-2">
                             <div class="container">                                
@@ -55,6 +55,14 @@
                                 <div class="title">名前 : <span>{{$spot->name}}</span> </div>
                                 <div class="title">位置 : <span>{{$spot->location}}</span> </div>
                                 <div class="title">イントロ : <span>{{$spot->intro}}</span></div>
+                                <div class="title">カテゴリー : 
+                              
+                                @foreach($category as $cate)
+                                    <span class="tag"> {{$cate->name}}|</span>
+                                @endforeach
+                          
+                                </div>
+
                                 <!-- <div>{{$spot->name}}</div> -->
                                 <!-- <div>{{$spot->name}}</div> -->
 
@@ -84,32 +92,8 @@
             </div> <!-- /inner-wrapper -->
         </div> <!-- /wrapper -->
 
-       
+        @include('web.inc.notification')        
 
-        
-
-        <div id="user-notification-modal" class="modal user-notification-modal">
-            <div class="modal_backdrop"></div>
-            <div class="modal_dialog">
-                <div class="modal_close">×</div>
-                <div class="modal_title">通知</div>
-                <ul class="user-notification_list custom-scrollbar">
-                    @if(Auth::check())
-                        @if($notifi = Auth::user()->getNotifi())
-                            @foreach($notifi as $noti)
-                            <li class="d-flex align-items-center">
-                                <div class="date">{{$noti->created_at}}</div>
-                                <div class="flex-fill content">{{$noti->feedback}}</div>
-                            </li>
-                            @endforeach
-                        @endif
-                    @endif
-                </ul>
-            </div>
-        </div>
-
-
-        
         <script src="/web-assets/js/components.js"></script>
         <script src="/web-assets/js/main.js"></script>
         <script src="/web-assets/js/tohoku-calendar.js"></script>

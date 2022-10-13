@@ -42,6 +42,11 @@ class Spot extends BaseModel
         return \App\Models\Upload::whereIn('id', $this->images_id)->get();
     }
 
+    public function getCategory_list()
+    {
+        return \App\Models\Category::whereIn('id', $this->category)->get();
+    }
+
     public function getCategory()
     {
         return \App\Models\Category_spot::where('spot_id', $this->id)->get();
@@ -70,4 +75,15 @@ class Spot extends BaseModel
         return $this->hasMany(\App\Models\Category_spot::class);
     }
 
+    public function listLocation(){
+        $arr = [
+            0=>'Akita',
+            1=>'Aomori',
+            2=>'Fukushima',
+            3=>'Iwate',
+            4=>'Miyagi',
+            5=>'Yamagate',
+        ];
+        return $arr;
+    }
 }

@@ -90,20 +90,7 @@
                                                 </div>
                                             </div>
                                             <a href="{{route('spot_detail',$value->alias)}}">
-                                                <?php
-                                                    $string = strip_tags($value->name);
-                                                    if (strlen($string) > 20) {
-                                                        // truncate string
-                                                        $stringCut = substr($string, 0, 20);
-                                                        $endPoint = strrpos($stringCut, ' ');
-                            
-                                                        //if the string doesn't contain any space then it will cut without word basis.
-                                                        $string = $endPoint ? substr($stringCut, 0, $endPoint) : substr($stringCut, 0);
-                                                        $string .= '...';
-                                                    }
-                                                ?>
-
-                                                <div class="item-title">{{$string}} .</div>
+                                                <div class="item-title">{{$value->name}} .</div>
                                             </a>
                                             <div class="counters d-flex align-items-center justify-content-end justify-content-lg-start">
                                                 <div class="comment-count">
@@ -156,25 +143,7 @@
             </div>
         </div>
 
-        <div id="user-notification-modal" class="modal user-notification-modal">
-            <div class="modal_backdrop"></div>
-            <div class="modal_dialog">
-                <div class="modal_close">×</div>
-                <div class="modal_title">通知</div>
-                <ul class="user-notification_list custom-scrollbar">
-                    @if(Auth::check())
-                        @if($notifi = Auth::user()->getNotifi())
-                            @foreach($notifi as $noti)
-                            <li class="d-flex align-items-center">
-                                <div class="date">{{$noti->created_at}}</div>
-                                <div class="flex-fill content">{{$noti->feedback}}</div>
-                            </li>
-                            @endforeach
-                        @endif
-                    @endif
-                </ul>
-            </div>
-        </div>
+        @include('web.inc.notification')        
 
         <div class="area-select-panel toggle-select-panel d-flex justify-content-lg-center align-items-lg-center">
             <div class="backdrop"></div>

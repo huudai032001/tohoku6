@@ -36,6 +36,15 @@
 
                 <li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs">{{ __('Data management') }}</div> <i class="icon-menu"></i></li>
                 <li class="nav-item">
+                    <a href="{{ route('admin.comment.index') }}" class="nav-link"><i class="icon-file-text3"></i> <span> {{ __('Comment') }}</span></a>                    
+                </li> 
+                <li class="nav-item">
+                    <a href="{{ route('admin.report_comment.index') }}" class="nav-link"><i class="icon-file-text3"></i> <span> {{ __('Report Comment') }}</span></a>                    
+                </li> 
+                <li class="nav-item">
+                    <a href="{{ route('admin.report_spot.index') }}" class="nav-link"><i class="icon-file-text3"></i> <span> {{ __('Report Spot') }}</span></a>                    
+                </li> 
+                <li class="nav-item">
                     <a href="{{ route('admin.category.index') }}" class="nav-link"><i class="icon-file-text3"></i> <span> {{ __('Category') }}</span></a>                    
                 </li> 
                 <li class="nav-item">

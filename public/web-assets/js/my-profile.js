@@ -51,7 +51,7 @@ function load_more(id){
                                 <a href="spot-detail/`+ data.list[i].alias +`">
         
 
-                                    <div class="item-title">`+ data.list[i].name +` .<span class="text-latin">RISING SUN</span></div>
+                                    <div class="item-title">`+ data.list[i].name +` .</div>
                                 </a>
                                 <div class="counters d-flex align-items-center justify-content-end justify-content-lg-start">
                                     <div class="comment-count">

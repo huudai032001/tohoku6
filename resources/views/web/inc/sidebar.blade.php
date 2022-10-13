@@ -4,7 +4,11 @@
         @if(Auth::check())
         <a href="{{route('myProfile')}}">
             <div class="profile-image">
+                @if($image = Auth::user()->image)
+                <img width="75" src="{{$image->getUrl()}}" alt="profile">
+                @else
                 <img width="75" src="/web-assets/images/profile.svg" alt="profile">
+                @endif
             </div>
             <div class="profile-label">プロフィール</div>
         </a>
@@ -31,22 +35,22 @@
                 <a href="{{route('list_goods')}}">トウホクポイントを使う</a>
             </li>
             <li class="li-lv-1 menu-item-small-text">
-                <a href="about.html">トウホクシックスとは？</a>
+                <a href="#">トウホクシックスとは？</a>
             </li>
             <li class="li-lv-1 menu-item-small-text">
-                <a href="about-point.html">トウホクポイントとは？</a>
+                <a href="#">トウホクポイントとは？</a>
             </li>
             <li class="li-lv-1 menu-item-small-text">
-                <a href="faq.html">よくあるご質問</a>
+                <a href="#">よくあるご質問</a>
             </li>
             <li class="li-lv-1 menu-item-small-text">
-                <a href="privacy-policy.html">プライバシーポリシー</a>
+                <a href="#">プライバシーポリシー</a>
             </li>
             <li class="li-lv-1 menu-item-small-text">
-                <a href="term-of-service.html">利用規約</a>
+                <a href="#">利用規約</a>
             </li>
             <li class="li-lv-1 menu-item-small-text">
-                <a href="inquiry.html">お問い合わせ</a>
+                <a href="#">お問い合わせ</a>
             </li>
             
         </ul>

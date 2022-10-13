@@ -45,7 +45,7 @@ function find_category(){
                                         <a href="spot-detail/`+ data.list_category[i].id +`">
                 
 
-                                            <div class="item-title">`+ data.list_category[i].name +` .<span class="text-latin">RISING SUN</span></div>
+                                            <div class="item-title">`+ data.list_category[i].name +` .</div>
                                         </a>
                                         <div class="counters d-flex align-items-center justify-content-end justify-content-lg-start">
                                             <div class="comment-count">
@@ -120,7 +120,7 @@ function sort(id){
                                 <a href="spot-detail/`+ data.list_spot[i].alias +`">
         
 
-                                    <div class="item-title">`+ data.list_spot[i].name +` .<span class="text-latin">RISING SUN</span></div>
+                                    <div class="item-title">`+ data.list_spot[i].name +` .</div>
                                 </a>
                                 <div class="counters d-flex align-items-center justify-content-end justify-content-lg-start">
                                     <div class="comment-count">
@@ -213,7 +213,7 @@ function load_more(id){
                                 <a href="spot-detail/`+ data.list_spot[i].alias +`">
         
 
-                                    <div class="item-title">`+ data.list_spot[i].name +` .<span class="text-latin">RISING SUN</span></div>
+                                    <div class="item-title">`+ data.list_spot[i].name +` .</div>
                                 </a>
                                 <div class="counters d-flex align-items-center justify-content-end justify-content-lg-start">
                                     <div class="comment-count">

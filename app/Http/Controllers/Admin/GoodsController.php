@@ -124,12 +124,12 @@ class GoodsController extends CommonDataController {
                 'required' => true,
                 'data' => $dataItem->point
             ]),
-            new Form\Text([
-                'name' => 'location',                
-                'label' => 'Location',
-                'required' => true,
-                'data' => $dataItem->location
-            ]),
+            // new Form\Text([
+            //     'name' => 'location',                
+            //     'label' => 'Location',
+            //     'required' => true,
+            //     'data' => $dataItem->location
+            // ]),
             new Form\Upload([
                 'name' => 'image',
                 'label' => 'Image',
@@ -158,6 +158,9 @@ class GoodsController extends CommonDataController {
     protected function updateItem(Request $request, $item)
     {
         $alias = Str::slug($request->input('name'), "-");
+        if($alias == ""){
+            $alias = $request->input('name');
+        }
 
         $item->name = $request->input('name');
         $item->intro = $request->input('intro');
@@ -165,7 +168,7 @@ class GoodsController extends CommonDataController {
         $item->author = Auth::user()->id;
         $item->image_id = $request->input('image');
         $item->alias = $alias;
-        $item->location = $request->input('location');
+        // $item->location = $request->input('location');
 
         $item->images_id = $request->input('images');
         $item->save();

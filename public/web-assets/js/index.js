@@ -20,11 +20,12 @@ function find_by_day(year,month,day){
             if(data.list_event.length > 0){
                 var html = ``;
                 for(var i = 0;i<data.list_event.length;i++){
+                console.log( data.list_event[i]);
                     
                     html += `
                     <div class="item">
                         <div class="post-item-1">
-                            <a href="event-detail.html">
+                            <a href="/event-detail/`+ data.list_event[i].alias +`">
                                 <div class="thumb ratio thumb-hover-anim">
                                     <img src="`+ data.arr_image[i] +`" alt="">
                                 </div>
@@ -40,7 +41,7 @@ function find_by_day(year,month,day){
                                     </div>
                                 </div>
                                 <div class="title">
-                                    <a href="event-detail.html">
+                                    <a href="">
                                     `+ data.list_event[i].name +`
                                     </a>
                                 </div>
@@ -83,14 +84,14 @@ function find_category(){
                 contentType: false,
                 data: formData,
                 success: function (data) {
-                    console.log(data);
+                    // console.log(data);
                     if(data.list_category.length > 0){
                         var html = ``;
                         for(var i = 0; i< data.list_category.length;i++){
                             html += `
                             <div class="item">
                                 <div class="post-item-2">
-                                    <a href="spot-detail/`+ data.list_category[i].id +`">
+                                    <a href="spot-detail/`+ data.list_category[i].alias +`">
                                         <div class="thumb ratio thumb-hover-anim">
                                             <img src="`+ data.arr_image[i] +`" alt="">
                                         </div>
@@ -107,7 +108,7 @@ function find_category(){
                                             </div>
                                         </div>
                                         <div class="title">
-                                            <a href="post-detail.html">`+ data.list_category[i].name +`・RISING SUN</a>
+                                            <a href="spot-detail/`+ data.list_category[i].alias +`">`+ data.list_category[i].name +`・</a>
                                         </div>
                                     </div>
                                 </div>
@@ -168,7 +169,7 @@ function find_location(){
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           },
-        url: "find_by_location",
+        url: "/find_by_location",
         type: 'post',
         dataType: "json",
         async: false,
@@ -183,7 +184,7 @@ function find_location(){
                     html += `
                     <div class="item">
                         <div class="post-item-2">
-                            <a href="spot-detail/`+ data.list_spot[i].id +`">
+                            <a href="spot-detail/`+ data.list_spot[i].alias +`">
                                 <div class="thumb ratio thumb-hover-anim">
                                     <img src="`+ data.arr_image[i] +`" alt="">
                                 </div>
@@ -200,7 +201,7 @@ function find_location(){
                                     </div>
                                 </div>
                                 <div class="title">
-                                    <a href="post-detail.html">`+ data.list_spot[i].name +`・RISING SUN</a>
+                                    <a href="spot-detail/`+ data.list_spot[i].alias +`">`+ data.list_spot[i].name +`・</a>
                                 </div>
                             </div>
                         </div>
@@ -238,6 +239,73 @@ function find_location(){
                     }
                 }
             });
+        }
+    });
+
+}
+function find_location_two(){
+    var location;
+    var checkbox = document.getElementsByName("area-select");
+    for (var i = 0; i < checkbox.length; i++){
+        if (checkbox[i].checked === true){
+            location = checkbox[i].value;
+        }
+    }
+    // console.log(location);
+    var formData = new FormData();
+    formData.append('location',location);
+
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+        url: "/find_by_location_event",
+        type: 'post',
+        dataType: "json",
+        async: false,
+        processData: false,
+        contentType: false,
+        data: formData,
+        success: function (data) {
+            if(data.list_event.length > 0){
+                var html = ``;
+                for(var i = 0; i< data.list_event.length;i++){
+                    html += `
+                    <div class="item">
+                        <div class="post-item-1">
+                            <a href="/event-detail/`+ data.list_event[i].alias +`">
+                                <div class="thumb ratio thumb-hover-anim">
+                                    <img src="`+ data.arr_image[i] +`" alt="">
+                                </div>
+                            </a>
+                            <div class="item-content">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="flex-fill">
+                                        <div class="date text-latin">`+ data.list_event[i].created_at +` UP!</div>
+                                    </div>
+                                    <div class="flex-auto ml-20">
+                                        <img width="16" src="/web-assets/images/icons/heart-gray.svg" alt=""> 
+                                        <span class="count text-latin">123</span>
+                                    </div>
+                                </div>
+                                <div class="title">
+                                    <a href="">
+                                    `+ data.list_event[i].name +`
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    `;
+                }
+            }
+            else {
+                var html = '';
+            }
+            $('#dom').html(html);
+
+            $('#dom').data('owl.carousel').destroy(); 
+            $('#dom').owlCarousel({touchDrag: true, mouseDrag: true, dots: true,});
         }
     });
 

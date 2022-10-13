@@ -17,6 +17,8 @@ use App\Models\Favorite;
 use App\Models\Comment;
 use App\Models\Notification;
 use App\Models\Category;
+use Illuminate\Support\Str;
+use App\Models\Category_spot;
 
 use App\Models\Goods;
 use App\Models\User;
@@ -73,59 +75,58 @@ class SpotController extends Controller
         return view('web.spot-detail',['info_spot'=>$info_spot,'list_spot'=>$list_spot,'list_comment'=>$list_comment,'recently'=>$recently]);
     }
     public function spotRegister(){
-        return view('web.spot-register');
+        $listLocation = Spot::listLocation();
+        return view('web.spot-register')
+        ->with([
+            'listLocation'=> $listLocation,
+        ]);
     }
 
     public function postSpotRegister(Request $req){
+            
         $this->validate($req,[
             'image'=>'required',
-            'sub_image_01'=>'required',
-            'sub_image_02'=>'required',
-            'sub_image_03'=>'required',
-
             'location'=>'required',
             'name'=>'required',
             'intro'=>'required',
             'category'=>'required',
+            'address'=>'required',
 
         ],
         [
+            'address.required'=>'必須項目です',
             'image.required'=>'必須項目です',
-            'sub_image_01.required'=>'必須項目です',
-            'sub_image_02.required'=>'必須項目です',
-            'sub_image_03.required'=>'必須項目です',
             'location.required'=>'必須項目です',
             'name.required'=>'必須項目です',
             'intro.required'=>'必須項目です',
             'category.required'=>'必須項目です',
 
         ]);
+        // dd($req);
+        $alias = Str::slug($req->input('name'), "-");
 
+        $check_name = Spot::where('name',$req->input('name'))->first();
+        if($check_name){
+            return redirect()->back()->with('error','タイトルは既に存在します');
+        }
         $file = $req->file('image');
-        $sub_image_01 = $req->file('sub_image_01');
-        $sub_image_02 = $req->file('sub_image_02');
-        $sub_image_03 = $req->file('sub_image_03');
+        $sub_img = [];
         $uploadService = new \App\Services\UploadService;
-
-        $images_01 =  $uploadService->handleUploadFile($sub_image_01,'')['file_info']['id'];
-        $images_02 =  $uploadService->handleUploadFile($sub_image_02,'')['file_info']['id'];
-        $images_03 =  $uploadService->handleUploadFile($sub_image_03,'')['file_info']['id'];
-
-        $sub_img = "$images_01,$images_02,$images_03";
-
+        for($u = 1;$u<3;$u++){
+            if($req->file('sub_image_0'. $u)){
+                $sub_img [] = $uploadService->handleUploadFile($req->file('sub_image_0'. $u),'')['file_info']['id'];
+            }
+        }
         $spot = new Spot();
         $spot->location = $req->input('location');
+        $spot->address = $req->input('address');
         $spot->name = $req->input('name');
         $spot->intro = $req->input('intro');
         $spot->image_id = $uploadService->handleUploadFile($file,"")['file_info']['id'];
-        $spot->sub_image = $sub_img;
+        $spot->images_id = $sub_img;
         $spot->category = $req->input('category');
-        // $spot->save();
-        // $spot->category = implode(",",$req->input('category'));
-
-        // dd($req->input('category'));
-
-        return view('web./spot-preview',['spot'=> $spot]);
+        $category = $spot->getCategory_list();
+        return view('web/spot-preview',['spot'=> $spot ,'category'=> $category]);
     }
     public function upload_img(){
         $img = $_FILES['file'];
@@ -136,50 +137,53 @@ class SpotController extends Controller
     }
 
     public function PostSpotPreview(Request $req){
-        $arr = explode(",",$req->input('sub_image'));
-        $example = array("$arr[0]","$arr[1]","$arr[2]");
+
+        $alias = Str::slug($req->input('name'), "-");
+        if($req->input('sub_image') == ""){
+            $example = array("");
+        }
+        else {
+            $example = explode(",",$req->input('sub_image'));
+        }
+
+        $list_cate = explode(",",$req->input('category'));
         $exampleEncoded = json_encode($example);
-
-        // $arr_cate = explode(",",$req->input('category'));
-        // $example_cate = array("$arr[0]","$arr[1]","$arr[2]");
-        // dd($req->input('category'));
         $user = Auth::user();
-        if($req->input('id') == null){
-            $spot = new Spot();
-            $spot->location = $req->input('location');
-            $spot->name = $req->input('name');
-            $spot->intro = $req->input('intro');
-            $spot->image_id = $req->input('image');
-            $spot->images_id = $example;
-            $spot->favorite = 0;
-            $spot->count_comment = 0;
-            $spot->address = $req->input('location');
-            $spot->author = $user->id;
-            $spot->status = 'disabled';
+        if($alias == ""){
+            $alias = $req->input('name');
+        }
+        Spot::updateOrInsert([
+            'id'=> $req->input('id'),
+        ],[
+            'location'=> $req->input('location'),
+            'address'=> $req->input('location'),
+            'name'=> $req->input('name'),
+            'intro'=> $req->input('intro'),
+            'image_id'=> $req->input('image'),
+            'images_id'=> $exampleEncoded,
+            'author'=> $user->id,
+            'alias'=> $alias,
+            'favorite'=> 0,
+            'count_comment'=> 0,
+            'status'=> 'disabled',
+            'address'=>$req->input('image'),
+        ]);
 
-            $spot->category = $req->input('category');
-            $spot->save();
-
-            $favorite = new Favorite();
-            $favorite->posts_id = $spot->id;
-            $favorite->type_posts = 1;
-            $favorite->save();
-
-        }else {
-            $spot = Spot::findorfail($req->input('id'));
-            $spot->location = $req->input('location');
-            $spot->name = $req->input('name');
-            $spot->intro = $req->input('intro');
-            $spot->image_id = $req->input('image');
-            $spot->images_id = $example;
-            $spot->author = $user->id;
-            $spot->category = $req->input('category');
-            $spot->save();
+        $spot  = Spot::where('alias',$alias)->first();
+        Category_spot::where('spot_id',$spot->id)->delete();
+        for($i = 0;$i < count($list_cate);$i++){
+            Category_spot::updateOrInsert(
+                [
+                    'category_id'=>6,
+                ],
+                [
+                    'category_id'=>$list_cate[$i],
+                    'spot_id'=>$spot->id,
+                ]
+            );
         }
         return view('web.spot-edtting-complete');
     }
-
-
     // edit
 
     public function spotEdit($id){

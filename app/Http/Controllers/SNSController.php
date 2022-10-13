@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Socialite\Facades\Socialite;
-
+use App\Jobs\SendEmail;
 class SNSController extends Controller
 {
     public function loginWithGoogle(){
@@ -48,7 +48,8 @@ class SNSController extends Controller
                         'task' => $otp,
                         'content' => 'has been created!',
                     ];
-                    SendEmail::dispatch($message, $user['name'])->delay(now()->addMinute(1));
+                    // dd($user['email']);
+                    SendEmail::dispatch($message, $user['email'])->delay(now()->addMinute(1));
                 
                     // dd($saveUser);
                     $get_user = User::where('email', $user['email'])->first();
@@ -84,10 +85,10 @@ class SNSController extends Controller
     public function handleFacebookCallback()
     {
         try {
+            // dd('a');
     
             $user = Socialite::driver('facebook')->user();
             $finduser = User::where('email', $user['email'])->first();
-            // dd($finduser);
      
             if($finduser){
 
@@ -103,7 +104,9 @@ class SNSController extends Controller
 
                 
             }else{
-                $check_facebookId = User::where('facebook_id',$user['id']);
+            // dd('s');
+
+                $check_facebookId = User::where('facebook_id',$user['id'])->first();
                 if($check_facebookId){
                     return redirect()->route('index');
                 }
@@ -116,7 +119,7 @@ class SNSController extends Controller
                     ]);
                         Auth::login($newUser);
                         $check = Auth::user();
-                        return redirect('register-edit-profile/'. $check['id']);
+                        return redirect('register-edit-profile');
                 }
             }
     

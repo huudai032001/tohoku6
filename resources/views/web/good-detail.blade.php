@@ -2,6 +2,8 @@
     @section('link_css')
 
         <link rel="stylesheet" href="/web-assets/css/good-detail.css">
+        <link rel="stylesheet" href="/web-assets/libs/lightslider/css/lightslider.min.css">
+        <script src="/web-assets/libs/lightslider/js/lightslider.min.js"></script>
     @endsection
 
     @section('content')
@@ -26,14 +28,14 @@
                         <div class="good-images">
                             <div class="slider">
                                 @if($image = $info_goods->image)
-                                <div class="item" data-thumb="/web-assets/images/demo/1.png">
+                                <div class="item" data-thumb="{{$image->getUrl()}}">
                                     <img src="{{$image->getUrl()}}" alt="">
                                 </div>
                                 @endif
 
                                 @if($images =$info_goods->getImages())
                                 @foreach($images as $image)
-                                <div class="item" data-thumb="/web-assets/images/demo/1.png">
+                                <div class="item" data-thumb="{{$image->getUrl()}}">
                                     <img src="{{$image->getUrl()}}" alt="">
                                 </div>
                                 @endforeach
@@ -57,7 +59,12 @@
                         </div>
 
                         <div class="text-align-center">
+                            @if(Auth::user()->point > $info_goods->point)
                             <a href="{{route('exchangeGoods',$info_goods->alias)}}" class="button button-style-1">交換する</a>
+                            @else
+                            <a onclick="fail()" class="button button-style-1">交換する</a>
+
+                            @endif
                         </div>
 
                     </div>
@@ -97,6 +104,7 @@
         <script src="/web-assets/js/components.js"></script>
         <script src="/web-assets/js/main.js"></script>
         <script src="/web-assets/js/tohoku-calendar.js"></script>
+        <script src="/web-assets/js/goods.js"></script>
         
     </body>
     @endsection

@@ -140,7 +140,7 @@ class SpotController extends CommonDataController {
                 'name' => 'address',                
                 'label' => 'Address',
                 'required' => false,
-                'data' => $dataItem->category
+                'data' => $dataItem->address
             ]),
             new Form\Upload([
                 'name' => 'image',
@@ -194,7 +194,10 @@ class SpotController extends CommonDataController {
     {
         $arr_cate = $request->input('category');
         $alias = Str::slug($request->input('name'), "-");
-
+        if($alias == ""){
+            $alias = $request->input('name');
+        }
+        // dd($alias);
         $item->name = $request->input('name');
         $item->location = $request->input('location');
         $item->intro = $request->input('intro');

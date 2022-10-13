@@ -17,6 +17,8 @@ use App\Misc\HTML;
 use App\Misc\FlashMsg;
 use App\Misc\Helper;
 use App\Models\Category_event;
+use App\Models\Category;
+use App\Models\Favorite;
 
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use App\Form;
@@ -185,6 +187,9 @@ class EventController extends CommonDataController {
     protected function updateItem(Request $request, $item)
     {
         $alias = Str::slug($request->input('name'), "-");
+        if($alias == ""){
+            $alias = $request->input('name');
+        }
         $arr_cate = $request->input('category');
 
         $item->name = $request->input('name');
@@ -204,7 +209,7 @@ class EventController extends CommonDataController {
 
         $category = new Category_event();
         for($i = 0; $i < count($arr_cate);$i++){
-            $category->spot_id = $item->id;
+            $category->event_id = $item->id;
             $category->category_id = $arr_cate[$i];
             $category->save();
         }

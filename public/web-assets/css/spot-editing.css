@@ -18,6 +18,13 @@
 img.images-spot {
   min-height: 200px;
 }
+select.select-text {
+  width: 30%;
+  height: 38px;
+  border-radius: 16px;
+  border: none;
+  text-align: center;
+}
 .owl-stage {
   display: flex;
   width: 795px !important;
