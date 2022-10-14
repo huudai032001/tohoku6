@@ -15,6 +15,7 @@ Route::crud('spot-category', AdminControllers\SpotCategoryController::class);
 
 Route::crud('goods', AdminControllers\GoodsController::class);
 Route::crud('event', AdminControllers\EventController::class);
+Route::crud('event-category', AdminControllers\EventCategoryController::class);
 
 Route::crud('comment', AdminControllers\CommentController::class);
 Route::crud('report', AdminControllers\ReportController::class);

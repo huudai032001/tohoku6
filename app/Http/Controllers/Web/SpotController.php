@@ -16,9 +16,12 @@ use App\Models\Upload;
 use App\Models\Favorite;
 use App\Models\Comment;
 use App\Models\Notification;
-use App\Models\Category;
+// use App\Models\Category;
+use App\Models\SpotCategory;
+use DB;
+
 use Illuminate\Support\Str;
-use App\Models\Category_spot;
+// use App\Models\Category_spot;
 
 use App\Models\Goods;
 use App\Models\User;
@@ -28,7 +31,7 @@ use App\Jobs\SendEmailResetPass;
 class SpotController extends Controller
 {
     public function list_spot(Request $req){
-        $query = Spot::with('upload')->where('status','active');
+        $query = Spot::where('status','publish');
 
         if($req->input('search')){
             $query->where('spots.name', 'like', \Helper::makeSearchString());
@@ -54,7 +57,7 @@ class SpotController extends Controller
 
         $list_spot = $query->take(6)->get();
 
-        $category = Category::all();
+        $category = SpotCategory::all();
         // dd($list_spot);
         return view('web.spots',compact('list_spot','category'));
     }
@@ -135,7 +138,6 @@ class SpotController extends Controller
     }
 
     public function PostSpotPreview(Request $req){
-        // $find_cate = Category_spot::findorfail($req->input('id'))->delete();
         $alias = Str::slug($req->input('name'), "-");
         if($req->input('sub_image') == ""){
             $example = array("");
@@ -168,18 +170,8 @@ class SpotController extends Controller
         ]);
 
         $spot  = Spot::where('alias',$alias)->first();
-        Category_spot::where('spot_id',$spot->id)->delete();
-        for($i = 0;$i < count($list_cate);$i++){
-            Category_spot::updateOrInsert(
-                [
-                    'category_id'=>$list_cate[$i],
-                ],
-                [
-                    // 'category_id'=>$list_cate[$i],
-                    'spot_id'=>$spot->id,
-                ]
-            );
-        }
+        $spot->categories()->sync($list_cate);
+
         return view('web.spot-edtting-complete');
     }
     // edit
@@ -256,18 +248,26 @@ class SpotController extends Controller
         [
             'comment.required'=>'必須項目です',
         ]);
-        $comment = new Comment();
-        $comment->user_id = Auth::user()->id;
-        $comment->spot_id = $req->input('posts_id');
-        $comment->content = $req->input('comment');
-        $comment->name_user = $req->input('name_user');
+        try {
+            $comment = new Comment();
+            $comment->user_id = Auth::user()->id;
+            $comment->spot_id = $req->input('posts_id');
+            $comment->content = $req->input('comment');
+            $comment->name_user = $req->input('name_user');
 
-        $comment->save();
+            $comment->save();
 
-        $spot = Spot::where('id',$req->input('posts_id') )->first();
-        $spot->count_comment = $spot->count_comment + 1;
-        $spot->save();
-        return redirect()->back();
+            $spot = Spot::where('id',$req->input('posts_id') )->first();
+            $spot->count_comment = $spot->count_comment + 1;
+            $spot->save();
+
+            return redirect()->back();
+            DB::commit();
+            // all good
+        } catch (\Exception $e) {
+            DB::rollback();
+            // something went wrong
+        }
     }
 
     public function deleteComment(){
@@ -276,20 +276,13 @@ class SpotController extends Controller
         echo json_encode(['res'=>true]);
     }
 
-    public function postfindByCategorySpot(){
-        if($_POST){
-            $category = $_POST['category'];
-            $arr_image = [];
-
-            $list_category = Spot::where('category','like',"%{$category}%")->take(6)->get();
-            // dd($list_category);
-
-            foreach($list_category as $value){
-                $arr_image [] = ($value->image)->getUrl(); 
-            }
-            echo json_encode(['list_category'=>$list_category,'arr_image'=>$arr_image]);
-            
+    public function postfindByCategorySpot(Request $req){
+        $arr_image = [];
+        $list_category = SpotCategory::findorfail($req->input('category'))->items;
+        foreach($list_category as $value){
+            $arr_image [] = ($value->image)->getUrl(); 
         }
+        echo json_encode(['list_category'=>$list_category,'arr_image'=>$arr_image]);
     }
 
 }

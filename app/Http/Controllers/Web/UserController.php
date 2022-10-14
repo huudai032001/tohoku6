@@ -17,6 +17,7 @@ use App\Models\Favorite;
 use App\Models\Comment;
 use App\Models\Notification;
 use App\Models\Category;
+use DB;
 
 use App\Models\Goods;
 use App\Models\User;
@@ -34,7 +35,6 @@ class UserController extends Controller
         $user_favorite_events = Event::where('author',$user->id)->orderBy('favorite','DESC')->take(6)->get();
         $user_comment = Comment::where('user_id',$user->id)->orderBy('created_at','DESC')->take(4)->get();
         $user_goods = Goods::where('author',$user->id)->orderBy('created_at','DESC')->take(6)->get();
-        // $notifi = Notification::where('user_id',$user->id)->orderBy('created_at','DESC')->take(20)->get();
         return view('web.my-profile', compact(
             'user_spot_posts',
             'user_favorite_events',
@@ -193,8 +193,7 @@ class UserController extends Controller
         $list_user->name = $req->input('name');
         $list_user->gender = $req->input('gender');
         $list_user->intro = $req->input('intro');
-        // $list_user->email = $req->input('email');
-        // dd($file);
+   
         if($file != null){
             $list_user->avatar_image_id = $uploadService->handleUploadFile($file,"")['file_info']['id'];
         }
@@ -353,9 +352,7 @@ class UserController extends Controller
     public function logout (Request $request)
     {
         Auth::logout();
-
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
 
         return redirect()->back();

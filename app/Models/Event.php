@@ -31,5 +31,9 @@ class Event extends BaseModel
     {
         return \App\Models\Upload::whereIn('id', $this->images_id)->get();
     }
+    public function categories()
+    {
+        return $this->belongsToMany(\App\Models\EventCategory::class, 'event_term_map', 'object_id','term_id', );
+    }
 
 }

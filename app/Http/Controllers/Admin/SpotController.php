@@ -22,7 +22,7 @@ use App\Models\Category_spot;
 
 use App\Models\Spot;
 use App\Models\Upload;
-use App\Models\Notification;
+use App\Models\SpotCategory;
 use App\Models\Favorite;
 
 
@@ -169,7 +169,6 @@ class SpotController extends CommonDataController {
                 'label' => __('common.category'),
                 'data' => $dataItem->categories,
                 'model' => \App\Models\SpotCategory::class,
-
             ]),
 
         ]);
@@ -216,6 +215,7 @@ class SpotController extends CommonDataController {
         $item->save();
 
         $item->categories()->sync($request->input('category'));
+        $item->categories()->sync(SpotCategory::getSyncId($request->input('category')));
 
     }    
 

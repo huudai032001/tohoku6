@@ -150,14 +150,15 @@
                                     <div class="form-control-wrap">
                                         <div class="row" style="--col-space-x: 30px; --col-space-y: 26px;">
                                         <?php
-                                                $categoty_spot = $info_spot->getCategory();
+                                                $categoty_spot = $info_spot->categories;
+                              
                                             for($s=0;$s<count($arr_category);$s++)
                                             {
 
                                         ?>
                                             <div class="col-auto">
                                                 <label class="custom-radio">
-                                                    <input type="checkbox" name="category[]" value="{{$s+1}}" <?php foreach($categoty_spot as $ca){ if($s+1 == $ca->category_id){ echo 'checked'; } } ?>> <span class="checkmark"></span> {{$arr_category[$s]}}
+                                                    <input type="checkbox" name="category[]" value="{{$s+1}}" <?php foreach($categoty_spot as $ca){ if($s+1 == $ca->id){ echo 'checked'; } } ?>> <span class="checkmark"></span> {{$arr_category[$s]}}
                                                 </label>
                                             </div>
                                             <?php
@@ -165,7 +166,7 @@
                                             ?>
                                             <div class="col-4 col-sm-3">
                                                 <label class="custom-radio">
-                                                    <input type="checkbox" name="category[]" value="7" <?php foreach($categoty_spot as $ca){ if(7 == $ca->category_id){ echo 'checked'; } } ?>> <span class="checkmark"></span> SNS映え
+                                                    <input type="checkbox" name="category[]" value="7" <?php foreach($categoty_spot as $ca){ if(7 == $ca->id){ echo 'checked'; } } ?>> <span class="checkmark"></span> SNS映え
                                                 </label>
                                             </div>                                            
                                         </div>

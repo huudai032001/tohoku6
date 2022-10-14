@@ -19,6 +19,7 @@ use App\Misc\Helper;
 use App\Models\Category_event;
 use App\Models\Category;
 use App\Models\Favorite;
+use App\Models\EventCategory;
 
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use App\Form;
@@ -143,21 +144,13 @@ class EventController extends CommonDataController {
                 'required' => true,
                 'data' => $dataItem->images_id
             ]),
-            // new Form\Checkbox([
-            //     'name' => 'category[]',
-            //     'label' => 'Category',
-            //     'options' => [
-            //         1 => 'グルメ',
-            //         2 => 'ショッピング',
-            //         3 => '宿泊',
-            //         4 => '体験',
-            //         5 => '自然',
-            //         6 => 'SNS映え',
-            //         7 => '歴史'
-            //     ],
-            //     'data' => $dataItem->category,
-            //     'inline' => true
-            // ]),
+            new Form\Taxonomy([
+                'name' => 'category',
+                'label' => __('common.category'),
+                'data' => $dataItem->categories,
+                'model' => \App\Models\EventCategory::class,
+            ]),
+
         ]);
         $form->addGroups([
             new Form\Select([
@@ -186,11 +179,11 @@ class EventController extends CommonDataController {
 
     protected function saveNewOrUpdate(Request $request, $item)
     {
-        $alias = Str::slug($request->input('name'), "-");
-        if($alias == ""){
-            $alias = $request->input('name');
+        $item->name = $request->input('name');
+        if(!$request->filled('alias')) {
+            $item->alias = \Helper::makeSlug($request->input('name'));
         }
-        $arr_cate = $request->input('category');
+ 
 
         $item->name = $request->input('name');
         $item->intro = $request->input('intro');
@@ -198,27 +191,13 @@ class EventController extends CommonDataController {
         $item->location = $request->input('location');
         $item->image_id = $request->input('image');
         $item->images_id = $request->input('images');
-        $item->favorite = 0;
-        $item->count_comment = 0;
-        $item->author = Auth::user()->id;
-        // $item->category = implode(',',$request->input('category'));
-        $item->location = $request->input('location');
-        $item->alias = $alias;
-
-        $item->save();
-
-        $category = new Category_event();
-        for($i = 0; $i < count($arr_cate);$i++){
-            $category->event_id = $item->id;
-            $category->category_id = $arr_cate[$i];
-            $category->save();
+        if (!$item->id) {
+            $item->favorite = 0;
+            $item->count_comment = 0;
+            $item->author = Auth::user()->id;
         }
-
-        $favorite = new Favorite();
-        $favorite->user_id = Auth::user()->id;
-        $favorite->posts_id = $item->id;
-        $favorite->type_posts = 2;
-        $favorite->save();
+        $item->save();
+        $item->categories()->sync(EventCategory::getSyncId($request->input('category')));
     }    
 
     // protected function delete($dataItem)

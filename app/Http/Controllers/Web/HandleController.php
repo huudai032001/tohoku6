@@ -22,10 +22,12 @@ use App\Models\ExchangeGoods;
 use App\Models\ZipCode;
 use Illuminate\Support\Str;
 use App\Models\Goods;
-use App\Models\Report_comment;
-use App\Models\Report_spot;
+use App\Models\Report;
+use App\Models\EventCategory;
+use DB;
+use App\Models\Category;
 
-use App\Models\Notification;
+use App\Models\UserNotification;
 
 use App\Models\User;
 use App\Jobs\SendEmail;
@@ -34,22 +36,16 @@ use App\Jobs\SendEmailResetPass;
 class HandleController extends Controller
 {
     public function postfindByCategory(Request $req){
-        // if($_POST){
-            $category = $req->input('category');
-            $arr_image = [];
+        $category = $req->input('category');
+        $arr_image = [];
 
-            $list_category = [];
-            $category_event = Category_event::where('category_id',$category)->get();
-            foreach($category_event as $value){
-                $list_category [] = $value->event;
-            }
+        $list_category = EventCategory::findorfail($req->input('category'))->items;
 
-            foreach($list_category as $value){
-                $arr_image [] = ($value->image)->getUrl(); 
-            }
-            echo json_encode(['list_category'=>$list_category,'arr_image'=>$arr_image]);
-            
-        // }
+        foreach($list_category as $value){
+            $arr_image [] = ($value->image)->getUrl(); 
+        }
+        echo json_encode(['list_category'=>$list_category,'arr_image'=>$arr_image]);
+        
     }
 
     public function allComment(){
@@ -66,27 +62,59 @@ class HandleController extends Controller
         $id_posts = $req->input('id_posts');
         $type_posts = $req->input('type_posts');
         $user_id = $req->input('user_id');
-
-        $favorite = Favorite::where(['posts_id'=>$id_posts,'type_posts'=>$type_posts])->first();
-        $array_user = explode(",",$favorite->user_id);
-        // dd(in_array($user_id, $array_user));
-        if (in_array($user_id, $array_user)) {
-            echo json_encode(['res'=>false]);
-        }
-        else {
-            try {
-                if($favorite->user_id != null){
-                    
+        // dd($id_posts);
+        $favorite = Favorite::where(['object_id'=>$id_posts,'object_type'=>$type_posts])->first();
+        if($favorite){
+            $array_user = explode(",",$favorite->user_id);
+            if (in_array($user_id, $array_user)) {
+                echo json_encode(['res'=>false]);
+            }else {
+                try{
                     $favorite->user_id = $favorite->user_id ."," . $user_id;
-                    // $favorite->user_id = array_pu
+
+                    $noti = new UserNotification();
+                    $noti->user_id = $req->input('user_id');
+                    $noti->user_group = User::findorfail($req->input('user_id'))->name;
+                    $noti->string = "recently liked post";
+                    $noti->params = json_encode(array('order_id'=>$id_posts));
+                    $noti->status = "unread";
+
+                    $favorite->save();
+                    $noti->save();
+
+                    if($type_posts == 1){
+                        $posts = Spot::findorfail($id_posts);
+                        $posts->favorite = $posts->favorite + 1;
+                        $posts->save();
+                    }  
+                    else {
+                        $posts = Event::findorfail($id_posts);
+                        $posts->favorite = $posts->favorite + 1;
+                        $posts->save();
+                    }
+                echo json_encode(['res'=>true ,'count'=>$posts->favorite]);
+                DB::commit();
+                } catch (\Exception $e) {
+                    DB::rollback();
                 }
-                else {
-                    $arr_user [] = $user_id;
-                    // $favorite->user_id = $arr_user;
-                    $favorite->user_id = $user_id;
-    
-                }
+            }
+        }else {
+            try{
+                $favorite = new Favorite();
+                $favorite->object_id = $id_posts;
+                $favorite->user_id = $user_id;
+                $favorite->object_type = $type_posts;
                 $favorite->save();
+
+                $noti = new UserNotification();
+                $noti->user_id = $req->input('user_id');
+                $noti->user_group = User::findorfail($req->input('user_id'))->name;
+                $noti->string = "recently liked post";
+                $noti->params = json_encode(array('order_id'=>$id_posts));
+                $noti->status = "unread";
+
+                $noti->save();
+                
                 if($type_posts == 1){
                     $posts = Spot::findorfail($id_posts);
                     $posts->favorite = $posts->favorite + 1;
@@ -97,20 +125,13 @@ class HandleController extends Controller
                     $posts->favorite = $posts->favorite + 1;
                     $posts->save();
                 }
-    
-                // dd($posts->getName());
-                $noti = new Notification();
-                $noti->user_id = $_POST['user_id'];
-                $noti->posts_id = $id_posts;
-                $noti->feedback = Auth::user()->name . "が  " . $posts->name ."についての感情を表した";
-                $noti->save();
-    
+            
                 echo json_encode(['res'=>true ,'count'=>$posts->favorite]);
-            } catch (\Throwable $th) {
-                //throw $th;\
-                echo \json_encode(['res'=>false]);
+                DB::commit();
+            } catch (\Exception $e) {
+                DB::rollback();
             }
-        }
+        }        
     }
     
         public function sortSpot(){
@@ -156,16 +177,13 @@ class HandleController extends Controller
             }
 
             foreach($list_event as $value){
-                $a = $value->categoryDetail;
+                $a = $value->categories;
 
                 foreach($a as $va){
-                    if($ca = $va->category){
-                        $arr_category  []= $ca->name; 
-                    }
+                        $arr_category  []= $va->name; 
                 }
                 $arr_image [] = ($value->image)->getUrl(); 
             }
-            // dd($arr_category);
             echo json_encode(['arr_image'=>$arr_image,'list_event'=>$list_event,'arr_category'=>$arr_category,'total_page'=>$total_page]);
     
         }
@@ -260,24 +278,34 @@ class HandleController extends Controller
             [
                 'comment.required'=>'必須項目です',
             ]);
-            $comment = new Comment();
-            $comment->user_id = Auth::user()->id;
-            $comment->spot_id = $req->input('posts_id');
-            $comment->content = $req->input('comment');
-            $comment->name_user = $req->input('name_user');
-            $comment->save();
-    
-            $spot = Spot::findorfail($req->input('posts_id'));
-            $spot->count_comment = $spot->count_comment + 1;
-            $spot->save();
+            try{
 
-            $noti = new Notification();
-            $noti->user_id = $req->input('author');
-            $noti->posts_id = $req->input('posts_id');
-            $noti->feedback = Auth::user()->name . "があなたの投稿にコメントしました";
-            $noti->save();
+                $comment = new Comment();
+                $comment->user_id = Auth::user()->id;
+                $comment->spot_id = $req->input('posts_id');
+                $comment->content = $req->input('comment');
+                $comment->name_user = $req->input('name_user');
+                $comment->save();
+        
+                $spot = Spot::findorfail($req->input('posts_id'));
+                $spot->count_comment = $spot->count_comment + 1;
+                $spot->save();
 
-            return redirect()->back();
+                $noti = new UserNotification();
+                $noti->user_id = $req->input('author');
+                $noti->user_group = User::findorfail($req->input('user_id'))->name;
+                $noti->string = "new_comment";
+                $noti->params = json_encode(array('order_id'=>$req->input('posts_id')));
+                $noti->status = "unread";
+                $noti->save();
+
+                return redirect()->back();
+                DB::commit();
+                // all good
+            } catch (\Exception $e) {
+                DB::rollback();
+                // something went wrong
+            }
         }
 
         public function deleteComment(){
@@ -313,10 +341,12 @@ class HandleController extends Controller
         }
 
         public function reportComment(Request $req){
-            $report = new Report_comment();
-            $report->comment_id = $req->input('id_com');
+            $report = new Report();
+            $report->object_id = $req->input('id_com');
+            $report->object_type = "comment";
             $report->content = $req->input('report');
             $report->user_id = Auth::user()->id;
+            $report->status = "unread";
             $report->save();
 
             echo json_encode(['res'=>true]);
@@ -324,9 +354,12 @@ class HandleController extends Controller
 
         public function reportSpot(Request $req){
             $report = new Report_spot();
-            $report->spot_id = $req->input('id_com');
+            $report->object_id = $req->input('id_com');
+            $report->object_type = "spot";
             $report->content = $req->input('report');
             $report->user_id = Auth::user()->id;
+            $report->status = "unread";
+
             $report->save();
 
             echo json_encode(['res'=>true]);

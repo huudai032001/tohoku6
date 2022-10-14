@@ -16,6 +16,7 @@ use App\Models\Favorite;
 use App\Models\Comment;
 use App\Models\Notification;
 use App\Models\Category;
+use DB;
 
 use App\Models\Goods;
 use App\Models\User;
@@ -108,21 +109,26 @@ class GoodsController extends Controller
     }
     public function postGoodExchangeConfirm(Request $req){
         $alias = Str::slug($req->input('name'), "-");
+        try {
+            $exchange = new ExchangeGoods;
+            $exchange->name = $req->input('name');
+            $exchange->phone = $req->input('phone');
+            $exchange->address = $req->input('address');
+            $exchange->home_address = $req->input('home_address');
+            $exchange->zip_code = $req->input('zip_code');
+            $exchange->furigana = $req->input('furigana');
+            $example->alias = $alias;
+            $exchange->save();
 
-        $exchange = new ExchangeGoods;
-        $exchange->name = $req->input('name');
-        $exchange->phone = $req->input('phone');
-        $exchange->address = $req->input('address');
-        $exchange->home_address = $req->input('home_address');
-        $exchange->zip_code = $req->input('zip_code');
-        $exchange->furigana = $req->input('furigana');
-        $example->alias = $alias;
-        $exchange->save();
-
-        $user = Auth::user();
-        $user->point = $req->input('point');
-        $user->save();
-
-        return redirect('/good-exchange-complete');
+            $user = Auth::user();
+            $user->point = $req->input('point');
+            $user->save();
+            return redirect('/good-exchange-complete');
+            DB::commit();
+            // all good
+        } catch (\Exception $e) {
+            DB::rollback();
+            // something went wrong
+        }
     }
 }

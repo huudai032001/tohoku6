@@ -43,14 +43,20 @@
                         <li class="nav-item"><a href="{{ route('admin.spot-category.index') }}" class="nav-link" >Category</a></li>
                     </ul>
                 </li>
-                
+                <li class="nav-item nav-item-submenu">
+                    <a href="#" class="nav-link"><i class="icon-file-text3"></i> <span> Event</span></a>
+                    <ul class="nav nav-group-sub">
+                        <li class="nav-item"><a href="{{ route('admin.event.index') }}" class="nav-link" >List</a></li>
+                        <li class="nav-item"><a href="{{ route('admin.event-category.index') }}" class="nav-link" >Category</a></li>
+                    </ul>
+                </li>
 
                 <li class="nav-item">
                     <a href="{{ route('admin.goods.index') }}" class="nav-link"><i class="icon-file-text3"></i> <span> {{ __('Goods') }}</span></a>                    
                 </li> 
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a href="{{ route('admin.event.index') }}" class="nav-link"><i class="icon-file-text3"></i> <span> {{ __('Event') }}</span></a>                    
-                </li>
+                </li> -->
 
                 <li class="nav-item">
                     <a href="{{ route('admin.comment.index') }}" class="nav-link"><i class="icon-file-text3"></i> <span> {{ __('Comment') }}</span></a>                    

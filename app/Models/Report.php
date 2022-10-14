@@ -8,18 +8,22 @@ use App\Models\Base\BaseModel;
 
 use App\Models\Traits;
 use App\Models\Casts;
-class Report_spot extends BaseModel
+
+class Report extends BaseModel
 {
-    protected $table = "report_spot";
+    protected $table = "report";
+
     public static function getModelName() {
-        return __('common.report_spot');        
+        return __('common.report');        
     }
     public function getName() {
         return $this->name;
     }
-    public function spot(){
-        return $this->belongsTo(\App\Models\Spot::class, 'spot_id');
+
+    public function comment(){
+        return $this->belongsTo(\App\Models\Comment::class, 'comment_id');
     }
+
     public function userName(){
         return $this->belongsTo(\App\Models\User::class, 'user_id');
     }

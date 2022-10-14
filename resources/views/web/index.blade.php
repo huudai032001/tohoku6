@@ -468,7 +468,7 @@
                 <div class="modal_title">通知</div>
                 <ul class="user-notification_list custom-scrollbar">
                     @if(Auth::check())
-                        @if($notifi = Auth::user()->getNotifi())
+                        @if($notifi = Auth::user()->notifications())
                             @foreach($notifi as $noti)
                             <li class="d-flex align-items-center">
                                 <div class="date">{{$noti->created_at}}</div>

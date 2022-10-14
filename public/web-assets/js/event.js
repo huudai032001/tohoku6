@@ -18,7 +18,6 @@ function find_by_day(year,month,day){
         contentType: false,
         data: formData,
         success: function (data) {
-
             if(data.list_event.length > 0){
                 var u = 0;
                 for(var i = 0;i<data.list_event.length;i++){
@@ -29,7 +28,7 @@ function find_by_day(year,month,day){
                                 <div class="icon-star">
                                     <img src="/web-assets/images/icons/star-yellow.svg" alt="">
                                 </div>
-                                <a href="event-detail/`+ data.list_event[i].id +`">
+                                <a href="event-detail/`+ data.list_event[i].alias +`">
                                     <div class="ratio thumb-image thumb-hover-anim">
                                         <img src="`+ data.arr_image[i] +`" alt="">
                                     </div>
@@ -49,7 +48,7 @@ function find_by_day(year,month,day){
                                 </div>
                                 <div class="line"></div>
                                 <div class="item-title">
-                                    <a href="event-detail/`+ data.list_event[i].id +`">
+                                    <a href="event-detail/`+ data.list_event[i].alias +`">
                                     `+ data.list_event[i].name +`
                                     </a>
                                 </div>
@@ -57,8 +56,8 @@ function find_by_day(year,month,day){
                                 <div class="counters d-flex align-items-center justify-content-between"> 
                                     <div class="tags d-flex align-items-center">`;
                                     // for(var s = 0;s < data.arr_category.length;s++){
-                                        for(var u = 0;u < data.arr_category[i].length;u++){
-                                            html +=`<span class="tag">`+ data.arr_category[i][u].name +`</span>`;
+                                        for(var u = 0;u < data.arr_category.length;u++){
+                                            html +=`<span class="tag">`+ data.arr_category[u].name +`</span>`;
                                         }
                                     // }
                                         
@@ -118,15 +117,15 @@ function find_by_day(year,month,day){
             `;
             $(".current-page-num").html(1);
             $(".total-page-num").html(data.total_page);
+            console.log(year,month,day);
 
-            document.getElementById("prev").href = url + "?year="+ year +"&month="+ month +"&day="+ day +"&page=1";
-            if(data.total_page ==1){
-                document.getElementById("next").href = url + "?year="+ year +"&month="+ month +"&day="+ day +"&page=1";
-            }
-            else {
-                document.getElementById("next").href = url + "?year="+ year +"&month="+ month +"&day="+ day +"&page=2";
-            }
-            console.log(html);
+            // document.getElementById("prev").href = url + "?year="+ year +"&month="+ month +"&day="+ day +"&page=1";
+            // if(data.total_page ==1){
+            //     document.getElementById("next").href = url + "?year="+ year +"&month="+ month +"&day="+ day +"&page=1";
+            // }
+            // else {
+            //     document.getElementById("next").href = url + "?year="+ year +"&month="+ month +"&day="+ day +"&page=2";
+            // }
             $('.post-row').html(html);
             $('.dom-location').html(dom_sort);
         },

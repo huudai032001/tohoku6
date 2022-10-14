@@ -44,6 +44,11 @@ class Spot extends BaseModel
         return $this->belongsToMany(\App\Models\SpotCategory::class, 'spot_term_map', 'object_id','term_id', );
     }
 
+    public function getCategories()
+    {
+        return \App\Models\SpotCategory::whereIn('id', $this->category)->get();
+    }
+
     public function user()
     {
         return $this->belongsTo(\App\Models\User::class, 'author');

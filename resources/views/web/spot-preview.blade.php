@@ -8,6 +8,7 @@
         $cate = implode(',',$spot->category);
 
         $images = implode(',',$spot->images_id);
+        // dd($categorys = $spot->categories)
     ?>
         <div id="wrapper">
             <div id="inner-wrapper">
@@ -56,10 +57,16 @@
                                 <div class="title">位置 : <span>{{$spot->location}}</span> </div>
                                 <div class="title">イントロ : <span>{{$spot->intro}}</span></div>
                                 <div class="title">カテゴリー : 
-                                @if($categorys = $spot->getCategory_list())
-                                @foreach($categorys as $cate)
-                                    <span class="tags">{{$cate->name}} |</span>
-                                @endforeach
+                                @if($categorys = $spot->categories)
+                                    @foreach($categorys as $category)
+                                    <span class="tags">{{$category->name}}</span>
+                                    @endforeach
+                                @endif
+
+                                @if($categorys = $spot->getCategories())
+                                    @foreach($categorys as $category)
+                                    <span class="tags">{{$category->name}} |</span>
+                                    @endforeach
                                 @endif
                                 </div>
 

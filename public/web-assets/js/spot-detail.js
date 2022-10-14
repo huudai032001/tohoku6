@@ -192,7 +192,6 @@ function report_two(){
     if(check){
         return false;
     }
-
     $.ajax({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -206,9 +205,6 @@ function report_two(){
         data: formData,
         success: function (data) {
             if(data.res == true){
-                // document.getElementById("result-message").style.display = "block"; 
-                // document.getElementById("ajax-loading-overlay").style.display = "block"; 
-                // document.getElementById("modal-spot-actions-two").style.display = "none";
                 alert("フィードバックを送信しました");
             }
         }

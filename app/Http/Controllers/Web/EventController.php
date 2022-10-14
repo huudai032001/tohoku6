@@ -17,6 +17,7 @@ use App\Models\Comment;
 use App\Models\Notification;
 use App\Models\Category;
 use App\Models\Category_event;
+use DB;
 
 use App\Models\Goods;
 use App\Models\User;
