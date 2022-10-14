@@ -94,7 +94,10 @@ return [
 
     'notification' => 'Notification',
     'mark_as_read' => 'Mark as read',
-    
+    'location'=>'Location',
+    'intro'=>'Intro',
+    'address'=>'Address',
+    'time_start'=>'Time start',
     'spot' => 'Spot',
     'event' => 'Event',
     'goods' => 'Goods',

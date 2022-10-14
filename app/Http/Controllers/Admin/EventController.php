@@ -65,10 +65,10 @@ class EventController extends CommonDataController {
     
 
     protected function initDataTable($dataTable) {
-        $dataTable->addSimpleColumn('name', 'Name');
-        $dataTable->addSimpleColumn('location', 'Location');
-        $dataTable->addSimpleColumn('time_start', 'Time start');
-        $dataTable->addSimpleColumn('intro', 'Intro');
+        $dataTable->addSimpleColumn('name', __('common.name'));
+        $dataTable->addSimpleColumn('location', __('common.location'));
+        $dataTable->addSimpleColumn('time_start', __('common.time_start'));
+        $dataTable->addSimpleColumn('intro', __('common.intro'));
 
         // $dataTable->addColumn('role', __('common.common'), function ($item)
         // {

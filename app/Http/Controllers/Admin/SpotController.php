@@ -65,12 +65,12 @@ class SpotController extends CommonDataController {
     
 
     protected function initDataTable($dataTable) {
-        $dataTable->addSimpleColumn('name', 'Ten');
-        $dataTable->addSimpleColumn('location', 'Dia Diem');
+        $dataTable->addSimpleColumn('name', __('common.name'));
+        $dataTable->addSimpleColumn('location', __('common.location'));
         //$dataTable->addSimpleColumn('category', 'Danh muc');
-        $dataTable->addSimpleColumn('intro', 'Mo ta');
-        $dataTable->addSimpleColumn('address', 'Address'); 
-        $dataTable->addLabelColumn('status','Status', function ($item)
+        $dataTable->addSimpleColumn('intro', __('common.intro'));
+        $dataTable->addSimpleColumn('address', __('common.address')); 
+        $dataTable->addLabelColumn('status',__('common.status'), function ($item)
         {
             return [$item->status, $item->getStatus()];
         },[

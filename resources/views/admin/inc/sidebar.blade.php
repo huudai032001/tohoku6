@@ -37,33 +37,33 @@
                 <li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs">{{ __('Data management') }}</div> <i class="icon-menu"></i></li>
                 
                 <li class="nav-item nav-item-submenu">
-                    <a href="#" class="nav-link"><i class="icon-file-text3"></i> <span> Spot</span></a>
+                    <a href="#" class="nav-link"><i class="icon-file-text3"></i> <span> {{ __('common.spot') }}</span></a>
                     <ul class="nav nav-group-sub">
-                        <li class="nav-item"><a href="{{ route('admin.spot.index') }}" class="nav-link" >List</a></li>
-                        <li class="nav-item"><a href="{{ route('admin.spot-category.index') }}" class="nav-link" >Category</a></li>
+                        <li class="nav-item"><a href="{{ route('admin.spot.index') }}" class="nav-link" >{{ __('common.list') }}</a></li>
+                        <li class="nav-item"><a href="{{ route('admin.spot-category.index') }}" class="nav-link" >{{ __('common.category') }}</a></li>
                     </ul>
                 </li>
                 <li class="nav-item nav-item-submenu">
-                    <a href="#" class="nav-link"><i class="icon-file-text3"></i> <span> Event</span></a>
+                    <a href="#" class="nav-link"><i class="icon-file-text3"></i> <span> {{ __('common.event') }}</span></a>
                     <ul class="nav nav-group-sub">
-                        <li class="nav-item"><a href="{{ route('admin.event.index') }}" class="nav-link" >List</a></li>
-                        <li class="nav-item"><a href="{{ route('admin.event-category.index') }}" class="nav-link" >Category</a></li>
+                        <li class="nav-item"><a href="{{ route('admin.event.index') }}" class="nav-link" >{{ __('common.list') }}</a></li>
+                        <li class="nav-item"><a href="{{ route('admin.event-category.index') }}" class="nav-link" >{{ __('common.category') }}</a></li>
                     </ul>
                 </li>
 
                 <li class="nav-item">
-                    <a href="{{ route('admin.goods.index') }}" class="nav-link"><i class="icon-file-text3"></i> <span> {{ __('Goods') }}</span></a>                    
+                    <a href="{{ route('admin.goods.index') }}" class="nav-link"><i class="icon-file-text3"></i> <span> {{ __('common.goods') }}</span></a>                    
                 </li> 
                 <!-- <li class="nav-item">
                     <a href="{{ route('admin.event.index') }}" class="nav-link"><i class="icon-file-text3"></i> <span> {{ __('Event') }}</span></a>                    
                 </li> -->
 
                 <li class="nav-item">
-                    <a href="{{ route('admin.comment.index') }}" class="nav-link"><i class="icon-file-text3"></i> <span> {{ __('Comment') }}</span></a>                    
+                    <a href="{{ route('admin.comment.index') }}" class="nav-link"><i class="icon-file-text3"></i> <span> {{ __('common.comment') }}</span></a>                    
                 </li> 
 
                 <li class="nav-item">
-                    <a href="{{ route('admin.report.index') }}" class="nav-link"><i class="icon-file-text3"></i> <span> {{ __('Report') }}</span></a>                    
+                    <a href="{{ route('admin.report.index') }}" class="nav-link"><i class="icon-file-text3"></i> <span> {{ __('common.report') }}</span></a>                    
                 </li> 
                 
 

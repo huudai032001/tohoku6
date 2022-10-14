@@ -79,8 +79,10 @@ return [
     'product' => '製品',
     'image' => '画像',
     'image_gallery' => '画像ギャラリー',
-
-
+    'location'=>'位置',
+    'intro'=>'イントロ',
+    'address'=>'住所',
+    'time_start'=>'時間開始',
     'category' => 'カテゴリー',
     'tag' => 'タグ',
 
@@ -97,10 +99,14 @@ return [
     'mark_as_read' => '既読にする',
 
 
-    'Spot' => 'スポット',
-    'Event' => 'イベント',
-    'Goods'=>'品',
-
+    'spot' => 'スポット',
+    // 'Event' => 'イベント',
+    'goods'=>'品',
+    'event' => 'イベント',
+    'category' => 'カテゴリー',
+    'report' => '報告',
+    
+    'comment' => 'コメント',
 
     'Name'=>'名前',
     'Point'=>'点'
