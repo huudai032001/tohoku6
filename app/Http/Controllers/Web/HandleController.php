@@ -353,13 +353,12 @@ class HandleController extends Controller
         }
 
         public function reportSpot(Request $req){
-            $report = new Report_spot();
+            $report = new Report();
             $report->object_id = $req->input('id_com');
             $report->object_type = "spot";
             $report->content = $req->input('report');
             $report->user_id = Auth::user()->id;
             $report->status = "unread";
-
             $report->save();
 
             echo json_encode(['res'=>true]);
