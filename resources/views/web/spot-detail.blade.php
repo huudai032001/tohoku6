@@ -17,15 +17,11 @@
                             <div class="section_title">
                                 <img src="/web-assets/images/tohoku-6-spot.svg" alt="">
                             </div>
-                            @if(Auth::check())
-                                @if(Auth::user()->id == $info_spot->author)
-                                    <div class="action-button" data-show-modal="#modal-spot-actions-two" data-id="{{$info_spot->id}}">
-                                        <span></span>
-                                        <span></span>
-                                        <span></span>
-                                    </div>
-                                @endif
-                            @endif
+                            <div class="action-button" data-show-modal="#modal-spot-actions-two" data-id="{{$info_spot->id}}">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
                         </div>
                         <div class="mb-20 d-flex justify-content-between">
                             <div class="area d-flex align-items-center">
@@ -320,12 +316,22 @@
                 <div class="modal_close">×</div>
                 <div class="modal_title">このスポットについて</div>
                 <ul class="modal_menu">
+                    
+                    @if(Auth::check())
+                        @if(Auth::user()->id == $info_spot->author)
                     <li>
                         <a href="{{route('spotEdit',$info_spot->id)}}">編集する</a>
                     </li>
                     <li>
                         <a href="#" data-to-report-spot>事務局に報告する</a>
-                    </li>                    
+                    </li> 
+                        @endif
+                    @else
+                    <li>
+                        <a href="{{route('signin')}}">事務局に報告する</a>
+                    </li> 
+                    @endif
+
                 </ul>
             </div>
         </div>
@@ -336,12 +342,20 @@
                 <div class="modal_close">×</div>
                 <div class="modal_title">このスポットについて</div>
                 <ul class="modal_menu">
+                @if(Auth::check())
+                        @if(Auth::user()->id == $info_spot->author)
                     <li>
                         <a href="{{route('spotEdit',$info_spot->id)}}">編集する</a>
                     </li>
+                    @endif
                     <li>
                         <a data-show-modal="#modal-report-two">事務局に報告する</a>
-                    </li>                    
+                    </li>  
+                @else
+                    <li>
+                        <a href="{{route('signin')}}">事務局に報告する</a>
+                    </li> 
+                    @endif               
                 </ul>
             </div>
         </div>

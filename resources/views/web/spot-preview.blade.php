@@ -56,11 +56,11 @@
                                 <div class="title">位置 : <span>{{$spot->location}}</span> </div>
                                 <div class="title">イントロ : <span>{{$spot->intro}}</span></div>
                                 <div class="title">カテゴリー : 
-                              
-                                @foreach($category as $cate)
-                                    <span class="tag"> {{$cate->name}}|</span>
+                                @if($categorys = $spot->getCategory_list())
+                                @foreach($categorys as $cate)
+                                    <span class="tags">{{$cate->name}} |</span>
                                 @endforeach
-                          
+                                @endif
                                 </div>
 
                                 <!-- <div>{{$spot->name}}</div> -->

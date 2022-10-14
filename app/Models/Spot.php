@@ -36,7 +36,6 @@ class Spot extends BaseModel
         return $this->belongsTo(\App\Models\Upload::class, 'image_id');
     }
 
-
     public function getImages()
     {
         return \App\Models\Upload::whereIn('id', $this->images_id)->get();

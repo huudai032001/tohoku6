@@ -249,59 +249,7 @@ class HandleController extends Controller
 
 
 
-        public function postSpotEdit(Request $req,$id){
-            $this->validate($req,[
-    
-                'location'=>'required',
-                'name'=>'required',
-                'intro'=>'required',
-                'category'=>'required',
-    
-            ],
-            [
-                'location.required'=>'必須項目です',
-                'name.required'=>'必須項目です',
-                'intro.required'=>'必須項目です',
-                'category.required'=>'必須項目です',
-    
-            ]);
-            $alias = Str::slug($req->input('name'), "-");
 
-            $check_name = Spot::where('alias',$alias)->where('author','!=',Auth::user()->id)->first();
-            if($check_name){
-                return redirect()->back()->with('error','タイトルは既に存在します');
-            }
-            
-            $file = $req->file('image');
-            $sub_image_01 = $req->file('sub_image_01');
-            $sub_image_02 = $req->file('sub_image_02');
-            $sub_image_03 = $req->file('sub_image_03');
-            $uploadService = new \App\Services\UploadService;
-    
-            $spot = Spot::findorfail($id);
-            $spot->location = $req->input('location');
-            $spot->name = $req->input('name');
-            $spot->intro = $req->input('intro');
-            $arr_images = $spot->images_id;
-            for($u = 1;$u<=3;$u++){
-
-                if($req->file('sub_image_0'. $u) != null){
-                    $update_img = $uploadService->handleUploadFile($req->file('sub_image_0'. $u),'')['file_info']['id'];
-                    array_push($arr_images, "$update_img");
-                }
-            }
-            if($file == null){
-                $spot->image_id = $req->input('image_hide');
-            }
-            else {
-                $spot->image_id = $uploadService->handleUploadFile($file,"")['file_info']['id'];
-            }
-            $spot->images_id = $arr_images;
-
-            $spot->category = $req->input('category');
-            return view('web./spot-preview',['spot'=> $spot]);
-    
-        }
 
 
 

@@ -45,7 +45,7 @@ Route::post('/postfindByCategorySpot', [App\Http\Controllers\Web\SpotController:
 Route::middleware(['login_user'])->group(function ()
 {
     Route::get('/spot-edit/{id}', [App\Http\Controllers\Web\SpotController::class, 'spotEdit'])->name('spotEdit');
-    Route::post('/spot-edit/{id}', [App\Http\Controllers\Web\HandleController::class, 'postSpotEdit'])->name('postSpotEdit');
+    Route::post('/spot-edit/{id}', [App\Http\Controllers\Web\SpotController::class, 'postSpotEdit'])->name('postSpotEdit');
 
     Route::get('/spot-register', [App\Http\Controllers\Web\SpotController::class, 'spotRegister'])->name('spotRegister');
     Route::post('/spot-register', [App\Http\Controllers\Web\SpotController::class, 'postSpotRegister'])->name('postSpotRegister');

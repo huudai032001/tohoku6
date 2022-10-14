@@ -117,6 +117,13 @@ class SpotController extends CommonDataController {
 
     protected function initFormEdit($form, $dataItem)
     {
+        // dd($dataItem->getCategory());
+        $category = [];
+        foreach($dataItem->getCategory() as $cate){
+            // var_dump();
+            $category [] = $cate->category->id;
+        }
+        
         $form->addGroups([
             new Form\Text([
                 'name' => 'name',                
@@ -168,7 +175,7 @@ class SpotController extends CommonDataController {
                     6 => 'SNS映え',
                     7 => '歴史'
                 ],
-                'data' => $dataItem->category,
+                'data' => $category,
                 'inline' => true
             ]),
         ]);
@@ -202,10 +209,8 @@ class SpotController extends CommonDataController {
         $item->location = $request->input('location');
         $item->intro = $request->input('intro');
         $item->address = $request->input('address');
-        // $item->category = $request->input('category');
         $item->image_id = $request->input('image');
         $item->images_id = $request->input('images');
-        // $item->category = implode(',',$request->input('category'));
         $item->status = $request->input('status');
         $item->favorite = 0;
         $item->count_comment = 0;

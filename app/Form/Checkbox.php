@@ -28,6 +28,11 @@ class Checkbox extends FormGroup
     {
         $html = '';
         $isAssoc = Arr::isAssoc($this->options);
+        $value_category = $this->value;
+        // dd($this->value);
+        // foreach($this->value as $ca){
+        //     var_dump($ca);
+        // }
         foreach($this->options as $key => $value) {
             if ($isAssoc) {
                 $option_value = $key;
@@ -36,7 +41,7 @@ class Checkbox extends FormGroup
                 $option_value = $value;
                 $option_label = $value;
             }
-            
+
             $html .= sprintf(
                 '<label class="custom-control custom-checkbox mb-2 mr-4 %s">
                     <input  type="checkbox" name="%s" value="%s" %s class="custom-control-input">
@@ -45,7 +50,9 @@ class Checkbox extends FormGroup
                 $this->inline ? 'd-inline-block' : '',
                 $this->name,
                 $option_value, 
-                $option_value == $this->value ? 'checked' : '',
+                // foreach($this->value as $ca){
+                    in_array($option_value ,$this->value) ? 'checked' : '' ,
+                // }
                 $option_label
             );
         }
@@ -69,6 +76,8 @@ class Checkbox extends FormGroup
 
     protected function getOptionLabel($value) 
     {
+        dd($value);
+
         $isAssoc = Arr::isAssoc($this->options);
         if ($isAssoc) {
             return $this->options[$value] ?? '';

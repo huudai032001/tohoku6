@@ -137,7 +137,7 @@ class SpotController extends Controller
     }
 
     public function PostSpotPreview(Request $req){
-
+        // $find_cate = Category_spot::findorfail($req->input('id'))->delete();
         $alias = Str::slug($req->input('name'), "-");
         if($req->input('sub_image') == ""){
             $example = array("");
@@ -174,10 +174,10 @@ class SpotController extends Controller
         for($i = 0;$i < count($list_cate);$i++){
             Category_spot::updateOrInsert(
                 [
-                    'category_id'=>6,
+                    'category_id'=>$list_cate[$i],
                 ],
                 [
-                    'category_id'=>$list_cate[$i],
+                    // 'category_id'=>$list_cate[$i],
                     'spot_id'=>$spot->id,
                 ]
             );
@@ -195,7 +195,6 @@ class SpotController extends Controller
             }
 
     }
-
     public function postSpotEdit(Request $req,$id){
         $this->validate($req,[
 
@@ -206,77 +205,48 @@ class SpotController extends Controller
 
         ],
         [
-            'image.required'=>'必須項目です',
-            'sub_image_01.required'=>'必須項目です',
-            'sub_image_02.required'=>'必須項目です',
-            'sub_image_03.required'=>'必須項目です',
             'location.required'=>'必須項目です',
             'name.required'=>'必須項目です',
             'intro.required'=>'必須項目です',
             'category.required'=>'必須項目です',
 
         ]);
+        $alias = Str::slug($req->input('name'), "-");
+
+        $check_name = Spot::where('alias',$alias)->where('author','!=',Auth::user()->id)->first();
+        if($check_name){
+            return redirect()->back()->with('error','タイトルは既に存在します');
+        }
+        
         $file = $req->file('image');
         $sub_image_01 = $req->file('sub_image_01');
         $sub_image_02 = $req->file('sub_image_02');
         $sub_image_03 = $req->file('sub_image_03');
         $uploadService = new \App\Services\UploadService;
 
-        $sub_01_hide = $req->input('sub_image_01_hide');
-        $sub_02_hide = $req->input('sub_image_02_hide');
-        $sub_03_hide = $req->input('sub_image_03_hide');
-
-
-        
-        if($sub_image_01 == null && $sub_image_02 != null && $sub_image_03 != null){
-            $images_02 =  $uploadService->handleUploadFile($sub_image_02,'')['file_info']['id'];
-            $images_03 =  $uploadService->handleUploadFile($sub_image_03,'')['file_info']['id'];
-            $sub_img = "$sub_01_hide,$images_02,$images_03";
-        }
-        elseif($sub_image_01 == null && $sub_image_02 == null && $sub_image_03 != null){
-            $images_03 =  $uploadService->handleUploadFile($sub_image_03,'')['file_info']['id'];
-            $sub_img = "$sub_01_hide,$sub_02_hide,$images_03";
-        }
-        elseif($sub_image_01 == null && $sub_image_02 == null && $sub_image_03 == null){
-            $sub_img = "$sub_01_hide,$sub_02_hide,$sub_03_hide";
-        }
-        elseif($sub_image_01 == null && $sub_image_02 != null && $sub_image_03 == null){
-            $images_02 =  $uploadService->handleUploadFile($sub_image_02,'')['file_info']['id'];
-            $sub_img = "$sub_01_hide,$images_02,$sub_03_hide";
-        }
-        elseif($sub_image_01 != null && $sub_image_02 == null && $sub_image_03 != null){
-            $images_03 =  $uploadService->handleUploadFile($sub_image_03,'')['file_info']['id'];
-            $sub_img = "$images_01,$sub_02_hide,$images_03";
-        }
-        elseif($sub_image_01 != null && $sub_image_02 == null && $sub_image_03 == null){
-            $images_01 =  $uploadService->handleUploadFile($sub_image_01,'')['file_info']['id'];
-            $sub_img = "$images_01,$sub_02_hide,$sub_03_hide";
-        }
-        elseif($sub_image_01 != null && $sub_image_02 != null && $sub_image_03 == null){
-            $images_01 =  $uploadService->handleUploadFile($sub_image_01,'')['file_info']['id'];
-            $images_02 =  $uploadService->handleUploadFile($sub_image_02,'')['file_info']['id'];
-            $sub_img = "$images_01,$images_02,$sub_03_hide";
-        }
-        else {
-            $images_01 =  $uploadService->handleUploadFile($sub_image_01,'')['file_info']['id'];
-            $images_02 =  $uploadService->handleUploadFile($sub_image_02,'')['file_info']['id'];
-            $images_03 =  $uploadService->handleUploadFile($sub_image_03,'')['file_info']['id'];
-            $sub_img = "$images_01,$images_02,$images_03";
-        }
-
         $spot = Spot::findorfail($id);
         $spot->location = $req->input('location');
         $spot->name = $req->input('name');
         $spot->intro = $req->input('intro');
+
+        $arr_images = $spot->images_id;
+        for($u = 1;$u<=3;$u++){
+
+            if($req->file('sub_image_0'. $u) != null){
+                $update_img = $uploadService->handleUploadFile($req->file('sub_image_0'. $u),'')['file_info']['id'];
+                array_push($arr_images, "$update_img");
+            }
+        }
         if($file == null){
             $spot->image_id = $req->input('image_hide');
         }
         else {
             $spot->image_id = $uploadService->handleUploadFile($file,"")['file_info']['id'];
         }
-        $spot->sub_image = $sub_img;
+        $spot->images_id = $arr_images;
 
-        $spot->category = implode(",",$req->input('category'));
+        $spot->category = $req->input('category');
+        // dd($spot->category);
         return view('web./spot-preview',['spot'=> $spot]);
 
     }
