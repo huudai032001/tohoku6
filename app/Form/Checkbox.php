@@ -50,9 +50,7 @@ class Checkbox extends FormGroup
                 $this->inline ? 'd-inline-block' : '',
                 $this->name,
                 $option_value, 
-                // foreach($this->value as $ca){
-                    in_array($option_value ,$this->value) ? 'checked' : '' ,
-                // }
+                in_array($option_value ,$this->value) ? 'checked' : '' ,
                 $option_label
             );
         }
