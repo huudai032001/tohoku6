@@ -19,6 +19,10 @@ abstract class FormGroup
         $this->data = $options['data'] ?? '';
         $this->required = $options['required'] ?? false;
     }
+
+    public function __toString() {
+        return $this->editMode();
+    }
     
 
     public function editMode()

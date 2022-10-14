@@ -1,0 +1,210 @@
+html[lang="ja"] body {
+    font-family: 'Noto Sans JP', 'Roboto', sans-serif;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+@media(min-width: 1140px) {
+    .file-grid-item {
+        width: 220px;
+    }
+}
+.note-editable {
+    font-size: 16px;
+}
+
+.data-table th,
+.data-table td {    
+    word-wrap: break-word;
+    padding-left: 10px;
+    padding-right: 10px;
+    vertical-align: top;
+}
+/* .data-table [data-column-name="id"] {
+    width: 100px;
+}
+.data-table [data-column-name="name"] {
+    width: 300px;
+}
+.data-table [data-column-name="action"] {
+    width: 400px;
+} */
+
+.text-editor-wrap p,
+.text-editor-wrap table {
+    margin-bottom: 1.2em;
+}
+.crud-form-group {
+    margin-bottom: 1.25rem;
+}
+.crud-form-group[data-mode="view"] {
+    margin-bottom: 0;
+    padding: 12px 0;
+}
+.crud-form-group[data-mode="view"]:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+.nav-bar-avatar-image {
+    object-fit: cover;
+}
+.custom-control-label {
+    padding-left: 1.6rem;
+}
+.form-control-inline {
+    width: auto;
+}
+.data-table-image-wrap {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+}
+.data-table-image {
+    width: 100px;;
+}
+
+/* Chrome, Safari, Edge, Opera */
+.form-control-number::-webkit-outer-spin-button,
+.form-control-number::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.form-control-number {
+  -moz-appearance: textfield;
+}
+/* .text-content-preview-container {
+    max-height: 450px;
+    overflow: auto;
+    width: 100%;
+    max-width: 100%;
+    box-shadow: 0px 0px 10px #ddd;
+    padding: 15px;    
+    border-radius: 3px;
+    background-color: white;
+    
+} */
+.content {
+    padding-bottom: 120px;
+}
+
+.form-control-taxonomy {
+    position: relative;
+}
+.form-control-taxonomy .showing-part {
+    display: flex;
+    border: 1px solid #ddd;
+    border-radius: 0.25rem;
+    min-height: 38px;
+    background-color: #fff;
+}
+.form-control-taxonomy .selected-items {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;        
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #333;  
+    border-right: 0;
+    flex: 1 1 auto;
+    padding-left: 3px;
+    padding-top: 3px;
+}
+.form-control-taxonomy .selected-item {
+    background-color: #294653;
+    color: #fff;
+    cursor: default;
+    font-size: 14px;
+    line-height: 20px;
+    margin-right: 3px;
+    margin-bottom: 3px;
+    padding: 5px 12px;    
+    border-radius: 0.25rem;   
+}
+
+.form-control-taxonomy .selected-item.is-primary {
+    background-color: #5c6bc0;
+    border-color: #5c6bc0;
+    color: white;
+}
+.form-control-taxonomy .selected-item_remove {
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 20px;
+    margin-top: 0.0625rem;
+    margin-left: 0.625rem;
+    opacity: .75;
+    transition: opacity ease-in-out .15s;
+}
+.form-control-taxonomy .selected-item_remove:hover {
+    opacity: 1;
+}
+.form-control-taxonomy .showing-part .toggle-button {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: 0.4375rem 0.875rem;
+    margin-left: auto;
+    margin-bottom: 0;
+    font-size: .875rem;
+    font-weight: 400;
+    line-height: 1.5715;
+    color: #333;
+    text-align: center;
+    white-space: nowrap;
+    background-color: #fafafa;
+    border-left: 1px solid #ddd;
+    border-radius: 0 0.25rem 0.25rem 0;
+}
+.form-control-taxonomy .selected-terms .placeholder {
+    color: #999;
+}
+.form-control-taxonomy .toggle-part {
+    display: block;    
+    width: 100%;
+    background-color: #fff;
+    color: #333;
+    border: 1px solid rgba(0,0,0,.15);    
+    border-radius: 0.25rem;
+    box-shadow: 0 0.25rem 0.5rem rgb(0 0 0 / 10%);
+    padding-bottom: 15px;
+    max-height: 300px;
+    overflow: auto;
+}
+.form-control-taxonomy .taxonomy-term-list[data-display="grid"] {
+    padding: 10px 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    /* display: grid;
+    gap: 4px;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); */
+}
+
+.form-control-taxonomy .taxonomy-term-list .item-control {
+    padding: 5px 15px;
+    cursor: pointer;
+    user-select: none;
+    transition: all ease-in-out .15s;
+}
+
+.form-control-taxonomy .taxonomy-term-list[data-display="list"] .item-control:hover {
+    background-color: #eee;
+    color: #333;
+}
+.form-control-taxonomy .taxonomy-term-list .sub-items {
+    padding-left: 30px;
+}
+.form-control-taxonomy .taxonomy-search-box {
+    padding: 0.5rem 15px;
+}
+.primary-term-check {
+    margin-left: 20px;
+}
+.form-control-taxonomy .fetching-notice {
+    padding: 10px 16px 0;
+}

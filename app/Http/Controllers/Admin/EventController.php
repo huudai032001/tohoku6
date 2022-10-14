@@ -103,7 +103,7 @@ class EventController extends CommonDataController {
     
     // protected function saveNew(Request $request, $item)
     // {
-    //     return $this->updateItem($request, $item);
+    //     return $this->saveNewOrUpdate($request, $item);
     // }
 
 
@@ -143,21 +143,21 @@ class EventController extends CommonDataController {
                 'required' => true,
                 'data' => $dataItem->images_id
             ]),
-            new Form\Checkbox([
-                'name' => 'category[]',
-                'label' => 'Category',
-                'options' => [
-                    1 => 'グルメ',
-                    2 => 'ショッピング',
-                    3 => '宿泊',
-                    4 => '体験',
-                    5 => '自然',
-                    6 => 'SNS映え',
-                    7 => '歴史'
-                ],
-                'data' => $dataItem->category,
-                'inline' => true
-            ]),
+            // new Form\Checkbox([
+            //     'name' => 'category[]',
+            //     'label' => 'Category',
+            //     'options' => [
+            //         1 => 'グルメ',
+            //         2 => 'ショッピング',
+            //         3 => '宿泊',
+            //         4 => '体験',
+            //         5 => '自然',
+            //         6 => 'SNS映え',
+            //         7 => '歴史'
+            //     ],
+            //     'data' => $dataItem->category,
+            //     'inline' => true
+            // ]),
         ]);
         $form->addGroups([
             new Form\Select([
@@ -184,7 +184,7 @@ class EventController extends CommonDataController {
         ];
     }
 
-    protected function updateItem(Request $request, $item)
+    protected function saveNewOrUpdate(Request $request, $item)
     {
         $alias = Str::slug($request->input('name'), "-");
         if($alias == ""){

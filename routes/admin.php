@@ -11,12 +11,14 @@ Route::name('dashboard')->get('/', function () {
 Route::crud('user', AdminControllers\UserController::class);
 
 Route::crud('spot', AdminControllers\SpotController::class);
+Route::crud('spot-category', AdminControllers\SpotCategoryController::class);
+
 Route::crud('goods', AdminControllers\GoodsController::class);
 Route::crud('event', AdminControllers\EventController::class);
-Route::crud('category', AdminControllers\CategoryController::class);
+
 Route::crud('comment', AdminControllers\CommentController::class);
-Route::crud('report_comment', AdminControllers\ReportCommentController::class);
-Route::crud('report_spot', AdminControllers\ReportSpotController::class);
+Route::crud('report', AdminControllers\ReportController::class);
+
 
 
 // Route::crud('page', Controllers\PageController::class);
@@ -48,17 +50,26 @@ Route::crud('report_spot', AdminControllers\ReportSpotController::class);
 
 Route::get('file-library', [AdminControllers\FileManagerController::class, 'fileLibrary'])->name('file-library');
 
-Route::prefix('file-manager')->name('file-manager.')->group(function ()
+
+Route::prefix('ajax')->name('ajax.')->group(function ()
 {
-    Route::get('/fetch-data', [AdminControllers\FileManagerController::class, 'fetchData'])->name('fetch-data');
+    Route::prefix('file-manager')->name('file-manager.')->group(function ()
+    {
+        Route::get('/fetch-data', [AdminControllers\FileManagerController::class, 'fetchData'])->name('fetch-data');
 
-    Route::post('/create-folder', [AdminControllers\FileManagerController::class, 'createFolder'])->name('create-folder');
+        Route::post('/create-folder', [AdminControllers\FileManagerController::class, 'createFolder'])->name('create-folder');
 
-    Route::post('/delete-folder', [AdminControllers\FileManagerController::class, 'deleteFolder'])->name('delete-folder');
+        Route::post('/delete-folder', [AdminControllers\FileManagerController::class, 'deleteFolder'])->name('delete-folder');
 
-    Route::post('/upload', [AdminControllers\FileManagerController::class, 'upload']);
+        Route::post('/upload', [AdminControllers\FileManagerController::class, 'upload']);
 
-    Route::post('/delete-file', [AdminControllers\FileManagerController::class, 'deleteFile'])->name('delete-file');
+        Route::post('/delete-file', [AdminControllers\FileManagerController::class, 'deleteFile'])->name('delete-file');
+    });
+    
+   Route::prefix('taxonomy')->name('taxonomy.')->group(function ()
+   {
+        Route::get('/fetch', [AdminControllers\AjaxTaxonomyController::class, 'fetchItems'])->name('fetch');
+   });
 });
 
 Route::get('tool/log-viewer', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);

@@ -37,7 +37,7 @@ class HomeController extends Controller
         if(count($list_event) == 0){
             $list_event = Event::orderBy('time_start','DESC')->take(6)->get();
         }
-        $all_event = Event::with('upload')->take(6)->get();
+        $all_event = Event::with('image')->take(6)->get();
         $list_spot = Spot::take(6)->get();
         $list_upcoming_spot = Event::whereDate('time_start','>', $today->format('Y-m-d'))->take(12)->get();
         $list_feature = Event::orderBy('created_at','DESC')->take(6)->get();
@@ -61,8 +61,6 @@ class HomeController extends Controller
         ]);
 
     }
-    public function test(){
-        return view("web.test");
-    }
+
 
 }

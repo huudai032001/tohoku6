@@ -18,7 +18,7 @@ class TextEditor extends FormGroup
    
     public function editMode()
     {
-        return sprintf('<text-editor name="%s" @add-upload="openUploadSelect">%s</text-editor>', 
+        return sprintf('<text-editor @add-upload="openUploadSelect"><textarea name="%s">%s</textarea></text-editor>', 
             $this->name, 
             $this->value
         );
@@ -31,12 +31,12 @@ class TextEditor extends FormGroup
             $this->value
         );
         $show = $this->value;
-        return $hidden . $show;
+        return $hidden . '<div class="text-content-preview-container">' . $show . '</div>';
     }
 
     public function viewMode()
     {
-        return $this->value;
+        return '<div class="text-content-preview-container">' . $this->value . '</div>';
     }
     
 }

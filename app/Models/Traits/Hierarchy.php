@@ -18,4 +18,17 @@ trait Hierarchy {
         return $this->parent->children()->where('id', '!=', $this->id);
     }
 
+    public function getAncestors($includeSelf = false)
+    {
+        $ancestors = collect();
+        if ($includeSelf) {
+            $ancestors->push($this);
+        }
+        $child = $this;
+        while ($child->parent_id && ($parent = $child->parent)) {
+            $ancestors->prepend($parent);
+            $child = $parent;
+        }        
+        return $ancestors;
+    }
 }

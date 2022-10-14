@@ -14,9 +14,17 @@ return [
     'edit_item' => 'Edit :Item',
     'delete' => 'Delete',
     'delete_item' => 'Delete :Item',
+    'view_all' => 'View all',
+
+    'id' => 'ID',
+    'name' => 'Name',
+    'slug' => 'Slug',
 
     'search' => 'Search',
     'keyword' => 'Keyword',
+    'id_or_keyword' => 'ID or keyword',
+    'search_by_id' => 'Search by ID',
+    'search_by_keyword' => 'Search by keyword',
     'sort' => 'Sort',
 
     'action' => 'Action',
@@ -65,11 +73,30 @@ return [
     'dashboard' => 'Dashboard',
     'tool' => 'Tool',
     'debug_log' => 'Debug log',
+
+
+    'product' => 'Product',
+    'image' => 'Image',
+    'image_gallery' => 'Image gallery',
+
+
+    'category' => 'Category',
+    'tag' => 'Tag',
+
+    'parent' => 'Parent',
+    'parent_item' => 'Parent :item',
+    'children_item' => 'Children :item',
+    'sub_category' => 'subcategory',
+    'detail' => 'Detail',
+
+    'time' => 'Time',
+    'date' => 'Date',
+
+    'notification' => 'Notification',
+    'mark_as_read' => 'Mark as read',
     
     'spot' => 'Spot',
     'event' => 'Event',
     'goods' => 'Goods',
-    'tag' => 'Tag'
-
 
 ];

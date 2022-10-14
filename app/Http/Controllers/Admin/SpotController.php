@@ -67,12 +67,12 @@ class SpotController extends CommonDataController {
     protected function initDataTable($dataTable) {
         $dataTable->addSimpleColumn('name', 'Ten');
         $dataTable->addSimpleColumn('location', 'Dia Diem');
-        $dataTable->addSimpleColumn('category', 'Danh muc');
+        //$dataTable->addSimpleColumn('category', 'Danh muc');
         $dataTable->addSimpleColumn('intro', 'Mo ta');
         $dataTable->addSimpleColumn('address', 'Address'); 
         $dataTable->addLabelColumn('status','Status', function ($item)
         {
-            return [$item->status, $item->statusName()];
+            return [$item->status, $item->getStatus()];
         },[
             'active' => 'badge badge-success'
         ]);
@@ -111,18 +111,12 @@ class SpotController extends CommonDataController {
     
     // protected function saveNew(Request $request, $item)
     // {
-    //     return $this->updateItem($request, $item);
+    //     return $this->saveNewOrUpdate($request, $item);
     // }
 
 
     protected function initFormEdit($form, $dataItem)
-    {
-        // dd($dataItem->getCategory());
-        $category = [];
-        foreach($dataItem->getCategory() as $cate){
-            // var_dump();
-            $category [] = $cate->category->id;
-        }
+    {       
         
         $form->addGroups([
             new Form\Text([
@@ -130,6 +124,12 @@ class SpotController extends CommonDataController {
                 'label' => 'Name',
                 'required' => true,
                 'data' => $dataItem->name
+            ]),
+            new Form\Text([
+                'name' => 'name',                
+                'label' => 'alias',
+                'required' => true,
+                'data' => $dataItem->alias
             ]),
             new Form\Text([
                 'name' => 'location',                
@@ -163,27 +163,24 @@ class SpotController extends CommonDataController {
                 'required' => true,
                 'data' => $dataItem->images_id
             ]),
-            new Form\Checkbox([
-                'name' => 'category[]',
-                'label' => 'Category',
-                'options' => [
-                    1 => 'グルメ',
-                    2 => 'ショッピング',
-                    3 => '宿泊',
-                    4 => '体験',
-                    5 => '自然',
-                    6 => 'SNS映え',
-                    7 => '歴史'
-                ],
-                'data' => $category,
-                'inline' => true
+
+            new Form\Taxonomy([
+                'name' => 'category',
+                'label' => __('common.category'),
+                'data' => $dataItem->categories,
+                'model' => \App\Models\SpotCategory::class,
+
             ]),
+
         ]);
         $form->addGroups([
             new Form\Select([
                 'name' => 'status',
                 'label' => 'Status',
-                'options' => Spot::statusList(),
+                'options' => [
+                    'publish' => __('status.publish'),
+                    'private' => __('status.private'),
+                ],
                 'required' => true,
                 'data' => $dataItem->status
             ])
@@ -197,45 +194,28 @@ class SpotController extends CommonDataController {
         ];
     }
 
-    protected function updateItem(Request $request, $item)
-    {
-        $arr_cate = $request->input('category');
-        $alias = Str::slug($request->input('name'), "-");
-        if($alias == ""){
-            $alias = $request->input('name');
-        }
-        // dd($alias);
+    protected function saveNewOrUpdate(Request $request, $item)
+    {        
         $item->name = $request->input('name');
+        if(!$request->filled('alias')) {
+            $item->alias = \Helper::makeSlug($request->input('name'));
+        }
+
         $item->location = $request->input('location');
         $item->intro = $request->input('intro');
         $item->address = $request->input('address');
         $item->image_id = $request->input('image');
         $item->images_id = $request->input('images');
         $item->status = $request->input('status');
-        $item->favorite = 0;
-        $item->count_comment = 0;
-        $item->author = Auth::user()->id;
-        $item->alias = $alias;
-        $item->save();
-        $category = new Category_spot();
-        for($i = 0; $i < count($arr_cate);$i++){
-            $category->spot_id = $item->id;
-            $category->category_id = $arr_cate[$i];
-            $category->save();
+        if (!$item->id) {
+            $item->favorite = 0;
+            $item->count_comment = 0;
+            $item->author = Auth::user()->id;
         }
+        
+        $item->save();
 
-        $noti = new  Notification();
-        $noti->posts_id = $item->id;
-        $noti->user_id = $item->author;
-        $noti->feedback = "承認された投稿";
-        // $noti->type_posts = "spots";
-        $noti->save();
-
-        $favorite = new Favorite();
-        $favorite->user_id = Auth::user()->id;
-        $favorite->posts_id = $item->id;
-        $favorite->type_posts = 1;
-        $favorite->save();
+        $item->categories()->sync($request->input('category'));
 
     }    
 

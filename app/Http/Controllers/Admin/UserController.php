@@ -20,12 +20,14 @@ class UserController extends CommonDataController
     
     protected $enableSearch = true;
 
+    protected $sort = 'oldest';   
+
     public function moreItemActions($dataItem = null)
     {
         return [
             'change-password' => [
                 'icon' => 'icon-key',
-                'label' => __('Change password')
+                'label' => __('common.change_password')
             ],
         ];
     }
@@ -66,8 +68,10 @@ class UserController extends CommonDataController
     protected function search($query, $searchString) {
         return $query->where(function ($query) use($searchString)
         {
-            $query->where('login_name', 'like', $searchString)
-                ->orWhere('email', 'like', $searchString);
+            $query->where(DB::raw('concat(sei,"",mei)') , 'LIKE' , $searchString);
+            $query->orWhere(DB::raw('concat(sei_kana,"",mei_kana)') , 'LIKE' , $searchString);
+            $query->orWhere('login_name' , 'LIKE' , $searchString);
+            $query->orWhere('email' , 'LIKE' , $searchString);
         });
     }
 
@@ -80,11 +84,16 @@ class UserController extends CommonDataController
                 'required' => true,
                 'data' => $dataItem->login_name                       
             ]),
-            // new Form\Text([
-            //     'name' => 'name',
-            //     'label' => __('Display name'),
-            //     'data' => $dataItem->name
-            // ]),
+            new Form\NameSeiMei([
+                'name' => 'name',
+                'label' => __('user.name'),
+                'data' => [
+                    'sei' => $dataItem->sei,
+                    'mei' => $dataItem->mei,
+                    'sei_kana' => $dataItem->sei_kana,
+                    'mei_kana' => $dataItem->mei_kana
+                ]
+            ]),
             new Form\Text([
                 'name' => 'email',
                 'type' => 'email',
@@ -97,7 +106,7 @@ class UserController extends CommonDataController
                 'options' => User::roleList(),
                 'required' => true,
                 'data' => $dataItem->role
-            ])
+            ])            
         ]);
 
         if (!$dataItem->id) {
@@ -143,8 +152,15 @@ class UserController extends CommonDataController
                 'data' => $dataItem->gender,
                 'inline' => true
             ]),
-           
+            new Form\Date([
+                'name' => 'date_of_birth',
+                'type' => 'date',
+                'label' => __('user.date_of_birth'),
+                'data' => $dataItem->date_of_birth,
+                'inline' => true
+            ]),
         ]);
+        
 
     }
 
@@ -154,7 +170,6 @@ class UserController extends CommonDataController
             'login_name' => ['required', 'between:2,32', 'alpha_dash', 
                     Rule::unique('users')->ignore($item->id)],
             'email' => ['nullable', 'email', Rule::unique('users')->ignore($item->id)],
-            'password' => [],
             'role' => ['required'],
             'status' => ['required'],
         ];
@@ -165,11 +180,13 @@ class UserController extends CommonDataController
     }
 
 
-    protected function updateItem(Request $request, $item) {
+    protected function saveNewOrUpdate(Request $request, $item) {
         if(!$item->id) {
             $item->password = Hash::make($request->input('password'));
             $item->fields = [];
         }
+
+        $item->fields = $request->input('test_texteditor');
         $item->login_name = $request->input('login_name');
         $item->sei = $request->input('name.sei');
         $item->mei = $request->input('name.mei');
@@ -177,8 +194,10 @@ class UserController extends CommonDataController
         $item->mei_kana = $request->input('name.mei_kana');
         $item->email = $request->input('email');
         $item->role = $request->input('role');
-        $item->status = $request->input('status');
-              
+        $item->status = $request->input('status');        
+        $item->avatar_image_id = $request->input('avatar_image_id');
+        $item->gender = $request->input('gender');
+        $item->date_of_birth = $request->input('date_of_birth');        
         $item->save();
     }
 

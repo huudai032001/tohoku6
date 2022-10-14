@@ -22,15 +22,6 @@ class Event extends BaseModel
         return $this->name;
     }
 
-    public function upload() {
-        return $this->belongsTo('App\Models\Upload');
-    }
-
-    public function joinUpload()
-    {
-        return $this->hasMany('App\Models\Upload');
-    }
-
     public function image()
     {
         return $this->belongsTo(\App\Models\Upload::class, 'image_id');
@@ -40,8 +31,5 @@ class Event extends BaseModel
     {
         return \App\Models\Upload::whereIn('id', $this->images_id)->get();
     }
-    public function categoryDetail()
-    {
-        return $this->hasMany(\App\Models\Category_event::class);
-    }
+
 }

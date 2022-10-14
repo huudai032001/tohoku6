@@ -152,12 +152,12 @@ class CommonDataController extends Controller {
         $views = \Arr::wrap($views);
 
         foreach ($views as $view) {
-            $array[] = $this->viewBase . $this->modelSlug . '.' . $view;            
+            $array[] = $this->viewBase . $view;            
         }
         foreach ($views as $view) {           
             $array[] = 'admin.data-management.base.' . $view;
         }
-
+        
         return View::first($array);
     }
 
@@ -237,19 +237,22 @@ class CommonDataController extends Controller {
 
 
     public function index(Request $request, $condition = null)
-    {
-        $query = $this->modelClass::query();
-
-        // custom query conditions
-        $this->indexQuery($query);
-
-        // search
-        if ($this->searchAble() && $request->filled('search')) {            
-            $query->where(function ($query) use ($request)
+    {        
+        if ($request->filled('id')) {
+            // search by ID
+            $query = $this->modelClass::where('id', $request->input('id'));
+        } elseif ($this->searchAble() && $request->filled('search')) {
+            // search by keyword
+            $query = $this->modelClass::query();
+            $keyword = $request->input('search');
+            $query->where(function ($subQuery) use ($keyword)
             {
-                $this->search($query, Helper::makeSearchString($request->input('search')));
-            });            
-        }
+                $this->search($subQuery, Helper::makeSearchString($keyword));
+            }); 
+        } else {
+            // custom default index query
+            $query = $this->indexQuery($request);
+        }       
 
         // sort
         $this->sort($query, $request->input('sort', $this->sort));        
@@ -274,7 +277,9 @@ class CommonDataController extends Controller {
 
     protected function initDataTable($dataTable) {}
 
-    protected function indexQuery($query){}
+    protected function indexQuery($request){
+        return $this->modelClass::query();
+    }
 
     protected function search($query, $searchString) {}
 
@@ -344,7 +349,7 @@ class CommonDataController extends Controller {
     
     protected function saveNew(Request $request, $item)
     {
-        return $this->updateItem($request, $item);
+        return $this->saveNewOrUpdate($request, $item);
     }
 
 
@@ -424,13 +429,17 @@ class CommonDataController extends Controller {
 
     protected function updateItem(Request $request, $item)
     {
+        return $this->saveNewOrUpdate($request, $item);
+    }
+
+    protected function saveNewOrUpdate(Request $request, $item)
+    {
         
     }
     
 
     protected function getBulkDelete(Request $request)
     {
-
         $dataList = $this->modelClass::find($request->input('ids'));
         
         return $this->getView('bulk-delete')->with([
@@ -455,7 +464,12 @@ class CommonDataController extends Controller {
             }            
         }
         if ($count > 0) {
-            FlashMsg::addSuccess(__('message.count_items_deleted', ['count' => $count]));
+            FlashMsg::addSuccess(__('message.count_items_deleted', 
+                [
+                    'count' => $count, 
+                    'item' => $this->modelClass::getModelName()
+                ]
+            ));
         }        
         
         return redirect($this->backToIndexRoute());
@@ -463,7 +477,6 @@ class CommonDataController extends Controller {
 
     protected function delete($dataItem)
     {
-
         $dataItem->delete();
     }
 

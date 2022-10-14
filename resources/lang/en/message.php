@@ -11,6 +11,7 @@ return [
     'item_status_changed' => ':item\'s status have been changed.',
     'item_status_changed_to' => ':item\'s status have been changed to :status.',
     'count_item_status_changed_to' => ':count :item(s) has their status changed to :status.',
+    'count_items_deleted' => ':count :item(s) has been deleted.',
 
     'user_password_changed' => 'This user\'s password has been changed.',
 

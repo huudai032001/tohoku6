@@ -30,17 +30,16 @@
 	<script src="/vendor/limitless/js/plugins/ui/moment/moment.min.js"></script>
 	<script src="/vendor/limitless/js/plugins/pickers/daterangepicker.js"></script> --}}
 
+	{{-- <script src="/vendor/limitless/js/plugins/forms/selects/select2.min.js"></script> --}}
 	<script src="/vendor/limitless/js/plugins/forms/tags/tagsinput.min.js"></script>
 	<script src="/vendor/limitless/js/plugins/forms/tags/tokenfield.min.js"></script>
 	{{-- <script src="/vendor/limitless/js/plugins/editors/summernote/summernote.min.js"></script> --}}
 	<script src="/vendor/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
-
-
 	
-	<link href="/admin-assets/css/admin-template-customize.css" rel="stylesheet" type="text/css">
-	<link href="/admin-assets/css/admin.css" rel="stylesheet" type="text/css">
+	<link href="/core-assets/css/limitless-template-customize.css" rel="stylesheet" type="text/css">
+	<link href="/core-assets/css/admin.css" rel="stylesheet" type="text/css">
 
-	<link href="/admin-assets/css/file-manager.css" rel="stylesheet" type="text/css">
+	<link href="/core-assets/css/file-manager.css" rel="stylesheet" type="text/css">
 	
 	@stack('head')
 
@@ -55,10 +54,10 @@
 	@include('admin.inc.file-manager-modal')
 
 
-	<script src="/admin-assets/js/limitless-admin-template-setup.js"></script>		
-	<script src="/admin-assets/js/vue-app.js"></script>
+	<script src="/core-assets/js/limitless-admin-template-setup.js"></script>		
+	<script src="/core-assets/js/vue-app.js"></script>
 
-	<script src="/admin-assets/js/admin.js"></script>
+	<script src="/core-assets/js/admin.js"></script>
 
 	@stack('body-close')
 

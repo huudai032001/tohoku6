@@ -1,6 +1,9 @@
 <?php
 namespace App\Misc;
 
+use Illuminate\Support\Str;
+use Illuminate\Support\Arr;
+
 class DataTable
 {
     protected $columns = [];
@@ -64,26 +67,35 @@ class DataTable
             $value = $callbackData[0];
             $label = $callbackData[1];
 
+            if (!$value) return;
+
             if (empty($htmlClasses[$value])) {
-                return $label;
+                return '<span class="badge badge-light">'.$label.'</span>';
             } else {
                 return '<span class="'.$htmlClasses[$value].'">'.$label.'</span>';
             }            
         });
     }
 
-    public function addImageColumn($column = 'image', $heading = '', $callback = null)
+    public function addUploadColumn($column, $heading, $callback = null)
     {
-        $this->addColumn($column, $heading ?: __('common.image'), function ($item) use ($callback)
+        $this->addColumn($column, $heading, function ($item) use ($column, $callback)
         {
             if ($callback) {
-                $image = call_user_func($callback, $item);                
-            } elseif ($image->image_id) {
-                $image = $item->image;
+                $value = call_user_func($callback, $item);                
+            } else {
+                $value = $item->{$column. '_id'};
+            }
+            if (is_numeric($value)) {
+                $file = \App\Models\Upload::find($value);
+            } else {
+                $file = $value;
             }
             
-            if (!empty($image)) {
-                return sprintf('<div class="data-table-image"><img src="%s"></div>', $image->getUrl('thumbnail'));
+            if ($file) {
+                return sprintf('<div class="data-table-image"><img src="%s"></div>', 
+                    $file->getThumbnailUrl()
+                );                
             }
         });
     }    

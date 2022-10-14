@@ -1,13 +1,9 @@
 <!-- Main navbar -->
 <div class="navbar navbar-expand-lg navbar-dark navbar-static">
-    <div class="d-flex flex-1 d-lg-none">
+    <div class="d-flex d-lg-none">
         <button class="navbar-toggler sidebar-mobile-main-toggle" type="button">
             <i class="icon-paragraph-justify3"></i>
-        </button>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-mobile">
-            <i class="icon-info22"></i>
-        </button>
-        
+        </button>        
     </div>
 
     <div class="navbar-brand text-center text-lg-left">
@@ -131,8 +127,8 @@
                 @endphp
                 @foreach ($langs as $lang_code => $lang)
                     @if ($lang_code == $current_lang)
-                        <img src="/share-assets/flags/{{ $lang['flag'] }}" class="img-flag mr-2" alt="">
-                        {{ $lang['name'] }}
+                        <img src="/core-assets/flags/{{ $lang['flag'] }}" class="img-flag" alt="">
+                        <span class="d-none d-md-inline ml-2">{{ $lang['name'] }}</span>
                     @endif
                 @endforeach
                 
@@ -140,7 +136,7 @@
         
             <div class="dropdown-menu">
                 @foreach ($langs as $lang_code => $lang)
-                    <a href="?setLocale={{ $lang_code }}" class="dropdown-item"><img src="/share-assets/flags/{{ $lang['flag'] }}"
+                    <a href="?setLocale={{ $lang_code }}" class="dropdown-item"><img src="/core-assets/flags/{{ $lang['flag'] }}"
                             class="img-flag" alt=""> {{ $lang['name'] }}</a>                    
                 @endforeach               
             </div>
@@ -148,11 +144,53 @@
 
         @php
             $user = Auth::user();
-        @endphp
+            $notifications = $user->notifications()->orderBy('id','desc')->take(20)->get();
+            $unreadNootificationCount = $user->notifications()->where('status', 'unread')->count();
+        @endphp        
+
+        <li class="nav-item dropdown">
+            <a href="#" class="navbar-nav-link" data-toggle="dropdown">
+                <i class="icon-bell2"></i>                
+                @if ($unreadNootificationCount > 0)
+                <span class="badge badge-warning badge-pill ml-auto ml-lg-0">{{ $unreadNootificationCount }}</span>
+                @endif
+            </a>
+
+            <div class="dropdown-menu dropdown-content wmin-lg-350 dropdown-menu-right">
+                <div class="dropdown-content-header">
+                    <span class="font-weight-semibold">{{ __('common.notification') }}</span>                    
+                </div>
+
+                <div class="dropdown-content-body dropdown-scrollable">
+                    @if ($notifications->isNotEmpty())
+                    <ul class="media-list" style="max-height: 400px;">
+                        @foreach ($notifications as $noti)
+                        <li class="media {{ $noti->status == 'read' ? 'text-muted' : 'font-weight-semibold'}}">                          
+                            <div class="media-body">
+                                {!! $noti->getMessage() !!}
+                                <div class="text-muted font-size-sm">{{ $noti->created_at->diffForHumans() }}</div>
+                            </div>
+                        </li>
+                        @endforeach
+                    </ul>
+                    @else
+                        {{ __('notification.no_new_notification') }}
+                    @endif
+                </div>
+
+                <div class="dropdown-content-footer bg-light">
+                    <a href="#" class="text-body mr-auto">{{ __('common.view_all') }}</a>
+                    <div>
+                        <a href="#" class="text-body" data-popup="tooltip" title="{{ __('common.mark_as_read') }}"><i class="icon-radio-unchecked"></i></a>                       
+                    </div>
+                </div>
+            </div>
+        </li>
+
         <li class="nav-item nav-item-dropdown-lg dropdown dropdown-user h-100">
             <a href="#" class="navbar-nav-link navbar-nav-link-toggler dropdown-toggle d-inline-flex align-items-center h-100" data-toggle="dropdown">
-                <img src="{{ ($image = $user->avatarImage) ? $image->getUrl('thumbnail') : '/admin-assets/images/avatar-placeholder.png' }}" class="rounded-pill mr-lg-2 nav-bar-avatar-image" width="34" height="34" alt="">
-                <span class="d-none d-lg-inline-block">{{ $user->display_name ?: $user->login_name ?: $user->email }}</span>
+                <img src="{{ ($image = $user->avatarImage) ? $image->getUrl('thumbnail') : '/core-assets/images/avatar-placeholder.png' }}" class="rounded-pill mr-lg-2 nav-bar-avatar-image" width="34" height="34" alt="">
+                <span class="d-none d-lg-inline-block">{{ $user->getName() ?: $user->login_name }}</span>
             </a>
 
             <div class="dropdown-menu dropdown-menu-right">

@@ -11,6 +11,7 @@ return [
     'item_status_changed' => ':itemのステータスが変更されました。',
     'item_status_changed_to' => ':itemのステータスが :status に変更されました。',
     'count_item_status_changed_to' => ':count 個の:itemのステータスが :status に変更されました。',
+    'count_items_deleted' => ':count件の:itemが削除されました。',
 
     'user_password_changed' => 'このユーザーのパスワードは変更されました。',
 

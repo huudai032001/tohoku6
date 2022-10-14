@@ -1,0 +1,26 @@
+.table .list-icons .list-icons-item {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+.table .list-icons>:not(:first-child) {
+    margin-left: 1rem;
+}
+.table .list-icons .list-icons-item .text {
+    margin-left: .2rem;
+}
+.pagination .page-link {
+    background-color: #fbfbfb;
+}
+.page-title {
+    padding: 10px 0;
+}
+.navbar-nav .dropdown-menu {
+    position: absolute;
+}
+@media (max-width: 767px) {
+    .navbar  .dropdown-toggle::after {
+        display: none;
+    }
+}

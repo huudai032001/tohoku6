@@ -7,6 +7,7 @@ return [
         'member' => 'メンバー'
     ],
     'name' => '名前',
+    'name_kana' => '名前 (かな)',
     'sei' => '姓',
     'mei' => '名',
     'sei_kana' => 'せい',
@@ -16,7 +17,7 @@ return [
     'gender' => '性別',
     'date_of_birth' => '誕生日',
     'phone' => '電話番号',
-
+    'address' => '住所',
     'genders' => [
         'male' => '男',
         'female' => '女',

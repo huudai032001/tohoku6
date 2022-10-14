@@ -233,6 +233,10 @@ return [
 
         'Image' => Intervention\Image\Facades\Image::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+
+        'Helper' => App\Misc\Helper::class,
+        'DataTable' => App\Misc\DataTable::class,
+        'FlashMsg' => App\Misc\FlashMsg::class,
     ],
 
 ];

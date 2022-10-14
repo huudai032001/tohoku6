@@ -14,9 +14,17 @@ return [
     'edit_item' => ':Itemを編集',
     'delete' => '消去',
     'delete_item' => ':Itemを削除',
+    'view_all' => 'すべて見る',
+
+    'id' => 'ID',
+    'name' => '名',
+    'slug' => 'URLスラッグ',
 
     'search' => '探索',
     'keyword' => 'キーワード',
+    'id_or_keyword' => 'IDまたはキーワード',
+    'search_by_id' => 'IDで検索',
+    'search_by_keyword' => 'キーワードで探す',
     'sort' => '選別',
 
     'action' => '行動',
@@ -66,6 +74,27 @@ return [
     'dashboard' => 'ダッシュボード',
     'tool' => '道具',
     'debug_log' => 'デバッグ ログ',
+
+
+    'product' => '製品',
+    'image' => '画像',
+    'image_gallery' => '画像ギャラリー',
+
+
+    'category' => 'カテゴリー',
+    'tag' => 'タグ',
+
+    'parent' => '親',
+    'parent_item' => '親:item',
+    'children_item' => '子供の:item',
+    'sub_category' => 'サブカテゴリ',
+    'detail' => '詳細',
+
+    'time' => '時間',
+    'date' => '日にち',
+
+    'notification' => '通知',
+    'mark_as_read' => '既読にする',
 
 
     'Spot' => 'スポット',

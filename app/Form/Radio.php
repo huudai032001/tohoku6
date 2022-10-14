@@ -38,7 +38,7 @@ class Radio extends FormGroup
             }
             
             $html .= sprintf(
-                '<label class="custom-control custom-checkbox mb-2 mr-4 %s">
+                '<label class="custom-control custom-checkbox my-1 mr-4 %s">
                     <input  type="radio" name="%s" value="%s" %s class="custom-control-input">
                     <span class="custom-control-label">%s</span>
                 </label>', 

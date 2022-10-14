@@ -2,11 +2,11 @@
 	export default {
 		data() {
             return {
-               editor: null
+               editor: null,              
             }
         },
         props: [
-            
+
 		],
         inheritAttrs: false,
 		mounted() {
@@ -18,8 +18,8 @@
                 editimage_cors_hosts: ['picsum.photos'],
                 menubar: 'edit insert format tools table help',
                 toolbar: 'undo redo | bold italic underline strikethrough | forecolor backcolor | fontsize blocks | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | pagebreak | charmap emoticons  | insertfile image media link anchor codesample | ltr rtl',
-                toolbar_sticky: true,
-                toolbar_sticky_offset: isSmallScreen ? 102 : 108,
+                //toolbar_sticky: true,
+                //toolbar_sticky_offset: isSmallScreen ? 102 : 108,
                 autosave_ask_before_unload: true,
                 autosave_interval: '30s',
                 autosave_prefix: '{path}{query}-{id}-',
@@ -33,14 +33,14 @@
                 template_mdate_format: '[Date Modified (MDATE): %Y/%m/%d : %H:%M:%S]',
                 height: 600,
                 //min_height: 500,
-                max_height: 800,
+                max_height: 600,
                 image_caption: true,
                 quickbars_selection_toolbar: '',
                 noneditable_class: 'mceNonEditable',
                 toolbar_mode: 'sliding',
                 contextmenu: 'link image table',
                 skin: useDarkMode ? 'oxide-dark' : 'oxide',
-                content_css: useDarkMode ? 'dark' : 'default',
+                content_css: false,
                 content_style: `
                     body { 
                         font-family:Helvetica,Arial,sans-serif;
@@ -54,7 +54,7 @@
                 branding: false, // remove tiny copyright logo
                 promotion: false, // remove upgrade promotion,
                 language: document.documentElement.lang,
-                target: this.$refs.textarea,
+                target: this.$refs.textareaHolder.querySelector('textarea'),
                 convert_urls: false, // disable tinymce to auto convert link and image url,
 
             }).then((value) => {
@@ -93,8 +93,8 @@
             <i class="icon-images2"></i> {{ $t('insert_media') }}
         </span>
     </div>
-	<textarea ref="textarea" v-bind="$attrs">
-		dddddddd
-	</textarea>
+    <div ref="textareaHolder">
+        <slot></slot>
+    </div>
 </template>
 

@@ -20,15 +20,13 @@ class Spot extends BaseModel
      public static function getModelName() {
         return __('common.spot');        
     }
-    protected $fillable = ['id'];
+
     public function getName() {
         return $this->name;
     }
-    public function upload() {
-        return $this->belongsTo('App\Models\Upload');
-    }
-    public function comment() {
-        return $this->hasMany('App\Models\Comment');
+
+    public function comments() {
+        return $this->hasMany('App\Models\Comment', 'spot_id');
     }
 
     public function image()
@@ -40,49 +38,32 @@ class Spot extends BaseModel
     {
         return \App\Models\Upload::whereIn('id', $this->images_id)->get();
     }
-
-    public function getCategory_list()
+   
+    public function categories()
     {
-        return \App\Models\Category::whereIn('id', $this->category)->get();
-    }
-
-    public function getCategory()
-    {
-        return \App\Models\Category_spot::where('spot_id', $this->id)->get();
+        return $this->belongsToMany(\App\Models\SpotCategory::class, 'spot_term_map', 'object_id','term_id', );
     }
 
     public function user()
     {
         return $this->belongsTo(\App\Models\User::class, 'author');
     }
-    public static function statusList()
-    {
-        return [
-           'active' => __('status.active'),
-           'disabled' => __('status.disabled')
-        ];
-    }
-    public function statusName()
+   
+    public function getStatus()
     {
         if ($this->status) {
             return __('status.' . $this->status);
         }
     }
 
-    public function categoryDetail()
-    {
-        return $this->hasMany(\App\Models\Category_spot::class);
-    }
-
     public function listLocation(){
-        $arr = [
-            0=>'Akita',
-            1=>'Aomori',
-            2=>'Fukushima',
-            3=>'Iwate',
-            4=>'Miyagi',
-            5=>'Yamagate',
-        ];
-        return $arr;
+        return [
+            'Akita',
+            'Aomori',
+            'Fukushima',
+            'Iwate',
+            'Miyagi',
+            'Yamagate',
+        ];        
     }
 }

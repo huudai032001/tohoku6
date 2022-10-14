@@ -108,7 +108,7 @@ export default {
             var result = null;
             let el = this;
             await $.ajax({
-                url: '/admin/file-manager/upload',
+                url: '/admin/ajax/file-manager/upload',
                 method: 'post',
                 data: formData,
                 cache: false,
@@ -144,7 +144,7 @@ export default {
                     let success = false;
 
                     await $.ajax({
-                        url: '/admin/file-manager/delete-file',
+                        url: '/admin/ajax/file-manager/delete-file',
                         method: 'post',
                         data: {
                             file_id: file_id
@@ -184,7 +184,7 @@ export default {
             
             this.state = 'fetching'
             await $.ajax({
-                url: '/admin/file-manager/fetch-data',
+                url: '/admin/ajax/file-manager/fetch-data',
                 method: 'get',
                 data: {
                     cursor: el.nextPaginateCursor,
@@ -241,7 +241,7 @@ export default {
                 let el = this;
                 el.state = 'doing-ajax'
                 await $.ajax({
-                    url: '/admin/file-manager/create-folder',
+                    url: '/admin/ajax/file-manager/create-folder',
                     method: 'post',
                     data: {
                         current_path: el.currentPath,
@@ -275,7 +275,7 @@ export default {
                 let el = this;
                 el.state = 'doing-ajax'
                 await $.ajax({
-                    url: '/admin/file-manager/delete-folder',
+                    url: '/admin/ajax/file-manager/delete-folder',
                     method: 'post',
                     data: {
                         current_path: el.currentPath,
@@ -338,7 +338,7 @@ export default {
             this.subFolders = []            
             this.fileItems = [];
             this.nextPaginateCursor = null
-
+            this.searchKeyword = ''
             this.fetchData([
                 'file',
                 'sub_folder'

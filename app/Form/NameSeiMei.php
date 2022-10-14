@@ -96,5 +96,16 @@ class NameSeiMei extends FormGroup
         }
         return $show;
     }
+
+    public function errorMsg($errors)
+    {          
+        $html = '';
+        // if($errors){
+        //     foreach ($errors->get($this->name) as $error) {
+        //         $html .= sprintf('<div class="form-group-error-msg text-danger">%s</div>', $error);
+        //     }
+        // }   
+        return $html;
+    }
     
 }

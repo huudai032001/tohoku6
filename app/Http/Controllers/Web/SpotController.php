@@ -28,34 +28,32 @@ use App\Jobs\SendEmailResetPass;
 class SpotController extends Controller
 {
     public function list_spot(Request $req){
+        $query = Spot::with('upload')->where('status','active');
+
         if($req->input('search')){
-            $search = $req->input('search');
-            $sort = $req->input('sort');
-            if($sort == 1){
-                $list_spot = Spot::where('spots.name', 'like', '%' . $search . '%')
-                ->where('status','active')
-                ->orderBy('created_at','DESC')
-                ->take(6)->get();
-            }else if($sort == 2){
-                $list_spot = Spot::where('spots.name', 'like', '%' . $search . '%')
-                ->where('status','active')
-                ->orderBy('favorite','DESC')
-                ->take(6)->get();
-            }
-            else if($sort ==3){
-                $list_spot = Spot::where('spots.name', 'like', '%' . $search . '%')
-                ->where('status','active')
-                ->orderBy('count_comment','DESC')
-                ->take(6)->get();
-            }else {
-                $list_spot = Spot::where('spots.name', 'like', '%' . $search . '%')
-                ->where('status','active')
-                ->orderBy('created_at','DESC')
-                ->take(6)->get();
-            }
-        }else {
-            $list_spot = Spot::with('upload')->where('status','active')->orderBy('created_at','DESC')->take(6)->get();
+            $query->where('spots.name', 'like', \Helper::makeSearchString());
         }
+
+        switch($req->input('sort')) {
+            case 1: 
+                $query->orderBy('created_at','DESC');
+                break;
+
+            case 2: 
+                $query->orderBy('favorite','DESC');
+                break;
+
+            case 1: 
+                $query->orderBy('count_comment','DESC');
+                break;
+
+            default: 
+                $query->orderBy('created_at','DESC');
+                break;
+        }
+
+        $list_spot = $query->take(6)->get();
+
         $category = Category::all();
         // dd($list_spot);
         return view('web.spots',compact('list_spot','category'));
@@ -125,7 +123,7 @@ class SpotController extends Controller
         $spot->image_id = $uploadService->handleUploadFile($file,"")['file_info']['id'];
         $spot->images_id = $sub_img;
         $spot->category = $req->input('category');
-        $category = $spot->getCategory_list();
+        $category = $spot->categories;
         return view('web/spot-preview',['spot'=> $spot ,'category'=> $category]);
     }
     public function upload_img(){

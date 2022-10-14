@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import { createI18n } from 'vue-i18n'
 
 import formControlUpload  from './vue-sfc/form-control-upload.vue'
+import formControlTaxonomy  from './vue-sfc/form-control-taxonomy.vue'
 import textEditor  from './vue-sfc/form-control-text-editor.vue'
 import buttonSubmit  from './vue-sfc/button-submit.vue'
 
@@ -31,6 +32,7 @@ document.querySelectorAll('.vue-form').forEach(element => {
         },
         components: {
             formControlUpload,
+            formControlTaxonomy,
             buttonSubmit,
             textEditor
         }

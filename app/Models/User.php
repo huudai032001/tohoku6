@@ -24,31 +24,26 @@ use App\Models\Casts;
 class User extends BaseModel implements
     AuthenticatableContract,
     AuthorizableContract,
-    CanResetPasswordContract
+    CanResetPasswordContract,
+    MustVerifyEmailContract 
 {
     use Authenticatable, Authorizable, CanResetPassword, MustVerifyEmail;
 
     use HasApiTokens, HasFactory, Notifiable;
 
+    protected $table = 'users';
 
     /**
      * The attributes that are mass assignable.
      *
      * @var string[]
      */
-    // protected $fillable = [
-    //     'name',
-    //     'email',
-    //     'password',
-    // ];
     protected $fillable = [
         'name',
         'email',
         'password',
-        'status',
-        'facebook_id',
-        'google_id'
-];
+    ];
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -66,8 +61,8 @@ class User extends BaseModel implements
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'image_id'=> Casts\Json::class,
-
+        'date_of_birth' => 'datetime',
+        'fields' => Casts\Json::class,
     ];    
     
 
@@ -120,18 +115,24 @@ class User extends BaseModel implements
         }
     }
 
-    public function image()
+    public function avatarImage()
     {
-        return $this->belongsTo(\App\Models\Upload::class, 'avatar_image_id');
+        return $this->belongsTo('App\Models\Upload', 'avatar_image_id');
     }
+    
+    public function notifications()
+    {
+        return UserNotification::where(function ($query)
+        {
+            $query->where('user_id', $this->id);
+            switch (\Auth::user()->role) {
+                case 'admin':
+                case 'super_admin':
+                    $query->where('user_group', 'admin');
+                    break;
 
-    public function getImages()
-    {
-        return \App\Models\Upload::whereIn('id', $this->avatar_image_id)->get();
+            }
+        });
     }
-
-    public function getNotifi()
-    {
-        return \App\Models\Notification::where('user_id', $this->id)->get();
-    }
+   
 }

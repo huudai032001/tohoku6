@@ -3,25 +3,42 @@
 @section('content')
 
 <div class="mb-2">
-    <form class="" action="" method="get">        
+      
         
         <div class="row justify-content-between">
-            <div class="col-12 col-md-8 mb-2 mb-md-0">
-                <div class="row">
-                    @if ($controller->searchAble())
-                        <div class="col-md-auto">
-                            @section('index-search')                        
-                                <div>{{ __('common.search') }}</div>
-                                <input type="search" class="form-control" name="search" value="{{ request()->input('search') }}"
-                                    placeholder="{{ __('common.keyword') }}">
-                            @show                            
-                        </div>
-                    @endif
-                    @yield('index-filter')
+            <div class="col-12 col-lg-auto mb-2 mb-md-0">
+                <div class="row align-items-end">
+                    <div class="col-md-auto">
+                        <form class="" action="" method="get">
+                            <div>{{ __('common.id') }}</div>
+                            <input style="width: 140px;" type="search" class="form-control" name="id" value="{{ request()->input('id') }}" placeholder="{{ __('common.search_by_id') }}">
+                        </form>
+                    </div>
+                    <div class="col-md-auto">
+                        <form class="" action="" method="get">
+                            <div class="row">
+                                @if ($controller->searchAble())
+                                    <div class="col-md-auto">
+                                        @section('index-search')                        
+                                            <div>{{ __('common.search') }}</div>
+                                            <input type="search" class="form-control" name="search" minlength="2" maxlength="32" value="{{ request()->input('search') }}" placeholder="{{ __('common.search_by_keyword') }}">
+                                        @show                            
+                                    </div>
+                                @endif                                
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-auto">
+                        <form class="" action="" method="get">
+                            <div class="row">                                
+                                @yield('index-filter')
+                            </div>
+                        </form>
+                    </div>
                 </div>
                 
             </div>
-            <div class="col-12 col-md-4 mb-2 mb-md-0">
+            <div class="col-12 col-lg-auto mb-2 mb-md-0">
                 <div class="row align-items-center justify-content-end">                    
                     <div class="col-auto">                                           
                         @section('index-sort')                        
@@ -37,7 +54,7 @@
             </div>
         </div>
         
-    </form>
+    
 </div>
 
 <form id="data-management-bulk-action-form" action="{{ route($routeBase . 'bulk-action') }}" method="GET">
@@ -96,8 +113,8 @@
                                             <a href="{{ route($routeBase . 'item-action', 
                                             ['id' => $dataItem->id, 'action' => 'view']) }}"
                                                 class="list-icons-item text-primary">
-                                                <i class="icon-eye"></i>
-                                                <span class="text">@trans('common.view')</span>
+                                                <i class="icon-file-text2"></i>
+                                                <span class="text">@trans('common.detail')</span>
                                             </a>
                                         @endif
 
@@ -142,7 +159,7 @@
 
     @else
         <div class="alert alert-primary alert-styled-left alert-dismissible">
-            {{ __('message.no_item_found.') }}
+            {{ __('message.no_item_found') }}
         </div>
     @endif
 

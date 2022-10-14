@@ -102,7 +102,7 @@ class ReportSpotController extends CommonDataController {
     
     // protected function saveNew(Request $request, $item)
     // {
-    //     return $this->updateItem($request, $item);
+    //     return $this->saveNewOrUpdate($request, $item);
     // }
 
 
@@ -127,7 +127,7 @@ class ReportSpotController extends CommonDataController {
         ];
     }
 
-    protected function updateItem(Request $request, $item)
+    protected function saveNewOrUpdate(Request $request, $item)
     {
         // $item->alias = $alias;
         // $item->save();

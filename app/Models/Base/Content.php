@@ -10,11 +10,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 abstract class Content extends BaseModel
 {  
-    use Traits\HasDateTimeColumns;
-    use Traits\HasFields; 
-    use Traits\HasImages;
+    use Traits\HasDateTime;
+    use Traits\HasJson; 
+    use Traits\HasImage;
     use Traits\HasExcerpt;
-    use SoftDeletes;    
+    //use SoftDeletes;    
 
     public function newerOne()
     {

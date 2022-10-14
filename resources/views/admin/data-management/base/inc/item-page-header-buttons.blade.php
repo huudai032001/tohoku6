@@ -7,7 +7,7 @@
 @if ($controller->viewAble($dataItem))
     <a href="{{ route($routeBase . 'item-action', 
     ['id' => $dataItem->id, 'action' => 'view']) }}" class="btn btn-link btn-float text-body">
-        <i class="icon-eye text-primary"></i> <span>@trans('common.view')</span>
+        <i class="icon-file-text2 text-primary"></i> <span>@trans('common.detail')</span>
     </a>
 @endif
 

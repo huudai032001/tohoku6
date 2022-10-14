@@ -105,7 +105,7 @@ class CommentController extends CommonDataController {
     
     // protected function saveNew(Request $request, $item)
     // {
-    //     return $this->updateItem($request, $item);
+    //     return $this->saveNewOrUpdate($request, $item);
     // }
 
 
@@ -129,7 +129,7 @@ class CommentController extends CommonDataController {
         ];
     }
 
-    protected function updateItem(Request $request, $item)
+    protected function saveNewOrUpdate(Request $request, $item)
     {
         dd($request->input('spot_id'));
         $item->content = $request->input('content');
