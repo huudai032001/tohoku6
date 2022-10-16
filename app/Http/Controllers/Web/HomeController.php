@@ -16,6 +16,7 @@ use App\Models\Upload;
 use App\Models\Favorite;
 use App\Models\Comment;
 use App\Models\Notification;
+use Illuminate\Support\Str;
 
 use App\Models\SpotCategory;
 

@@ -17,6 +17,8 @@ use App\Models\Comment;
 use App\Models\Notification;
 use App\Models\Category;
 use DB;
+use App\Models\ExchangeGoods;
+use Illuminate\Support\Str;
 
 use App\Models\Goods;
 use App\Models\User;
@@ -108,8 +110,9 @@ class GoodsController extends Controller
 
     }
     public function postGoodExchangeConfirm(Request $req){
-        $alias = Str::slug($req->input('name'), "-");
+        // $alias = Str::slug($req->input('name'), "-");
         try {
+            // dd($alias);
             $exchange = new ExchangeGoods;
             $exchange->name = $req->input('name');
             $exchange->phone = $req->input('phone');
@@ -117,8 +120,9 @@ class GoodsController extends Controller
             $exchange->home_address = $req->input('home_address');
             $exchange->zip_code = $req->input('zip_code');
             $exchange->furigana = $req->input('furigana');
-            $example->alias = $alias;
+            // $example->alias = $alias;
             $exchange->save();
+            // dd('a');
 
             $user = Auth::user();
             $user->point = $req->input('point');

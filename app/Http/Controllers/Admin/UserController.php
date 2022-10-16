@@ -13,6 +13,7 @@ use App\Misc\DataTable;
 use App\Misc\HTML;
 use App\Misc\FlashMsg;
 use App\Form;
+use Illuminate\Support\Str;
 
 class UserController extends CommonDataController
 {
