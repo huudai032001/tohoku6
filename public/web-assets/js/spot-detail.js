@@ -2,8 +2,15 @@
 
 $(document).on("click", ".toggle-action-button", function () {
     var com_id = $(this).data('id');
-    $(".modal_comment #id_comment").val( com_id );
+    var user_com = $(this).data('user_id');
 
+    var user = $("#user").val();
+    // console.log(user_com);
+    if(user != user_com){
+        $(".delete_com").addClass('hide');
+    }else {
+        $(".modal_comment #id_comment").val( com_id );
+    }
 });
 
 $(document).on("click", ".action-button", function () {
@@ -32,6 +39,8 @@ function delete_comment(){
             // console.log(data);
             if(data.res == true){
                 window.location.reload();
+            }else {
+                alert('このコメントは削除できません');
             }
         }
     });

@@ -6,7 +6,7 @@
     @section('content')
 
     <body class="my-profile-page">
-
+    <input type="hidden" value="{{Auth::user()->id}}" id="user">
 
         <div id="wrapper">
             <div id="inner-wrapper">
@@ -144,7 +144,7 @@
                                                 </div>
                                                 <div class="d-flex align-items-center">
                                                     <div class="review-time">{{$value->created_at}}</div>
-                                                    <div class="toggle-action-button d-flex align-items-center" data-show-modal="#modal-review-actions" data-id="{{$value->id}}">
+                                                    <div class="toggle-action-button d-flex align-items-center" data-show-modal="#modal-review-actions" data-id="{{$value->id}}" data-user_id="{{$value->user_id}}">
                                                         <span></span>
                                                         <span></span>
                                                         <span></span>
@@ -367,8 +367,7 @@
                 <div class="modal_title">この口コミについて</div>
                 <ul class="modal_menu">
                     <li>
-                        
-                        <a onclick="delete_comment()" data-to-delete-review>削除する</a>
+                        <a onclick="delete_comment()" data-to-delete-review class="delete_com">削除する</a>
                     </li>
                     <li>
                         <a href="#" data-to-report-review>事務局に報告する</a>

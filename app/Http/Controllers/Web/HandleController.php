@@ -320,8 +320,14 @@ class HandleController extends Controller
 
         public function deleteComment(Request $req){
             $com = Comment::findorfail($req->input('id'));
-            $com->delete();
-            echo json_encode(['res'=>true]);
+            // $spot = Spot::findorfail($com->spot_id);
+            // dd($spot);
+            if(Auth::user()->id == $com->user_id){
+                $com->delete();
+                echo json_encode(['res'=>true]);
+            }else {
+                echo json_encode(['res'=>false]);
+            }
         }
 
 
