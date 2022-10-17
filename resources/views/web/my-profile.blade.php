@@ -240,7 +240,7 @@
                                                    <div class="icon-star">
                                                        <img src="/web-assets/images/icons/star-yellow.svg" alt="">
                                                    </div>
-                                                   <a href="spot-detail.html">
+                                                   <a href="{{route('spot_detail',$value->alias)}}">
                                                         @if($image = $value->image)
                                                         <div class="ratio thumb-image">
                                                             <img src="{{$image->getUrl()}}" alt="" class="image">
@@ -255,7 +255,7 @@
                                                            <img src="/web-assets/images/area/akita.svg" alt="">
                                                        </div>
                                                    </div>
-                                                   <a href="spot-detail.html">
+                                                   <a href="{{route('spot_detail',$value->alias)}}">
                                                    <?php
                                                         $string = strip_tags($value->name);
                                                         if (strlen($string) > 25) {
