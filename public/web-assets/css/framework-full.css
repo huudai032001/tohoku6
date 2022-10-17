@@ -28,7 +28,7 @@ input#upload_avatar {
 }
 img#file_upload {
   width: 87px;
-  min-height: 87px;
+  max-height: 87px;
   border-radius: 50%;
 }
 .form-error-msg {

@@ -15,7 +15,7 @@
 
                             <div class="d-flex justify-content-center">
                                 <div class="avatar">
-                                    @if($image = $user->image)
+                                    @if($image = $user->avatarImage)
                                     <img src="{{$image->getUrl()}}" alt="" id="file_upload">
                                     @else
                                     <img src="/web-assets/images/profile.svg" alt="" id="file_upload">

@@ -37,7 +37,7 @@
                 <div class="icon dropdown">
                     <img src="/web-assets/images/icons/user_image.png" alt="search" style="width:23px; height:23px">
                     <div class="dropdown-content">
-                        <a href="/logout-user">ログアウト</a>
+                        <a href="/logout-user"><img src="/web-assets/images/icons/logout.png" alt="" style="width:23px; height:23px"> ログアウト</a>
                     </div>
                 </div>
             </a>

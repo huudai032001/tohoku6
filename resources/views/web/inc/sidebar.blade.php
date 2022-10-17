@@ -4,8 +4,8 @@
         @if(Auth::check())
         <a href="{{route('myProfile')}}">
             <div class="profile-image">
-                @if($image = Auth::user()->image)
-                <img width="75" src="{{$image->getUrl()}}" alt="profile">
+                @if($image = Auth::user()->avatarImage)
+                <img width="75" src="{{$image->getUrl()}}" alt="profile" id="file_upload">
                 @else
                 <img width="75" src="/web-assets/images/profile.svg" alt="profile">
                 @endif

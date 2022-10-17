@@ -308,7 +308,6 @@ class UserController extends Controller
 
     public function postProfileEdit(Request $req){
         // dd($req->input('alo'));
-
         $this->validate($req,[
             'name'=>'required|min:6|max:50',
             'email'=>'required',
@@ -327,9 +326,11 @@ class UserController extends Controller
             'intro.required'=>'必須項目です',
 
         ]);
+
         $uploadService = new \App\Services\UploadService;
 
         $file = $req->file('image');
+
         $user = Auth::user();
         $user->name = $req->input('name');
         $user->email = $req->input('email');
@@ -345,6 +346,8 @@ class UserController extends Controller
         $user->intro = $req->input('intro');
 
         $user->save();
+        // dd($user);
+
         return redirect()->back();
     }
 
