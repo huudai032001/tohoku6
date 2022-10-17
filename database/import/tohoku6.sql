@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 14, 2022 at 04:07 AM
+-- Generation Time: Oct 17, 2022 at 04:12 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -20,85 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `tohoku6`
 --
-
--- --------------------------------------------------------
-
---
--- Table structure for table `category`
---
-
-CREATE TABLE `category` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `category`
---
-
-INSERT INTO `category` (`id`, `name`, `created_at`, `updated_at`) VALUES
-(1, 'グルメ', NULL, NULL),
-(2, 'ショッピング', NULL, NULL),
-(3, '宿泊', '2022-10-06 02:17:29', '2022-10-06 02:17:29'),
-(4, '体験', NULL, NULL),
-(5, '自然', NULL, NULL),
-(6, 'SNS映え', NULL, NULL),
-(7, '歴史', NULL, NULL);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `category_event`
---
-
-CREATE TABLE `category_event` (
-  `id` int(11) NOT NULL,
-  `event_id` int(11) NOT NULL,
-  `category_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `category_event`
---
-
-INSERT INTO `category_event` (`id`, `event_id`, `category_id`) VALUES
-(2, 2, 3),
-(3, 3, 4),
-(4, 4, 3),
-(5, 5, 3),
-(6, 6, 3),
-(7, 7, 2);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `category_spot`
---
-
-CREATE TABLE `category_spot` (
-  `id` int(11) NOT NULL,
-  `spot_id` int(11) NOT NULL,
-  `category_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `category_spot`
---
-
-INSERT INTO `category_spot` (`id`, `spot_id`, `category_id`) VALUES
-(7, 3, 1),
-(8, 3, 2),
-(11, 5, 1),
-(12, 5, 7),
-(13, 7, 3),
-(17, 7, 4),
-(18, 2, 6),
-(19, 7, 6),
-(20, 2, 6),
-(21, 2, 7),
-(24, 8, 4);
 
 -- --------------------------------------------------------
 
@@ -122,7 +43,12 @@ CREATE TABLE `comment` (
 
 INSERT INTO `comment` (`id`, `spot_id`, `user_id`, `name_user`, `content`, `created_at`, `updated_at`) VALUES
 (3, 1, 58, 'mail tests', 'nice', '2022-10-13 01:54:30', '2022-10-13 01:54:30'),
-(4, 6, 58, 'mail tests', 'verry', '2022-10-13 02:48:07', '2022-10-13 02:48:07');
+(4, 6, 58, 'mail tests', 'verry', '2022-10-13 02:48:07', '2022-10-13 02:48:07'),
+(5, 9, 58, 'mail tests', 'nice', '2022-10-14 02:44:09', '2022-10-14 02:44:09'),
+(8, 9, 58, 'mail tests', 'ádasd', '2022-10-14 02:47:15', '2022-10-14 02:47:15'),
+(9, 9, 58, 'mail tests', 'nixce', '2022-10-14 07:05:08', '2022-10-14 07:05:08'),
+(10, 4, 58, 'mail tests', 'nice', '2022-10-14 07:22:04', '2022-10-14 07:22:04'),
+(11, 4, 58, 'mail tests', 'nogn', '2022-10-14 07:23:23', '2022-10-14 07:23:23');
 
 -- --------------------------------------------------------
 
@@ -151,12 +77,66 @@ CREATE TABLE `event` (
 --
 
 INSERT INTO `event` (`id`, `name`, `alias`, `location`, `time_start`, `intro`, `image_id`, `images_id`, `author`, `favorite`, `count_comment`, `created_at`, `updated_at`) VALUES
-(2, '天守県カントリーミュージックイベント', '天守県カントリーミュージックイベント', 'Akita', '2022-10-13 17:00:00', 'とても興味深い', 20, '[\"20\",\"19\",\"18\"]', 1, 0, 0, '2022-10-13 01:04:22', '2022-10-13 01:04:22'),
+(2, '天守県カントリーミュージックイベント', '天守県カントリーミュージックイベント', 'Akita', '2022-10-17 01:25:45', 'とても興味深い', 20, '[\"20\",\"19\",\"18\"]', 1, 0, 0, '2022-10-13 01:04:22', '2022-10-14 07:19:43'),
 (3, '最新のマジック サーカス ショー', '最新のマジック サーカス ショー', 'Akita', '2022-10-12 17:00:00', 'とても魅力的な', 21, '[\"20\",\"19\",\"15\"]', 1, 0, 0, '2022-10-13 01:06:38', '2022-10-13 01:06:38'),
 (4, 'テトコメディ', 'テトコメディ', 'Akita', '2022-10-13 17:00:00', '椅子から離れて笑う', 19, '[\"20\",\"18\",\"17\"]', 1, 0, 0, '2022-10-13 01:07:28', '2022-10-13 01:07:28'),
-(5, 'Cry 恐れるな「弱者を守る」', 'cry', 'Fukushima', '2022-10-13 08:08:33', '最後の一滴まで魅力的', 16, '[\"21\",\"18\",\"15\"]', 1, 0, 0, '2022-10-13 01:08:33', '2022-10-13 01:08:33'),
-(6, 'Khóa Học Tiếng Anh Mới Nhất', 'khoa-hoc-tieng-anh-moi-nhat', 'Aomori', '2022-10-14 17:00:00', 'depdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 15, '[\"19\",\"18\",\"17\"]', 1, 0, 0, '2022-10-13 01:09:02', '2022-10-13 01:09:02'),
-(7, '10年歌手Jso', '10jso', 'Fukushima', '2022-10-13 08:09:43', 'dep', 18, '[\"18\",\"17\",\"15\"]', 1, 0, 0, '2022-10-13 01:09:43', '2022-10-13 01:09:43');
+(5, 'Cry 恐れるな「弱者を守る」', 'cry', 'Fukushima', '2022-10-17 02:08:23', '最後の一滴まで魅力的', 16, '[\"21\",\"18\",\"15\"]', 1, 1, 0, '2022-10-13 01:08:33', '2022-10-16 19:08:23'),
+(6, 'Khóa Học Tiếng Anh Mới Nhất', 'khoa-hoc-tieng-anh-moi-nhat', 'Aomori', '2022-10-17 01:25:42', 'depdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 15, '[\"19\",\"18\",\"17\"]', 1, 0, 0, '2022-10-13 01:09:02', '2022-10-14 07:04:30'),
+(7, '10年歌手Jso', '10jso', 'Fukushima', '2022-10-13 08:09:43', 'dep', 18, '[\"18\",\"17\",\"15\"]', 1, 0, 0, '2022-10-13 01:09:43', '2022-10-13 01:09:43'),
+(8, 'Khóa Học Tiếng Anh Mới Nhất', 'khoa-hoc-tieng-anh-moi-nhat', 'Akita', '2022-10-14 17:00:00', 'depdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 17, '[\"16\",\"17\"]', 1, 0, 0, '2022-10-14 03:12:33', '2022-10-14 03:17:48');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `event_terms`
+--
+
+CREATE TABLE `event_terms` (
+  `id` int(11) NOT NULL,
+  `taxonomy` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `slug` varchar(255) DEFAULT NULL,
+  `parent_id` int(11) DEFAULT NULL,
+  `image_id` int(11) DEFAULT NULL,
+  `description` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `event_terms`
+--
+
+INSERT INTO `event_terms` (`id`, `taxonomy`, `name`, `slug`, `parent_id`, `image_id`, `description`) VALUES
+(1, 'category', 'グルメ', NULL, NULL, NULL, NULL),
+(2, 'category', 'ショッピング', NULL, NULL, NULL, NULL),
+(3, 'category', '宿泊', NULL, NULL, NULL, NULL),
+(4, 'category', '体験', NULL, NULL, NULL, NULL),
+(5, 'category', '自然', NULL, NULL, NULL, NULL),
+(6, 'category', 'SNS映え', NULL, NULL, NULL, NULL),
+(7, 'category', '歴史', NULL, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `event_term_map`
+--
+
+CREATE TABLE `event_term_map` (
+  `id` int(11) NOT NULL,
+  `object_id` int(11) NOT NULL,
+  `term_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `event_term_map`
+--
+
+INSERT INTO `event_term_map` (`id`, `object_id`, `term_id`) VALUES
+(2, 2, 3),
+(3, 3, 4),
+(4, 4, 3),
+(5, 5, 3),
+(6, 6, 3),
+(7, 7, 2);
 
 -- --------------------------------------------------------
 
@@ -181,7 +161,9 @@ CREATE TABLE `exchange_goods` (
 --
 
 INSERT INTO `exchange_goods` (`id`, `name`, `furigana`, `phone`, `zip_code`, `address`, `home_address`, `created_at`, `updated_at`) VALUES
-(1, 'huudaddad', 'ssss', '0563064010', '100000', 'thon 1', 'das', '2022-10-04 20:59:33', '2022-10-04 20:59:33');
+(1, 'huudaddad', 'ssss', '0563064010', '100000', 'thon 1', 'das', '2022-10-04 20:59:33', '2022-10-04 20:59:33'),
+(2, 'dai huu', NULL, '0563064010', '100000', 'thon 1', 'fsdfsdfsdf', '2022-10-16 06:01:05', '2022-10-16 06:01:05'),
+(3, 'dai huu', NULL, '0563064010', '113-0024,東京都,文京区,西片', 'thon 1', '371-ddas', '2022-10-16 18:49:12', '2022-10-16 18:49:12');
 
 -- --------------------------------------------------------
 
@@ -207,8 +189,8 @@ CREATE TABLE `failed_jobs` (
 
 CREATE TABLE `favorite` (
   `id` int(11) NOT NULL,
-  `posts_id` int(11) NOT NULL,
-  `type_posts` int(11) NOT NULL,
+  `object_id` int(11) NOT NULL,
+  `object_type` int(11) NOT NULL,
   `user_id` text DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -218,22 +200,24 @@ CREATE TABLE `favorite` (
 -- Dumping data for table `favorite`
 --
 
-INSERT INTO `favorite` (`id`, `posts_id`, `type_posts`, `user_id`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, '1,58', '2022-10-13 00:48:08', '2022-10-13 01:33:31'),
-(2, 1, 1, '1', '2022-10-13 00:51:14', '2022-10-13 00:51:14'),
-(3, 6, 1, '1,58', '2022-10-13 01:01:42', '2022-10-13 02:47:54'),
-(4, 2, 2, '1', '2022-10-13 01:04:22', '2022-10-13 01:04:22'),
-(5, 3, 2, '1', '2022-10-13 01:06:38', '2022-10-13 01:06:38'),
-(6, 4, 2, '1', '2022-10-13 01:07:28', '2022-10-13 01:07:28'),
-(7, 5, 2, '1', '2022-10-13 01:08:33', '2022-10-13 01:08:33'),
-(8, 6, 2, '1', '2022-10-13 01:09:02', '2022-10-13 01:09:02'),
-(9, 7, 2, '1', '2022-10-13 01:09:43', '2022-10-13 01:09:43'),
-(10, 7, 1, '1', '2022-10-13 18:37:04', '2022-10-13 18:37:04'),
+INSERT INTO `favorite` (`id`, `object_id`, `object_type`, `user_id`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, NULL, '2022-10-13 00:48:08', '2022-10-13 01:33:31'),
+(2, 1, 1, NULL, '2022-10-13 00:51:14', '2022-10-13 00:51:14'),
+(3, 6, 1, NULL, '2022-10-13 01:01:42', '2022-10-13 02:47:54'),
+(4, 2, 2, NULL, '2022-10-13 01:04:22', '2022-10-14 07:19:43'),
+(5, 3, 2, NULL, '2022-10-13 01:06:38', '2022-10-13 01:06:38'),
+(6, 4, 2, NULL, '2022-10-13 01:07:28', '2022-10-13 01:07:28'),
+(7, 5, 2, ',58', '2022-10-13 01:08:33', '2022-10-16 19:08:23'),
+(8, 6, 2, NULL, '2022-10-13 01:09:02', '2022-10-14 07:04:30'),
+(9, 7, 2, NULL, '2022-10-13 01:09:43', '2022-10-13 01:09:43'),
+(10, 7, 1, NULL, '2022-10-13 18:37:04', '2022-10-13 18:37:04'),
 (11, 2, 1, '1', '2022-10-13 18:52:46', '2022-10-13 18:52:46'),
 (12, 2, 1, '1', '2022-10-13 18:55:17', '2022-10-13 18:55:17'),
 (13, 2, 1, '1', '2022-10-13 18:56:25', '2022-10-13 18:56:25'),
 (14, 2, 1, '1', '2022-10-13 18:56:32', '2022-10-13 18:56:32'),
-(15, 8, 1, '1', '2022-10-13 18:57:24', '2022-10-13 18:57:24');
+(15, 8, 1, '1', '2022-10-13 18:57:24', '2022-10-13 18:57:24'),
+(17, 9, 1, '58', '2022-10-14 02:39:04', '2022-10-14 02:39:04'),
+(18, 4, 1, '58', '2022-10-14 07:24:09', '2022-10-14 07:24:09');
 
 -- --------------------------------------------------------
 
@@ -284,42 +268,6 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `notification`
---
-
-CREATE TABLE `notification` (
-  `id` int(11) NOT NULL,
-  `posts_id` int(11) NOT NULL,
-  `feedback` varchar(255) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `notification`
---
-
-INSERT INTO `notification` (`id`, `posts_id`, `feedback`, `user_id`, `created_at`, `updated_at`) VALUES
-(1, 1, '承認された投稿', 1, '2022-10-13 00:48:08', '2022-10-13 00:48:08'),
-(2, 1, '承認された投稿', 1, '2022-10-13 00:51:14', '2022-10-13 00:51:14'),
-(3, 6, '承認された投稿', 1, '2022-10-13 01:01:42', '2022-10-13 01:01:42'),
-(4, 1, 'mail testsが  よくある質問フォーラムについての感情を表した', 58, '2022-10-13 01:33:31', '2022-10-13 01:33:31'),
-(5, 1, 'mail testsがあなたの投稿にコメントしました', 1, '2022-10-13 01:35:50', '2022-10-13 01:35:50'),
-(6, 1, 'mail testsがあなたの投稿にコメントしました', 1, '2022-10-13 01:37:52', '2022-10-13 01:37:52'),
-(7, 1, 'mail testsがあなたの投稿にコメントしました', 1, '2022-10-13 01:54:30', '2022-10-13 01:54:30'),
-(8, 6, 'mail testsが  振り返るな、前を向くについての感情を表した', 58, '2022-10-13 02:47:54', '2022-10-13 02:47:54'),
-(9, 6, 'mail testsがあなたの投稿にコメントしました', 1, '2022-10-13 02:48:07', '2022-10-13 02:48:07'),
-(10, 7, '承認された投稿', 1, '2022-10-13 18:37:04', '2022-10-13 18:37:04'),
-(11, 2, '承認された投稿', 1, '2022-10-13 18:52:46', '2022-10-13 18:52:46'),
-(12, 2, '承認された投稿', 1, '2022-10-13 18:55:17', '2022-10-13 18:55:17'),
-(13, 2, '承認された投稿', 1, '2022-10-13 18:56:25', '2022-10-13 18:56:25'),
-(14, 2, '承認された投稿', 1, '2022-10-13 18:56:32', '2022-10-13 18:56:32'),
-(15, 8, '承認された投稿', 1, '2022-10-13 18:57:24', '2022-10-13 18:57:24');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `password_resets`
 --
 
@@ -350,12 +298,13 @@ CREATE TABLE `personal_access_tokens` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `report_comment`
+-- Table structure for table `report`
 --
 
-CREATE TABLE `report_comment` (
+CREATE TABLE `report` (
   `id` int(11) NOT NULL,
-  `comment_id` int(11) NOT NULL,
+  `object_id` int(11) NOT NULL,
+  `object_type` varchar(255) DEFAULT NULL,
   `user_id` int(11) NOT NULL,
   `content` text NOT NULL,
   `status` varchar(255) NOT NULL,
@@ -364,35 +313,15 @@ CREATE TABLE `report_comment` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `report_comment`
+-- Dumping data for table `report`
 --
 
-INSERT INTO `report_comment` (`id`, `comment_id`, `user_id`, `content`, `status`, `created_at`, `updated_at`) VALUES
-(1, 3, 58, 'hacker', '', '2022-10-13 01:38:56', '2022-10-13 01:38:56');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `report_spot`
---
-
-CREATE TABLE `report_spot` (
-  `id` int(11) NOT NULL,
-  `spot_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `content` text NOT NULL,
-  `status` varchar(255) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `report_spot`
---
-
-INSERT INTO `report_spot` (`id`, `spot_id`, `user_id`, `content`, `status`, `created_at`, `updated_at`) VALUES
-(1, 2, 60, 'hacker', '', '2022-10-13 02:26:15', '2022-10-13 02:26:15'),
-(2, 6, 58, 'nice', '', '2022-10-13 02:48:19', '2022-10-13 02:48:19');
+INSERT INTO `report` (`id`, `object_id`, `object_type`, `user_id`, `content`, `status`, `created_at`, `updated_at`) VALUES
+(1, 2, 'spot', 60, 'hacker', '', '2022-10-13 02:26:15', '2022-10-13 02:26:15'),
+(2, 6, 'spot', 58, 'nice', '', '2022-10-13 02:48:19', '2022-10-13 02:48:19'),
+(3, 5, 'comment', 58, 'sâs', 'unread', '2022-10-14 02:53:50', '2022-10-14 02:53:50'),
+(4, 4, 'spot', 58, 'aloalo', 'unread', '2022-10-14 07:26:04', '2022-10-14 07:26:04'),
+(5, 11, 'comment', 58, 'hack', 'unread', '2022-10-14 07:26:34', '2022-10-14 07:26:34');
 
 -- --------------------------------------------------------
 
@@ -453,13 +382,79 @@ CREATE TABLE `spots` (
 --
 
 INSERT INTO `spots` (`id`, `name`, `alias`, `image_id`, `images_id`, `address`, `location`, `intro`, `author`, `status`, `favorite`, `count_comment`, `created_at`, `updated_at`) VALUES
-(1, 'よくある質問フォーラム', 'よくある質問フォーラム', 4, NULL, '4番レーン123', 'Aomori', 'スポット説明', '1', 'active', 1, 3, NULL, '2022-10-13 01:54:30'),
-(2, '定期武道交流', '定期武道交流', 6, '[\"5\"]', '6', 'Akita', 'スポット説明', '1', 'disabled', 0, 0, NULL, '2022-10-13 18:52:46'),
-(3, '年末にお会いしましょう', '年末にお会いしましょう', 9, '[\"7\",\"8\"]', '9', 'Fukushima', 'スポット説明', '60', 'active', 0, 0, NULL, NULL),
-(4, '成功のために走る', '成功のために走る', 11, '[\"10\"]', '11', 'Akita', 'スポット説明', '60', 'active', 0, 0, NULL, NULL),
-(5, '感動的なショー', '感動的なショー', 14, '[\"12\",\"13\"]', '14', 'Aomori', 'スポット説明', '60', 'active', 0, 0, NULL, NULL),
-(6, '振り返るな、前を向く', '振り返るな、前を向く', 15, '[\"17\",\"16\",\"15\"]', '62 ニッチ 34', 'Akita', 'ここに来て', '1', 'active', 1, 1, '2022-10-13 01:01:42', '2022-10-13 02:48:07'),
-(7, '全国みどり会議', '全国みどり会議', 27, '[\"26\"]', '27', 'Aomori', '全国みどり会議', '1', 'disabled', 0, 0, NULL, '2022-10-13 18:37:04');
+(1, 'よくある質問フォーラム', 'よくある質問フォーラム', 4, NULL, '4番レーン123', 'Aomori', 'スポット説明', '1', 'publish', 0, 3, NULL, '2022-10-13 01:54:30'),
+(2, '定期武道交流', '定期武道交流', 6, '[\"5\"]', '6', 'Akita', 'スポット説明', '1', 'publish', 0, 0, NULL, '2022-10-13 18:52:46'),
+(3, '年末にお会いしましょう', '年末にお会いしましょう', 9, '[\"7\",\"8\"]', '9', 'Fukushima', 'スポット説明', '60', 'publish', 0, 0, NULL, NULL),
+(4, '成功のために走る', '成功のために走る', 11, '[\"10\"]', '11', 'Akita', 'スポット説明', '60', 'publish', 1, 2, NULL, '2022-10-14 07:24:09'),
+(5, '感動的なショー', '感動的なショー', 14, '[\"12\",\"13\"]', '14', 'Aomori', 'スポット説明', '60', 'publish', 0, 0, NULL, NULL),
+(6, '振り返るな、前を向く', '振り返るな、前を向く', 15, '[\"17\",\"16\",\"15\"]', '62 ニッチ 34', 'Akita', 'ここに来て', '1', 'publish', 1, 1, '2022-10-13 01:01:42', '2022-10-13 02:48:07'),
+(7, '全国みどり会議', '全国みどり会議', 27, '[\"26\"]', '27', 'Aomori', '全国みどり会議', '1', 'publish', 0, 0, NULL, '2022-10-13 18:37:04'),
+(9, '新しいスポット', '新しいスポット', 47, '[\"46\",\"48\"]', '47', 'Akita - 544s', '新しいスポット', '58', 'disabled', 0, 0, NULL, '2022-10-14 07:05:08');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `spot_terms`
+--
+
+CREATE TABLE `spot_terms` (
+  `id` int(11) NOT NULL,
+  `taxonomy` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `slug` varchar(255) DEFAULT NULL,
+  `parent_id` int(11) DEFAULT NULL,
+  `image_id` int(11) DEFAULT NULL,
+  `description` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `spot_terms`
+--
+
+INSERT INTO `spot_terms` (`id`, `taxonomy`, `name`, `slug`, `parent_id`, `image_id`, `description`) VALUES
+(1, 'category', 'グルメ', 'グルメ', NULL, NULL, '<p>test</p>'),
+(2, 'category', 'ショッピング', NULL, NULL, NULL, NULL),
+(3, 'category', '宿泊', NULL, NULL, NULL, NULL),
+(4, 'category', '体験', NULL, NULL, NULL, NULL),
+(5, 'category', '自然', NULL, NULL, NULL, NULL),
+(6, 'category', 'SNS映え', NULL, NULL, NULL, NULL),
+(7, 'category', '歴史', NULL, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `spot_term_map`
+--
+
+CREATE TABLE `spot_term_map` (
+  `id` int(11) NOT NULL,
+  `object_id` int(11) NOT NULL,
+  `term_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `spot_term_map`
+--
+
+INSERT INTO `spot_term_map` (`id`, `object_id`, `term_id`) VALUES
+(7, 3, 1),
+(8, 3, 2),
+(11, 5, 1),
+(12, 5, 7),
+(13, 7, 3),
+(17, 7, 4),
+(18, 2, 6),
+(20, 2, 6),
+(21, 2, 7),
+(25, 7, 2),
+(26, 7, 1),
+(27, 9, 2),
+(28, 9, 3),
+(29, 9, 4),
+(30, 8, 2),
+(31, 8, 3),
+(32, 8, 5),
+(33, 9, 5);
 
 -- --------------------------------------------------------
 
@@ -551,7 +546,33 @@ INSERT INTO `uploads` (`id`, `name`, `folder_path`, `file_name`, `extension`, `m
 (24, '6612fdff8f82e1796beefdca7f369fad.jpg_720x720q80.jpg_', NULL, 'IavRmfLQuAvAdf96yaIYpPERCn8cIYGuFsfMHD6e.webp', 'webp', 'image/webp', 82772, '{\"width\":720,\"height\":720,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":256,\"file_name\":\"IavRmfLQuAvAdf96yaIYpPERCn8cIYGuFsfMHD6e-thumbnail.webp\"},\"small\":{\"width\":640,\"height\":640,\"file_name\":\"IavRmfLQuAvAdf96yaIYpPERCn8cIYGuFsfMHD6e-small.webp\"}}}', '2022-10-13 01:12:13', '2022-10-13 01:12:13'),
 (25, 'cc-1', '', '3II43wqTRfwBaURJtSudiE3GeUFfoPp7uBpA7xEN.jpg', 'jpg', 'image/jpeg', 35211, '{\"width\":499,\"height\":331,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":170,\"file_name\":\"3II43wqTRfwBaURJtSudiE3GeUFfoPp7uBpA7xEN-thumbnail.jpg\"}}}', '2022-10-13 01:41:55', '2022-10-13 01:41:55'),
 (26, 'ấdadad', '', 'cCJpCBZWnC6g9Afv0XrmJDIG7REoO6v2ixwqMijR.jpg', 'jpg', 'image/jpeg', 67917, '{\"width\":600,\"height\":429,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":183,\"file_name\":\"cCJpCBZWnC6g9Afv0XrmJDIG7REoO6v2ixwqMijR-thumbnail.jpg\"}}}', '2022-10-13 18:33:11', '2022-10-13 18:33:11'),
-(27, 'tải xuống', '', 'gLHQbln2WEtZ8es31ih7w41G3v7DoLIbd9atQYCe.jpg', 'jpg', 'image/jpeg', 13851, '{\"width\":286,\"height\":176,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":158,\"file_name\":\"gLHQbln2WEtZ8es31ih7w41G3v7DoLIbd9atQYCe-thumbnail.jpg\"}}}', '2022-10-13 18:33:11', '2022-10-13 18:33:11');
+(27, 'tải xuống', '', 'gLHQbln2WEtZ8es31ih7w41G3v7DoLIbd9atQYCe.jpg', 'jpg', 'image/jpeg', 13851, '{\"width\":286,\"height\":176,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":158,\"file_name\":\"gLHQbln2WEtZ8es31ih7w41G3v7DoLIbd9atQYCe-thumbnail.jpg\"}}}', '2022-10-13 18:33:11', '2022-10-13 18:33:11'),
+(28, 'cc-1', '', 'H3UFZZBgspf5ziR1atXI6JQCe0FSZCicZKTJ4k0r.jpg', 'jpg', 'image/jpeg', 35211, '{\"width\":499,\"height\":331,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":170,\"file_name\":\"H3UFZZBgspf5ziR1atXI6JQCe0FSZCicZKTJ4k0r-thumbnail.jpg\"}}}', '2022-10-14 01:47:34', '2022-10-14 01:47:34'),
+(29, 'Du-lịch-Kyoto-Nhật-Bản-mùa-hè-4', '', '4XO4zej692v7SF5PMyGKZSpFJ4H49TtxZXbvhqg0.png', 'png', 'image/png', 699515, '{\"width\":800,\"height\":543,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":174,\"file_name\":\"4XO4zej692v7SF5PMyGKZSpFJ4H49TtxZXbvhqg0-thumbnail.png\"}}}', '2022-10-14 01:47:34', '2022-10-14 01:47:34'),
+(30, 'cc-1', '', '4WRPyOpjZhvTXIVdHk01dg79oOWUpOQCh8JBqIA0.jpg', 'jpg', 'image/jpeg', 35211, '{\"width\":499,\"height\":331,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":170,\"file_name\":\"4WRPyOpjZhvTXIVdHk01dg79oOWUpOQCh8JBqIA0-thumbnail.jpg\"}}}', '2022-10-14 01:48:58', '2022-10-14 01:48:58'),
+(31, 'Du-lịch-Kyoto-Nhật-Bản-mùa-hè-4', '', 'TUpFCK1ezoOSqbqIB5u58FJueKAPasnu7pM3wsk9.png', 'png', 'image/png', 699515, '{\"width\":800,\"height\":543,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":174,\"file_name\":\"TUpFCK1ezoOSqbqIB5u58FJueKAPasnu7pM3wsk9-thumbnail.png\"}}}', '2022-10-14 01:48:58', '2022-10-14 01:48:58'),
+(32, 'cc-1', '', 'rV7206lUw7cqZMxxgfc9ioeFIsOz2BBVb8F7d6HQ.jpg', 'jpg', 'image/jpeg', 35211, '{\"width\":499,\"height\":331,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":170,\"file_name\":\"rV7206lUw7cqZMxxgfc9ioeFIsOz2BBVb8F7d6HQ-thumbnail.jpg\"}}}', '2022-10-14 01:51:16', '2022-10-14 01:51:16'),
+(33, 'Du-lịch-Kyoto-Nhật-Bản-mùa-hè-4', '', 'Eeld5s4PAPHYkKXNK2mzSGLkFKI7gl6j5cCI6HCf.png', 'png', 'image/png', 699515, '{\"width\":800,\"height\":543,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":174,\"file_name\":\"Eeld5s4PAPHYkKXNK2mzSGLkFKI7gl6j5cCI6HCf-thumbnail.png\"}}}', '2022-10-14 01:51:16', '2022-10-14 01:51:16'),
+(34, 'cc-1', '', '8kWjuKgTqJ60zcthxCFz1O4vgLObLut6vUCaTbvJ.jpg', 'jpg', 'image/jpeg', 35211, '{\"width\":499,\"height\":331,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":170,\"file_name\":\"8kWjuKgTqJ60zcthxCFz1O4vgLObLut6vUCaTbvJ-thumbnail.jpg\"}}}', '2022-10-14 01:57:01', '2022-10-14 01:57:01'),
+(35, 'Du-lịch-Kyoto-Nhật-Bản-mùa-hè-4', '', 'r3dvIAWQBxuinGl177OL7kEVbvZtMijosCAc9KYz.png', 'png', 'image/png', 699515, '{\"width\":800,\"height\":543,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":174,\"file_name\":\"r3dvIAWQBxuinGl177OL7kEVbvZtMijosCAc9KYz-thumbnail.png\"}}}', '2022-10-14 01:57:01', '2022-10-14 01:57:01'),
+(36, 'cc-1', '', 'i0mP6vc9TwLCmB8XXEmVtNxcbKILp1mRdnnoxMYy.jpg', 'jpg', 'image/jpeg', 35211, '{\"width\":499,\"height\":331,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":170,\"file_name\":\"i0mP6vc9TwLCmB8XXEmVtNxcbKILp1mRdnnoxMYy-thumbnail.jpg\"}}}', '2022-10-14 01:59:31', '2022-10-14 01:59:31'),
+(37, 'Du-lịch-Kyoto-Nhật-Bản-mùa-hè-4', '', '4isdkcqioU1r2QofFhT6SQVN7MUbWlbZ6pAdfvg8.png', 'png', 'image/png', 699515, '{\"width\":800,\"height\":543,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":174,\"file_name\":\"4isdkcqioU1r2QofFhT6SQVN7MUbWlbZ6pAdfvg8-thumbnail.png\"}}}', '2022-10-14 01:59:31', '2022-10-14 01:59:31'),
+(38, 'cc-1', '', 'XpntX5cZBKXBTiiAURjRK3BQHqc6DHrZQJOU8WcW.jpg', 'jpg', 'image/jpeg', 35211, '{\"width\":499,\"height\":331,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":170,\"file_name\":\"XpntX5cZBKXBTiiAURjRK3BQHqc6DHrZQJOU8WcW-thumbnail.jpg\"}}}', '2022-10-14 01:59:44', '2022-10-14 01:59:44'),
+(39, 'Du-lịch-Kyoto-Nhật-Bản-mùa-hè-4', '', 'ogEJbdhtKRqxNi8GoZYuDHYKG5AbuYApk1052Y8T.png', 'png', 'image/png', 699515, '{\"width\":800,\"height\":543,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":174,\"file_name\":\"ogEJbdhtKRqxNi8GoZYuDHYKG5AbuYApk1052Y8T-thumbnail.png\"}}}', '2022-10-14 01:59:44', '2022-10-14 01:59:44'),
+(40, 'cc-1', '', '5AKEeycQnFZJEGPKJto6XcOA1xHQE7FmAA7XezIk.jpg', 'jpg', 'image/jpeg', 35211, '{\"width\":499,\"height\":331,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":170,\"file_name\":\"5AKEeycQnFZJEGPKJto6XcOA1xHQE7FmAA7XezIk-thumbnail.jpg\"}}}', '2022-10-14 02:00:14', '2022-10-14 02:00:14'),
+(41, 'Du-lịch-Kyoto-Nhật-Bản-mùa-hè-4', '', '6PWSFHtHXCTiGsC2lgeRAhGzt9cimhAKH6CH8C4h.png', 'png', 'image/png', 699515, '{\"width\":800,\"height\":543,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":174,\"file_name\":\"6PWSFHtHXCTiGsC2lgeRAhGzt9cimhAKH6CH8C4h-thumbnail.png\"}}}', '2022-10-14 02:00:14', '2022-10-14 02:00:14'),
+(42, 'cc-1', '', 'FbNdi5U3NXH42Nh0rb9yzn7mt5XnsAv2I8jukIIs.jpg', 'jpg', 'image/jpeg', 35211, '{\"width\":499,\"height\":331,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":170,\"file_name\":\"FbNdi5U3NXH42Nh0rb9yzn7mt5XnsAv2I8jukIIs-thumbnail.jpg\"}}}', '2022-10-14 02:01:16', '2022-10-14 02:01:16'),
+(43, 'Du-lịch-Kyoto-Nhật-Bản-mùa-hè-4', '', 'YsZu5lxOCEXzTAxTx4iBuVXH3qVPEWWPlRgQXDJF.png', 'png', 'image/png', 699515, '{\"width\":800,\"height\":543,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":174,\"file_name\":\"YsZu5lxOCEXzTAxTx4iBuVXH3qVPEWWPlRgQXDJF-thumbnail.png\"}}}', '2022-10-14 02:01:16', '2022-10-14 02:01:16'),
+(44, 'cc-1', '', 'RVeKdvtsBI8iP8Mo4B2uTxyAQE5gQG30gvfdUCEj.jpg', 'jpg', 'image/jpeg', 35211, '{\"width\":499,\"height\":331,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":170,\"file_name\":\"RVeKdvtsBI8iP8Mo4B2uTxyAQE5gQG30gvfdUCEj-thumbnail.jpg\"}}}', '2022-10-14 02:01:41', '2022-10-14 02:01:41'),
+(45, 'Du-lịch-Kyoto-Nhật-Bản-mùa-hè-4', '', '6SBsyIdpvHS1qO42SoE63kCrwzcvzSudAhxsskHy.png', 'png', 'image/png', 699515, '{\"width\":800,\"height\":543,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":174,\"file_name\":\"6SBsyIdpvHS1qO42SoE63kCrwzcvzSudAhxsskHy-thumbnail.png\"}}}', '2022-10-14 02:01:41', '2022-10-14 02:01:41'),
+(46, 'cc-1', '', '7CWdkivbeiD2ztz7MM7WpmyTCevPCZ7eZdKr4LGz.jpg', 'jpg', 'image/jpeg', 35211, '{\"width\":499,\"height\":331,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":170,\"file_name\":\"7CWdkivbeiD2ztz7MM7WpmyTCevPCZ7eZdKr4LGz-thumbnail.jpg\"}}}', '2022-10-14 02:01:53', '2022-10-14 02:01:53'),
+(47, 'Du-lịch-Kyoto-Nhật-Bản-mùa-hè-4', '', 'M4MRPRR2xUwaD1EbN9d8q3ojxRo51rnyTfgGCuBO.png', 'png', 'image/png', 699515, '{\"width\":800,\"height\":543,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":174,\"file_name\":\"M4MRPRR2xUwaD1EbN9d8q3ojxRo51rnyTfgGCuBO-thumbnail.png\"}}}', '2022-10-14 02:01:53', '2022-10-14 02:01:53'),
+(48, 'ấdadad', '', 'NwkWuv1ctC0VlmahGFEoswELiAApsfF1XmrNOWst.jpg', 'jpg', 'image/jpeg', 67917, '{\"width\":600,\"height\":429,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":183,\"file_name\":\"NwkWuv1ctC0VlmahGFEoswELiAApsfF1XmrNOWst-thumbnail.jpg\"}}}', '2022-10-14 02:10:49', '2022-10-14 02:10:49'),
+(49, 'vTz5Po6Y', '', 'UdhTTyUfzPfgBIamVc3nJNUWvwro2t5xgNLh7nH7.jpg', 'jpg', 'image/jpeg', 25775, '{\"width\":305,\"height\":405,\"versions\":{\"thumbnail\":{\"width\":193,\"height\":256,\"file_name\":\"UdhTTyUfzPfgBIamVc3nJNUWvwro2t5xgNLh7nH7-thumbnail.jpg\"}}}', '2022-10-16 18:55:51', '2022-10-16 18:55:51'),
+(50, 'vTz5Po6Y', '', 'Y6wyaZMQSY9De2oGMgYmrbiijX152PqBguZc0mH2.jpg', 'jpg', 'image/jpeg', 25775, '{\"width\":305,\"height\":405,\"versions\":{\"thumbnail\":{\"width\":193,\"height\":256,\"file_name\":\"Y6wyaZMQSY9De2oGMgYmrbiijX152PqBguZc0mH2-thumbnail.jpg\"}}}', '2022-10-16 18:59:00', '2022-10-16 18:59:00'),
+(51, 'vTz5Po6Y', '', 'ztSSAaE22PVOa70P8GvzAnpkjbSiNe7g3pDV1fyN.jpg', 'jpg', 'image/jpeg', 25775, '{\"width\":305,\"height\":405,\"versions\":{\"thumbnail\":{\"width\":193,\"height\":256,\"file_name\":\"ztSSAaE22PVOa70P8GvzAnpkjbSiNe7g3pDV1fyN-thumbnail.jpg\"}}}', '2022-10-16 18:59:08', '2022-10-16 18:59:08'),
+(52, 'vTz5Po6Y', '', 'n785EjkGjw5JKmcXdHbSurBeprHYl5J5jNErIW3i.jpg', 'jpg', 'image/jpeg', 25775, '{\"width\":305,\"height\":405,\"versions\":{\"thumbnail\":{\"width\":193,\"height\":256,\"file_name\":\"n785EjkGjw5JKmcXdHbSurBeprHYl5J5jNErIW3i-thumbnail.jpg\"}}}', '2022-10-16 18:59:34', '2022-10-16 18:59:34'),
+(53, 'vTz5Po6Y', '', 'YK23jxOXOAaleHYArQdxHYl9lTQ75UYqqtKTmEwJ.jpg', 'jpg', 'image/jpeg', 25775, '{\"width\":305,\"height\":405,\"versions\":{\"thumbnail\":{\"width\":193,\"height\":256,\"file_name\":\"YK23jxOXOAaleHYArQdxHYl9lTQ75UYqqtKTmEwJ-thumbnail.jpg\"}}}', '2022-10-16 19:00:26', '2022-10-16 19:00:26');
 
 -- --------------------------------------------------------
 
@@ -562,6 +583,10 @@ INSERT INTO `uploads` (`id`, `name`, `folder_path`, `file_name`, `extension`, `m
 CREATE TABLE `users` (
   `id` int(10) UNSIGNED NOT NULL,
   `login_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sei` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mei` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sei_kana` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mei_kana` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `avatar_image_id` int(10) UNSIGNED DEFAULT NULL,
   `role` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -593,11 +618,45 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `login_name`, `name`, `avatar_image_id`, `role`, `gender`, `birth_day`, `intro`, `email`, `location`, `password`, `email_verified_at`, `email_verified_token`, `remember_token`, `fields`, `point`, `status`, `otp`, `twitter_url`, `tiktok_url`, `instagram_url`, `sns_active`, `google_id`, `facebook_id`, `twitter_id`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'Admin', NULL, 'admin', NULL, NULL, '', 'admin@sample.email', NULL, '$2y$10$HT3qwQXcuh6BZR88auQUt.pfNNslChaKBVFBrkOu1YsYq9Gg5q65e', NULL, NULL, NULL, '[]', NULL, 'active', '', NULL, NULL, NULL, '0', '0', NULL, 0, '2020-12-31 17:00:00', '2022-09-18 23:58:29'),
-(47, NULL, 'dai huudasd', 43, 'member', 1, '2022-09-28', 'sda', 'dai20010301@gmail.com', '川崎', '$2y$10$HiYtwOy1RXEOZO5WlFcU0e3lvHqZ3y1yUE3hlAU1TF1Zn9hsCOx7K', NULL, NULL, NULL, NULL, NULL, 'active', '92155', NULL, NULL, NULL, '[\"1\"]', '117606606609355028013', NULL, NULL, '2022-10-05 02:15:25', '2022-10-13 00:05:57'),
-(58, NULL, 'mail tests', 25, NULL, 1, '2022-10-12', 'asas', 'mailtests2001@gmail.com', '東京', '$2y$10$D8ydw.x/MRjyJfrDLIhJBOn/CfiM3xseIMzg.wmBZfGu2bi6KJwmC', NULL, NULL, NULL, NULL, NULL, 'active', '68185', NULL, NULL, NULL, NULL, '102272033398519678082', NULL, NULL, '2022-10-13 00:09:44', '2022-10-13 02:47:29'),
-(60, NULL, 'Đại Hữu Nguyễn', 3, NULL, 2, '2022-10-12', 'sa', 'huudai032001@gmail.com', '川崎', 'eyJpdiI6ImJrckM1ZGhFM2JPanJ0OE1kamY1clE9PSIsInZhbHVlIjoiUU1QRXNsWXEzZDBmVFpDN09QNzA5MGU4dXRuNWxKYVhITnIyaE1vV2Zjaz0iLCJtYWMiOiIxOWYwODk2YzljMWJhM2MzM2JiZDIzYmVmNDIzNjZjZGJmNjZhY2Y3NTAxYmQxZDYzNWIwNWZlYWNiMWRlOTRjIiwidGFnIjoiIn0=', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'asa', 'sas', 'sa', NULL, '109829984724144315607', '3226743507581614', NULL, '2022-10-13 00:16:17', '2022-10-13 18:59:47');
+INSERT INTO `users` (`id`, `login_name`, `sei`, `mei`, `sei_kana`, `mei_kana`, `name`, `avatar_image_id`, `role`, `gender`, `birth_day`, `intro`, `email`, `location`, `password`, `email_verified_at`, `email_verified_token`, `remember_token`, `fields`, `point`, `status`, `otp`, `twitter_url`, `tiktok_url`, `instagram_url`, `sns_active`, `google_id`, `facebook_id`, `twitter_id`, `created_at`, `updated_at`) VALUES
+(1, 'admin', NULL, NULL, NULL, NULL, 'Admin', NULL, 'admin', NULL, NULL, '', 'admin@sample.email', NULL, '$2y$10$HT3qwQXcuh6BZR88auQUt.pfNNslChaKBVFBrkOu1YsYq9Gg5q65e', NULL, NULL, NULL, '[]', NULL, 'active', '', NULL, NULL, NULL, '0', '0', NULL, 0, '2020-12-31 17:00:00', '2022-09-18 23:58:29'),
+(47, NULL, NULL, NULL, NULL, NULL, 'dai huudasd', 43, 'member', 1, '2022-09-28', 'sda', 'dai20010301@gmail.com', '川崎', '$2y$10$HiYtwOy1RXEOZO5WlFcU0e3lvHqZ3y1yUE3hlAU1TF1Zn9hsCOx7K', NULL, NULL, NULL, NULL, NULL, 'active', '92155', NULL, NULL, NULL, '[\"1\"]', '117606606609355028013', NULL, NULL, '2022-10-05 02:15:25', '2022-10-13 00:05:57'),
+(58, NULL, NULL, NULL, NULL, NULL, 'mail tests', 53, NULL, 1, '2022-10-12', 'asas', 'mailtests2001@gmail.com', '東京', '$2y$10$D8ydw.x/MRjyJfrDLIhJBOn/CfiM3xseIMzg.wmBZfGu2bi6KJwmC', NULL, NULL, NULL, NULL, '1600', 'active', '68185', NULL, NULL, NULL, NULL, '102272033398519678082', NULL, NULL, '2022-10-13 00:09:44', '2022-10-16 19:00:26'),
+(60, NULL, NULL, NULL, NULL, NULL, 'Đại Hữu Nguyễn', 3, NULL, 2, '2022-10-12', 'sa', 'huudai032001@gmail.com', '川崎', 'eyJpdiI6ImJrckM1ZGhFM2JPanJ0OE1kamY1clE9PSIsInZhbHVlIjoiUU1QRXNsWXEzZDBmVFpDN09QNzA5MGU4dXRuNWxKYVhITnIyaE1vV2Zjaz0iLCJtYWMiOiIxOWYwODk2YzljMWJhM2MzM2JiZDIzYmVmNDIzNjZjZGJmNjZhY2Y3NTAxYmQxZDYzNWIwNWZlYWNiMWRlOTRjIiwidGFnIjoiIn0=', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'asa', 'sas', 'sa', NULL, '109829984724144315607', '3226743507581614', NULL, '2022-10-13 00:16:17', '2022-10-13 18:59:47');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_notifications`
+--
+
+CREATE TABLE `user_notifications` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `user_id` int(10) UNSIGNED DEFAULT NULL,
+  `user_group` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `string` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `params` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `user_notifications`
+--
+
+INSERT INTO `user_notifications` (`id`, `user_id`, `user_group`, `string`, `params`, `status`, `created_at`, `updated_at`) VALUES
+(1, 2, 'admin', 'new_order_received', '{\"order_id\":1}', 'unread', '2022-10-04 18:42:27', '2022-10-11 18:42:27'),
+(2, 2, 'admin', 'new_order_received', '{\"order_id\":2}', 'read', '2022-10-07 18:42:27', '2022-10-11 18:42:27'),
+(4, 58, 'mail tests', 'recently liked post', '\"{\\\"order_id\\\":\\\"9\\\"}\"', 'unread', '2022-10-14 09:48:26', '2022-10-14 02:39:04'),
+(7, 58, 'mail tests', 'new_comment', '\"{\\\"order_id\\\":\\\"9\\\"}\"', 'unread', '2022-10-14 09:48:25', '2022-10-14 02:47:15'),
+(8, 58, 'mail tests', 'recently liked post', '\"{\\\"order_id\\\":\\\"6\\\"}\"', 'unread', '2022-10-14 07:04:30', '2022-10-14 07:04:30'),
+(9, 58, 'mail tests', 'new_comment', '\"{\\\"order_id\\\":\\\"9\\\"}\"', 'unread', '2022-10-14 07:05:08', '2022-10-14 07:05:08'),
+(10, 58, 'mail tests', 'recently liked post', '\"{\\\"order_id\\\":\\\"2\\\"}\"', 'unread', '2022-10-14 07:19:43', '2022-10-14 07:19:43'),
+(11, 60, 'mail tests', 'new_comment', '\"{\\\"order_id\\\":\\\"4\\\"}\"', 'unread', '2022-10-14 07:22:04', '2022-10-14 07:22:04'),
+(12, 60, 'mail tests', 'new_comment', '\"{\\\"order_id\\\":\\\"4\\\"}\"', 'unread', '2022-10-14 07:23:23', '2022-10-14 07:23:23'),
+(13, 58, 'mail tests', 'recently liked post', '\"{\\\"order_id\\\":\\\"4\\\"}\"', 'unread', '2022-10-14 07:24:09', '2022-10-14 07:24:09'),
+(14, 58, 'mail tests', 'recently liked post', '\"{\\\"order_id\\\":\\\"5\\\"}\"', 'unread', '2022-10-16 19:08:23', '2022-10-16 19:08:23');
 
 -- --------------------------------------------------------
 
@@ -627,24 +686,6 @@ INSERT INTO `zip_code` (`id`, `code`, `city`, `district`, `town`, `created_at`, 
 --
 
 --
--- Indexes for table `category`
---
-ALTER TABLE `category`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `category_event`
---
-ALTER TABLE `category_event`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `category_spot`
---
-ALTER TABLE `category_spot`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `comment`
 --
 ALTER TABLE `comment`
@@ -654,6 +695,18 @@ ALTER TABLE `comment`
 -- Indexes for table `event`
 --
 ALTER TABLE `event`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `event_terms`
+--
+ALTER TABLE `event_terms`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `event_term_map`
+--
+ALTER TABLE `event_term_map`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -688,12 +741,6 @@ ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `notification`
---
-ALTER TABLE `notification`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `password_resets`
 --
 ALTER TABLE `password_resets`
@@ -708,15 +755,9 @@ ALTER TABLE `personal_access_tokens`
   ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
 
 --
--- Indexes for table `report_comment`
+-- Indexes for table `report`
 --
-ALTER TABLE `report_comment`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `report_spot`
---
-ALTER TABLE `report_spot`
+ALTER TABLE `report`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -735,6 +776,18 @@ ALTER TABLE `sample_term_map`
 -- Indexes for table `spots`
 --
 ALTER TABLE `spots`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `spot_terms`
+--
+ALTER TABLE `spot_terms`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `spot_term_map`
+--
+ALTER TABLE `spot_term_map`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -758,6 +811,12 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `users_email_unique` (`email`);
 
 --
+-- Indexes for table `user_notifications`
+--
+ALTER TABLE `user_notifications`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `zip_code`
 --
 ALTER TABLE `zip_code`
@@ -768,40 +827,34 @@ ALTER TABLE `zip_code`
 --
 
 --
--- AUTO_INCREMENT for table `category`
---
-ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
---
--- AUTO_INCREMENT for table `category_event`
---
-ALTER TABLE `category_event`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
---
--- AUTO_INCREMENT for table `category_spot`
---
-ALTER TABLE `category_spot`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
-
---
 -- AUTO_INCREMENT for table `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `event`
 --
 ALTER TABLE `event`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `event_terms`
+--
+ALTER TABLE `event_terms`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `event_term_map`
+--
+ALTER TABLE `event_term_map`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `exchange_goods`
 --
 ALTER TABLE `exchange_goods`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -813,7 +866,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `favorite`
 --
 ALTER TABLE `favorite`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `goods`
@@ -828,28 +881,16 @@ ALTER TABLE `migrations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `notification`
---
-ALTER TABLE `notification`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
-
---
 -- AUTO_INCREMENT for table `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `report_comment`
+-- AUTO_INCREMENT for table `report`
 --
-ALTER TABLE `report_comment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `report_spot`
---
-ALTER TABLE `report_spot`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `report`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `sample_terms`
@@ -867,7 +908,19 @@ ALTER TABLE `sample_term_map`
 -- AUTO_INCREMENT for table `spots`
 --
 ALTER TABLE `spots`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT for table `spot_terms`
+--
+ALTER TABLE `spot_terms`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `spot_term_map`
+--
+ALTER TABLE `spot_term_map`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `tasks`
@@ -879,13 +932,19 @@ ALTER TABLE `tasks`
 -- AUTO_INCREMENT for table `uploads`
 --
 ALTER TABLE `uploads`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+
+--
+-- AUTO_INCREMENT for table `user_notifications`
+--
+ALTER TABLE `user_notifications`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `zip_code`
