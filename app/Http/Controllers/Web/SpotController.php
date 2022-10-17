@@ -270,8 +270,8 @@ class SpotController extends Controller
         }
     }
 
-    public function deleteComment(){
-        $com = Comment::findorfail($_POST['id']);
+    public function deleteComment(Request $req){
+        $com = Comment::findorfail($req->input('id'));
         $com->delete();
         echo json_encode(['res'=>true]);
     }

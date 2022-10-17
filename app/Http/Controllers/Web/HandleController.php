@@ -48,8 +48,8 @@ class HandleController extends Controller
         
     }
 
-    public function allComment(){
-        $id = $_POST['id'];
+    public function allComment(Request $req){
+        $id = $req->input('id');
         $list_comment = Comment::where('spot_id',$id)->orderBy('created_at','DESC')->get();
 
         echo json_encode($list_comment,JSON_UNESCAPED_UNICODE);
@@ -134,8 +134,8 @@ class HandleController extends Controller
         }        
     }
     
-        public function sortSpot(){
-            $sort = $_POST['id'];
+        public function sortSpot(Request $req){
+            $sort = $req->input('id');
 
             if($sort == 1){
                 $list_spot = Spot::orderBy('created_at','DESC')->take(6)->get();
@@ -152,12 +152,12 @@ class HandleController extends Controller
             }
             echo json_encode(['list_spot'=>$list_spot , 'arr_image'=>$arr_image]);
         }
-        public function postIndex(){
+        public function postIndex(Request $req){
 
-            if($_POST){
-                $year = $_POST['year'];
-                $month = $_POST['month'];
-                $day = $_POST['day'];
+            if($req){
+                $year = $req->input('year');
+                $month = $req->input('month');
+                $day = $req->input('day');
     
                 if($month < 10){
                     $month = "0" .$month;
@@ -187,9 +187,9 @@ class HandleController extends Controller
             echo json_encode(['arr_image'=>$arr_image,'list_event'=>$list_event,'arr_category'=>$arr_category,'total_page'=>$total_page]);
     
         }
-        public function loadMore(){
-            $sort = $_POST['id'];
-            $count = $_POST['count'] + 12;
+        public function loadMore(Request $req){
+            $sort = $req->input('id');
+            $count = $req->input('count') + 12;
 
             if($sort == 1){
                 $list_spot = Spot::orderBy('created_at','DESC')->take($count)->get();
@@ -209,10 +209,10 @@ class HandleController extends Controller
         }
 
 
-        public function loadParamProfile(){
+        public function loadParamProfile(Request $req){
             $user = Auth::user();
-            $sort = $_POST['id'];
-            $count = $_POST['count'] + 12;
+            $sort = $req->input('id');
+            $count = $req->input('count') + 12;
 
             if($sort == 1){
                 $list = Spot::where('author',$user->id)->orderBy('created_at','DESC')->take($count)->get();
@@ -251,8 +251,8 @@ class HandleController extends Controller
 
         }
 
-        function findByLocation(){
-            $location = $_POST['location'];
+        function findByLocation(Request $req){
+            $location = $req->input('location');
 
             $list_spot = Spot::where('location',$location)->orderBy('created_at','DESC')->take(6)->get();
             // dd($list_spot);
@@ -264,7 +264,7 @@ class HandleController extends Controller
         }
 
         function findByLocationEvent(){
-            $location = $_POST['location'];
+            $location = $req->input('location');
 
             $list_event = Event::where('location',$location)->orderBy('created_at','DESC')->take(6)->get();
             // dd($list_spot);
@@ -318,8 +318,8 @@ class HandleController extends Controller
             }
         }
 
-        public function deleteComment(){
-            $com = Comment::findorfail($_POST['id']);
+        public function deleteComment(Request $req){
+            $com = Comment::findorfail($req->input('id'));
             $com->delete();
             echo json_encode(['res'=>true]);
         }
@@ -334,9 +334,9 @@ class HandleController extends Controller
                
         }
 
-        public function unFile(){
-            $image_id = $_POST['image'];
-            $sub_image = explode(',',$_POST['sub_image']);
+        public function unFile(Request $req){
+            $image_id = $req->input('image');
+            $sub_image = explode(',',$req->input('sub_image'));
             $count = count($sub_image);
             for($i = 0;$i< $count;$i++){
                 $images = Upload::findorfail($sub_image[$i]);

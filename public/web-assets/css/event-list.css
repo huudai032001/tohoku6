@@ -21,6 +21,9 @@
 }
 a.page-link ,span.page-link{
   font-size: 20px;
+  background: rgb(71, 76, 78);
+  padding: 0px 10px;
+  color: #fff;
 }
 
 li.page-item.disabled::marker {

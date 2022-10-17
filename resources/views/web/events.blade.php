@@ -117,25 +117,7 @@
                 <div style="padding: 25px 0;">
                     <div class="container">
                     {!! $list_events->appends(['nickname'=>'huudai'])->links() !!}
-                        <!-- <div class="simple-paginator d-flex justify-content-between align-items-center">
-                            @if($total_page >1 && ($page-1) >0)
-                            <a href="{{url()->full()}}&page={{$page - 1}}" class="prev" id="prev">
-                            @else
-                            <a href="" class="prev" id="prev">
-                            @endif
-                                <img src="/web-assets/images/angle-left.svg" alt="">
-                            </a>
-                            <div class="page-num">
-                                <span class="current-page-num">{{$page}}</span>/<span class="total-page-num">{{$total_page}}</span>
-                            </div>
-                            @if($total_page == 1 || $page == $total_page)
-                            <a href="" class="next" id="next">
-                            @else
-                            <a href="{{url()->full()}}&page={{$page + 1}}" class="next" id="next">
-                            @endif
-                                <img src="/web-assets/images/angle-right.svg" alt="">
-                            </a>
-                        </div> -->
+                        
                         <div class="mt-20 text-align-center">
                         @if($total_page > 9)
                             <a href="{{url()->full()}}&page={{$page + 10}}" class="button-style-1 button">次の10件を見る</a>
