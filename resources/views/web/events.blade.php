@@ -97,11 +97,9 @@
                                     <div class="item-desc">{{$value->location}}</div>
                                     <div class="counters d-flex align-items-center justify-content-between"> 
                                         <div class="tags d-flex align-items-center">
-                                        @if($category = $value->categoryDetail)
-                                            @foreach($category as $cate)
-                                                @if($ca = $cate->category)
-                                                <span class="tag"> {{$ca->name}}|</span>
-                                                @endif
+                                        @if($categorys = $value->categories)
+                                            @foreach($categorys as $category)
+                                            <span class="tags">{{$category->name}} |</span>
                                             @endforeach
                                         @endif
                                         </div>

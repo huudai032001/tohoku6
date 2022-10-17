@@ -41,11 +41,9 @@
                         </div>
                         <div class="d-flex justify-content-between">
                             <div class="tags">
-                            @if($category = $info_spot->categoryDetail)
-                                @foreach($category as $cate)
-                                    @if($ca = $cate->category)
-                                    <span class="tag"> {{$ca->name}}|</span>
-                                    @endif
+                            @if($categorys = $info_spot->categories)
+                                @foreach($categorys as $category)
+                                <span class="tags">{{$category->name}} |</span>
                                 @endforeach
                             @endif
                             </div>

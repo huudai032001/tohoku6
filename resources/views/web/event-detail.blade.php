@@ -124,13 +124,11 @@
                                             <div class="d-flex align-items-center">
                                                 <div class="d-flex align-items-center"> 
                                                     <div class="tags">
-                                                        @if($category = $value->categoryDetail)
-                                                            @foreach($category as $cate)
-                                                                @if($ca = $cate->category)
-                                                                <span class="tag"> {{$ca->name}}|</span>
-                                                                @endif
-                                                            @endforeach
-                                                        @endif
+                                                    @if($categorys = $value->categories)
+                                                        @foreach($categorys as $category)
+                                                        <span class="tags">{{$category->name}} |</span>
+                                                        @endforeach
+                                                    @endif
                                                     </div>                                               
                                                 </div>
                                                 <div class="favorite-count ml-20">
@@ -185,11 +183,9 @@
                                             <div class="d-flex align-items-center">
                                                 <div class="d-flex align-items-center"> 
                                                     <div class="tags">
-                                                    @if($category = $value->categoryDetail)
-                                                        @foreach($category as $cate)
-                                                            @if($ca = $cate->category)
-                                                            <span class="tag"> {{$ca->name}}|</span>
-                                                            @endif
+                                                    @if($categorys = $value->categories)
+                                                        @foreach($categorys as $category)
+                                                        <span class="tags">{{$category->name}} |</span>
                                                         @endforeach
                                                     @endif
                                                     </div>                                               
