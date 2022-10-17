@@ -41,7 +41,6 @@ class UserController extends Controller
             'user',
             'user_comment',
             'user_goods',
-            // 'notifi'
 
         ));
     }
@@ -102,7 +101,6 @@ class UserController extends Controller
             'email'=>$req->input('email'),
             'password'=>($req->input('password'))
         ]);
-        // dd(Auth::attempt($credentials));
         if(Auth::attempt($credentials)){
             $check = Auth::user();
             if($check['status'] == 'active'){
@@ -246,7 +244,6 @@ class UserController extends Controller
             $user->otp = $otp;
             $user->save();
             SendEmailResetPass::dispatch($message, $req->input('email'))->delay(now()->addMinute(1));
-            // dd($user->id);
             return view('web.password-reset-verify')
             ->with([
                 'user_id'=>$user->id
@@ -307,7 +304,6 @@ class UserController extends Controller
     }
 
     public function postProfileEdit(Request $req){
-        // dd($req->input('alo'));
         $this->validate($req,[
             'name'=>'required|min:6|max:50',
             'email'=>'required',
@@ -346,7 +342,6 @@ class UserController extends Controller
         $user->intro = $req->input('intro');
 
         $user->save();
-        // dd($user);
 
         return redirect()->back();
     }

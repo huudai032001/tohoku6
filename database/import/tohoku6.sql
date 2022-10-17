@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 17, 2022 at 04:12 AM
+-- Generation Time: Oct 17, 2022 at 10:36 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -43,12 +43,10 @@ CREATE TABLE `comment` (
 
 INSERT INTO `comment` (`id`, `spot_id`, `user_id`, `name_user`, `content`, `created_at`, `updated_at`) VALUES
 (3, 1, 58, 'mail tests', 'nice', '2022-10-13 01:54:30', '2022-10-13 01:54:30'),
-(4, 6, 58, 'mail tests', 'verry', '2022-10-13 02:48:07', '2022-10-13 02:48:07'),
-(5, 9, 58, 'mail tests', 'nice', '2022-10-14 02:44:09', '2022-10-14 02:44:09'),
-(8, 9, 58, 'mail tests', 'ádasd', '2022-10-14 02:47:15', '2022-10-14 02:47:15'),
-(9, 9, 58, 'mail tests', 'nixce', '2022-10-14 07:05:08', '2022-10-14 07:05:08'),
 (10, 4, 58, 'mail tests', 'nice', '2022-10-14 07:22:04', '2022-10-14 07:22:04'),
-(11, 4, 58, 'mail tests', 'nogn', '2022-10-14 07:23:23', '2022-10-14 07:23:23');
+(11, 4, 58, 'mail tests', 'nogn', '2022-10-14 07:23:23', '2022-10-14 07:23:23'),
+(12, 9, 58, 'mail tests', 'nice', '2022-10-16 21:33:30', '2022-10-16 21:33:30'),
+(13, 6, 58, 'mail tests', 'niec', '2022-10-16 23:59:06', '2022-10-16 23:59:06');
 
 -- --------------------------------------------------------
 
@@ -81,7 +79,7 @@ INSERT INTO `event` (`id`, `name`, `alias`, `location`, `time_start`, `intro`, `
 (3, '最新のマジック サーカス ショー', '最新のマジック サーカス ショー', 'Akita', '2022-10-12 17:00:00', 'とても魅力的な', 21, '[\"20\",\"19\",\"15\"]', 1, 0, 0, '2022-10-13 01:06:38', '2022-10-13 01:06:38'),
 (4, 'テトコメディ', 'テトコメディ', 'Akita', '2022-10-13 17:00:00', '椅子から離れて笑う', 19, '[\"20\",\"18\",\"17\"]', 1, 0, 0, '2022-10-13 01:07:28', '2022-10-13 01:07:28'),
 (5, 'Cry 恐れるな「弱者を守る」', 'cry', 'Fukushima', '2022-10-17 02:08:23', '最後の一滴まで魅力的', 16, '[\"21\",\"18\",\"15\"]', 1, 1, 0, '2022-10-13 01:08:33', '2022-10-16 19:08:23'),
-(6, 'Khóa Học Tiếng Anh Mới Nhất', 'khoa-hoc-tieng-anh-moi-nhat', 'Aomori', '2022-10-17 01:25:42', 'depdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 15, '[\"19\",\"18\",\"17\"]', 1, 0, 0, '2022-10-13 01:09:02', '2022-10-14 07:04:30'),
+(6, 'Khóa Học Tiếng Anh Mới Nhất', 'khoa-hoc-tieng-anh-moi-nhat', 'Aomori', '2022-10-17 02:34:04', 'depdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 15, '[\"19\",\"18\",\"17\"]', 1, 1, 0, '2022-10-13 01:09:02', '2022-10-16 19:34:04'),
 (7, '10年歌手Jso', '10jso', 'Fukushima', '2022-10-13 08:09:43', 'dep', 18, '[\"18\",\"17\",\"15\"]', 1, 0, 0, '2022-10-13 01:09:43', '2022-10-13 01:09:43'),
 (8, 'Khóa Học Tiếng Anh Mới Nhất', 'khoa-hoc-tieng-anh-moi-nhat', 'Akita', '2022-10-14 17:00:00', 'depdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 17, '[\"16\",\"17\"]', 1, 0, 0, '2022-10-14 03:12:33', '2022-10-14 03:17:48');
 
@@ -152,6 +150,7 @@ CREATE TABLE `exchange_goods` (
   `zip_code` varchar(20) DEFAULT NULL,
   `address` varchar(255) DEFAULT NULL,
   `home_address` varchar(255) DEFAULT NULL,
+  `status` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -160,10 +159,10 @@ CREATE TABLE `exchange_goods` (
 -- Dumping data for table `exchange_goods`
 --
 
-INSERT INTO `exchange_goods` (`id`, `name`, `furigana`, `phone`, `zip_code`, `address`, `home_address`, `created_at`, `updated_at`) VALUES
-(1, 'huudaddad', 'ssss', '0563064010', '100000', 'thon 1', 'das', '2022-10-04 20:59:33', '2022-10-04 20:59:33'),
-(2, 'dai huu', NULL, '0563064010', '100000', 'thon 1', 'fsdfsdfsdf', '2022-10-16 06:01:05', '2022-10-16 06:01:05'),
-(3, 'dai huu', NULL, '0563064010', '113-0024,東京都,文京区,西片', 'thon 1', '371-ddas', '2022-10-16 18:49:12', '2022-10-16 18:49:12');
+INSERT INTO `exchange_goods` (`id`, `name`, `furigana`, `phone`, `zip_code`, `address`, `home_address`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'huudaddad', 'ssss', '0563064010', '100000', 'thon 1', 'das', 'unread', '2022-10-04 20:59:33', '2022-10-04 20:59:33'),
+(2, 'dai huu', NULL, '0563064010', '100000', 'thon 1', 'fsdfsdfsdf', 'unread', '2022-10-16 06:01:05', '2022-10-16 06:01:05'),
+(3, 'dai huu', NULL, '0563064010', '113-0024,東京都,文京区,西片', 'thon 1', '371-ddas', 'read', '2022-10-16 18:49:12', '2022-10-17 01:25:15');
 
 -- --------------------------------------------------------
 
@@ -208,7 +207,7 @@ INSERT INTO `favorite` (`id`, `object_id`, `object_type`, `user_id`, `created_at
 (5, 3, 2, NULL, '2022-10-13 01:06:38', '2022-10-13 01:06:38'),
 (6, 4, 2, NULL, '2022-10-13 01:07:28', '2022-10-13 01:07:28'),
 (7, 5, 2, ',58', '2022-10-13 01:08:33', '2022-10-16 19:08:23'),
-(8, 6, 2, NULL, '2022-10-13 01:09:02', '2022-10-14 07:04:30'),
+(8, 6, 2, ',58', '2022-10-13 01:09:02', '2022-10-16 19:34:04'),
 (9, 7, 2, NULL, '2022-10-13 01:09:43', '2022-10-13 01:09:43'),
 (10, 7, 1, NULL, '2022-10-13 18:37:04', '2022-10-13 18:37:04'),
 (11, 2, 1, '1', '2022-10-13 18:52:46', '2022-10-13 18:52:46'),
@@ -317,11 +316,17 @@ CREATE TABLE `report` (
 --
 
 INSERT INTO `report` (`id`, `object_id`, `object_type`, `user_id`, `content`, `status`, `created_at`, `updated_at`) VALUES
-(1, 2, 'spot', 60, 'hacker', '', '2022-10-13 02:26:15', '2022-10-13 02:26:15'),
-(2, 6, 'spot', 58, 'nice', '', '2022-10-13 02:48:19', '2022-10-13 02:48:19'),
+(1, 2, 'spot', 60, 'hacker', 'unread', '2022-10-13 02:26:15', '2022-10-13 02:26:15'),
+(2, 6, 'spot', 58, 'nice', 'unread', '2022-10-13 02:48:19', '2022-10-13 02:48:19'),
 (3, 5, 'comment', 58, 'sâs', 'unread', '2022-10-14 02:53:50', '2022-10-14 02:53:50'),
 (4, 4, 'spot', 58, 'aloalo', 'unread', '2022-10-14 07:26:04', '2022-10-14 07:26:04'),
-(5, 11, 'comment', 58, 'hack', 'unread', '2022-10-14 07:26:34', '2022-10-14 07:26:34');
+(5, 11, 'comment', 58, 'hack', 'unread', '2022-10-14 07:26:34', '2022-10-14 07:26:34'),
+(6, 13, 'comment', 58, 's', 'unread', '2022-10-17 00:08:06', '2022-10-17 00:08:06'),
+(7, 13, 'comment', 58, 'no', 'unread', '2022-10-17 00:09:10', '2022-10-17 00:09:10'),
+(8, 13, 'comment', 58, 'sss', 'unread', '2022-10-17 00:13:47', '2022-10-17 00:13:47'),
+(9, 13, 'comment', 58, 'sss', 'unread', '2022-10-17 00:14:10', '2022-10-17 00:14:10'),
+(10, 13, 'comment', 58, 'a', 'unread', '2022-10-17 00:15:15', '2022-10-17 00:15:15'),
+(11, 13, 'comment', 58, 'ssss', 'read', '2022-10-17 00:15:39', '2022-10-17 00:54:29');
 
 -- --------------------------------------------------------
 
@@ -387,9 +392,9 @@ INSERT INTO `spots` (`id`, `name`, `alias`, `image_id`, `images_id`, `address`, 
 (3, '年末にお会いしましょう', '年末にお会いしましょう', 9, '[\"7\",\"8\"]', '9', 'Fukushima', 'スポット説明', '60', 'publish', 0, 0, NULL, NULL),
 (4, '成功のために走る', '成功のために走る', 11, '[\"10\"]', '11', 'Akita', 'スポット説明', '60', 'publish', 1, 2, NULL, '2022-10-14 07:24:09'),
 (5, '感動的なショー', '感動的なショー', 14, '[\"12\",\"13\"]', '14', 'Aomori', 'スポット説明', '60', 'publish', 0, 0, NULL, NULL),
-(6, '振り返るな、前を向く', '振り返るな、前を向く', 15, '[\"17\",\"16\",\"15\"]', '62 ニッチ 34', 'Akita', 'ここに来て', '1', 'publish', 1, 1, '2022-10-13 01:01:42', '2022-10-13 02:48:07'),
+(6, '振り返るな、前を向く', '振り返るな、前を向く', 15, '[\"17\",\"16\",\"15\"]', '62 ニッチ 34', 'Akita', 'ここに来て', '1', 'publish', 1, 2, '2022-10-13 01:01:42', '2022-10-16 23:59:06'),
 (7, '全国みどり会議', '全国みどり会議', 27, '[\"26\"]', '27', 'Aomori', '全国みどり会議', '1', 'publish', 0, 0, NULL, '2022-10-13 18:37:04'),
-(9, '新しいスポット', '新しいスポット', 47, '[\"46\",\"48\"]', '47', 'Akita - 544s', '新しいスポット', '58', 'disabled', 0, 0, NULL, '2022-10-14 07:05:08');
+(9, '新しいスポット', '新しいスポット', 47, '[\"46\",\"48\",\"54\"]', '47', 'Akita - 544s', '新しいスポット', '58', 'disabled', 0, 1, NULL, '2022-10-16 21:33:30');
 
 -- --------------------------------------------------------
 
@@ -572,7 +577,8 @@ INSERT INTO `uploads` (`id`, `name`, `folder_path`, `file_name`, `extension`, `m
 (50, 'vTz5Po6Y', '', 'Y6wyaZMQSY9De2oGMgYmrbiijX152PqBguZc0mH2.jpg', 'jpg', 'image/jpeg', 25775, '{\"width\":305,\"height\":405,\"versions\":{\"thumbnail\":{\"width\":193,\"height\":256,\"file_name\":\"Y6wyaZMQSY9De2oGMgYmrbiijX152PqBguZc0mH2-thumbnail.jpg\"}}}', '2022-10-16 18:59:00', '2022-10-16 18:59:00'),
 (51, 'vTz5Po6Y', '', 'ztSSAaE22PVOa70P8GvzAnpkjbSiNe7g3pDV1fyN.jpg', 'jpg', 'image/jpeg', 25775, '{\"width\":305,\"height\":405,\"versions\":{\"thumbnail\":{\"width\":193,\"height\":256,\"file_name\":\"ztSSAaE22PVOa70P8GvzAnpkjbSiNe7g3pDV1fyN-thumbnail.jpg\"}}}', '2022-10-16 18:59:08', '2022-10-16 18:59:08'),
 (52, 'vTz5Po6Y', '', 'n785EjkGjw5JKmcXdHbSurBeprHYl5J5jNErIW3i.jpg', 'jpg', 'image/jpeg', 25775, '{\"width\":305,\"height\":405,\"versions\":{\"thumbnail\":{\"width\":193,\"height\":256,\"file_name\":\"n785EjkGjw5JKmcXdHbSurBeprHYl5J5jNErIW3i-thumbnail.jpg\"}}}', '2022-10-16 18:59:34', '2022-10-16 18:59:34'),
-(53, 'vTz5Po6Y', '', 'YK23jxOXOAaleHYArQdxHYl9lTQ75UYqqtKTmEwJ.jpg', 'jpg', 'image/jpeg', 25775, '{\"width\":305,\"height\":405,\"versions\":{\"thumbnail\":{\"width\":193,\"height\":256,\"file_name\":\"YK23jxOXOAaleHYArQdxHYl9lTQ75UYqqtKTmEwJ-thumbnail.jpg\"}}}', '2022-10-16 19:00:26', '2022-10-16 19:00:26');
+(53, 'vTz5Po6Y', '', 'YK23jxOXOAaleHYArQdxHYl9lTQ75UYqqtKTmEwJ.jpg', 'jpg', 'image/jpeg', 25775, '{\"width\":305,\"height\":405,\"versions\":{\"thumbnail\":{\"width\":193,\"height\":256,\"file_name\":\"YK23jxOXOAaleHYArQdxHYl9lTQ75UYqqtKTmEwJ-thumbnail.jpg\"}}}', '2022-10-16 19:00:26', '2022-10-16 19:00:26'),
+(54, 'tải xuống', '', 'wXojMynjJA19OPVjO0ciBeTO3ztj5JNGcEt0wrMY.jpg', 'jpg', 'image/jpeg', 13851, '{\"width\":286,\"height\":176,\"versions\":{\"thumbnail\":{\"width\":256,\"height\":158,\"file_name\":\"wXojMynjJA19OPVjO0ciBeTO3ztj5JNGcEt0wrMY-thumbnail.jpg\"}}}', '2022-10-16 21:04:47', '2022-10-16 21:04:47');
 
 -- --------------------------------------------------------
 
@@ -621,8 +627,8 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `login_name`, `sei`, `mei`, `sei_kana`, `mei_kana`, `name`, `avatar_image_id`, `role`, `gender`, `birth_day`, `intro`, `email`, `location`, `password`, `email_verified_at`, `email_verified_token`, `remember_token`, `fields`, `point`, `status`, `otp`, `twitter_url`, `tiktok_url`, `instagram_url`, `sns_active`, `google_id`, `facebook_id`, `twitter_id`, `created_at`, `updated_at`) VALUES
 (1, 'admin', NULL, NULL, NULL, NULL, 'Admin', NULL, 'admin', NULL, NULL, '', 'admin@sample.email', NULL, '$2y$10$HT3qwQXcuh6BZR88auQUt.pfNNslChaKBVFBrkOu1YsYq9Gg5q65e', NULL, NULL, NULL, '[]', NULL, 'active', '', NULL, NULL, NULL, '0', '0', NULL, 0, '2020-12-31 17:00:00', '2022-09-18 23:58:29'),
 (47, NULL, NULL, NULL, NULL, NULL, 'dai huudasd', 43, 'member', 1, '2022-09-28', 'sda', 'dai20010301@gmail.com', '川崎', '$2y$10$HiYtwOy1RXEOZO5WlFcU0e3lvHqZ3y1yUE3hlAU1TF1Zn9hsCOx7K', NULL, NULL, NULL, NULL, NULL, 'active', '92155', NULL, NULL, NULL, '[\"1\"]', '117606606609355028013', NULL, NULL, '2022-10-05 02:15:25', '2022-10-13 00:05:57'),
-(58, NULL, NULL, NULL, NULL, NULL, 'mail tests', 53, NULL, 1, '2022-10-12', 'asas', 'mailtests2001@gmail.com', '東京', '$2y$10$D8ydw.x/MRjyJfrDLIhJBOn/CfiM3xseIMzg.wmBZfGu2bi6KJwmC', NULL, NULL, NULL, NULL, '1600', 'active', '68185', NULL, NULL, NULL, NULL, '102272033398519678082', NULL, NULL, '2022-10-13 00:09:44', '2022-10-16 19:00:26'),
-(60, NULL, NULL, NULL, NULL, NULL, 'Đại Hữu Nguyễn', 3, NULL, 2, '2022-10-12', 'sa', 'huudai032001@gmail.com', '川崎', 'eyJpdiI6ImJrckM1ZGhFM2JPanJ0OE1kamY1clE9PSIsInZhbHVlIjoiUU1QRXNsWXEzZDBmVFpDN09QNzA5MGU4dXRuNWxKYVhITnIyaE1vV2Zjaz0iLCJtYWMiOiIxOWYwODk2YzljMWJhM2MzM2JiZDIzYmVmNDIzNjZjZGJmNjZhY2Y3NTAxYmQxZDYzNWIwNWZlYWNiMWRlOTRjIiwidGFnIjoiIn0=', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'asa', 'sas', 'sa', NULL, '109829984724144315607', '3226743507581614', NULL, '2022-10-13 00:16:17', '2022-10-13 18:59:47');
+(58, NULL, NULL, NULL, NULL, NULL, 'mail tests', 53, NULL, 1, '2022-10-12', 'asas', 'mailtests2001@gmail.com', '東京', '$2y$10$D8ydw.x/MRjyJfrDLIhJBOn/CfiM3xseIMzg.wmBZfGu2bi6KJwmC', NULL, NULL, NULL, NULL, '1600', 'active', '68185', NULL, NULL, NULL, NULL, '102272033398519678082', NULL, NULL, '2022-10-13 00:09:44', '2022-10-16 23:58:36'),
+(60, NULL, NULL, NULL, NULL, NULL, 'Đại Hữu Nguyễn', 3, NULL, 2, '2022-10-12', 'sa', 'huudai032001@gmail.com', '川崎', 'eyJpdiI6ImJrckM1ZGhFM2JPanJ0OE1kamY1clE9PSIsInZhbHVlIjoiUU1QRXNsWXEzZDBmVFpDN09QNzA5MGU4dXRuNWxKYVhITnIyaE1vV2Zjaz0iLCJtYWMiOiIxOWYwODk2YzljMWJhM2MzM2JiZDIzYmVmNDIzNjZjZGJmNjZhY2Y3NTAxYmQxZDYzNWIwNWZlYWNiMWRlOTRjIiwidGFnIjoiIn0=', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'asa', 'sas', 'sa', NULL, '109829984724144315607', '3226743507581614', NULL, '2022-10-13 00:16:17', '2022-10-16 21:33:51');
 
 -- --------------------------------------------------------
 
@@ -656,7 +662,10 @@ INSERT INTO `user_notifications` (`id`, `user_id`, `user_group`, `string`, `para
 (11, 60, 'mail tests', 'new_comment', '\"{\\\"order_id\\\":\\\"4\\\"}\"', 'unread', '2022-10-14 07:22:04', '2022-10-14 07:22:04'),
 (12, 60, 'mail tests', 'new_comment', '\"{\\\"order_id\\\":\\\"4\\\"}\"', 'unread', '2022-10-14 07:23:23', '2022-10-14 07:23:23'),
 (13, 58, 'mail tests', 'recently liked post', '\"{\\\"order_id\\\":\\\"4\\\"}\"', 'unread', '2022-10-14 07:24:09', '2022-10-14 07:24:09'),
-(14, 58, 'mail tests', 'recently liked post', '\"{\\\"order_id\\\":\\\"5\\\"}\"', 'unread', '2022-10-16 19:08:23', '2022-10-16 19:08:23');
+(14, 58, 'mail tests', 'recently liked post', '\"{\\\"order_id\\\":\\\"5\\\"}\"', 'unread', '2022-10-16 19:08:23', '2022-10-16 19:08:23'),
+(15, 58, 'mail tests', 'recently liked post', '\"{\\\"order_id\\\":\\\"6\\\"}\"', 'unread', '2022-10-16 19:34:04', '2022-10-16 19:34:04'),
+(16, 58, 'mail tests', 'new_comment', '\"{\\\"order_id\\\":\\\"9\\\"}\"', 'unread', '2022-10-16 21:33:30', '2022-10-16 21:33:30'),
+(17, 1, 'mail tests', 'new_comment', '\"{\\\"order_id\\\":\\\"6\\\"}\"', 'unread', '2022-10-16 23:59:06', '2022-10-16 23:59:06');
 
 -- --------------------------------------------------------
 
@@ -830,7 +839,7 @@ ALTER TABLE `zip_code`
 -- AUTO_INCREMENT for table `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `event`
@@ -890,7 +899,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `report`
 --
 ALTER TABLE `report`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `sample_terms`
@@ -932,7 +941,7 @@ ALTER TABLE `tasks`
 -- AUTO_INCREMENT for table `uploads`
 --
 ALTER TABLE `uploads`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -944,7 +953,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `user_notifications`
 --
 ALTER TABLE `user_notifications`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `zip_code`

@@ -85,7 +85,6 @@ class GoodsController extends Controller
             'address.required'=>'必須項目です',
             'home_address.required'=>'必須項目です',
         ]);
-        // dd($req->input('point_remaining'));
         if($req->input('point_remaining') > 0){
 
             $exchange = new ExchangeGoods;

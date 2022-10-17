@@ -30,7 +30,7 @@ class EventController extends Controller
     public function list_events(Request $req){
         $today = \Carbon\Carbon::now();
         $date = $today->format('Y-m-d');
-        $limit = 2;
+        $limit = 6;
         if($req->input('page')){
             $page = $req->input('page');
         }else {
@@ -97,7 +97,6 @@ class EventController extends Controller
         if($total_page == 0){
             $total_page = 1;
         }
-        // dd($start);
         return view('web.events',compact('list_events','total_page','page'));
     }
 
@@ -107,7 +106,6 @@ class EventController extends Controller
             abort (404);
         }
         $recently = Event::where('location',$info_event->location)->take(3)->get();
-        // dd($recently);
         $list_event = Event::take(6)->get();
         return view('web.event-detail',[
             'info_event'=>$info_event,

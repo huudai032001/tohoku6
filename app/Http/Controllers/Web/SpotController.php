@@ -229,9 +229,7 @@ class SpotController extends Controller
             $spot->image_id = $uploadService->handleUploadFile($file,"")['file_info']['id'];
         }
         $spot->images_id = $arr_images;
-
         $spot->category = $req->input('category');
-        // dd($spot->category);
         return view('web./spot-preview',['spot'=> $spot]);
 
     }

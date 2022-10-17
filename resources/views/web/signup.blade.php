@@ -2,7 +2,7 @@
     @section('content')
     <body>
         @if(Session::has('error'))
-            <h1 style="text-align: center;">{{Session::get('error')}}</h1>
+            <h1 style="text-align: center;color:red;">{{Session::get('error')}}</h1>
         @endif
         <div id="wrapper">
             <div id="inner-wrapper"> 

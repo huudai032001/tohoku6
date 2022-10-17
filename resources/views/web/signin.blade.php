@@ -3,7 +3,7 @@
     @section('content')
     <body>
         @if(Session::has('thongbao'))
-            <h1 style="text-align: center;">{{Session::get('thongbao')}}</h1>
+            <h1 style="text-align: center;color:red;">{{Session::get('thongbao')}}</h1>
         @endif
         <div id="wrapper">
             <div id="inner-wrapper"> 

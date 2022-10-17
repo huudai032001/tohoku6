@@ -47,10 +47,8 @@ class HomeController extends Controller
 
         $favorite_spot = Spot::orderBy('favorite','DESC')->take(4)->get();
         $favorite_event = Event::orderBy('favorite','DESC')->take(4)->get();
-        // $category = Category::all();
         $category = SpotCategory::all();
 
-        // dd(SpotCategory::all());
         return view('web.index')->with([
             'list_event' => $list_event,
             'list_spot' => $list_spot,
