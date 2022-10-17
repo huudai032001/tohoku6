@@ -160,39 +160,39 @@
                         <ul class="area-selection-list">
                             <li>
                                 <label class="custom-radio-2">
-                                    <input type="radio" name="area-select" value="Akita"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">Akita
+                                    <input type="radio" name="area-select" value="Akita" id="area-select"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">Akita
                                 </label>
                             </li>
                             <li>
                                 <label class="custom-radio-2">
-                                    <input type="radio" name="area-select" value="Aomori"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">Aomori
+                                    <input type="radio" name="area-select" value="Aomori" id="area-select"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">Aomori
                                 </label>
                             </li>
                             <li>
                                 <label class="custom-radio-2">
-                                    <input type="radio" name="area-select" checked value="Fukushima"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">Fukushima
+                                    <input type="radio" name="area-select" checked value="Fukushima" id="area-select" > <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">Fukushima
                                 </label>
                             </li>
                             <li>
                                 <label class="custom-radio-2">
-                                    <input type="radio" name="area-select" value="Iwate"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">Iwate
+                                    <input type="radio" name="area-select" value="Iwate" id="area-select"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">Iwate
                                 </label>
                             </li>
                             <li>
                                 <label class="custom-radio-2">
-                                    <input type="radio" name="area-select" value="Miyagi"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">Miyagi
+                                    <input type="radio" name="area-select" value="Miyagi" id="area-select"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">Miyagi
                                 </label>
                             </li>
                             <li>
                                 <label class="custom-radio-2">
-                                    <input type="radio" name="area-select" value="Yamagata"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">Yamagata
+                                    <input type="radio" name="area-select" value="Yamagata" id="area-select"> <span class="checkmark"></span> <img src="/web-assets/images/area/akita.svg" alt="">Yamagata
                                 </label>
                             </li>
                         </ul>
                     </div>
                 </div>
                 <div class="flex-auto panel_footer text-align-center">
-                    <div class="button button-style-1" >
+                    <div class="button button-style-1" onclick="find_location()">
                         絞り込む
                     </div>
                 </div>

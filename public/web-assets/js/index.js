@@ -91,7 +91,7 @@ function find_category(){
                             html += `
                             <div class="item">
                                 <div class="post-item-2">
-                                    <a href="spot-detail/`+ data.list_category[i].alias +`">
+                                    <a href="event-detail/`+ data.list_category[i].alias +`">
                                         <div class="thumb ratio thumb-hover-anim">
                                             <img src="`+ data.arr_image[i] +`" alt="">
                                         </div>
@@ -108,7 +108,7 @@ function find_category(){
                                             </div>
                                         </div>
                                         <div class="title">
-                                            <a href="spot-detail/`+ data.list_category[i].alias +`">`+ data.list_category[i].name +`・</a>
+                                            <a href="event-detail/`+ data.list_category[i].alias +`">`+ data.list_category[i].name +`・</a>
                                         </div>
                                     </div>
                                 </div>
