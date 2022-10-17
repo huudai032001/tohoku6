@@ -59,7 +59,7 @@
                         </div>
 
                         <div class="text-align-center">
-                            @if(Auth::user()->point > $info_goods->point)
+                            @if(Auth::user()->point >= $info_goods->point)
                             <a href="{{route('exchangeGoods',$info_goods->alias)}}" class="button button-style-1">交換する</a>
                             @else
                             <a onclick="fail()" class="button button-style-1">交換する</a>

@@ -26,8 +26,5 @@ class EventCategory extends HierachyTaxonomy
     {
         return $this->belongsToMany(\App\Models\Event::class, 'event_term_map', 'term_id', 'object_id');
     }
-    public function event()
-    {
-        return $this->belongsToMany(\App\Models\EventCategory::class, 'event_term_map','object_id','term_id', );
-    }
+
 }

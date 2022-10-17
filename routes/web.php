@@ -130,7 +130,7 @@ Route::post('/upload_img',[App\Http\Controllers\Web\HandleController::class, 'up
 Route::post('/sort_spot',[App\Http\Controllers\Web\HandleController::class, 'sortSpot'])->name('sortSpot');
 Route::post('/load_more_spot',[App\Http\Controllers\Web\HandleController::class, 'loadMore'])->name('loadMore');
 Route::post('/load_param_profile',[App\Http\Controllers\Web\HandleController::class, 'loadParamProfile'])->name('loadParamProfile');
-Route::get('/find_by_zip_code',[App\Http\Controllers\Web\HandleController::class, 'findByZipCode'])->name('findByZipCode');
+Route::post('/find_by_zip_code',[App\Http\Controllers\Web\HandleController::class, 'findByZipCode'])->name('findByZipCode');
 Route::post('/find_by_location',[App\Http\Controllers\Web\HandleController::class, 'findByLocation'])->name('findByLocation');
 Route::post('/find_by_location_event',[App\Http\Controllers\Web\HandleController::class, 'findByLocationEvent'])->name('findByLocationEvent');
 

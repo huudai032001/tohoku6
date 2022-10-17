@@ -79,7 +79,7 @@
                                     <div class="form-control-wrap">
                                         <div class="row space-x-10">
                                             <div class="col-7">
-                                                <input type="text" class="input-text" name="zip_code">
+                                                <input type="text" class="input-text" name="zip_code" id="zip_code">
                                             </div>
                                             <div class="col-5">
                                                 <a class="button form-control-button" onclick="zip_code()">検索</a>
@@ -149,6 +149,8 @@
         <script src="/web-assets/js/components.js"></script>
         <script src="/web-assets/js/main.js"></script>
         <script src="/web-assets/js/tohoku-calendar.js"></script>
+        <script src="/web-assets/js/goods.js"></script>
+
         
     </body>
 

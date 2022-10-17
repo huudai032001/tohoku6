@@ -231,14 +231,24 @@ class HandleController extends Controller
 
         }
 
-        function findByZipCode(){
-            $arr = array("1","2");
-            $exampleEncoded = json_encode($arr);
+        function findByZipCode(Request $req){
+            $code = $req->input('code');
+            // dd($code);
+            $zip_code = ZipCode::where('code',$code)->first();
+            if($zip_code){
+                echo json_encode(['zip_code'=>$zip_code,'res'=>true]);
+            }else {
+                echo json_encode(['res'=>false]);
+            }
+            // $arr = array("1","2");
+            // $exampleEncoded = json_encode($arr);
 
-            // dd($arr);
-            $update =  new Spot;
-            $update->category = $arr;
-            $update->save();
+            // // dd($arr);
+            // $update =  new Spot;
+            // $update->category = $arr;
+            // $update->save();
+
+
         }
 
         function findByLocation(){

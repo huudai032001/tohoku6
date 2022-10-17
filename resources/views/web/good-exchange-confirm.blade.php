@@ -40,6 +40,7 @@
                     <input type="hidden" name="address" id="" value="{{$exchange->address}}">
                     <input type="hidden" name="home_address" id="" value="{{$exchange->home_address}}">
                     <input type="hidden" name="point" id="" value="{{$point}}">
+                    <input type="hidden" name="point" id="" value="{{$exchange->furigana}}">
 
                         <div class="container">
 
@@ -52,7 +53,7 @@
                                 お届け先 <br>
                                 <b>{{$exchange->address}}</b> カジママサヒコ <br>
                                 Tel {{$exchange->phone}}<br>
-                                zip code
+                                {{$exchange->zip_code}}
                             </div>
                             
                             <div class="text-align-center">
