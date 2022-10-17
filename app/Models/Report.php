@@ -21,10 +21,22 @@ class Report extends BaseModel
     }
 
     public function comment(){
-        return $this->belongsTo(\App\Models\Comment::class, 'comment_id');
+        return $this->belongsTo(\App\Models\Comment::class, 'object_id');
+    }
+
+    public function spot(){
+        return $this->belongsTo(\App\Models\Spot::class, 'object_id');
     }
 
     public function userName(){
         return $this->belongsTo(\App\Models\User::class, 'user_id');
+    }
+
+    public static function reportList()
+    {
+        return [
+           'unread' => __('status.unread'),
+           'read' => __('status.read')
+        ];
     }
 }

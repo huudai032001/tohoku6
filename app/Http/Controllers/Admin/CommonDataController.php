@@ -390,6 +390,7 @@ class CommonDataController extends Controller {
     protected function postItemEdit(Request $request, $id)
     {   
         $dataItem = $this->modelClass::find($id);
+
         if (!$dataItem) {            
             return $this->showErrorPage(__('message.data_not_found'));
         }

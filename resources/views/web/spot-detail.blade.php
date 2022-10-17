@@ -6,8 +6,9 @@
     @section('content')
 
     <body class="my-profile-page">
-    <input type="hidden" value="{{Auth::user()->id}}" id="user">
-
+        @if(Auth::check())
+            <input type="hidden" value="{{Auth::user()->id}}" id="user">
+        @endif
         <div id="wrapper">
             <div id="inner-wrapper">
 
@@ -389,7 +390,7 @@
                         <textarea class="textarea report-content" rows="6" id="report"></textarea>
                         <div class="error" id="error_report_comment"></div>
                         <div class="text-align-center" style="margin-top: 15px;">
-                            <button class="button button-style-1 button-form-submit" onclick="report()">送信</button>
+                            <button class="button button-style-1 button-form-submits" onclick="report()">送信</button>
                         </div>
                     </div>
                 </div>

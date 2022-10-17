@@ -39,6 +39,7 @@ function delete_comment(){
             // console.log(data);
             if(data.res == true){
                 window.location.reload();
+
             }else {
                 alert('このコメントは削除できません');
             }
@@ -99,12 +100,6 @@ function all_comment(id){
             var html = ``;
             for(var i= 0;i< data.length;i++){
                 var created_at = Date.parse(data[i].created_at);
-                // var created_at = (data[i].created_at).split("");
-                // console.log(created_at);
-                // console.log(array_time);
-                // var time_com = time-
-                // console.log(array_time[4]- data[i][crea]);
-
                 html += `
                 <div class="col-12">
                     <div class="review-item">
@@ -177,7 +172,19 @@ function report(){
         contentType: false,
         data: formData,
         success: function (data) {
-            
+            if(data.res == true){
+                $('#modal-report').hideModal();
+
+                $('#ajax-loading-overlay .loading-icon').show();
+                $('#ajax-loading-overlay .result-message').html('').hide();
+                $('#ajax-loading-overlay').show();
+
+                $('#ajax-loading-overlay').addClass('is-loading');
+
+                $('#ajax-loading-overlay .loading-icon').hide();
+                $('#ajax-loading-overlay .result-message').html('事務局への報告を送信しました').show();
+                $('#ajax-loading-overlay').removeClass('is-loading');
+            }
         }
     });
 }
@@ -201,21 +208,23 @@ function report_two(){
     if(check){
         return false;
     }
-    $.ajax({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          },
-        url: "/report-spot",
-        type: 'post',
-        dataType: "json",
-        async: false,
-        processData: false,
-        contentType: false,
-        data: formData,
-        success: function (data) {
-            if(data.res == true){
-                alert("フィードバックを送信しました");
+    async function doAjax() {
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: "/report-spot",
+            type: 'post',
+            dataType: "json",
+            async: false,
+            processData: false,
+            contentType: false,
+            data: formData,
+            success: function (data) {
+                if(data.res == true){
+                    alert("フィードバックを送信しました");
+                }
             }
-        }
-    });
+        });
+    }
 }

@@ -65,7 +65,9 @@
                 <li class="nav-item">
                     <a href="{{ route('admin.report.index') }}" class="nav-link"><i class="icon-file-text3"></i> <span> {{ __('common.report') }}</span></a>                    
                 </li> 
-                
+                <li class="nav-item">
+                    <a href="{{ route('admin.exchange-goods.index') }}" class="nav-link"><i class="icon-file-text3"></i> <span> {{ __('common.exchange_goods') }}</span></a>                    
+                </li> 
 
                 <li class="nav-item">
                     <a href="{{ route('admin.file-library') }}" class="nav-link"><i class="icon-images2"></i> <span>{{ __('common.file_library') }}</span></a>

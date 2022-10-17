@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Support\Facades\View;
-// use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Spot;
@@ -16,13 +15,9 @@ use App\Models\Upload;
 use App\Models\Favorite;
 use App\Models\Comment;
 use App\Models\Notification;
-// use App\Models\Category;
 use App\Models\SpotCategory;
 use DB;
-
 use Illuminate\Support\Str;
-// use App\Models\Category_spot;
-
 use App\Models\Goods;
 use App\Models\User;
 use App\Jobs\SendEmail;

@@ -16,16 +16,16 @@ use App\Misc\DataTable;
 use App\Misc\HTML;
 use App\Misc\FlashMsg;
 use App\Misc\Helper;
-use App\Models\Report_spot;
+use App\Models\Report;
 
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use App\Form;
 
 use App\Models\Event;
 
-class ReportSpotController extends CommonDataController {
+class ReportController extends CommonDataController {
 
-    protected $modelClass = Report_spot::class;
+    protected $modelClass = Report::class;
     // protected $modelName;
     // protected $modelSlug;
     
@@ -62,16 +62,15 @@ class ReportSpotController extends CommonDataController {
     
 
     protected function initDataTable($dataTable) {
-        $dataTable->addColumn('Spot Name', __('Spot Name'), function ($item)
-        {
-            return $item->spot->name;
-        });
-        $dataTable->addColumn('User Name', __('User Name'), function ($item)
+        $dataTable->addColumn('User Name', __('common.user_name'), function ($item)
         {
         
             return $item->userName->name;
         });
-        $dataTable->addSimpleColumn('content', 'Report Content');
+        $dataTable->addSimpleColumn('content', __('common.report_content'));
+        $dataTable->addSimpleColumn('object_type',__('common.object_type'));
+        $dataTable->addSimpleColumn('status',__('common.status'));
+
     }
 
     // protected function indexQuery($query){
@@ -79,7 +78,7 @@ class ReportSpotController extends CommonDataController {
     // }
 
     protected function search($query, $searchString) {
-        $query->where('name', 'like', $searchString);
+        $query->where('content', 'like', $searchString);
     }
 
     // protected function sort($query, $order) {        
@@ -108,29 +107,30 @@ class ReportSpotController extends CommonDataController {
 
     protected function initFormEdit($form, $dataItem)
     {
-        // $form->addGroups([
-        //     new Form\Text([
-        //         'name' => 'name',                
-        //         'label' => 'Name',
-        //         'required' => true,
-        //         'data' => $dataItem->name
-        //     ]),
+        $form->addGroups([
+            new Form\Select([
+                'name' => 'status',
+                'label' => __('common.status'),
+                'options' => Report::reportList(),
+                'required' => true,
+                'data' => $dataItem->status
+            ])
 
-
-        // ]);
+        ]);
     }
 
     public function ruleEdit($item)
     {
         return [
-            'name' => ['required', 'max:255']
+            'status' => ['required']
         ];
     }
 
     protected function saveNewOrUpdate(Request $request, $item)
     {
-        // $item->alias = $alias;
-        // $item->save();
+ 
+        $item->status = $request->input('status');
+        $item->save();
 
     }    
 

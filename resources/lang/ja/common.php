@@ -109,6 +109,14 @@ return [
     'comment' => 'コメント',
 
     'Name'=>'名前',
-    'Point'=>'点'
+    'Point'=>'点',
 
+    'user_name'=> 'ユーザー名',
+    'report_content'=> '報告内容',
+    'object_type'=> 'オブジェクトタイプ',
+    'status'=> '状態',
+    'exchange_goods'=> '交換品',
+    'furigana' => 'Furigana',
+    'zipcode'=>'郵便番号',
+    'phone'=> '電話'
 ];

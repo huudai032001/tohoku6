@@ -233,29 +233,17 @@ class HandleController extends Controller
 
         function findByZipCode(Request $req){
             $code = $req->input('code');
-            // dd($code);
             $zip_code = ZipCode::where('code',$code)->first();
             if($zip_code){
                 echo json_encode(['zip_code'=>$zip_code,'res'=>true]);
             }else {
                 echo json_encode(['res'=>false]);
             }
-            // $arr = array("1","2");
-            // $exampleEncoded = json_encode($arr);
-
-            // // dd($arr);
-            // $update =  new Spot;
-            // $update->category = $arr;
-            // $update->save();
-
-
         }
 
         function findByLocation(Request $req){
             $location = $req->input('location');
-
             $list_spot = Spot::where('location',$location)->orderBy('created_at','DESC')->take(6)->get();
-            // dd($list_spot);
             $arr_image = [];
             foreach($list_spot as $value){
                 $arr_image [] = ($value->image)->getUrl(); 
@@ -265,21 +253,13 @@ class HandleController extends Controller
 
         function findByLocationEvent(){
             $location = $req->input('location');
-
             $list_event = Event::where('location',$location)->orderBy('created_at','DESC')->take(6)->get();
-            // dd($list_spot);
             $arr_image = [];
             foreach($list_event as $value){
                 $arr_image [] = ($value->image)->getUrl(); 
             }
             echo json_encode(['list_event'=>$list_event,'arr_image'=>$arr_image]);
         }
-
-
-
-
-
-
 
         public function spotComment(Request $req){
             $this->validate($req,[
@@ -320,8 +300,6 @@ class HandleController extends Controller
 
         public function deleteComment(Request $req){
             $com = Comment::findorfail($req->input('id'));
-            // $spot = Spot::findorfail($com->spot_id);
-            // dd($spot);
             if(Auth::user()->id == $com->user_id){
                 $com->delete();
                 echo json_encode(['res'=>true]);
@@ -329,8 +307,6 @@ class HandleController extends Controller
                 echo json_encode(['res'=>false]);
             }
         }
-
-
 
         public function upload_img(){
             $img = $_FILES['file'];

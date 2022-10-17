@@ -46,7 +46,7 @@ class AuthController extends Controller
             if ($request->filled('redirect')) {
                 return redirect($request->input('redirect'));
             } else {
-                return redirect('/');
+                return redirect('/admin');
             }
             
         }

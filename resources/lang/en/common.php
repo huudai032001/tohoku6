@@ -101,5 +101,15 @@ return [
     'spot' => 'Spot',
     'event' => 'Event',
     'goods' => 'Goods',
+    'comment'=>'Comment',
+    'report'=>'Report',
+    'user_name'=> 'User Name',
+    'report_content'=> 'Report Content',
+    'object_type'=> 'Object Type',
+    'status'=> 'Status',
+    'exchange_goods'=> 'Exchange Goods',
+    'furigana' => 'Furigana',
+    'zipcode'=>'Zip Code',
+    'phone'=> 'Phone'
 
 ];

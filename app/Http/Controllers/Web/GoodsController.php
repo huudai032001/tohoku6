@@ -118,6 +118,8 @@ class GoodsController extends Controller
             $exchange->home_address = $req->input('home_address');
             $exchange->zip_code = $req->input('zip_code');
             $exchange->furigana = $req->input('furigana');
+            $exchange->status = 'unread';
+
             $exchange->save();
 
             $user = Auth::user();

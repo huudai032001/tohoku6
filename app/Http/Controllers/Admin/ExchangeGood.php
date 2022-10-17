@@ -16,16 +16,16 @@ use App\Misc\DataTable;
 use App\Misc\HTML;
 use App\Misc\FlashMsg;
 use App\Misc\Helper;
-use App\Models\Report_comment;
+use App\Models\ExchangeGoods;
 
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use App\Form;
 
 use App\Models\Event;
 
-class ReportCommentController extends CommonDataController {
+class ExchangeGood extends CommonDataController {
 
-    protected $modelClass = Report_comment::class;
+    protected $modelClass = ExchangeGoods::class;
     // protected $modelName;
     // protected $modelSlug;
     
@@ -62,15 +62,19 @@ class ReportCommentController extends CommonDataController {
     
 
     protected function initDataTable($dataTable) {
-        $dataTable->addColumn('User Name', __('User Name'), function ($item)
-        {
-            return $item->userName->name;
-        });
-        $dataTable->addColumn('Comment', __('Comment'), function ($item)
-        {
-            return $item->comment->content;
-        });
-        $dataTable->addSimpleColumn('content', 'Report Content');
+        // $dataTable->addColumn('User Name', __('common.user_name'), function ($item)
+        // {
+        
+        //     return $item->userName->name;
+        // });
+        $dataTable->addSimpleColumn('name', __('common.name'));
+        $dataTable->addSimpleColumn('furigana',__('common.furigana'));
+        $dataTable->addSimpleColumn('phone',__('common.phone'));
+        $dataTable->addSimpleColumn('zip_code',__('common.zipcode'));
+        $dataTable->addSimpleColumn('address',__('common.address'));
+        $dataTable->addSimpleColumn('status',__('common.status'));
+
+
     }
 
     // protected function indexQuery($query){
@@ -78,7 +82,7 @@ class ReportCommentController extends CommonDataController {
     // }
 
     protected function search($query, $searchString) {
-        $query->where('name', 'like', $searchString);
+        $query->where('content', 'like', $searchString);
     }
 
     // protected function sort($query, $order) {        
@@ -107,29 +111,30 @@ class ReportCommentController extends CommonDataController {
 
     protected function initFormEdit($form, $dataItem)
     {
-        // $form->addGroups([
-        //     new Form\Text([
-        //         'name' => 'name',                
-        //         'label' => 'Name',
-        //         'required' => true,
-        //         'data' => $dataItem->name
-        //     ]),
+        $form->addGroups([
+            new Form\Select([
+                'name' => 'status',
+                'label' => __('common.status'),
+                'options' => ExchangeGoods::exchangeList(),
+                'required' => true,
+                'data' => $dataItem->status
+            ])
 
-
-        // ]);
+        ]);
     }
 
     public function ruleEdit($item)
     {
         return [
-            'name' => ['required', 'max:255']
+            'status' => ['required']
         ];
     }
 
     protected function saveNewOrUpdate(Request $request, $item)
     {
-        // $item->alias = $alias;
-        // $item->save();
+ 
+        $item->status = $request->input('status');
+        $item->save();
 
     }    
 

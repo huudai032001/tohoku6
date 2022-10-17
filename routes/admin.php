@@ -19,6 +19,7 @@ Route::crud('event-category', AdminControllers\EventCategoryController::class);
 
 Route::crud('comment', AdminControllers\CommentController::class);
 Route::crud('report', AdminControllers\ReportController::class);
+Route::crud('exchange-goods', AdminControllers\ExchangeGood::class);
 
 
 
