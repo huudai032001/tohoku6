@@ -10,10 +10,10 @@
 
 	<!--Vendor -->
 	<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
-	<link href="/core-assets/global_assets/css/icons/icomoon/styles.min.css" rel="stylesheet" type="text/css">
+	<link href="/vendor/limitless/css/icons/icomoon/styles.min.css" rel="stylesheet" type="text/css">
 	<link href="/core-assets/layout_1/LTR/default/full/assets/css/all.min.css" rel="stylesheet" type="text/css">
 
-	<script src="/core-assets/global_assets/js/main/jquery.min.js"></script>	
+	<script src="/vendor/limitless/js/main/jquery.min.js"></script>	
 
 
 	@stack('head')
